@@ -1023,7 +1023,6 @@ class UserController extends Controller
 
         /* Installments */
         $bundleInstallments = [];
-
         foreach ($studentBundles as $studentBundle) {
             $hasBought = $studentBundle->bundle->checkUserHasBought($user);
             $canSale = ($studentBundle->bundle->canSale() && !$hasBought);

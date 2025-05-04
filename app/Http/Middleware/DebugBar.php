@@ -13,7 +13,7 @@ class DebugBar
      */
     public function handle($request, Closure $next)
     {
-        app('debugbar')->disable();
+        // app('debugbar')->disable();
 
         if (!empty(getGeneralSettings('app_debugbar'))) {
             app('debugbar')->enable();

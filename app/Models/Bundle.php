@@ -359,7 +359,6 @@ class Bundle extends Model implements TranslatableContract
     public function checkUserHasBought($user = null, $checkExpired = true): bool
     {
         $hasBought = false;
-
         if (empty($user) and auth()->check()) {
             $user = auth()->user();
         }

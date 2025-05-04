@@ -4,102 +4,108 @@
 @endpush
 
 @section('content')
-    <style>
-        .content {
-        overflow: auto;
+<style>
+    .content {
+    overflow: auto;
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+    .cs-btn {
+        background-color: #c14b93 !important;
+        width:100%;
+    height:50px;
+    color: #fff;
+
+    }
+
+    /* .cs-btn:hover {
+        background-color: #599FAF !important;
+        color: #fff;
+    } */
+
+    .custom-control-label::after,
+    .custom-control-label::before {
+        left: initial !important;
+        right: -1.5rem !important;
+    }
+
+    .iti__country-list {
+        position: absolute;
+        z-index: 2;
+        list-style: none;
+        text-align: left;
+        padding: 0;
+        margin: 0 0 0 -1px;
+        box-shadow: 1px 1px 4px rgba(0, 0, 0, .2);
+        background-color: #fff;
+        color: #000 !important;
+        border: 1px solid #fff;
+        white-space: nowrap;
+        max-height: 200px;
+        overflow-y: scroll;
+        -webkit-overflow-scrolling: touch;
+        left: 0 !important;
+        direction: ltr !important;
+        width: 580%;
+    }
+    .iti__selected-dial-code {
+        color: #000;
+    }
+    a {
+        color: #c14b93 !important;
+    }
+    /* a:hover {
+        color: #599FAF !important;
+
+    } */
+    .bg-secondary-acadima {
+        background-color: #fff !important;
+    }
+    .text-pink {
+    color: #c14b93 !important;
+    font-size:16px;
+    }
+    /* .text-cyan:hover {
+    color: #ccf5ffa4 !important;
+    } */
+    .border-radius-lg {
+        border-radius: 20px !important;
+    }
+    .btn-border-radius {
+        border-radius: 20px !important;
+        font-size: 16px !important;
+    }
+    .ltr {
+        direction: ltr;
+    }
+    .input-size {
+        padding:0.75rem 1rem 0.75rem 1rem;
+        height:60px !important;
+        font-size:16px !important;
+    }   
+    .input-flex {
         display: flex;
-        height: 100vh;
-        justify-content: center;
-        align-content: center;
+        flex-direction: row;
+        justify-content: flex-start;
         align-items: center;
-        flex-direction: column;
-        flex-wrap: wrap;
     }
-        .cs-btn {
-            background-color: #CCF5FF !important;
-            width:100%;
-        height:50px;
-        }
-
-        .cs-btn:hover {
-            background-color: #599FAF !important;
-            color: #fff;
-
-        }
-
-        .custom-control-label::after,
-        .custom-control-label::before {
-            left: initial !important;
-            right: -1.5rem !important;
-        }
-
-        .iti__country-list {
-            position: absolute;
-            z-index: 2;
-            list-style: none;
-            text-align: left;
-            padding: 0;
-            margin: 0 0 0 -1px;
-            box-shadow: 1px 1px 4px rgba(0, 0, 0, .2);
-            background-color: #fff;
-            color: #000 !important;
-            border: 1px solid #fff;
-            white-space: nowrap;
-            max-height: 200px;
-            overflow-y: scroll;
-            -webkit-overflow-scrolling: touch;
-            left: 0 !important;
-            direction: ltr !important;
-            width: 580%;
-        }
-        .iti__selected-dial-code {
-            color: #000;
-        }
-        a {
-            color: #CCF5FF !important;
-        }
-        a:hover {
-            color: #599FAF !important;
-
-        }
-        .bg-secondary-acadima {
-            background-color: #141F25 !important;
-        }
-        .text-cyan {
-        color: #CCF5FF !important;
-        font-size:16px;
-        }
-        .text-cyan:hover {
-        color: #ccf5ffa4 !important;
-        }
-        .border-radius-lg {
-            border-radius: 20px !important;
-        }
-        .btn-border-radius {
-            border-radius: 20px !important;
-            font-size: 16px !important;
-        }
-        .ltr {
-            direction: ltr;
-        }
-        .input-size {
-            padding:0.75rem 1rem 0.75rem 1rem;
-            height:60px !important;
-            font-size:16px !important;
-        }   
-        .input-flex {
-            display: flex;
-            flex-direction: row;
-            justify-content: flex-start;
-            align-items: center;
-        }
-        .border-none {
-            border: none;
-        }
-        input:-internal-autofill-selected {
-        background-color: #fdfdff !important;
+    .border-none {
+        border: none;
     }
-    </style>
+    input:-internal-autofill-selected {
+    background-color: #fdfdff !important;
+}
+.select-border-radius {
+    border-radius: 20px;
+    height:55px !important;
+    padding: 5px 16px;
+}
+</style>
     @php
         $siteGeneralSettings = getGeneralSettings();
     @endphp
@@ -109,7 +115,7 @@
         $showCertificateAdditionalInRegister = getFeaturesSettings('show_certificate_additional_in_register') ?? false;
         $selectRolesDuringRegistration = getFeaturesSettings('select_the_role_during_registration') ?? null;
     @endphp
-    <div class="p-3 p-lg-5 m-md-3 bg-secondary-acadima col-sm-7 col-md-8 col-lg-4 border-radius-lg ltr">
+    <div class="px-3 px-lg-5 py-2 m-md-3 bg-secondary-acadima col-sm-7 col-md-8 col-lg-4 border-radius-lg ltr border shadow">
         <div class="col-6 col-md-6 p-0 mb-0 mb-lg-5 mt-3 mt-md-auto mx-auto d-flex flex-column align-items-center">
             <img src="{{ asset('store/Acadima/acadima-logo.webp') }}" alt="logo" width="100%" class="">
             <h1 class="font-20 font-weight-bold mb-3 mt-3 ltr">
@@ -127,7 +133,7 @@
 
         {{-- show messages --}}
         @if (!empty(session()->has('msg')))
-            <div class="alert alert-info alert-dismissible fade show mt-30" role="alert">
+            <div class="alert alert-info alert-dismissible fade show mt-30 text-black" role="alert">
                 {{ session()->get('msg') }}
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -158,11 +164,12 @@
             <div class="form-group ltr">
                 <!-- <label class="input-label text-light" for="en_name">Full Name   *</label> -->
                 
-                <div class="border-radius-lg input-size form-control input-flex">
+                 <div class="border-radius-lg input-size form-control input-flex">
                     <img src="{{ asset('store/Images/Registration/User_01.svg') }}" alt="Mail" class="mb-1">
                     <input name="en_name" type="text" value="{{ old('en_name') }}"
                     class="form-control @error('en_name') is-invalid @enderror border-none" placeholder="Full Name">
                 </div>
+
 
                     @error('en_name')
                     <div class="invalid-feedback">
