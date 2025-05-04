@@ -338,9 +338,6 @@ class RegisterController extends Controller
             ]);
         }
 
-        //session()->forget(['main_category_id', 'sub_category_id', 'webinar_id', 'bundle_id']);
-        // dd(session()->all());
-
         $this->validator($request->all())->validate();
 
         [$user, $data] = $this->create($request->all());

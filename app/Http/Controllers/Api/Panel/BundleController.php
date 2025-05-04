@@ -104,7 +104,6 @@ class BundleController extends Controller
     public function programPaymentStep()
     {
         $user = auth('api')->user();
-
         $student = $user->Student;
 
 
@@ -196,7 +195,7 @@ class BundleController extends Controller
                 ];
             }
 
-
+            
             $programs[] = $program;
         }
 

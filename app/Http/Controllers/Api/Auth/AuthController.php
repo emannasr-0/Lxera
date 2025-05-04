@@ -28,6 +28,7 @@ class AuthController extends Controller
     public function country_code(){
         return response()->json(getCountriesMobileCode());
     }
+
     public function register(Request $request)
     {
         // Validate incoming request
@@ -40,7 +41,6 @@ class AuthController extends Controller
 
         // If validation fails, return error response
         if ($validator->fails()) {
-            // return sendError($validator->errors(), 'there are registering errors');
             return response()->json(['errors' => $validator->errors()], 400);
         }
 
@@ -65,14 +65,7 @@ class AuthController extends Controller
             'user' => UserResource::make($user),
             'token' => $token,
         ];
-            // return sendResponse($data, "User registered successfully.");
         return apiResponse2(1, 'register', "User registered successfully.", $data);
-
-        // return response()->json([
-        //     'message' => 'User registered successfully.',
-        //     'user' => UserResource::make($user),
-        //     'token' => $token,
-        // ], status: 201);
 
     }
 

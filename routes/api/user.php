@@ -222,7 +222,7 @@ Route::group([], function () {
         Route::get('/installments/{installmentId}/verify', ['uses' => 'InstallmentsController@makeInstallmentPayment']);
         Route::post('/purchase/{installmentId?}', ['uses' => 'BundleController@purchase_bundle']);
         Route::get('/purchases', ['uses' => 'BundleController@purchases']);
-        Route::get('/applieds', ['uses' => 'BundleController@programPaymentStep'])->middleware('vpn');
+        Route::get('/applieds', ['uses' => 'BundleController@programPaymentStep']);
     });
     /***** Reviews  *****/
     Route::group(['prefix' => '/reviews3'], function () {
