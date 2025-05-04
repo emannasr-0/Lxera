@@ -1,0 +1,45 @@
+@import "bootstrap/variables";
+@import "panel/dashboard";
+@import "panel/support";
+@import "panel/notifications";
+@import "panel/sidebar";
+@import "panel/user-settings";
+@import "panel/reward";
+@import "panel/store";
+@import "panel/forum";
+@import "panel/upcoming";
+@import url(https://db.onlinewebfonts.com/c/6024b7fb249d186b351255dc7b480d7f?family=Facebook+Sans);
+
+body {
+    background-color: var(--panel-bg);
+    font-family: sans-serif, sans-serif !important;
+}
+
+#panel_app {
+    .nav-icons-or-start-live {
+        .nav-notify-cart-dropdown {
+            display: flex !important;
+        }
+
+        .nav-start-a-live-btn {
+            display: none !important;
+        }
+    }
+}
+
+.table {
+    th{
+        font-weight: 500;
+    }
+}
+
+tbody{
+    tr{
+        transition: all 0.3s ease;
+
+        &:hover{
+            background-color: var(--panel-bg) !important;
+            transition: all 0.3s ease;
+        }
+    }
+}
