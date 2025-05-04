@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Auth;
 
+use App\BundleStudent;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserProfile;
 use App\Http\Resources\UserResource;
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Validator;
 
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\Role;
+use App\Student;
 use Exception;
 
 
@@ -56,6 +58,23 @@ class AuthController extends Controller
             'updated_at' => now()->timestamp,
             'verified' => 1
         ]);
+
+
+        //create student 
+        $student = Student::create([
+            'user_id' => $user->id,
+            'en_name' => $request->full_name,
+            'email' => $request->email,
+            'phone' => $request->mobile,
+            'mobile' => $request->mobile,
+            // 'status' => 'pending'
+        ]);
+        
+
+        //create bundle student 
+        $bundle_id = $request->bundle_id ?? 0;
+        $studentBundle = BundleStudent::create(['student_id' => $student->id, 'bundle_id' => $bundle_id, 'status' => 'applying']);
+
 
         // Generate JWT token for the user after registration
         $token = JWTAuth::fromUser($user);
