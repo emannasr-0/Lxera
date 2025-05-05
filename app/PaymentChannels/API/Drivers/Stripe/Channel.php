@@ -1,12 +1,14 @@
 <?php
 
-namespace App\PaymentChannels\Drivers\Stripe;
+namespace App\PaymentChannels\API\Drivers\Stripe;
 
+use App\Http\Controllers\Api\Web\PaymentController;
 use App\Models\Order;
 use App\Models\PaymentChannel;
 use App\PaymentChannels\BasePaymentChannel;
 use App\PaymentChannels\IChannel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Stripe\Checkout\Session;
 use Stripe\Stripe;
 
@@ -36,15 +38,13 @@ class Channel extends BasePaymentChannel implements IChannel
         $price = $this->makeAmountByCurrency($order->total_amount, $this->currency);
         $generalSettings = getGeneralSettings();
         $currency = currency();
-
+        $user = auth('api')->user();
         Stripe::setApiKey($this->api_secret);
-        
-        
         $checkout = Session::create([
             'payment_method_types' => ['card'],
             'line_items' => [[
                 'price_data' => [
-                    'currency' =>$currency,
+                    'currency' => $currency,
                     'unit_amount_decimal' => $price * 100,
                     'product_data' => [
                         'name' => $generalSettings['site_name'] . ' payment',
@@ -53,28 +53,38 @@ class Channel extends BasePaymentChannel implements IChannel
                 'quantity' => 1,
             ]],
             'mode' => 'payment',
-            
-            'customer_email' => auth()->user()->email, // Pass the email address here
-            'success_url' => $this->makeCallbackUrl('success',$order->id),
-            'cancel_url' => $this->makeCallbackUrl('cancel',$order->id),
+            'customer_email' => $user->email, // Pass the email address here
+            'success_url' => $this->makeCallbackUrl('success', $order->id),
+            'cancel_url' => $this->makeCallbackUrl('cancel', $order->id),
+            'metadata' => [
+                'order_id' => $order->id,
+                'user_id' => $user->id,
+            ]
         ]);
         // dd($checkout);
-                /*$order->update([
+        /*$order->update([
                     'reference_id' => $checkout->id,
                 ]);*/
 
         // session()->put($this->order_session_key, $order->id);
 
-        $Html = '<script src="https://js.stripe.com/v3/"></script>';
-        $Html .= '<script type="text/javascript">let stripe = Stripe("' . $this->api_key . '");';
-        $Html .= 'stripe.redirectToCheckout({ sessionId: "' . $checkout->id . '" }); </script>';
+        // $Html = '<script src="https://js.stripe.com/v3/"></script>';
+        // $Html .= '<script type="text/javascript">let stripe = Stripe("' . $this->api_key . '");';
+        // $Html .= 'stripe.redirectToCheckout({ sessionId: "' . $checkout->id . '" }); </script>';
 
-        echo $Html;
+        // echo $Html;
+        // Auth::login($user);
+        return [
+            'sessionId' => $checkout->id,
+            'url' => $checkout->url,
+            // 'checkout' => $checkout
+        ];
     }
 
-    private function makeCallbackUrl($status,$order_id)
+    private function makeCallbackUrl($status, $order_id)
+
     {
-        return url("/payments/verify/Stripe?status=$status&order_id=$order_id&session_id={CHECKOUT_SESSION_ID}");
+        return url("/api/development/payments/verify/Stripe?status=$status&order_id=$order_id&session_id={CHECKOUT_SESSION_ID}");
     }
 
     public function verify(Request $request)
@@ -86,11 +96,11 @@ class Channel extends BasePaymentChannel implements IChannel
         // $order_id = session()->get($this->order_session_key, null);
         // session()->forget($this->order_session_key);
 
-        $user = auth()->user();
+        // $order = Order::where('id', $order_id)
+        //     ->where('user_id', $user->id)
+        //     ->first();
 
-        $order = Order::where('id', $order_id)
-            ->where('user_id', $user->id)
-            ->first();
+        $order = Order::find($order_id);
         // dd($request->session_id);
         if ($status == 'success' and !empty($request->session_id) and !empty($order)) {
             Stripe::setApiKey($this->api_secret);

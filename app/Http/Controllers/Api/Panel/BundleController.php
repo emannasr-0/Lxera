@@ -106,7 +106,7 @@ class BundleController extends Controller
         $user = auth('api')->user();
         $student = $user->Student;
 
-
+        // return response()->json(1);
         $studentBundles = BundleStudent::where('student_id', $student?->id ?? null)->groupBy('bundle_id')->get()->reverse();
 
         /* Installments */
@@ -170,7 +170,6 @@ class BundleController extends Controller
                         $new_upfront = '';
                     }
 
-                    
                     $program['installment_plan'] = [
                         'id' => $installment->id,
                         'title' => $installment->main_title,
@@ -179,7 +178,7 @@ class BundleController extends Controller
                         'total_new_price' => $new_price,
                         'upfront' => !empty($installment->upfront) ? trans('update.amount_upfront', ['amount' => handlePrice($installment->getUpfront())]) . ($installment->upfront_type == 'percent' ? " ({$installment->upfront}%)" : '') : trans('update.no_upfront'),
                         'new_upfront' => $new_upfront,
-                        'last_step_date' => $installment->steps->last()->getDeadline(1, $studentBundle->bundle->id),
+                        'last_step_date' => $installment->steps->last()->getDeadlineTitle(1, $studentBundle->bundle->id),
                         'steps' => [],
                     ];
 

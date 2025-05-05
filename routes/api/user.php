@@ -168,11 +168,14 @@ Route::group([], function () {
         Route::post('/education', ['uses' => 'UsersController@updateUserEducation']);
         Route::put('/', ['uses' => 'UsersController@update']);
         Route::post('/images', ['uses' => 'UsersController@updateImages']);
-
+    
+        Route::get('/business_links','UsersController@indexbusinesslinks');
+        Route::get('/metas', 'UsersController@indexMetas');
         Route::post('/metas', 'UsersController@storeMetas');
         Route::put('metas/{meta_id}/update', 'UsersController@updateMeta');
         Route::delete('metas/{meta_id}/delete', 'UsersController@deleteMeta');
 
+        Route::get('/references', 'UsersController@indexReferences');
         Route::post('/references', 'UsersController@storeReference');
         Route::put('references/{reference_id}/update', 'UsersController@updateReference');
         Route::delete('references/{reference_id}/delete', 'UsersController@deleteReference');

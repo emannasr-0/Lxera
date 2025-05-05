@@ -699,6 +699,13 @@ class UsersController extends Controller
         }
     }
 
+    public function indexMetas(){
+        $user = apiAuth();
+        $metas = UserMeta::where('user_id', $user->id)->get();
+
+        return response()->json($metas);
+    }
+
     public function followToggle(Request $request, $id)
     {
         // dd('ff') ;
@@ -974,7 +981,19 @@ class UsersController extends Controller
         return sendResponse([], "meta is deleted successfully");
     }
 
+    public function indexReferences(){
+        $user = apiAuth();
+        $reference = UserReference::where('user_id', $user->id)->get();
+        return response()->json($reference);
+    }
 
+    public function indexbusinesslinks(){
+        $user = apiAuth();
+        $reference = UserMeta::where('user_id', $user->id)->where('name','link')->get();
+        return response()->json($reference);
+    }
+
+    
     public function storeReference(Request $request)
     {
         $user = auth('api')->user();

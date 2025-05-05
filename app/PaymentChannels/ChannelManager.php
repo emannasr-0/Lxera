@@ -19,6 +19,12 @@ class ChannelManager
      * @param Order $order
      * @return string
      */
+
+     public static function makeApiChannel(PaymentChannel $paymentChannel){
+        $className = "App\\PaymentChannels\\API\\Drivers\\{$paymentChannel->class_name}\\Channel";
+        return new $className($paymentChannel);
+    }
+
     public static function makeCallbackUrl(Order $order)
     {
         return route('receipt_verify', [
