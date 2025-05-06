@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\UserProfile;
 use App\Http\Resources\UserResource;
 use App\Models\Api\User;
+use App\Models\Bundle;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\Facades\Hash;
@@ -16,7 +17,7 @@ use Laravel\Socialite\Facades\Socialite;
 use App\Models\Role;
 use App\Student;
 use Exception;
-
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -27,8 +28,37 @@ class AuthController extends Controller
     //     $this->middleware('auth:api', ['except' => ['login','register']]);
     // }
 
-    public function country_code(){
+    public function country_code()
+    {
         return response()->json(getCountriesMobileCode());
+    }
+    public function register_bundle($id)
+    {
+        $user = auth('api')->user();
+
+        if ($user) {
+            //if user loggedin
+            $bundle = Bundle::where('id', $id)->where('status', 'active')->first();
+
+            if ($bundle) {
+                $alreadyJoined = BundleStudent::where('bundle_id', $id)
+                    ->where('student_id', $user->student->id)
+                    ->exists();
+
+                if (!$alreadyJoined) {
+                    BundleStudent::create([
+                        'student_id' => $user->student->id,
+                        'bundle_id' => $id,
+                        'status' => 'approved'
+                    ]);
+                }else{
+                    //if user already applied to bundle
+                    return redirect('/'); 
+                }
+            }
+        }else{
+            return redirect('register');
+        }
     }
 
     public function register(Request $request)
@@ -69,7 +99,7 @@ class AuthController extends Controller
             'mobile' => $request->mobile,
             // 'status' => 'pending'
         ]);
-        
+
 
         //create bundle student 
         $bundle_id = $request->bundle_id ?? 0;
@@ -85,7 +115,6 @@ class AuthController extends Controller
             'token' => $token,
         ];
         return apiResponse2(1, 'register', "User registered successfully.", $data);
-
     }
 
     public function login(Request $request)
@@ -98,7 +127,6 @@ class AuthController extends Controller
         validateParam($request->all(), $rules);
 
         return $this->attemptLogin($request);
-
     }
 
     protected function attemptLogin(Request $request)
@@ -126,7 +154,7 @@ class AuthController extends Controller
             $endBan = $user->ban_end_at;
             if (!empty($endBan) and $endBan > $time) {
                 auth('api')->logout();
-                return sendError([], "your account has been banned",403);
+                return sendError([], "your account has been banned", 403);
                 // return apiResponse2(0, 'banned_account', "your account has been banned");
             } elseif (!empty($endBan) and $endBan < $time) {
                 $user->update([
@@ -176,7 +204,7 @@ class AuthController extends Controller
         }
 
         // return sendResponse2($data, 'user login successfully' );
-        return response()->json(['data'=>$data]);
+        return response()->json(['data' => $data]);
     }
 
     public function redirectToGoogle()
@@ -226,7 +254,6 @@ class AuthController extends Controller
                 'user' => $user,
                 'token' => $token
             ]);
-
         } catch (Exception $e) {
             // Handle errors and return response
             return response()->json([
@@ -240,7 +267,7 @@ class AuthController extends Controller
     {
         $user = auth('api')->user();
 
-        return sendResponse(UserProfile::make($user),'user profile data is returned successfully');
+        return sendResponse(UserProfile::make($user), 'user profile data is returned successfully');
     }
     public function BriefProfile()
     {
@@ -252,14 +279,13 @@ class AuthController extends Controller
             'email' => $user->email,
             'avatar' => url($user->getAvatar(150)),
         ];
-        return sendResponse($data,'user profile data is returned successfully');
+        return sendResponse($data, 'user profile data is returned successfully');
     }
 
     // Logout method
     public function logout()
     {
         auth('api')->logout();
-        return response()->json(['success'=>'Successfully logged out']);
+        return response()->json(['success' => 'Successfully logged out']);
     }
-
 }

@@ -4,6 +4,7 @@
 namespace App\Http\Middleware\Api;
 
 use Closure;
+use Illuminate\Support\Facades\Auth;
 
 class RequestType
 {

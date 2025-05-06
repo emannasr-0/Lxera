@@ -4,7 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\Panel\DashboardController;
 use App\Http\Controllers\Api\Instructor\WebinarsController;
-
+use Illuminate\Support\Facades\Auth;
+use Tymon\JWTAuth\Facades\JWTAuth;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -20,8 +21,7 @@ use App\Http\Controllers\Api\Instructor\WebinarsController;
 Route::group(['prefix' => '/development'], function () {
     
     Route::get('test',[DashboardController::class,'test']);
-    
-    
+    Route::get('register/bundle_id={id}',[AuthController::class,'register_bundle']);
     Route::get('/timezone', function () {
         return sendResponse(getListOfTimezones(), 'timezone list is retrieved successfully');
     });
