@@ -23,6 +23,21 @@ use Illuminate\Http\Request;
 
 class InstallmentsController extends Controller
 {
+
+    public function __construct()
+    {
+
+        if (!function_exists('sendError')) {
+            function sendError($data = [], $message = '', $code = 400)
+            {
+                return response()->json([
+                    'success' => false,
+                    'message' => $message,
+                    'data' => $data
+                ], $code);
+            }
+        }
+    }
     public function index()
     {
         $user = auth("api")->user();
@@ -712,6 +727,7 @@ class InstallmentsController extends Controller
             $item = $this->getItem($itemId, $itemType, $user);
 
             if (!empty($item)) {
+
                 $installment = Installment::query()->where('id', $installmentId)
                     ->where('enable', true)
                     ->withCount([
@@ -735,8 +751,8 @@ class InstallmentsController extends Controller
                         return sendError([], trans('update.installment_not_allowed_for_this_item'));
                     }
                     $itemPrice = $item->getPrice();
-
                     $hasPhysicalProduct = false;
+
                     if ($itemType == 'product') {
                         $quantity = $request->get('quantity', 1);
                         $itemPrice = $itemPrice * $quantity;

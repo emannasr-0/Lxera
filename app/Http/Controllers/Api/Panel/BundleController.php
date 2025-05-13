@@ -183,7 +183,8 @@ class BundleController extends Controller
                     ];
 
                     foreach ($installment->steps as $installmentStep) {
-                        $program['installment_plan']['steps'][] = $installmentStep->getDeadlineTitle($studentBundle->bundle->price, $studentBundle->bundle->id) ;
+                        $step_id = SelectedInstallmentStep::where('installment_step_id',$installmentStep->id)->first()->id;
+                        $program['installment_plan']['steps'][] = $installmentStep->getDeadlineTitle($studentBundle->bundle->price, $studentBundle->bundle->id).'=> Step ID : ' . $step_id ;
                     }
                 }
             } else {
