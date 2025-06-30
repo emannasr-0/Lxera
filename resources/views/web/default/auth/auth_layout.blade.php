@@ -128,13 +128,13 @@
 
         </section> --}}
 
-        <section class="section">
-            <div class="d-flex flex-wrap bg-primary-acadima col-12">
-                <div class="p-md-3 order-lg-1 order-2 content text-dark col-12">
+         <section class="section">
+            <div class="bg-primary-acadima col-12 h-100 d-flex justify-content-center align-items-center">
+                <!-- <div class="p-md-3 order-lg-1 order-2 content text-dark col-12"> -->
 
                     @yield('content')
 
-                </div>
+                <!-- </div> -->
 
    
 

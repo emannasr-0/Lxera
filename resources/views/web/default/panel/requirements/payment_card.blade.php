@@ -67,12 +67,12 @@
             <div class="installment-card p-15 w-100 h-100">
                 <div class="row">
                     <div class="col-12">
-                        <h4 class="font-16 font-weight-bold text-pink">
+                        <h4 class="font-16 font-weight-bold text-pink text-center">
                             {{ trans('panel.early_registration_fee') }}
                         </h4>
 
                         <div class="">
-                            <p class="text-dark font-14 text-ellipsis">
+                            <p class="text-dark font-14 text-center">
                                 <!-- {{ trans('panel.price_includes_tax') }} -->
                                 {{ trans('panel.best_value_single_payment') }}
                             </p>
@@ -210,9 +210,9 @@
         @if (empty($bundleData['bundle']->class_id) && empty($bundleData['bundle']->bridging))
             <div class="text-center mx-auto mt-15">
                 <p class="text-pink font-weight-bold">{{trans('panel.or')}}</p>
-                <p class="text-dark font-14 text-ellipsis">Not ready to pay now, reserve your seat today and pay later</p>
+                <p class="text-dark font-14 text-ellipsis">Not ready to pay now, dont miss out reserve your place today and pay later </p>
                 <a href="/panel/{{ $bundleData['bundle']->bundle->id }}/book_seat"
-                    class="btn btn-acadima-primary register-btn mx-auto mt-5">{{trans('panel.reserve_seat_here')}}  </a>
+                    class="btn btn-acadima-primary mx-auto mt-5">{{trans('panel.reserve_seat_here')}}  </a>
             </div>
         @endif
 

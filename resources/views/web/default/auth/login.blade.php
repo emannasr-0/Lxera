@@ -87,7 +87,7 @@
         background-color: #fdfdff !important;
     }
 </style>
-    <div class="p-3 p-lg-5 m-md-3 bg-secondary-acadima border-radius-lg col-sm-7 col-md-8 col-lg-4 ltr shadow border" >
+    <div class="p-3 p-lg-5 m-md-3 bg-secondary-acadima border-radius-lg col-sm-7 col-md-8 col-lg-4 shadow border " >
         <div class="col-7 col-md-7 p-0 mb-5 mt-3 mt-md-auto mx-auto d-flex flex-column align-items-center">
             <img src="{{ asset('store/Acadima/acadima-logo.webp') }}" alt="logo" width="100%" class="">
             

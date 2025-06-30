@@ -396,8 +396,8 @@ return [
   'best_value_single_payment' => 'Best value single payment',
   'installment' => 'Installment',
   'online_program_100' => '100% Online Program',
-  'pay_full_fee_here' => 'Click here to pay the full fee',
-  'reserve_seat_here' => 'Click here to reserve a seat',
+  'pay_full_fee_here' => 'Click here to make one full payment',
+  'reserve_seat_here' => 'Click here to reserve you place ',
   'or' => 'Or',
   'pay_in_installments_here' => 'Click here to pay in installments',
 
