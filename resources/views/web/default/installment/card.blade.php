@@ -7,13 +7,13 @@
 <div class="installment-card p-15 w-100 h-100">
     <div class="row">
         <div class="col-12">
-            <h4 class="font-16 font-weight-bold text-pink">
+            <h4 class="font-16 font-weight-bold text-pink text-center">
                 <!-- {{ $installment->main_title }} -->
                   Early Registration Installment Plan
             </h4>
 
             <div class="">
-                <p class="text-dark font-14 text-ellipsis">
+                <p class="text-dark font-14 text-center">
                     <!-- {{ nl2br($installment->description) }} -->
                       Affordable Installment Plan
                 </p>
