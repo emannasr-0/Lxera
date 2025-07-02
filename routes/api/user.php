@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Web\CartController;
+use App\Http\Controllers\Web\LearningPageController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\InstallmentOrder;
@@ -21,7 +22,9 @@ Route::group([], function () {
         Route::post('/{id}/report', ['uses' => 'CommentsController@report', 'middleware' => 'api.request.type']);
     });
 
-
+    //webinar content
+    Route::get('/bundles/{bundle}/course/learning/{id}',[LearningPageController::class,'api_index']);
+    
     Route::get('/quick-info', ['uses' => 'SummaryController@list']);
     Route::post('/webinars/{id}/free', ['uses' => 'WebinarsController@free']);
     Route::group(['prefix' => 'subscribe'], function () {
@@ -168,8 +171,8 @@ Route::group([], function () {
         Route::post('/education', ['uses' => 'UsersController@updateUserEducation']);
         Route::put('/', ['uses' => 'UsersController@update']);
         Route::post('/images', ['uses' => 'UsersController@updateImages']);
-    
-        Route::get('/business_links','UsersController@indexbusinesslinks');
+
+        Route::get('/business_links', 'UsersController@indexbusinesslinks');
         Route::get('/metas', 'UsersController@indexMetas');
         Route::post('/metas', 'UsersController@storeMetas');
         Route::put('metas/{meta_id}/update', 'UsersController@updateMeta');
@@ -305,6 +308,4 @@ Route::group([], function () {
         Route::get('/{id}/pay_upcoming_part', 'InstallmentsController@payUpcomingPart');
         Route::get('/{id}/steps/{step_id}/pay', 'InstallmentsController@payStep');
     });
-
-    
 });

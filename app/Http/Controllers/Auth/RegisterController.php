@@ -187,7 +187,7 @@ class RegisterController extends Controller
             ],
             'email' => 'required|email|max:255|unique:users',
             // 'full_name' => 'required|string|regex:/^[\p{Arabic} ]+$/u|max:255|min:5',
-            'en_name' => 'required|string|max:255|min:15|regex:/^[a-zA-Z\s-]+$/',
+            'en_name' => 'required|string|max:255|min:10',
             'password' => 'required|string|min:6',
             // 'password_confirmation' => 'required|same:password',
             // 'email_confirmation' => 'required|same:email',

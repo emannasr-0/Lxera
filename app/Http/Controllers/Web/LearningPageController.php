@@ -78,4 +78,65 @@ class LearningPageController extends Controller
 
         return view('web.default.course.learningPage.index', $data);
     }
+
+    public function api_index(Request $request,Bundle $bundle=null, $id){
+        $requestData = $request->all();
+        $webinarController = new WebinarController();
+
+        $webinar = Webinar::findOrFail($id);
+        $data = $webinarController->course($id, true);
+
+        $course = $data['course'];
+        $user = $data['user'];
+        $itemId= $course->id;
+        $itemName= 'webinar_id';
+
+        if(empty($course->unattached) && !empty($bundle)){
+            $itemId = $bundle->id;
+            $itemName = "bundle_id";
+        }
+
+        $installmentLimitation = $webinarController->installmentContentLimitation($user, $itemId, $itemName);
+        if ($installmentLimitation != "ok") {
+            return $installmentLimitation;
+        }
+
+
+        if (!$data or (!$data['hasBought'] and empty($course->getInstallmentOrder()))) {
+            abort(403);
+        }
+
+        if (!empty($requestData['type']) and $requestData['type'] == 'assignment' and !empty($requestData['item'])) {
+
+            $assignmentData = $this->getAssignmentData($course, $requestData);
+
+            $data = array_merge($data, $assignmentData);
+        }
+
+        if ($course->creator_id != $user->id and $course->teacher_id != $user->id and !$user->isAdmin() and !$course->isPartnerTeacher($user->id)) {
+            $unReadCourseNoticeboards = CourseNoticeboard::where('webinar_id', $course->id)
+                ->whereDoesntHave('noticeboardStatus', function ($query) use ($user) {
+                    $query->where('user_id', $user->id);
+                })
+                ->count();
+
+            if ($unReadCourseNoticeboards) {
+                $url = $course->getNoticeboardsPageUrl();
+
+                return redirect($url);
+            }
+        }
+
+        if ($course->certificate) {
+            $data["courseCertificate"] = Certificate::where('type', 'course')
+                ->where('student_id', $user->id)
+                ->where('webinar_id', $course->id)
+                ->first();
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $data
+        ]);
+    }
 }

@@ -1,15 +1,33 @@
 <?php
 
+use App\Http\Controllers\panel\StripeConnectController;
 use App\Models\InstallmentOrder;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Web\LearningPageController ;
+use App\Http\Controllers\Web\LearningPageController;
 
 /*
 |--------------------------------------------------------------------------
 | User Panel Routes
 |--------------------------------------------------------------------------
 */
-Route::group(['namespace' => 'Web','prefix' => 'panel', 'middleware' => ['check_mobile_app', 'impersonate', 'panel', 'share', 'check_maintenance']], function () {
+
+// Route::get('stripe', [StripeConnectController::class, 'index']);
+
+// Route::post('stripe_connect', [StripeConnectController::class, 'createConnectAccount'])->name('stripe.connect.create');
+
+
+// Route::get('/stripe/refresh', function () {
+//     // This is called if the user cancels onboarding
+//     return 'stripe refresh';
+// })->name('stripe.refresh');
+
+// Route::get('/stripe/return', function () {
+//     // This is called if the user completes onboarding
+//     return 'stripe return';
+// })->name('stripe.return');
+
+// Route::post('/stripe/transfer', [StripeConnectController::class, 'transferToConnectedAccount'])->name('stripe.transfer');
+Route::group(['namespace' => 'Web', 'prefix' => 'panel', 'middleware' => ['check_mobile_app', 'impersonate', 'panel', 'share', 'check_maintenance']], function () {
 
     // new enrollment
     Route::group(['prefix' => 'newEnrollment'], function () {
@@ -23,8 +41,8 @@ Route::group(['namespace' => 'Web','prefix' => 'panel', 'middleware' => ['check_
 Route::group(['namespace' => 'Panel', 'prefix' => 'panel', 'middleware' => ['check_mobile_app', 'impersonate', 'panel', 'share', 'check_maintenance']], function () {
     Route::get('/course/{WebinarId}/showCertificate/{format?}', 'CertificateController@makeCourseCertificate');
 
-     Route::get('/bundle/{bundleId}/showCertificate/{format?}', 'CertificateController@makeBundleCertificate');
-  //  Route::get('/bundle/{bundleId}/showCertificate', 'CertificateController@makeBundleCertificate');
+    Route::get('/bundle/{bundleId}/showCertificate/{format?}', 'CertificateController@makeBundleCertificate');
+    //  Route::get('/bundle/{bundleId}/showCertificate', 'CertificateController@makeBundleCertificate');
     Route::get('/', 'DashboardController@dashboard')->middleware('can:show_panel');
 
     Route::group(['prefix' => 'users'], function () {
@@ -34,7 +52,7 @@ Route::group(['namespace' => 'Panel', 'prefix' => 'panel', 'middleware' => ['che
         Route::get('/{id}/getInfo', 'UserController@getUserInfo');
     });
 
-    Route::group(['prefix' => 'webinars', 'middleware' =>'can:student_showClasses'], function () {
+    Route::group(['prefix' => 'webinars', 'middleware' => 'can:student_showClasses'], function () {
         Route::group(['middleware' => 'user.not.access'], function () {
             Route::get('/', 'WebinarController@index');
             Route::get('/new', 'WebinarController@create');
@@ -83,7 +101,7 @@ Route::group(['namespace' => 'Panel', 'prefix' => 'panel', 'middleware' => ['che
         });
     });
 
-    Route::group(['prefix' => 'upcoming_courses', 'middleware' =>'can:student_showUpcomingCourses'], function () {
+    Route::group(['prefix' => 'upcoming_courses', 'middleware' => 'can:student_showUpcomingCourses'], function () {
         Route::group(['middleware' => 'user.not.access'], function () {
             Route::get('/', 'UpcomingCoursesController@index');
             Route::get('/new', 'UpcomingCoursesController@create');
@@ -102,7 +120,7 @@ Route::group(['namespace' => 'Panel', 'prefix' => 'panel', 'middleware' => ['che
         Route::get('/followings', 'UpcomingCoursesController@followings');
     });
 
-    Route::group(['prefix' => 'quizzes', 'middleware' =>'can:student_showTest'], function () {
+    Route::group(['prefix' => 'quizzes', 'middleware' => 'can:student_showTest'], function () {
         Route::group(['middleware' => 'user.not.access'], function () {
 
             Route::get('/', 'QuizController@index');
@@ -177,7 +195,7 @@ Route::group(['namespace' => 'Panel', 'prefix' => 'panel', 'middleware' => ['che
         Route::get('/{id}/delete', 'FileController@destroy');
     });
 
-    Route::group(['prefix' => 'assignments','middleware'=>'can:student_showTasks'], function () {
+    Route::group(['prefix' => 'assignments', 'middleware' => 'can:student_showTasks'], function () {
         Route::post('/store', 'AssignmentController@store');
         Route::post('/{id}/update', 'AssignmentController@update');
         Route::get('/{id}/delete', 'AssignmentController@destroy');
@@ -225,7 +243,7 @@ Route::group(['namespace' => 'Panel', 'prefix' => 'panel', 'middleware' => ['che
         });
     });
 
-    Route::group(['prefix' => 'meetings','middleware'=>'can:student_showSession'], function () {
+    Route::group(['prefix' => 'meetings', 'middleware' => 'can:student_showSession'], function () {
         Route::get('/reservation', 'ReserveMeetingController@reservation');
         Route::get('/requests', 'ReserveMeetingController@requests');
 
@@ -328,7 +346,7 @@ Route::group(['namespace' => 'Panel', 'prefix' => 'panel', 'middleware' => ['che
     Route::get('/bundletransform/{bundleTransform}/pay', 'ServiceController@bundleTransformPay');
     Route::get('/bundletransform/{bundleTransform}/refund', 'ServiceController@bundleTransformRefund');
 
-    Route::group(['prefix' => 'support','middleware'=>'can:show_support'], function () {
+    Route::group(['prefix' => 'support', 'middleware' => 'can:show_support'], function () {
         Route::get('/', 'SupportsController@index');
         Route::get('/new', 'SupportsController@create');
         Route::post('/store', 'SupportsController@store');
@@ -341,7 +359,7 @@ Route::group(['namespace' => 'Panel', 'prefix' => 'panel', 'middleware' => ['che
         });
     });
 
-    Route::group(['prefix' => 'marketing', 'middleware' => ['user.not.access','can:student_showMarkting']], function () {
+    Route::group(['prefix' => 'marketing', 'middleware' => ['user.not.access', 'can:student_showMarkting']], function () {
         Route::get('/special_offers', 'SpecialOfferController@index')->name('special_offer_index');
         Route::post('/special_offers/store', 'SpecialOfferController@store');
         Route::get('/special_offers/{id}/disable', 'SpecialOfferController@disable');
@@ -382,12 +400,12 @@ Route::group(['namespace' => 'Panel', 'prefix' => 'panel', 'middleware' => ['che
         Route::get('/{user_type}/{user_id}/delete', 'UserController@deleteUser');
     });
 
-    Route::group(['prefix' => 'rewards','middleware'=>'can:show_reward'], function () {
+    Route::group(['prefix' => 'rewards', 'middleware' => 'can:show_reward'], function () {
         Route::get('/', 'RewardController@index');
         Route::post('/exchange', 'RewardController@exchange');
     });
 
-    Route::group(['prefix' => 'store', 'namespace' => 'Store','middleware'=>'can:student_showStore'], function () {
+    Route::group(['prefix' => 'store', 'namespace' => 'Store', 'middleware' => 'can:student_showStore'], function () {
         Route::group(['middleware' => 'user.not.access'], function () {
 
             Route::group(['prefix' => 'products'], function () {
@@ -457,7 +475,7 @@ Route::group(['namespace' => 'Panel', 'prefix' => 'panel', 'middleware' => ['che
         });
     });
 
-    Route::group(['prefix' => 'assignments','middleware'=>'can:student_showTasks'], function () {
+    Route::group(['prefix' => 'assignments', 'middleware' => 'can:student_showTasks'], function () {
         Route::get('/my-assignments', 'AssignmentController@myAssignments');
         Route::get('/my-courses-assignments', 'AssignmentController@myCoursesAssignments');
         Route::get('/{id}/students', 'AssignmentController@students');
@@ -504,7 +522,7 @@ Route::group(['namespace' => 'Panel', 'prefix' => 'panel', 'middleware' => ['che
         Route::get('/{noticeboard_id}/saveStatus', 'CourseNoticeboardController@saveStatus');
     });
 
-    Route::group(['prefix' => 'forums','middleware'=>'can:student_showForums'], function () {
+    Route::group(['prefix' => 'forums', 'middleware' => 'can:student_showForums'], function () {
         Route::get('/topics', 'ForumsController@topics');
         Route::get('/topics/{id}/removeBookmarks', 'ForumsController@removeBookmarks');
         Route::get('/posts', 'ForumsController@posts');
