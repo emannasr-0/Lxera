@@ -50,7 +50,7 @@ Route::group(['prefix' => '/development'], function () {
             ->withoutMiddleware('api.identify');
     });
 
-
+    //payment checkout
     Route::group(['namespace' => 'Web', 'middleware' => ['api.auth']], function () {
         Route::get("/checkout/{order}", 'PaymentController@index');
         Route::post("/checkout", 'PaymentController@paymentRequest');

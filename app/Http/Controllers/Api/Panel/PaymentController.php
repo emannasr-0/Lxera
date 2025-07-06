@@ -237,7 +237,7 @@ class PaymentController extends Controller
         $order = Order::where('id', $orderId)
             ->where('user_id', auth()->id())
             ->first();
-
+        
         if (!empty($order)) {
             $data = [
                 'pageTitle' => trans('public.cart_page_title'),

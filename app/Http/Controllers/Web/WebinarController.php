@@ -42,6 +42,8 @@ class WebinarController extends Controller
 
         if (auth()->check()) {
             $user = auth()->user();
+        } else {
+            $user = apiAuth();
         }
 
 
@@ -268,13 +270,13 @@ class WebinarController extends Controller
             $cashbackRules = $cashbackRulesMixin->getRules('courses', $course->id, $course->type, $course->category_id, $course->teacher_id);
         }
 
-        $checkAllContentPass = $course->chapters()->where('user_id',$user->id)->get();
+        $checkAllContentPass = $course->chapters()->where('user_id', $user->id)->get();
         $bundleId = BundleWebinar::where('webinar_id', $course->id)->value('bundle_id');
-        $bundle=Bundle::find($bundleId);
+        $bundle = Bundle::find($bundleId);
 
-    $group=$course->groups()->whereHas('enrollments',function($query) use($user){
-        $query->where('user_id', $user->id);
-    })->first();
+        $group = $course->groups()->whereHas('enrollments', function ($query) use ($user) {
+            $query->where('user_id', $user->id);
+        })->first();
 
         $data = [
             'pageTitle' => $course->title,
@@ -295,8 +297,8 @@ class WebinarController extends Controller
             'installments' => $installments ?? null,
             'cashbackRules' => $cashbackRules ?? null,
             'checkAllContentPass' => $checkAllContentPass,
-            'bundle'=>$bundle,
-            'group'=>$group,
+            'bundle' => $bundle,
+            'group' => $group,
 
 
         ];
@@ -310,47 +312,39 @@ class WebinarController extends Controller
             return $data;
         }
 
-// dd($bundleId);
+        // dd($bundleId);
         $order_id = OrderItem::where('bundle_id', $bundleId)
-        ->where('user_id', auth()->user()->id)
-        ->latest('created_at')
-        ->value('order_id');
+            ->where('user_id', auth()->user()->id)
+            ->latest('created_at')
+            ->value('order_id');
 
         $order = Order::where('id', $order_id)->first();
-        $installment_order = InstallmentOrder::where('bundle_id', $bundleId)->where('user_id',auth()->user()->id)->first();
+        $installment_order = InstallmentOrder::where('bundle_id', $bundleId)->where('user_id', auth()->user()->id)->first();
         //////////////////////////////////////
-        $bundle_start=Bundle::where('id',$bundleId)->value('start_date');
-        $bundle_start=Carbon::createFromTimestamp($bundle_start);
-// dd($order_id);
+        $bundle_start = Bundle::where('id', $bundleId)->value('start_date');
+        $bundle_start = Carbon::createFromTimestamp($bundle_start);
+        // dd($order_id);
         if (optional($order)->status == 'paid' && $order->user_id == auth()->user()->id) {
-            if(now() >= $bundle_start )
-            {
+            if (now() >= $bundle_start) {
                 return view('web.default.course.index', $data);
-            }
-            else
-            {
+            } else {
                 $now = Carbon::now();
                 $endTime = $bundle_start->timestamp * 1000;
                 $remainingTime = $endTime - ($now->timestamp * 1000);
-                 return view('errors.notstart',  ['remainingTime' => $remainingTime]);
+                return view('errors.notstart',  ['remainingTime' => $remainingTime]);
             }
-
         } elseif (optional($installment_order)->status == 'open' && $installment_order->user_id == auth()->user()->id) {
-            if(now() >= $bundle_start )
-            {
+            if (now() >= $bundle_start) {
                 return view('web.default.course.index', $data);
-            }
-            else
-            {
+            } else {
                 $now = Carbon::now();
                 $endTime = $bundle_start->timestamp * 1000;
                 $remainingTime = $endTime - ($now->timestamp * 1000);
-                 return view('errors.notstart',  ['remainingTime' => $remainingTime]);
+                return view('errors.notstart',  ['remainingTime' => $remainingTime]);
             }
         } else {
             return view('errors.notPaid');
         }
-
     }
 
     private function checkQuizzesResults($user, $quizzes)
@@ -499,7 +493,7 @@ class WebinarController extends Controller
                         ];
                         return view('web.default.course.learningPage.interactive_file', $data);
                     }
-// dd($file);
+                    // dd($file);
                     return view('errors.404');
                 } else {
                     $toastData = [
