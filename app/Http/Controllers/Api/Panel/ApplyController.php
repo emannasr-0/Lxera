@@ -57,11 +57,26 @@ class ApplyController extends Controller
                     ->whereNotNull(['bundle_id', 'order_id']);
             })->get()->unique('bundle_id');
 
-
-        $data = [
-            'categories' =>  ActiveCategoryResource::collection($categories),
-            'applied_programs' => [],
+ $data = [
+            'categories' => $categories->map(function($category) {
+                return [
+                    'id' => $category->id,
+                    'title' => $category->title,
+                    'bundles' => $category->activeBundles->map(function($bundle) {
+                        return [
+                            'id' => $bundle->id,
+                            'title' => $bundle->title,
+                            // Add other bundle fields as needed
+                        ];
+                    })
+                ];
+            }),
+           'applied_programs' => [],
         ];
+        // $data = [
+        //     'categories' =>  ActiveCategoryResource::collection($categories),
+        //     'applied_programs' => [],
+        // ];
 
         foreach ($bundleSales as $bundleSale) {
             $program = [
@@ -96,133 +111,236 @@ class ApplyController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function checkout(Request $request, $carts = null)
-    {
-        app()->setLocale('en');
+    // public function checkout(Request $request, $carts = null)
+    // {
+    //     app()->setLocale('en');
 
-        $user = auth("api")->user();
-        $student = $user->student;
+    //     $user = auth("api")->user();
+    //     $student = $user->student;
 
-        $rules = [
-            'category_id' => 'required|exists:categories,id',
-            'bundle_id' => array_merge(
-                ['required', 'exists:bundles,id'],
-                [
-                    function ($attribute, $value, $fail) use ($request, $student) {
+    //     $rules = [
+    //         'category_id' => 'required|exists:categories,id',
+    //         'bundle_id' => array_merge(
+    //             ['required', 'exists:bundles,id'],
+    //             [
+    //                 function ($attribute, $value, $fail) use ($request, $student) {
 
-                        if ($student && $student->bundles()->where('bundles.id', $value)->exists()) {
-                            $fail(trans('User has already applied for this bundle.'));
-                        }
-                    },
-                ]
-            ),
-        ];
+    //                     if ($student && $student->bundles()->where('bundles.id', $value)->exists()) {
+    //                         $fail(trans('User has already applied for this bundle.'));
+    //                     }
+    //                 },
+    //             ]
+    //         ),
+    //     ];
 
-        validateParam($request->all(), $rules);
+    //     validateParam($request->all(), $rules);
 
-        try {
-            $bundle = Bundle::where('id', $request->bundle_id)->first();
+    //     try {
+    //         $bundle = Bundle::where('id', $request->bundle_id)->first();
 
-            if ($bundle->price > 0) {
-                $studentData = [
-                    'user_id' => $user->id,
-                    'ar_name' => $user->full_name,
-                    'en_name' => $user->full_name,
-                    'email' => $user->email,
-                    'phone' => $user->mobile,
-                    'mobile' => $user->mobile,
-                ];
-                if (empty($user->student)) {
-                    $student = Student::create($studentData);
+    //         if ($bundle->price > 0) {
+    //             $studentData = [
+    //                 'user_id' => $user->id,
+    //                 'ar_name' => $user->full_name,
+    //                 'en_name' => $user->full_name,
+    //                 'email' => $user->email,
+    //                 'phone' => $user->mobile,
+    //                 'mobile' => $user->mobile,
+    //             ];
+    //             if (empty($user->student)) {
+    //                 $student = Student::create($studentData);
 
-                    $code = generateStudentCode();
-                    $user->update([
-                        'user_code' => $code,
-                        'access_content' => 1
-                    ]);
+    //                 $code = generateStudentCode();
+    //                 $user->update([
+    //                     'user_code' => $code,
+    //                     'access_content' => 1
+    //                 ]);
 
-                    // update code
-                    Code::latest()->first()->update(['lst_sd_code' => $code]);
-                }
-                $student->bundles()->attach($bundle->id, [
-                    'certificate' => (!empty($request['certificate'])) ? $request['certificate'] : null,
-                    'created_at' => Date::now(),  // Set current timestamp for created_at
-                    'updated_at' => Date::now()
-                ]);
+    //                 // update code
+    //                 Code::latest()->first()->update(['lst_sd_code' => $code]);
+    //             }
+    //             $student->bundles()->attach($bundle->id, [
+    //                 'certificate' => (!empty($request['certificate'])) ? $request['certificate'] : null,
+    //                 'created_at' => Date::now(),  // Set current timestamp for created_at
+    //                 'updated_at' => Date::now()
+    //             ]);
 
-                $application = [
-                    'user' => [
-                        'id' => $user->id,
-                        'full_name' => $user->full_name,
-                        'code' => $user->user_code,
-                    ],
-                    'program' => [
-                        'id' => $bundle->id,
-                        'name' => $bundle->title,
-                    ]
-                ];
-                return sendResponse($application, "application is done successfully");
-            } else {
-                $order = Order::create([
-                    'user_id' => $user->id,
-                    'status' => Order::$pending,
-                    'amount' => $bundle->price ?? 0,
-                    'tax' => 0,
-                    'total_discount' => 0,
-                    'total_amount' => $bundle->price ?? 0,
-                    'product_delivery_fee' => null,
-                    'created_at' => time(),
-                ]);
-                $orderItem = OrderItem::create([
-                    'user_id' => $user->id,
-                    'order_id' => $order->id,
-                    'bundle_id' => $bundle->id,
-                    'certificate_template_id' => null,
-                    'certificate_bundle_id' => null,
-                    'form_fee' => null,
-                    'product_id' => null,
-                    'product_order_id' => null,
-                    'reserve_meeting_id' => null,
-                    'subscribe_id' => null,
-                    'promotion_id' => null,
-                    'gift_id' => null,
-                    'installment_payment_id' => null,
-                    'ticket_id' => null,
-                    'discount_id' => null,
-                    'amount' => $bundle->price ?? 0,
-                    'total_amount' => $bundle->price ?? 0,
-                    'tax' => null,
-                    'tax_price' => 0,
-                    'commission' => 0,
-                    'commission_price' => 0,
-                    'product_delivery_fee' => 0,
-                    'discount' => 0,
-                    'created_at' => time(),
-                ]);
+    //             $application = [
+    //                 'user' => [
+    //                     'id' => $user->id,
+    //                     'full_name' => $user->full_name,
+    //                     'code' => $user->user_code,
+    //                 ],
+    //                 'program' => [
+    //                     'id' => $bundle->id,
+    //                     'name' => $bundle->title,
+    //                 ]
+    //             ];
+    //             return sendResponse($application, "application is done successfully");
+    //         } else {
+    //             $order = Order::create([
+    //                 'user_id' => $user->id,
+    //                 'status' => Order::$pending,
+    //                 'amount' => $bundle->price ?? 0,
+    //                 'tax' => 0,
+    //                 'total_discount' => 0,
+    //                 'total_amount' => $bundle->price ?? 0,
+    //                 'product_delivery_fee' => null,
+    //                 'created_at' => time(),
+    //             ]);
+    //             $orderItem = OrderItem::create([
+    //                 'user_id' => $user->id,
+    //                 'order_id' => $order->id,
+    //                 'bundle_id' => $bundle->id,
+    //                 'certificate_template_id' => null,
+    //                 'certificate_bundle_id' => null,
+    //                 'form_fee' => null,
+    //                 'product_id' => null,
+    //                 'product_order_id' => null,
+    //                 'reserve_meeting_id' => null,
+    //                 'subscribe_id' => null,
+    //                 'promotion_id' => null,
+    //                 'gift_id' => null,
+    //                 'installment_payment_id' => null,
+    //                 'ticket_id' => null,
+    //                 'discount_id' => null,
+    //                 'amount' => $bundle->price ?? 0,
+    //                 'total_amount' => $bundle->price ?? 0,
+    //                 'tax' => null,
+    //                 'tax_price' => 0,
+    //                 'commission' => 0,
+    //                 'commission_price' => 0,
+    //                 'product_delivery_fee' => 0,
+    //                 'discount' => 0,
+    //                 'created_at' => time(),
+    //             ]);
 
 
-                if (!empty($order) and $order->total_amount > 0) {
+    //             if (!empty($order) and $order->total_amount > 0) {
 
-                    $data['order'] = [
-                        'id' => $order->id,
-                        'status' => $order->status,
-                        'total_amount' => $order->total_amount,
-                    ];
+    //                 $data['order'] = [
+    //                     'id' => $order->id,
+    //                     'status' => $order->status,
+    //                     'total_amount' => $order->total_amount,
+    //                 ];
 
-                    return sendResponse($data, "application for programs is successfully, pay to continue");
-                } else {
-                    return $this->handlePaymentOrderWithZeroTotalAmount($request, $order);
-                }
-            }
-        } catch (\Exception $e) {
-            return sendError([], $e->getMessage(), 500);
+    //                 return sendResponse($data, "application for programs is successfully, pay to continue");
+    //             } else {
+    //                 return $this->handlePaymentOrderWithZeroTotalAmount($request, $order);
+    //             }
+    //         }
+    //     } catch (\Exception $e) {
+    //         return sendError([], $e->getMessage(), 500);
+    //     }
+
+
+
+    //     // return apiResponse2(1, 'applied', "application for diploma is successfully");
+
+    // }
+public function checkout(Request $request)
+{
+    if (!auth("api")->user()) {
+        return redirect('/login');
+    }
+
+    $user = auth("api")->user();
+
+    $bundle = null;
+    $webinar = null;
+
+    // Only one of them is allowed
+    if ($request->has('bundle_id') && $request->has('webinar_id')) {
+        return back()->with('toast', [
+            'status' => 'error',
+            'title' => 'خطأ',
+            'msg' => 'يرجى اختيار برنامج أو دورة واحدة فقط',
+        ]);
+    }
+
+    if ($request->has('bundle_id')) {
+        $bundle = Bundle::find($request->bundle_id);
+        if (!$bundle) {
+            return back()->with('toast', [
+                'status' => 'error',
+                'title' => 'البرنامج غير موجود',
+                'msg' => 'لم يتم العثور على البرنامج المطلوب',
+            ]);
+        }
+    } elseif ($request->has('webinar_id')) {
+        $webinar = Webinar::find($request->webinar_id);
+        if (!$webinar) {
+            return back()->with('toast', [
+                'status' => 'error',
+                'title' => 'الدورة غير موجودة',
+                'msg' => 'لم يتم العثور على الدورة المطلوبة',
+            ]);
         }
 
-
-
-        // return apiResponse2(1, 'applied', "application for diploma is successfully");
-
+        $purchasedWebinars = $user->getAllPurchasedWebinarsIds();
+        if (in_array($webinar->id, $purchasedWebinars)) {
+            return redirect('/panel')->with('toast', [
+                'status' => 'info',
+                'title' => 'دورة مسجلة',
+                'msg' => 'أنت مسجل بالفعل في هذه الدورة',
+            ]);
+        }
+    } else {
+        return back()->with('toast', [
+            'status' => 'error',
+            'title' => 'لا يوجد اختيار',
+            'msg' => 'يرجى اختيار برنامج أو دورة للمتابعة',
+        ]);
     }
+
+    $price = $bundle ? $bundle->price : ($webinar->price ?? 0);
+
+    $order = Order::create([
+        'user_id' => $user->id,
+        'status' => Order::$pending,
+        'amount' => $price,
+        'tax' => 0,
+        'total_discount' => 0,
+        'total_amount' => $price,
+        'product_delivery_fee' => null,
+       
+        'created_at' => time(),
+    ]);
+
+    OrderItem::create([
+        'user_id' => $user->id,
+        'order_id' => $order->id,
+        'webinar_id' => $webinar?->id,
+        'bundle_id' => $bundle?->id,
+        'amount' => $price,
+        'total_amount' => $price,
+        'tax' => 0,
+        'tax_price' => 0,
+        'commission' => 0,
+        'commission_price' => 0,
+        'product_delivery_fee' => 0,
+        'discount' => 0,
+        'created_at' => time(),
+    ]);
+
+    // Store user info in cookie (optional)
+    Cookie::queue('user_data', json_encode([
+        'user_id' => $user->id,
+        'ar_name' => $user->full_name,
+        'en_name' => $user->en_name,
+        'email' => $user->email,
+        'phone' => $user->mobile,
+        'mobile' => $user->mobile,
+    ]));
+
+    // Redirect to payment or handle free item
+    if ($order->total_amount > 0) {
+        return response()->json($order);
+        // return redirect('/payment/' . $order->id);
+    }
+
+    return $this->handlePaymentOrderWithZeroTotalAmount($request, $order);
+}
 
     public function checkout2(Request $request, $carts = null)
     {

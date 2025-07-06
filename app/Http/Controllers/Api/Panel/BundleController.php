@@ -17,13 +17,16 @@ use App\Models\OrderItem;
 use App\Models\PaymentChannel;
 use App\Models\RewardAccounting;
 use App\Models\Api\Sale;
+use App\Models\Enrollment;
 use App\Models\SelectedInstallment;
 use App\Models\SelectedInstallmentStep;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Gift;
+use App\Models\Webinar;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Pagination\LengthAwarePaginator;
+
 class BundleController extends Controller
 {
     public function buyWithPoint($id)
@@ -101,7 +104,7 @@ class BundleController extends Controller
         return apiResponse2(1, 'enrolled', trans('cart.success_pay_msg_for_free_course'));
     }
 
-    public function programPaymentStep()
+    public function programPaymentStep1()
     {
         $user = auth('api')->user();
         $student = $user->Student;
@@ -112,29 +115,29 @@ class BundleController extends Controller
         /* Installments */
         $bundleInstallments = [];
         $programs = [];
-        
-        $egp_exchange = \App\Models\Currency::where('currency','EGP')->first();
-        $sar_exchange = \App\Models\Currency::where('currency','SAR')->first();
-        
+
+        $egp_exchange = \App\Models\Currency::where('currency', 'EGP')->first();
+        $sar_exchange = \App\Models\Currency::where('currency', 'SAR')->first();
+
         foreach ($studentBundles as $studentBundle) {
             $hasBought = $studentBundle->bundle->checkUserHasBought($user);
             $canSale = ($studentBundle->bundle->canSale() && !$hasBought);
             //currency 
             $country_currency = Session::get('country_currency');
-            if($country_currency == "EGP"){
+            if ($country_currency == "EGP") {
                 $new_price = (int)($studentBundle->bundle->price * $egp_exchange->exchange_rate);
-            }elseif($country_currency == "SAR"){
+            } elseif ($country_currency == "SAR") {
                 $new_price = (int)($studentBundle->bundle->price * $sar_exchange->exchange_rate);
             }
-            
-            
+
+
             //
             $program = [
                 'id' => $studentBundle->bundle->id,
                 'title' => $studentBundle->bundle->title,
                 'price' => $studentBundle->bundle->price,
-                'country_currency'=>Session::get('country_currency'),
-                'new_price'=> $new_price ?? "",
+                'country_currency' => Session::get('country_currency'),
+                'new_price' => $new_price ?? "",
                 'has_bought' => $hasBought,
                 "bought_type" => !empty($studentBundle->bundle->getInstallmentOrder()) ? 'installment' : 'cache',
                 'installment_plan' => null,
@@ -150,22 +153,18 @@ class BundleController extends Controller
                 // ];
 
                 if ($installment) {
-                    if($country_currency == "EGP"){
+                    if ($country_currency == "EGP") {
                         $new_price = (int)($installment->totalPayments() * $egp_exchange->exchange_rate);
-                       
+
                         $new_upfront = (int)handlePrice($installment->getUpfront());
-                        
-                        
-                        $new_upfront= (int)($new_upfront*$egp_exchange->exchange_rate);
-                        
-                        
-                        
-                    }elseif($country_currency == "SAR"){
+
+
+                        $new_upfront = (int)($new_upfront * $egp_exchange->exchange_rate);
+                    } elseif ($country_currency == "SAR") {
                         $new_price = (int)($installment->totalPayments() * $sar_exchange->exchange_rate);
                         $new_upfront = (int)handlePrice($installment->getUpfront());
-                        $new_upfront= (int)($new_upfront*$sar_exchange->exchange_rate);
-                        
-                    }else{
+                        $new_upfront = (int)($new_upfront * $sar_exchange->exchange_rate);
+                    } else {
                         $new_price = '';
                         $new_upfront = '';
                     }
@@ -183,8 +182,8 @@ class BundleController extends Controller
                     ];
 
                     foreach ($installment->steps as $installmentStep) {
-                        $step_id = SelectedInstallmentStep::where('installment_step_id',$installmentStep->id)->first()->id;
-                        $program['installment_plan']['steps'][] = $installmentStep->getDeadlineTitle($studentBundle->bundle->price, $studentBundle->bundle->id).'=> Step ID : ' . $step_id ;
+                        $step_id = SelectedInstallmentStep::where('installment_step_id', $installmentStep->id)->first()->id;
+                        $program['installment_plan']['steps'][] = $installmentStep->getDeadlineTitle($studentBundle->bundle->price, $studentBundle->bundle->id) . '=> Step ID : ' . $step_id;
                     }
                 }
             } else {
@@ -195,7 +194,7 @@ class BundleController extends Controller
                 ];
             }
 
-            
+
             $programs[] = $program;
         }
 
@@ -203,11 +202,128 @@ class BundleController extends Controller
 
         return sendResponse($programs, "programs that user has applied");
     }
+    public function programPaymentStep()
+    {
+        $user = auth('api')->user();
+        $student = $user->Student;
+
+        // Get student bundles (paid programs)
+        $studentBundles = BundleStudent::where('student_id', $student?->id ?? null)
+            ->groupBy('bundle_id')
+            ->get()
+            ->reverse();
+
+        // Get student webinars (courses)
+        $studentWebinars = Webinar::whereHas('groups.enrollments', function ($query) use ($user) {
+            $query->where('user_id', $user->id);
+        })
+            ->get()
+            ->reverse();
+        // return response()->json($studentWebinars);
+        $programs = [];
+        $egp_exchange = \App\Models\Currency::where('currency', 'EGP')->first();
+        $sar_exchange = \App\Models\Currency::where('currency', 'SAR')->first();
+
+        // Process bundles (paid programs with possible installments)
+        foreach ($studentBundles as $studentBundle) {
+            $hasBought = $studentBundle->bundle->checkUserHasBought($user);
+            $canSale = ($studentBundle->bundle->canSale() && !$hasBought);
+
+            $country_currency = Session::get('country_currency');
+            if ($country_currency == "EGP") {
+                $new_price = (int)($studentBundle->bundle->price * $egp_exchange->exchange_rate);
+            } elseif ($country_currency == "SAR") {
+                $new_price = (int)($studentBundle->bundle->price * $sar_exchange->exchange_rate);
+            }
+
+            $program = [
+                'type' => 'program',
+                'id' => $studentBundle->bundle->id,
+                'title' => $studentBundle->bundle->title,
+                'price' => $studentBundle->bundle->price,
+                'country_currency' => $country_currency,
+                'new_price' => $new_price ?? "",
+                'has_bought' => $hasBought,
+                "bought_type" => !empty($studentBundle->bundle->getInstallmentOrder()) ? 'installment' : 'cache',
+                'installment_plan' => null,
+            ];
+
+            if ($canSale && !empty($studentBundle->bundle->price) && $studentBundle->bundle->price > 0 && getInstallmentsSettings('status') && (empty($user) || $user->enable_installments)) {
+                $installmentPlans = new InstallmentPlans($user);
+                $installment = $installmentPlans->getPlans('bundles', $studentBundle->bundle->id, $studentBundle->bundle->type, $studentBundle->bundle->category_id, $studentBundle->bundle->teacher_id)->last();
+
+                if ($installment) {
+                    if ($country_currency == "EGP") {
+                        $new_price = (int)($installment->totalPayments() * $egp_exchange->exchange_rate);
+                        $new_upfront = (int)handlePrice($installment->getUpfront());
+                        $new_upfront = (int)($new_upfront * $egp_exchange->exchange_rate);
+                    } elseif ($country_currency == "SAR") {
+                        $new_price = (int)($installment->totalPayments() * $sar_exchange->exchange_rate);
+                        $new_upfront = (int)handlePrice($installment->getUpfront());
+                        $new_upfront = (int)($new_upfront * $sar_exchange->exchange_rate);
+                    } else {
+                        $new_price = '';
+                        $new_upfront = '';
+                    }
+
+                    $program['installment_plan'] = [
+                        'id' => $installment->id,
+                        'title' => $installment->main_title,
+                        'description' => $installment->main_title,
+                        'totalPayments' => $installment->totalPayments(),
+                        'total_new_price' => $new_price,
+                        'upfront' => !empty($installment->upfront) ? trans('update.amount_upfront', ['amount' => handlePrice($installment->getUpfront())]) . ($installment->upfront_type == 'percent' ? " ({$installment->upfront}%)" : '') : trans('update.no_upfront'),
+                        'new_upfront' => $new_upfront,
+                        'last_step_date' => $installment->steps->last()->getDeadlineTitle(1, $studentBundle->bundle->id),
+                        'steps' => [],
+                    ];
+
+                    foreach ($installment->steps as $installmentStep) {
+                        $step_id = SelectedInstallmentStep::where('installment_step_id', $installmentStep->id)->first()->id;
+                        $program['installment_plan']['steps'][] = $installmentStep->getDeadlineTitle($studentBundle->bundle->price, $studentBundle->bundle->id) . '=> Step ID : ' . $step_id;
+                    }
+                }
+            }
+
+            $programs[] = $program;
+        }
+
+        // Process webinars (courses)
+        foreach ($studentWebinars as $webinar) {
+            // Check if user has purchased the webinar
+            $hasBought = $webinar->checkUserHasBought($user); // Assuming Webinar model has this method
+            $canSale = $webinar->canSale() && !$hasBought;
+
+            $country_currency = Session::get('country_currency');
+            if ($country_currency == "EGP") {
+                $new_price = (int)($webinar->price * $egp_exchange->exchange_rate);
+            } elseif ($country_currency == "SAR") {
+                $new_price = (int)($webinar->price * $sar_exchange->exchange_rate);
+            }
+
+            $programs[] = [
+                'type' => 'course',
+                'id' => $webinar->id,
+                'title' => $webinar->title,
+                'price' => $webinar->price,
+                'country_currency' => $country_currency,
+                'new_price' => $new_price ?? "",
+                'has_bought' => $hasBought,
+                'bought_type' => 'cache', // Webinars are always paid in full
+                'start_date' => $webinar->start_date ?? null,
+                'duration' => $webinar->duration ?? null,
+            ];
+        }
+
+        return sendResponse($programs, "Programs and courses that user has applied");
+    }
 
     public function purchase_bundle(Request $request, $installmentId = null, $carts = null)
     {
         $user = apiAuth();
         $data = $request->all();
+        $itemType   = $request->get('item_type') ?? 'bundles';   // default bundle
+        $itemId     = $request->get('item_id');
         if (!empty($installmentId)) {
             $itemId = $request->get('item_id');
             $itemType = $request->get('item_type') ?? 'bundles';
@@ -392,17 +508,25 @@ class BundleController extends Controller
         } else {
             $rules = [
                 'item_id' => 'required',
+                'item_type' => 'nullable|in:bundles,webinars',
             ];
 
 
             validateParam($data, $rules);
-            $bundle_id = $request->item_id;
-            $bundle = Bundle::find($bundle_id);
+            if ($itemType === 'bundles') {
+               $item_id = $request->item_id;
+               $item = Bundle::find( $item_id);
+            } else {
+                $item_id = $request->item_id;
+                 $item = Webinar::find( $item_id);
+            }
+            // $bundle_id = $request->item_id;
+            // $bundle = Bundle::find($bundle_id);
             // $paymentChannels = PaymentChannel::where('status', 'active')->get();
 
-            $calculate = $this->calculatePrice($bundle, $installment_payment_id = null, $user, $discountCoupon = null);
+            $calculate = $this->calculatePrice($item, $installment_payment_id = null, $user, $discountCoupon = null);
 
-            $order = $this->createOrderAndOrderItems($bundle, $installment_payment_id = null, $calculate, $user, $discountCoupon = null);
+            $order = $this->createOrderAndOrderItems($item, $installment_payment_id = null, $calculate, $user, $discountCoupon = null);
 
             if (!empty($order) and $order->total_amount > 0) {
                 // $razorpay = false;
@@ -566,7 +690,7 @@ class BundleController extends Controller
             $sales->total(),
             $sales->perPage(),
             $sales->currentPage(),
-            ['path' => request()->url(), 'query' => request()->query()] 
+            ['path' => request()->url(), 'query' => request()->query()]
         );
         $data = [
             'pageTitle' => trans('webinars.webinars_purchases_page_title'),
@@ -575,7 +699,7 @@ class BundleController extends Controller
             'purchasedCount' => $purchasedCount + $giftPurchasedCount,
             'hours' => $hours,
             'upComing' => $upComing + $giftUpcoming
-            
+
         ];
 
         return sendResponse($data,  "All purchased bundles are retrieved");
@@ -648,60 +772,60 @@ class BundleController extends Controller
         return (new PaymentController())->payStatusJson($request, $order->id);
     }
 
-    private function calculatePrice($bundle, $installment_payment_id, $user, $discountCoupon)
-    {
-        $financialSettings = getFinancialSettings();
+private function calculatePrice($item, $installment_payment_id, $user, $discountCoupon = null)
+{
+    $financialSettings = getFinancialSettings();
 
-        $subTotal = 0;
-        $totalDiscount = 0;
-        $tax = (!empty($financialSettings['tax']) and $financialSettings['tax'] > 0) ? $financialSettings['tax'] : 0;
-        $taxPrice = 0;
-        $commissionPrice = 0;
-        $commission = 0;
+    $subTotal         = 0;
+    $totalDiscount    = 0;
+    $tax              = (!empty($financialSettings['tax']) && $financialSettings['tax'] > 0)
+                        ? $financialSettings['tax'] : 0;
+    $taxPrice         = 0;
+    $commissionPrice  = 0;
+    $commission       = 0;
+    $taxIsDifferent   = true;        // keep your original flag
 
-        // $cartHasCertificate = array_filter($carts->pluck('certificate_template_id')->toArray());
-        // $cartHasInstallmentPayment = array_filter($carts->pluck('installment_payment_id')->toArray());
+    /* delegate real work to handleOrderPrices() */
+    $orderPrices      = $this->handleOrderPrices(
+        $item,
+        $installment_payment_id,
+        $user,
+        $taxIsDifferent,
+        $discountCoupon
+    );
 
-        $taxIsDifferent = (1
-            // or count($cartHasCertificate) or count($cartHasInstallmentPayment)
-        );
+    $subTotal       += $orderPrices['sub_total'];
+    $totalDiscount  += $orderPrices['total_discount'];
+    $tax             = $orderPrices['tax'];
+    $taxPrice       += $orderPrices['tax_price'];
+    $commission     += $orderPrices['commission'];
+    $commissionPrice+= $orderPrices['commission_price'];
+    $taxIsDifferent  = $orderPrices['tax_is_different'];
 
-
-        $orderPrices = $this->handleOrderPrices($bundle, $installment_payment_id, $user, $taxIsDifferent, $discountCoupon);
-        $subTotal += $orderPrices['sub_total'];
-        $totalDiscount += $orderPrices['total_discount'];
-        $tax = $orderPrices['tax'];
-        $taxPrice += $orderPrices['tax_price'];
-        $commission += $orderPrices['commission'];
-        $commissionPrice += $orderPrices['commission_price'];
-        $taxIsDifferent = $orderPrices['tax_is_different'];
-
-
-        if ($totalDiscount > $subTotal) {
-            $totalDiscount = $subTotal;
-        }
-
-        $subTotalWithoutDiscount = $subTotal - $totalDiscount;
-        $productDeliveryFee = 0;
-
-        $total = $subTotalWithoutDiscount + $taxPrice + $productDeliveryFee;
-
-        if ($total < 0) {
-            $total = 0;
-        }
-
-        return [
-            'sub_total' => round($subTotal, 2),
-            'total_discount' => round($totalDiscount, 2),
-            'tax' => $tax,
-            'tax_price' => round($taxPrice, 2),
-            'commission' => $commission,
-            'commission_price' => round($commissionPrice, 2),
-            'total' => round($total, 2),
-            'product_delivery_fee' => round($productDeliveryFee, 2),
-            'tax_is_different' => $taxIsDifferent
-        ];
+    if ($totalDiscount > $subTotal) {
+        $totalDiscount = $subTotal;
     }
+
+    $subTotalWithoutDiscount = $subTotal - $totalDiscount;
+    $productDeliveryFee      = 0;
+
+    $total = $subTotalWithoutDiscount + $taxPrice + $productDeliveryFee;
+    if ($total < 0) {
+        $total = 0;
+    }
+
+    return [
+        'sub_total'            => round($subTotal, 2),
+        'total_discount'       => round($totalDiscount, 2),
+        'tax'                  => $tax,
+        'tax_price'            => round($taxPrice, 2),
+        'commission'           => $commission,
+        'commission_price'     => round($commissionPrice, 2),
+        'total'                => round($total, 2),
+        'product_delivery_fee' => round($productDeliveryFee, 2),
+        'tax_is_different'     => $taxIsDifferent,
+    ];
+}
 
     private function handleSelectedInstallment($user, $order, $installment)
     {
@@ -737,149 +861,151 @@ class BundleController extends Controller
     }
 
 
-    public function handleOrderPrices($bundle, $installment_payment_id = null, $user, $taxIsDifferent = false, $discountCoupon = null)
-    {
-        $seller = $bundle->creator ?? null;
-        $financialSettings = getFinancialSettings();
+public function handleOrderPrices($item, $installment_payment_id = null, $user,
+                                  $taxIsDifferent = false, $discountCoupon = null)
+{
+    // seller → bundles use creator; webinars use teacher
+    $seller = $item instanceof \App\Models\Bundle
+                ? $item->creator
+                : ($item->teacher ?? null);
 
-        $subTotal = 0;
-        $totalDiscount = 0;
-        $tax = (!empty($financialSettings['tax']) and $financialSettings['tax'] > 0) ? $financialSettings['tax'] : 0;
-        $taxPrice = 0;
-        $commissionPrice = 0;
+    $financialSettings = getFinancialSettings();
 
-        if (!empty($seller)) {
-            $commission = $seller->getCommission();
-        } else {
-            $commission = 0;
+    $subTotal        = 0;
+    $totalDiscount   = 0;
+    $tax             = (!empty($financialSettings['tax']) && $financialSettings['tax'] > 0)
+                       ? $financialSettings['tax'] : 0;
+    $taxPrice        = 0;
+    $commissionPrice = 0;
 
-            if (!empty($financialSettings) and !empty($financialSettings['commission'])) {
-                $commission = (int)$financialSettings['commission'];
-            }
-        }
-
-        if (!empty($bundle) && empty($installment_payment_id)) {
-            // $item = !empty($cart->webinar_id) ? $cart->webinar : $cart->bundle;
-            $item = $bundle;
-
-            $price = $item->price;
-            $discount = null;
-            $priceWithoutDiscount = $price - $discount;
-
-            if ($tax > 0 and $priceWithoutDiscount > 0) {
-                $taxPrice += $priceWithoutDiscount * $tax / 100;
-            }
-
-            if (!empty($commission) and $commission > 0) {
-                $commissionPrice += $priceWithoutDiscount > 0 ? $priceWithoutDiscount * $commission / 100 : 0;
-            }
-
-            $totalDiscount += $discount;
-            $subTotal += $price;
-        } elseif (!empty($installment_payment_id)) {
-            $installmentOrderPayment = InstallmentOrderPayment::findOrFail($installment_payment_id);
-            $price = $installmentOrderPayment->amount;
-            // $cart->installmentPayment->amount;
-            $discount = 0;
-
-            $priceWithoutDiscount = $price - $discount;
-
-            if ($tax > 0 and $priceWithoutDiscount > 0) {
-                $taxPrice += $priceWithoutDiscount * $tax / 100;
-            }
-
-            if (!empty($commission) and $commission > 0) {
-                $commissionPrice += $priceWithoutDiscount > 0 ? $priceWithoutDiscount * $commission / 100 : 0;
-            }
-
-            $totalDiscount += $discount;
-            $subTotal += $price;
-        }
-
-        if ($totalDiscount > $subTotal) {
-            $totalDiscount = $subTotal;
-        }
-
-
-        return [
-            'sub_total' => round($subTotal, 2),
-            'total_discount' => round($totalDiscount, 2),
-            'tax' => $tax,
-            'tax_price' => round($taxPrice, 2),
-            'commission' => $commission,
-            'commission_price' => round($commissionPrice, 2),
-            //'product_delivery_fee' => round($productDeliveryFee, 2),
-            'tax_is_different' => $taxIsDifferent
-        ];
+    /* commission percentage */
+    if ($seller) {
+        $commission = $seller->getCommission();              // model method
+    } else {
+        $commission = !empty($financialSettings['commission'])
+                      ? (int)$financialSettings['commission'] : 0;
     }
 
+    /* --------- (A) Normal pay‑in‑full ---------- */
+    if ($item && empty($installment_payment_id)) {
 
-    public function createOrderAndOrderItems($bundle, $installment_payment_id, $calculate, $user, $discountCoupon = null)
-    {
-        $totalCouponDiscount = 0;
+        $price               = $item->price;
+        $discount            = 0;                  // apply your own coupon logic here
+        $priceWithoutDiscount= $price - $discount;
 
-        $totalAmount = $calculate["total"] - $totalCouponDiscount;
-
-        $order = Order::create([
-            'user_id' => $user->id,
-            'status' => Order::$pending,
-            'amount' => $calculate["sub_total"],
-            'tax' => $calculate["tax_price"],
-            'total_discount' => $calculate["total_discount"] + $totalCouponDiscount,
-            'total_amount' => ($totalAmount > 0) ? $totalAmount : 0,
-            'product_delivery_fee' => $calculate["product_delivery_fee"] ?? null,
-            'created_at' => time(),
-        ]);
-
-
-
-        $orderPrices = $this->handleOrderPrices($bundle, $installment_payment_id, $user, $taxIsDifferent = false, $discountCoupon);
-        $price = $orderPrices['sub_total'];
-        $totalDiscount = $orderPrices['total_discount'];
-        $tax = $orderPrices['tax'];
-        $taxPrice = $orderPrices['tax_price'];
-        $commission = $orderPrices['commission'];
-        $commissionPrice = $orderPrices['commission_price'];
-
-
-        $productDeliveryFee = 0;
-
-        $allDiscountPrice = $totalDiscount;
-        if ($totalCouponDiscount > 0 and $price > 0) {
-            $percent = (($price / $calculate["sub_total"]) * 100);
-            $allDiscountPrice += (($totalCouponDiscount * $percent) / 100);
+        if ($tax > 0 && $priceWithoutDiscount > 0) {
+            $taxPrice += $priceWithoutDiscount * $tax / 100;
+        }
+        if ($commission > 0) {
+            $commissionPrice += $priceWithoutDiscount > 0
+                              ? $priceWithoutDiscount * $commission / 100 : 0;
         }
 
-        $subTotalWithoutDiscount = $price - $allDiscountPrice;
-        $totalAmount = $subTotalWithoutDiscount + $taxPrice + $productDeliveryFee;
-
-        OrderItem::create([
-            'user_id' => $user->id,
-            'order_id' => $order->id,
-            'webinar_id' => null,
-            'bundle_id' => $bundle ? $bundle->id : null,
-            'certificate_template_id' =>  null,
-            'certificate_bundle_id' =>  null,
-            'product_id' => null,
-            'product_order_id' =>  null,
-            'reserve_meeting_id' => null,
-            'subscribe_id' => null,
-            'promotion_id' => null,
-            'gift_id' => null,
-            'installment_payment_id' => $installment_payment_id ?? null,
-            'ticket_id' => null,
-            'discount_id' => $discountCoupon ? $discountCoupon->id : null,
-            'amount' => $price,
-            'total_amount' => $totalAmount,
-            'tax' => $tax,
-            'tax_price' => $taxPrice,
-            'commission' => $commission,
-            'commission_price' => $commissionPrice,
-            'product_delivery_fee' => $productDeliveryFee,
-            'discount' => $allDiscountPrice,
-            'created_at' => time(),
-        ]);
-
-        return $order;
+        $totalDiscount += $discount;
+        $subTotal      += $price;
     }
+
+    /* --------- (B) Up‑front installment payment ---------- */
+    elseif (!empty($installment_payment_id)) {
+
+        $installmentOrderPayment = InstallmentOrderPayment::findOrFail($installment_payment_id);
+        $price               = $installmentOrderPayment->amount;
+        $discount            = 0;
+        $priceWithoutDiscount= $price - $discount;
+
+        if ($tax > 0 && $priceWithoutDiscount > 0) {
+            $taxPrice += $priceWithoutDiscount * $tax / 100;
+        }
+        if ($commission > 0) {
+            $commissionPrice += $priceWithoutDiscount > 0
+                              ? $priceWithoutDiscount * $commission / 100 : 0;
+        }
+
+        $totalDiscount += $discount;
+        $subTotal      += $price;
+    }
+
+    if ($totalDiscount > $subTotal) {
+        $totalDiscount = $subTotal;
+    }
+
+    return [
+        'sub_total'        => round($subTotal, 2),
+        'total_discount'   => round($totalDiscount, 2),
+        'tax'              => $tax,
+        'tax_price'        => round($taxPrice, 2),
+        'commission'       => $commission,
+        'commission_price' => round($commissionPrice, 2),
+        'tax_is_different' => $taxIsDifferent,
+    ];
+}
+
+
+ public function createOrderAndOrderItems($item, $installment_payment_id,
+                                         array $calculate, $user,
+                                         $discountCoupon = null)
+{
+    $totalCouponDiscount = 0;                      // inject coupon logic if needed
+    $totalAmount         = $calculate['total'] - $totalCouponDiscount;
+
+    /* ---------- 3.1 Order shell ---------- */
+    $order = Order::create([
+        'user_id'            => $user->id,
+        'status'             => Order::$pending,
+        'amount'             => $calculate['sub_total'],
+        'tax'                => $calculate['tax_price'],
+        'total_discount'     => $calculate['total_discount'] + $totalCouponDiscount,
+        'total_amount'       => max($totalAmount, 0),
+        'product_delivery_fee' => $calculate['product_delivery_fee'] ?? null,
+        'created_at'         => time(),
+    ]);
+
+    /* ---------- 3.2 Per‑item prices ---------- */
+    $orderPrices     = $this->handleOrderPrices(
+        $item,
+        $installment_payment_id,
+        $user,
+        false,
+        $discountCoupon
+    );
+
+    $price           = $orderPrices['sub_total'];
+    $totalDiscount   = $orderPrices['total_discount'];
+    $tax             = $orderPrices['tax'];
+    $taxPrice        = $orderPrices['tax_price'];
+    $commission      = $orderPrices['commission'];
+    $commissionPrice = $orderPrices['commission_price'];
+
+    $productDeliveryFee = 0;
+    $allDiscountPrice   = $totalDiscount;
+
+    if ($totalCouponDiscount > 0 && $price > 0) {
+        $percent          = ($price / $calculate['sub_total']) * 100;
+        $allDiscountPrice += ($totalCouponDiscount * $percent) / 100;
+    }
+
+    $subTotalWithoutDiscount = $price - $allDiscountPrice;
+    $totalAmount             = $subTotalWithoutDiscount + $taxPrice + $productDeliveryFee;
+
+    /* ---------- 3.3 One OrderItem ---------- */
+    OrderItem::create([
+        'user_id'             => $user->id,
+        'order_id'            => $order->id,
+        'webinar_id'          => $item instanceof \App\Models\Webinar ? $item->id : null,
+        'bundle_id'           => $item instanceof \App\Models\Bundle  ? $item->id : null,
+        'installment_payment_id' => $installment_payment_id,
+        'discount_id'         => $discountCoupon?->id,
+        'amount'              => $price,
+        'total_amount'        => $totalAmount,
+        'tax'                 => $tax,
+        'tax_price'           => $taxPrice,
+        'commission'          => $commission,
+        'commission_price'    => $commissionPrice,
+        'product_delivery_fee'=> $productDeliveryFee,
+        'discount'            => $allDiscountPrice,
+        'created_at'          => time(),
+    ]);
+
+    return $order;
+}
 }

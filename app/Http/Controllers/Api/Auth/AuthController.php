@@ -8,6 +8,8 @@ use App\Http\Resources\UserProfile;
 use App\Http\Resources\UserResource;
 use App\Models\Api\User;
 use App\Models\Bundle;
+use App\Models\Enrollment;
+use App\Models\Group;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\Facades\Hash;
@@ -15,6 +17,7 @@ use Illuminate\Support\Facades\Validator;
 
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\Role;
+use App\Models\Webinar;
 use App\Student;
 use Exception;
 use Illuminate\Support\Facades\Auth;
@@ -61,61 +64,119 @@ class AuthController extends Controller
         }
     }
 
-    public function register(Request $request)
-    {
-        // Validate incoming request
-        $validator = Validator::make($request->all(), [
-            'full_name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:6',
-            'mobile' => 'required|string|min:10|max:15|unique:users,mobile',
-        ]);
+     public function register(Request $request)
+{
+    // Validate incoming request
+    $validator = Validator::make($request->all(), [
+        'full_name' => 'required|string|max:255',
+        'email' => 'required|email|unique:users,email',
+        'password' => 'required|string|min:6',
+        'mobile' => 'required|string|min:10|max:15|unique:users,mobile',
+        'bundle_id' => 'nullable|exists:bundles,id',
+        'webinar_id' => 'nullable|exists:webinars,id',
+    ]);
 
-        // If validation fails, return error response
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 400);
+    // Enforce that at least one of bundle_id or webinar_id is present
+    $validator->after(function ($validator) use ($request) {
+        if (!$request->filled('bundle_id') && !$request->filled('webinar_id')) {
+            $validator->errors()->add('bundle_id', 'Either bundle_id or webinar_id is required.');
+            $validator->errors()->add('webinar_id', 'Either bundle_id or webinar_id is required.');
         }
+    });
 
-        // Create new user
-        $user = User::create([
-            'full_name' => $request->full_name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'mobile' => $request->mobile,
-            'role_name' => 'registered_user',
-            'role_id' => 13,
-            'created_at' => now()->timestamp,  // Use Unix timestamp for created_at
-            'updated_at' => now()->timestamp,
-            'verified' => 1
-        ]);
-
-
-        //create student 
-        $student = Student::create([
-            'user_id' => $user->id,
-            'en_name' => $request->full_name,
-            'email' => $request->email,
-            'phone' => $request->mobile,
-            'mobile' => $request->mobile,
-            // 'status' => 'pending'
-        ]);
-
-
-        //create bundle student 
-        $bundle_id = $request->bundle_id ?? 0;
-        $studentBundle = BundleStudent::create(['student_id' => $student->id, 'bundle_id' => $bundle_id, 'status' => 'applying']);
-
-
-        // Generate JWT token for the user after registration
-        $token = JWTAuth::fromUser($user);
-
-        // Return response with user data and token
-        $data = [
-            'user' => UserResource::make($user),
-            'token' => $token,
-        ];
-        return apiResponse2(1, 'register', "User registered successfully.", $data);
+    if ($validator->fails()) {
+        return apiResponse2(0, 'validation_error', trans('api.validation_error'), ['errors' => $validator->errors()], 400);
     }
+
+    // Create User
+    $user = User::create([
+        'full_name' => $request->full_name,
+        'email' => $request->email,
+        'mobile' => $request->mobile,
+        'password' => Hash::make($request->password),
+        'role_name' => 'registered_user',
+        'role_id' => 13,
+        'verified' => 1,
+        'created_at' => now()->timestamp,
+        'updated_at' => now()->timestamp,
+        'application_type' => $request->bundle_id ? 'programs' : 'courses',
+        'program_id' => $request->bundle_id ?? $request->webinar_id,
+    ]);
+
+    // Create Student - This is the crucial part that was missing
+    $student = Student::create([
+        'user_id' => $user->id,
+        'en_name' => $request->full_name,
+        'email' => $request->email,
+        'phone' => $request->mobile,
+        'mobile' => $request->mobile,
+        // Add any other required student fields here
+    ]);
+
+    // Handle Bundle Registration
+    if ($request->filled('bundle_id')) {
+        BundleStudent::create([
+            'student_id' => $student->id, // Using the created student's ID
+            'bundle_id' => $request->bundle_id,
+            'status' => 'applying',
+        ]);
+    }
+
+    // Handle Webinar Registration
+    if ($request->filled('webinar_id')) {
+        $webinar = Webinar::find($request->webinar_id);
+
+        if ($webinar) {
+            $lastGroup = Group::where('webinar_id', $webinar->id)
+                ->latest()
+                ->first();
+
+            $startDate = now()->addMonth()->startOfMonth();
+            $endDate = now()->addMonths(2)->startOfMonth();
+
+            if (!$lastGroup) {
+                $lastGroup = Group::create([
+                    'name' => 'A',
+                    'creator_id' => 1,
+                    'webinar_id' => $webinar->id,
+                    'capacity' => 20,
+                    'start_date' => $startDate,
+                    'end_date' => $endDate,
+                ]);
+            }
+
+            // Check if we need to create a new group
+            $enrollments = $lastGroup->enrollments()->count();
+            if ($enrollments >= $lastGroup->capacity || $lastGroup->start_date < now()) {
+                $lastGroup = Group::create([
+                    'name' => chr(ord($lastGroup->name) + 1),
+                    'creator_id' => 1,
+                    'webinar_id' => $webinar->id,
+                    'capacity' => 20,
+                    'start_date' => $startDate,
+                    'end_date' => $endDate,
+                ]);
+            }
+
+            // Create enrollment
+            Enrollment::firstOrCreate([
+                'user_id' => $user->id,
+                'group_id' => $lastGroup->id,
+            ]);
+        }
+    }
+
+    // Generate JWT token
+    $token = JWTAuth::fromUser($user);
+
+    // Return success response
+    return apiResponse2(1, 'register', trans('api.register_success'), [
+        'user' => UserResource::make($user),
+        'token' => $token,
+        'student_id' => $student->id // Optional: include student ID in response
+    ]);
+}
+
 
     public function login(Request $request)
     {
