@@ -2,55 +2,42 @@
 
 namespace App\Http\Controllers\Api\Panel;
 
-use App\Bitwise\UserLevelOfTraining;
+use App\Models\Sale;
 use App\Http\Controllers\Api\Controller;
-use App\Http\Controllers\Api\Objects\UserObj;
 use App\Http\Resources\InstallmentResource;
 use App\Models\Category;
 use App\Models\Newsletter;
-
 use App\Models\Reward;
 use App\Models\RewardAccounting;
 use App\Models\UserMeta;
 use App\Models\Follow;
-
-use App\Models\UserZoomApi;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
-
 use App\Http\Controllers\Api\UploadFileManager;
 use App\Mixins\Installment\InstallmentPlans;
-
-use App\Mixins\RegistrationPackage\UserPackage;
-use App\Models\DeleteAccountRequest;
 use App\Models\Meeting;
-use App\Models\Region;
 use App\Models\ReserveMeeting;
 use App\Models\Role;
-use App\Models\UserBank;
-use App\Models\UserOccupation;
-use App\Models\UserSelectedBank;
-use App\Models\UserSelectedBankSpecification;
-use App\Student;
 use App\StudentRequirement;
 use App\BundleStudent;
-use App\Models\Accounting;
-use App\Models\OfflineBank;
-use App\Models\OfflinePayment;
-use App\Models\PaymentChannel;
-use App\Http\Controllers\Web\traits\InstallmentsTrait;
 use App\Http\Resources\ActiveBundleResource;
-use App\Models\Bundle;
-use App\Models\UserReference;
+use App\Models\Group;
+use App\Http\Controllers\Admin\SaleController;
+use App\Models\Api\Organization;
+use App\Models\Api\Webinar;
+use App\Models\Enrollment;
+use App\Exports\StudentsExport;
+use App\Models\StudyClass;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\EnrollersExport;
+use App\Exports\DirectRegisterExport;
+use App\Http\Controllers\Admin\StudyClassController;
 
 class UsersController extends Controller
-
 {
-
     public function setting()
     {
         $user = apiAuth();
@@ -68,10 +55,7 @@ class UsersController extends Controller
     {
         $user = apiAuth();
         if ($request->file('profile_image')) {
-            validateParam($request->all(), [
-                'profile_image' => 'file|mimes:jpeg,jpg,png',
 
-            ]);
             $profileImage = $this->createImage($user, $request->file('profile_image'));
             $user->update([
                 'avatar' => $profileImage
@@ -96,527 +80,10 @@ class UsersController extends Controller
             ]);
         }
 
-        return sendResponse([],  trans('api.public.updated'));
-    }
-
-
-    public function update1(Request $request)
-    {
-        $available_inputs = [
-            'full_name',
-            'language',
-            'email',
-            'mobile',
-            'newsletter',
-            'public_message',
-            'timezone',
-            'password',
-            'about',
-            'bio',
-            'account_type',
-            'iban',
-            'account_id',
-            'level_of_training',
-            'meeting_type',
-            'country_id',
-            'province_id',
-            'city_id',
-            'district_id',
-            'location'
-        ];
-        $meta = ['address', 'gender', 'age'];
-
-        $user = apiAuth();
-
-        validateParam($request->all(), [
-            'full_name' => 'string',
-            'language' => 'string',
-            'email' => 'email|unique:users,email,' . $user->id,
-            'mobile' => 'numeric|unique:users,mobile,' . $user->id,
-            'timezone' => ['string', Rule::in(getListOfTimezones())],
-            'public_message' => 'boolean',
-            'newsletter' => 'boolean',
-            // 'password' => 'required|string|min:6',
-
-            'account_type' => Rule::in(getOfflineBanksTitle()),
-            'iban' => 'required_with:account_type',
-            'account_id' => 'required_with:account_type',
-            // 'identity_scan' => 'required_with:account_type',
-
-            'bio' => 'nullable|string|min:3|max:48',
-            'level_of_training' => 'array|in:beginner,middle,expert',
-            'meeting_type' => 'in:in_person,all,online',
-
-            'gender' => 'nullable|in:man,woman',
-            'location' => 'array|size:2',
-            'location.latitude' => 'required_with:location',
-            'location.longitude' => 'required_with:location',
-            'address' => 'string',
-            'country_id' => 'exists:regions,id',
-            'province_id' => 'exists:regions,id',
-            'city_id' => 'exists:regions,id',
-            'district_id' => 'exists:regions,id',
-        ]);
-
-        $user = User::find($user->id);
-
-        foreach ($available_inputs as $input) {
-            if ($request->has($input)) {
-                $value = $request->input($input);
-                if ($input == 'level_of_training') {
-                    $value = (new UserLevelOfTraining())->getValue($value);
-                }
-                if ($input == 'location') {
-                    $value = DB::raw("POINT(" . $value['latitude'] . "," . $value['longitude'] . ")");
-                }
-                if ($input == 'password') {
-                    $value = User::generatePassword($value);
-                }
-
-                $user->update([
-                    $input => $value
-                ]);
-            }
-        }
-
-
-        if (!$user->isUser()) {
-            if ($request->has('zoom_jwt_token') and !empty($request->input('zoom_jwt_token'))) {
-
-                UserZoomApi::updateOrCreate(
-                    [
-                        'user_id' => $user->id,
-                    ],
-                    [
-                        'jwt_token' => $request->input('zoom_jwt_token'),
-                        'created_at' => time()
-                    ]
-                );
-            } else {
-                UserZoomApi::where('user_id', $user->id)->delete();
-            }
-        }
-
-        if ($request->has('newsletter')) {
-            $this->handleNewsletter($user->email, $user->id, $user->newsletter);
-        }
-
-        $this->updateMetas($meta);
-
-
         return apiResponse2(1, 'updated', trans('api.public.updated'));
     }
 
-    public function update(Request $request)
-    {
-        $data = $request->all();
-        $user = auth('api')->user();
-        $organization = null;
-        // if (!empty($data['organization_id']) and !empty($data['user_id'])) {
-        //     $organization = auth('api')->user();
-        //     $user = User::where('id', $data['user_id'])
-        //     ->where('organ_id', $organization->id)
-        //         ->first();
-        // }
-        $step = $data['step'] ?? 1;
-        $nextStep = (!empty($data['next_step']) and $data['next_step'] == '1') ?? false;
-
-        $rules = [
-            'identity_scan' => 'required_with:account_type',
-            'bio' => 'nullable|string|min:3|max:48',
-        ];
-
-        if ($step == 1) {
-            $rules = array_merge($rules, [
-                'full_name' => 'required|string',
-                'email' => 'required|email|max:255|unique:users,email,' . $user->id,
-                'mobile' => 'required|unique:users,mobile,' . $user->id,
-            ]);
-
-            if ($user->student) {
-                $rules['user_code'] = 'required|unique:users,user_code,' . $user->id;
-            }
-        }
-        validateParam($request->all(), $rules);
-
-        if (!empty($user)) {
-
-            if (!empty($data['password'])) {
-                validateParam($request->all(), [
-                    'password' => 'required|string|confirmed|min:6',
-                ]);
-
-                $user->update([
-                    'password' => User::generatePassword($data['password'])
-                ]);
-            }
-
-
-
-            $updateData = [];
-
-            if ($step == 1) {
-                $joinNewsletter = (!empty($data['join_newsletter']) and $data['join_newsletter'] == 'on');
-
-                $updateData = [
-                    'email' => $data['email'],
-                    'full_name' => $data['full_name'],
-                    'mobile' => $data['mobile'],
-                    // 'user_code' => $data['user_code'] ?? $user->user_code,
-                    'language' => $data['language'] ?? null,
-                    'timezone' => $data['timezone'] ?? null,
-                    'currency' => $data['currency'] ?? null,
-                    'newsletter' => $joinNewsletter,
-                    'public_message' => (!empty($data['public_messages']) and $data['public_messages'] == 'on'),
-                ];
-
-                // if (!session()->has('impersonated')) {
-
-                //     $updateData['email'] = $user->email;
-                //     $updateData['mobile'] = $user->mobile;
-                //     $updateData['user_code'] = $user->user_code;
-                // }
-
-                $this->handleNewsletter($data['email'], $user->id, $joinNewsletter);
-            } elseif ($step == 2) {
-
-                // $updateData = [
-                //     'cover_img' => $data['cover_img'] ?? null,
-                // ];
-
-                if (!empty($data['profile_image'])) {
-                    $profileImage = $this->createImage($user, $data['profile_image']);
-                    $updateData['avatar'] = $profileImage;
-                }
-            } elseif ($step == 3) {
-                $data = $request->except(['step', '_token', 'next_step']);
-                if (!empty($request['identity_img'])) {
-                    $request->validate([
-                        'identity_img' => 'file|mimes:jpeg,jpg,png'
-                    ]);
-                    $identityImg = $request->file('identity_img');
-                    if (!in_array(strtolower($identityImg->getClientOriginalExtension()), ['jpg', 'jpeg', 'png'])) {
-                        return back()->withInput($request->all())->withErrors(['identity_img' => "يجب أن تكون صورة الهوية الوطنية/جواز السفر صورة بإمتداد : jpeg, jpg, png والصورة المرفعة بامتداد " . $identityImg->getClientOriginalExtension()]);
-                    }
-                    $identityImgName =  $user->user_code . '_identity.' . $identityImg->getClientOriginalExtension();
-                    $identityImgPath = $identityImg->storeAs('userIdentityImages', $identityImgName);
-                    $data['identity_img'] = $identityImgPath;
-                }
-                // if (!session()->has('impersonated')) {
-                //     $data['ar_name'] = $user->student->ar_name;
-                //     $data['en_name'] = $user->student->en_name;
-                // }
-                $user->student->update($data);
-            } elseif ($step == 4) {
-                $data = $request->except(['step', '_token', 'next_step']);
-                if (!empty($request['high_certificate_img'])) {
-                    $request->validate([
-                        'high_certificate_img' => 'file|mimes:jpeg,jpg,png'
-                    ]);
-                    $highCertificateImg = $request->file('high_certificate_img');
-                    if (!in_array(strtolower($highCertificateImg->getClientOriginalExtension()), ['jpg', 'jpeg', 'png'])) {
-                        return back()->withInput($request->all())->withErrors(['high_certificate_img' => "يجب أن تكون صورة شهادة التخرج  بإمتداد : jpeg, jpg, png والصورة المرفعة بامتداد " . $highCertificateImg->getClientOriginalExtension()]);
-                    }
-                    $highCertificateImgName =  $user->user_code . '_highCertificate.' . $highCertificateImg->getClientOriginalExtension();
-                    $highCertificateImgPath = $highCertificateImg->storeAs('userCertificateImages', $highCertificateImgName);
-                    $data['high_certificate_img'] = $highCertificateImgPath;
-                }
-
-                if (!empty($request['secondary_certificate_img'])) {
-                    $request->validate([
-                        'secondary_certificate_img' => 'file|mimes:jpeg,jpg,png'
-                    ]);
-                    $secondaryCertificateImg = $request->file('secondary_certificate_img');
-                    if (!in_array(strtolower($secondaryCertificateImg->getClientOriginalExtension()), ['jpg', 'jpeg', 'png'])) {
-                        return back()->withInput($request->all())->withErrors(['secondary_certificate_img' => "يجب أن تكون صورة شهادة الثانوية العامة بإمتداد : jpeg, jpg, png والصورة المرفعة بامتداد " . $secondaryCertificateImg->getClientOriginalExtension()]);
-                    }
-                    $secondaryCertificateImgName =  $user->user_code . '_secondaryCertificate.' . $secondaryCertificateImg->getClientOriginalExtension();
-                    $secondaryCertificateImgPath = $secondaryCertificateImg->storeAs('userCertificateImages', $secondaryCertificateImgName);
-                    $data['secondary_certificate_img'] = $secondaryCertificateImgPath;
-                }
-
-                $user->student->update($data);
-            } elseif ($step == 5) {
-                $data = [
-                    "job" => $request->workStatus == 1 ? $request->job : null,
-                    "job_type" => $request->workStatus == 1 ? $request->job : null,
-                    "healthy_problem" => $request->healthy == 1 ? $request->healthy_problem : null,
-                    "disabled_type" => $request->disabled == 1 ? $request->disabled_type : null,
-                    "deaf" => $request->deaf,
-                ];
-                $user->student->update($data);
-            } elseif ($step == 6) {
-                $user->student->update($request->except(['step', '_token', 'next_step']));
-            } elseif ($step == 10) {
-                UserOccupation::where('user_id', $user->id)->delete();
-                if (!empty($data['occupations'])) {
-
-                    foreach ($data['occupations'] as $category_id) {
-                        UserOccupation::create([
-                            'user_id' => $user->id,
-                            'category_id' => $category_id
-                        ]);
-                    }
-                }
-            } elseif ($step == 11) {
-                $updateData = [
-                    'identity_scan' => $data['identity_scan'] ?? '',
-                    'certificate' => $data['certificate'] ?? '',
-                    'address' => $data['address'] ?? '',
-                ];
-
-                if (!empty($data['bank_id'])) {
-                    UserSelectedBank::query()->where('user_id', $user->id)->delete();
-
-                    $userSelectedBank = UserSelectedBank::query()->create([
-                        'user_id' => $user->id,
-                        'user_bank_id' => $data['bank_id']
-                    ]);
-
-                    if (!empty($data['bank_specifications'])) {
-                        $specificationInsert = [];
-
-                        foreach ($data['bank_specifications'] as $specificationId => $specificationValue) {
-                            if (!empty($specificationValue)) {
-                                $specificationInsert[] = [
-                                    'user_selected_bank_id' => $userSelectedBank->id,
-                                    'user_bank_specification_id' => $specificationId,
-                                    'value' => $specificationValue
-                                ];
-                            }
-                        }
-
-                        UserSelectedBankSpecification::query()->insert($specificationInsert);
-                    }
-                }
-            } elseif ($step == 12) {
-                if (!$user->isUser()) {
-                    if (!empty($data['zoom_api_key']) and !empty($data['zoom_api_secret'])) {
-                        UserZoomApi::updateOrCreate(
-                            [
-                                'user_id' => $user->id,
-                            ],
-                            [
-                                'api_key' => $data['zoom_api_key'] ?? null,
-                                'api_secret' => $data['zoom_api_secret'] ?? null,
-                                'created_at' => time()
-                            ]
-                        );
-                    } else {
-                        UserZoomApi::where('user_id', $user->id)->delete();
-                    }
-                }
-            } elseif ($step == 13) {
-                $updateData = [
-                    'about' => $data['about'],
-                    'bio' => $data['bio'],
-                ];
-            }
-
-            if (!empty($updateData)) {
-                $user->update($updateData);
-            }
-
-            $url = '/panel/setting';
-            if (!empty($organization)) {
-                $userType = $user->isTeacher() ? 'instructors' : 'students';
-                $url = "/panel/manage/{$userType}/{$user->id}/edit";
-            }
-
-            if ($step <= 10) {
-                if ($nextStep) {
-                    $step = $step + 1;
-                }
-
-                $url .= '/step/' . (($step <= 9) ? $step : 10);
-            }
-
-            $toastData = [
-                'title' => trans('public.request_success'),
-                'msg' => trans('panel.user_setting_success'),
-                'status' => 'success'
-            ];
-            return sendResponse([], trans('panel.user_setting_success'));
-        }
-        return $this->forbidden();
-    }
-
-    public function updateUserBasicInformation(Request $request)
-    {
-        $user = auth('api')->user();
-        $data = $request->all();
-
-        $rules = [
-            'full_name' => 'required|string|min:15',
-            'email' => 'required|email|unique:users,email,' . $user->id,
-            'mobile' => 'required|unique:users,mobile,',
-            'password' => 'nullable|string|min:6',
-            'timezone' => ['string', Rule::in(getListOfTimezones())],
-            'language' => 'string',
-            'public_message' => 'boolean',
-            'newsletter' => 'boolean',
-        ];
-
-        $validData = validateParam($request->all(), $rules);
-
-        $joinNewsletter = !empty($data['newsletter']);
-
-        $this->handleNewsletter($user->email, $user->id, $joinNewsletter);
-
-
-        if (!empty($validData['password'])) {
-            $user->update([
-                'password' => User::generatePassword($validData['password'])
-            ]);
-        }
-
-        $updateData = [
-            'full_name' => $data['full_name'],
-            'email' => $data['email'],
-            'mobile' => $data['mobile'],
-            // 'user_code' => $data['user_code'] ?? $user->user_code,
-            'language' => $data['language'] ?? null,
-            'timezone' => $data['timezone'] ?? null,
-            'currency' => $data['currency'] ?? null,
-            'newsletter' => $joinNewsletter,
-            'public_message' => !empty($data['public_message']),
-        ];
-
-        $user->update($updateData);
-
-        return sendResponse([], trans('panel.user_setting_success'));
-    }
-
-    public function updatePersonalDetails(Request $request)
-    {
-        $user = auth('api')->user();
-        $data = $request->all();
-
-        $rules = [
-            'ar_name' => 'required|string|regex:/^[\p{Arabic} ]+$/u|max:255|min:15',
-            'en_name' => 'required|string|regex:/^[a-zA-Z\s]+$/|max:255|min:15',
-            'birthdate' => 'required|date',
-            'identifier_num' => 'required|numeric|min:6',
-            'nationality' => 'required|string|min:3|max:25',
-            'gender' => 'required|in:male,female',
-            'country' => 'required|string|max:255|min:3|regex:/^(?=.*[\p{Arabic}\p{L}])[0-9\p{Arabic}\p{L}\s]+$/u',
-            'town' => 'required|string|max:255|min:3|regex:/^(?=.*[\p{Arabic}\p{L}])[0-9\p{Arabic}\p{L}\s]+$/u',
-            'area' => 'nullable|string|max:255|min:3|regex:/^(?=.*[\p{Arabic}\p{L}])[0-9\p{Arabic}\p{L}\s]+$/u',
-            'city' => 'nullable|string|max:255|min:3|regex:/^(?=.*[\p{Arabic}\p{L}])[0-9\p{Arabic}\p{L}\s]+$/u',
-            'identity_img' => 'nullable|file|mimes:jpeg,jpg,png',
-        ];
-        $validData = validateParam($request->all(), $rules);
-
-        if (!empty($request['identity_img'])) {
-            $identityImg = $request->file('identity_img');
-            if (!in_array(strtolower($identityImg->getClientOriginalExtension()), ['jpg', 'jpeg', 'png'])) {
-                return sendError([
-                    'identity_img' => ["يجب أن تكون صورة الهوية الوطنية/جواز السفر صورة بإمتداد : jpeg, jpg, png والصورة المرفعة بامتداد " . $identityImg->getClientOriginalExtension()]
-                ], "صيغة الهوية الوطنية غير صحيحة");
-            }
-            $identityImgName =  $user->user_code . '_identity.' . $identityImg->getClientOriginalExtension();
-            $identityImgPath = $identityImg->storeAs('userIdentityImages', $identityImgName);
-            $validData['identity_img'] = $identityImgPath;
-        }
-
-        $user->student->update($validData);
-        return sendResponse([], trans('panel.user_setting_success'));
-    }
-
-    public function updateUserEducation(Request $request)
-    {
-        $user = auth('api')->user();
-        $data = $request->all();
-
-        $rules = [
-            'certificate_type' => 'required|in:diploma,bachelor,master,PhD',
-            'educational_qualification_country' => 'nullable|string',
-            'university' => 'nullable|string',
-            'faculty' => 'nullable|string',
-            'education_specialization' => 'nullable|string',
-            'graduation_year' => 'nullable|numeric',
-            'gpa' => 'nullable|numeric',
-            'high_certificate_img' => 'nullable|file|mimes:jpeg,jpg,png',
-
-            'secondary_educational_qualification_country' => 'nullable|string',
-            'educational_area' => 'nullable|string',
-            'school' => 'nullable|string',
-            'secondary_graduation_year' => 'nullable|numeric',
-            'secondary_school_gpa' => 'nullable|numeric',
-            'secondary_certificate_img' => 'nullable|file|mimes:jpeg,jpg,png',
-            'experiences' => 'nullable|array',
-            'experiences.' => 'string',
-        ];
-        $validData = validateParam($request->all(), $rules);
-
-        if (!empty($request['high_certificate_img'])) {
-
-            $highCertificateImg = $request->file('high_certificate_img');
-            if (!in_array(strtolower($highCertificateImg->getClientOriginalExtension()), ['jpg', 'jpeg', 'png'])) {
-                return sendError([
-                    'high_certificate_img' => ["يجب أن تكون صورة شهادة التخرج  بإمتداد : jpeg, jpg, png والصورة المرفعة بامتداد " . $highCertificateImg->getClientOriginalExtension()]
-                ], "صيغة صورة شهادة التخرج غير صحيحة");
-            }
-            $highCertificateImgName =  $user->user_code . '_highCertificate.' . $highCertificateImg->getClientOriginalExtension();
-            $highCertificateImgPath = $highCertificateImg->storeAs('userCertificateImages', $highCertificateImgName);
-            $validData['high_certificate_img'] = $highCertificateImgPath;
-        }
-
-        if (!empty($request['secondary_certificate_img'])) {
-
-            $secondaryCertificateImg = $request->file('secondary_certificate_img');
-            if (!in_array(strtolower($secondaryCertificateImg->getClientOriginalExtension()), ['jpg', 'jpeg', 'png'])) {
-                return back()->withInput($request->all())->withErrors(['secondary_certificate_img' => "يجب أن تكون صورة شهادة الثانوية العامة بإمتداد : jpeg, jpg, png والصورة المرفعة بامتداد " . $secondaryCertificateImg->getClientOriginalExtension()]);
-            }
-            $secondaryCertificateImgName =  $user->user_code . '_secondaryCertificate.' . $secondaryCertificateImg->getClientOriginalExtension();
-            $secondaryCertificateImgPath = $secondaryCertificateImg->storeAs('userCertificateImages', $secondaryCertificateImgName);
-            $validData['secondary_certificate_img'] = $secondaryCertificateImgPath;
-        }
-
-
-        $user->student->update($validData);
-        return sendResponse([], trans('panel.user_setting_success'));
-    }
-
-    public function updateAddtionalDetails(Request $request)
-    {
-        $user = auth('api')->user();
-        $data = $request->all();
-
-        $rules = [
-            'work_status' => 'required|boolean',
-            'job_type' => 'required_if:workStatus,1',
-            'job' => 'required_if:workStatus,1',
-            'healthy' => 'required|boolean',
-            'healthy_problem' => 'required_if:healthy,1',
-            'disabled' => 'required|boolean',
-            'disabled_type' => 'required_if:disabled,1',
-            'deaf' => 'required|boolean',
-            'referral_person' => 'nullable|string',
-            'relation' => 'nullable|string',
-            'referral_email' => 'nullable|email',
-            'referral_phone' => 'nullable|string',
-        ];
-
-        $validData = validateParam($request->all(), $rules);
-
-        $data = [
-            "job" => $request->work_status == 1 ? $request->job : null,
-            "job_type" => $request->work_status == 1 ? $request->job_type : null,
-            "healthy_problem" => $request->healthy == 1 ? $request->healthy_problem : null,
-            "disabled_type" => $request->disabled == 1 ? $request->disabled_type : null,
-            "deaf" => $request->deaf,
-            "referral_person" => $request->referral_person ?? null,
-            "relation" => $request->relation ?? null,
-            "referral_email" => $request->referral_email ?? null,
-            "referral_phone" => $request->referral_phone ?? null,
-        ];
-
-        $user->student->update($data);
-        return sendResponse([], trans('panel.user_setting_success'));
-    }
     private function handleNewsletter($email, $user_id, $joinNewsletter)
-
     {
         $check = Newsletter::where('email', $email)->first();
         if ($joinNewsletter) {
@@ -652,7 +119,7 @@ class UsersController extends Controller
     public function updatePassword(Request $request)
     {
         validateParam($request->all(), [
-            'current_password' => 'required|string',
+            'current_password' => 'required',
             'new_password' => 'required|string|min:6',
         ]);
 
@@ -663,47 +130,37 @@ class UsersController extends Controller
             ]);
             $token = auth('api')->refresh();
 
-            return sendResponse([
+            return apiResponse2(1, 'updated', trans('api.public.updated'), [
                 'token' => $token
-            ], trans('api.public.status', ['item' => 'الباسورد', 'status' => 'تم تغيير']),);
+            ]);
         }
-        return sendError([
-            'current_password' => [trans('update.invalid_current_password')]
-        ],  trans('update.profile_setting_incorrect'));
+        return apiResponse2(0, 'incorrect', trans('api.public.profile_setting.incorrect'));
     }
 
-    private function updateMetas($updateUserMeta)
+    private function updateMeta(array $metaFields, Request $request)
     {
         $user = apiAuth();
-        foreach ($updateUserMeta as $name) {
-            $value = request()->input($name);
-            $checkMeta = UserMeta::where('user_id', operator: $user->id)
+
+        foreach ($metaFields as $name) {
+            $value = $request->input($name); // safer than global helper
+            $checkMeta = UserMeta::where('user_id', $user->id)
                 ->where('name', $name)
                 ->first();
 
             if (!empty($checkMeta)) {
-                if (!empty($value)) {
-                    $checkMeta->update([
-                        'value' => $value
-                    ]);
+                if (!is_null($value)) {
+                    $checkMeta->update(['value' => $value]);
                 } else {
                     $checkMeta->delete();
                 }
-            } else if (!empty($value)) {
+            } elseif (!is_null($value)) {
                 UserMeta::create([
                     'user_id' => $user->id,
                     'name' => $name,
-                    'value' => $value
+                    'value' => $value,
                 ]);
             }
         }
-    }
-
-    public function indexMetas(){
-        $user = apiAuth();
-        $metas = UserMeta::where('user_id', $user->id)->get();
-
-        return response()->json($metas);
     }
 
     public function followToggle(Request $request, $id)
@@ -770,8 +227,6 @@ class UsersController extends Controller
     // requirement index
     public function requirementIndex($step = 1)
     {
-
-
         $user = auth("api")->user();
 
         $student = $user->Student;
@@ -794,7 +249,6 @@ class UsersController extends Controller
                 "status" => !empty($studentBundle->studentRequirement) ? $studentBundle->studentRequirement->status : null,
                 "upload_link" => "/panel/bundles/$studentBundle->id/requirements"
             ];
-
 
             // Check if the bundle meets the conditions
             if ($canSale && !empty($studentBundle->bundle->price) && $studentBundle->bundle->price > 0 && getInstallmentsSettings('status') && (empty($user) || $user->enable_installments)) {
@@ -861,7 +315,6 @@ class UsersController extends Controller
         return apiResponse2(0, 'create_requirement', "retieve what you need to upload requirements", $data);
     }
 
-
     // store requirements
     public function storeRequirement(Request $request, $studentBundleId)
     {
@@ -921,138 +374,971 @@ class UsersController extends Controller
         return apiResponse2(1, 'success', "requirements uploaded successfully, wait to be reviewed");
     }
 
-
-    public function storeMetas(Request $request)
+    private function cleanUsersUtf8($collection)
     {
-        $data = $request->all();
-        $rules = [
-            'name' => 'required|string',
-            'value' => 'required|string',
-        ];
-
-        validateParam($request->all(), $rules);
-
-        $user = auth("api")->user();
-
-        $meta = UserMeta::create([
-            'user_id' => $user->id,
-            'name' => $data['name'],
-            'value' => $data['value'],
-        ]);
-
-        return sendResponse( $meta , 'data stored successfully');
+        return $collection->map(function ($item) {
+            foreach ($item->getAttributes() as $key => $value) {
+                if (is_string($value) && !mb_check_encoding($value, 'UTF-8')) {
+                    $item->$key = mb_convert_encoding($value, 'UTF-8', 'UTF-8');
+                }
+            }
+            return $item;
+        });
     }
 
-    public function updateMeta(Request $request, $meta_id)
+
+    public function students(Request $request, $is_export_excel = false)
     {
-        $data = $request->all();
-        $user = auth('api')->user();
-        $rules = [
-            'name' => 'required|string',
-            'value' => 'required|string',
-        ];
-        validateParam($request->all(), $rules);
+        $this->authorize('admin_users_list');
 
-        $meta = UserMeta::where('id', $meta_id)
-            ->where('user_id', $user->id)
-            ->where('name', $data['name'])
-            ->first();
+        $query = User::whereIn('role_name', [Role::$user, Role::$registered_user]);
 
-        if (!empty($meta)) {
-            $meta->update([
-                'value' => $data['value']
-            ]);
+        $totalStudents = clone $query;
+        $inactiveStudents = clone $query;
+        $banStudents = clone $query;
+        $totalStudents = $totalStudents->count();
+        $inactiveStudents = $inactiveStudents->where('status', 'inactive')->count();
+        $banStudents = $banStudents
+            ->where('ban', true)
+            ->whereNotNull('ban_end_at')
+            ->where('ban_end_at', '>', time())
+            ->count();
 
-            return sendResponse($meta, "meta is updated successfully");
+        $userGroups = Group::where('status', 'active')
+            ->orderBy('created_at', 'desc')
+            ->get();
+        $query = $this->filters($query, $request);
+
+        if ($is_export_excel) {
+            $users = $query->orderBy('created_at', 'desc')->get();
+        } else {
+            $users = $query->orderBy('created_at', 'desc')->get();
         }
 
-        return sendError([], "reference not found or not belong to you", 404);
-    }
+        $users = $query->with([
+            'student.bundleStudent.bundle',
+            'programTranslation'
+        ])->orderBy('created_at', 'desc')->get();
 
-    public function deleteMeta(Request $request, $meta_id)
-    {
-        $data = $request->all();
-        $user = auth('api')->user();
-
-        UserMeta::where('id', $meta_id)
-            ->where('user_id', $user->id)
-            ->delete();
-
-        return sendResponse([], "meta is deleted successfully");
-    }
-
-    public function indexReferences(){
-        $user = apiAuth();
-        $reference = UserReference::where('user_id', $user->id)->get();
-        return response()->json($reference);
-    }
-
-    public function indexbusinesslinks(){
-        $user = apiAuth();
-        $reference = UserMeta::where('user_id', $user->id)->where('name','link')->get();
-        return response()->json($reference);
-    }
-
-    
-    public function storeReference(Request $request)
-    {
-        $user = auth('api')->user();
-        $data = $request->all();
-
-        $rules = [
-            'name' => 'required|string',
-            'email' => 'required|email',
-            'workplace' => 'required|string',
-            'relationship' => 'required|string',
-            'job_title' => 'required|string',
-        ];
-
-        $validData = validateParam($request->all(), $rules);
-        $validData['user_id'] = $user->id;
-        $reference = UserReference::create($validData);
-
-        return sendResponse($reference, "reference is created successfully");
-    }
-
-    public function updateReference(Request $request, $reference_id)
-    {
-        $data = $request->all();
-        $user = auth('api')->user();
-
-        $rules = [
-            'name' => 'required|string',
-            'email' => 'required|email',
-            'workplace' => 'required|string',
-            'relationship' => 'required|string',
-            'job_title' => 'required|string',
-        ];
-
-        $validData = validateParam($request->all(), $rules);
-        $reference = UserReference::where('id', $reference_id)
-            ->where('user_id', $user->id)
-            ->first();
-
-
-        if (!empty($reference)) {
-            $reference->update($validData);
-
-            return sendResponse($reference, "reference is updated successfully");
+        if ($is_export_excel) {
+            $users = $query->orderBy('created_at', 'desc')->get();
+        } else {
+            $users = $query->orderBy('created_at', 'desc')
+                ->get();
         }
 
-        return sendError([], "reference not found or not belong to you", 404);
+        $users = $this->addUsersExtraInfo($users);
+
+        $category = Category::where('parent_id', '!=', null)->get();
+        $users = $users->map(function ($user) {
+            $student = $user->student;
+            if ($student) {
+                $user->student_id = $student->id;
+                $user->identity_img = $student->identity_img;
+                $user->bundles = $student->bundleStudent ? $student->bundleStudent->map(function ($bundleStudent) {
+                    return $bundleStudent->bundle;
+                }) : collect();
+            } else {
+                $user->student_id = null;
+                $user->identity_img = null;
+                $user->bundles = collect();
+            }
+            $user->program = $user->programTranslation ?? null;
+            return $user;
+        });
+
+        $data = [
+            'students' => $users,
+            'category' => $category,
+            'totalStudents' => $totalStudents,
+            'inactiveStudents' => $inactiveStudents,
+            'banStudents' => $banStudents,
+            'userGroups' => $userGroups
+        ];
+
+        return response()->json($data, 200, [], JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE);
     }
 
-    public function deleteReference(Request $request, $reference_id)
+    public function students2(Request $request, $is_export_excel = false)
     {
-        $data = $request->all();
-        $user = auth('api')->user();
+        $this->authorize('admin_users_list');
 
-        UserReference::where('id', $reference_id)
-            ->where('user_id', $user->id)
-            ->delete();
+        $query = User::whereIn('role_name', [Role::$user, Role::$registered_user]);
+
+        $totalStudents = clone $query;
+        $inactiveStudents = clone $query;
+        $banStudents = clone $query;
+        $totalStudents = $totalStudents->count();
+        $inactiveStudents = $inactiveStudents->where('status', 'inactive')->count();
+        $banStudents = $banStudents
+            ->where('ban', true)
+            ->whereNotNull('ban_end_at')
+            ->where('ban_end_at', '>', time())
+            ->count();
+
+        $userGroups = Group::where('status', 'active')
+            ->orderBy('created_at', 'desc')
+            ->get();
+        $query = $this->filters($query, $request);
+
+        if ($is_export_excel) {
+            $users = $query->orderBy('created_at', 'desc')->get();
+        } else {
+            $users = $query->orderBy('created_at', 'desc')->get();
+        }
+
+        $users = $query->with([
+            'student.bundleStudent.bundle',
+            'programTranslation'
+        ])->orderBy('created_at', 'desc')->get();
+
+        if ($is_export_excel) {
+            $users = $query->orderBy('created_at', 'desc')->get();
+        } else {
+            $users = $query->orderBy('created_at', 'desc')
+                ->get();
+        }
+
+        $users = $this->addUsersExtraInfo($users);
+
+        if ($is_export_excel) {
+            return $users;
+        }
+        $category = Category::where('parent_id', '!=', null)->get();
+        $users = $users->map(function ($user) {
+            $student = $user->student;
+            if ($student) {
+                $user->student_id = $student->id;
+                $user->identity_img = $student->identity_img;
+                $user->bundles = $student->bundleStudent ? $student->bundleStudent->map(function ($bundleStudent) {
+                    return $bundleStudent->bundle;
+                }) : collect();
+            } else {
+                $user->student_id = null;
+                $user->identity_img = null;
+                $user->bundles = collect();
+            }
+            $user->program = $user->programTranslation ?? null;
+            return $user;
+        });
+
+        $data = [
+            'students' => $users,
+            'category' => $category,
+            'totalStudents' => $totalStudents,
+            'inactiveStudents' => $inactiveStudents,
+            'banStudents' => $banStudents,
+            'userGroups' => $userGroups
+        ];
+
+        return response()->json($data, 200, [], JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE);
+    }
+
+    public function exportExcelAll(Request $request)
+    {
+        $this->authorize('admin_users_export_excel');
+
+        $users = $this->students2($request, true);
+
+        $usersExport = new StudentsExport($users);
+
+        return Excel::download($usersExport, 'الطلاب.xlsx');
+    }
+
+    public function addUsersExtraInfo($users)
+    {
+        foreach ($users as $user) {
+            $salesQuery = Sale::where('seller_id', $user->id)
+                ->whereNull('refund_at');
+
+            $classesSaleQuery = deepClone($salesQuery)->whereNotNull('webinar_id')
+                ->whereNull('meeting_id')
+                ->whereNull('promotion_id')
+                ->whereNull('subscribe_id');
+
+            $user->classesSalesCount = $classesSaleQuery->count();
+            $user->classesSalesSum = $classesSaleQuery->sum('total_amount');
+
+            $meetingIds = Meeting::where('creator_id', $user->id)->pluck('id');
+            $reserveMeetingsQuery = ReserveMeeting::whereIn('meeting_id', $meetingIds)
+                ->where(function ($query) {
+                    $query->whereHas('sale', function ($query) {
+                        $query->whereNull('refund_at');
+                    });
+
+                    $query->orWhere(function ($query) {
+                        $query->whereIn('status', ['canceled']);
+                        $query->whereHas('sale');
+                    });
+                });
+
+            $user->meetingsSalesCount = deepClone($reserveMeetingsQuery)->count();
+            $user->meetingsSalesSum = deepClone($reserveMeetingsQuery)->sum('paid_amount');
+
+            $purchasedQuery = Sale::where('buyer_id', $user->id)
+                ->whereNull('refund_at');
+
+            $classesPurchasedQuery = deepClone($purchasedQuery)->whereNotNull('webinar_id')
+                ->whereNull('meeting_id')
+                ->whereNull('promotion_id')
+                ->whereNull('subscribe_id');
+
+            $user->classesPurchasedsCount = $classesPurchasedQuery->count();
+            $user->classesPurchasedsSum = $classesPurchasedQuery->sum('total_amount');
+
+            $meetingsPurchasedQuery = deepClone($purchasedQuery)->whereNotNull('meeting_id')
+                ->whereNull('webinar_id')
+                ->whereNull('promotion_id')
+                ->whereNull('subscribe_id');
+
+            $user->meetingsPurchasedsCount = $meetingsPurchasedQuery->count();
+            $user->meetingsPurchasedsSum = $meetingsPurchasedQuery->sum('total_amount');
+        }
+
+        return $users;
+    }
+
+    public function coursesList(Request $request)
+    {
+        $query = Webinar::where(['unattached' => 1, 'hasGroup' => 1])->withCount('groups');
+        $webinars = $this->coursesListFilter($query, $request)->paginate(10);
+        // return view('admin.students.coursesList', compact('webinars'));
+        return response()->json([
+            'webinars' => $webinars,
+        ], 200);
+    }
+
+    public function coursesListFilter($query, $request)
+    {
+        $title = $request->input('title', null);
+        $from = $request->input('from', null);
+        $to = $request->input('to', null);
+
+        $query = fromAndToDateFilter($from, $to, $query, 'start_date');
+        if ($title) {
+            $query->whereTranslationLike('title', '%' . $title . '%')
+                ->orWhere('slug', 'like', '%' . $title . '%');
+        }
+        return $query;
+    }
+
+    public function RegisteredUsers(Request $request, $is_export_excel = false)
+    {
+
+        $this->authorize('admin_users_list');
+         $query = User::where(['role_name' => Role::$registered_user])->whereDoesntHave('student')->with('programTranslation');
+
+        $query = $this->filters($query, $request);
+
+        $users = $query->orderBy('created_at', 'desc')->get();
 
 
+        $users = $this->addUsersExtraInfo($users);
 
-        return sendResponse([], "reference is deleted successfully");
+        $data = [
+            'users' => $users,
+        ];
+
+        return response()->json($data, 200, [], JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE);
+    }
+
+    public function RegisteredUsers2(Request $request, $is_export_excel = false)
+    {
+
+        $this->authorize('admin_users_list');
+        $query = User::where(['role_name' => Role::$registered_user])->whereDoesntHave('student')->with('programTranslation');
+
+        $query = $this->filters($query, $request);
+
+        $users = $query->orderBy('created_at', 'desc')->get();
+
+
+        $users = $this->addUsersExtraInfo($users);
+
+        if ($is_export_excel) {
+        return $users;
+        }
+        return $users;
+        $data = [
+            'users' => $users,
+        ];
+
+        return response()->json($data, 200, [], JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE);
+    }
+
+    public function exportExcelRegisteredUsers(Request $request)
+    {
+        $this->authorize('admin_users_export_excel');
+
+        $users = $this->RegisteredUsers2($request, true);
+
+        if (!empty($request->class_id)) {
+            $studyClass = StudyClass::find($request->class_id);
+            if (!empty($studyClass)) {
+                $users = (new StudyClassController())->RegisteredUsers($request, $studyClass, true);
+            }
+        }
+
+        $usersExport = new StudentsExport($users, $request->class_id ?? null);
+
+        return Excel::download($usersExport, 'نموذج انشاء حساب.xlsx');
+    }
+
+    public function filters($query, $request)
+    {
+        $from = $request->input('from');
+        $to = $request->input('to');
+        $user_name = $request->get('user_name');
+        $full_name = $request->get('full_name');
+        $user_code = $request->get('user_code');
+        $ar_name = $request->get('ar_name');
+        $email = $request->get('email');
+        $mobile = $request->get('mobile');
+        $sort = $request->get('sort');
+        $group_id = $request->get('group_id');
+        $status = $request->get('status');
+        $role_id = $request->get('role_id');
+        $organization_id = $request->get('organization_id');
+        $program = $request->get('program', null);
+
+        $query = fromAndToDateFilter($from, $to, $query, 'created_at');
+
+        if (!empty($full_name)) {
+            $query->where('full_name', 'like', "%$full_name%");
+        }
+
+        if (!empty($user_name)) {
+            $query->where(function ($q) use ($user_name) {
+                $q->where('full_name', 'like', "%$user_name%")
+                    ->orWhereHas('student', function ($q) use ($user_name) {
+                        $q->where('ar_name', 'like', "%$user_name%")
+                            ->orWhere('en_name', 'like', "%$user_name%");
+                    });
+            });
+        }
+
+        if (!empty($user_code)) {
+            $query->where('user_code', 'like', "%$user_code%");
+        }
+        if (!empty($ar_name)) {
+            $query->whereHas('student', function ($q) use ($ar_name) {
+                $q->where('ar_name', 'like', "%$ar_name%");
+                $q->orWhere('en_name', 'like', "%$ar_name%");
+            });
+        }
+        if (!empty($email)) {
+            $query->where('email', 'like', "%$email%");
+        }
+        if (!empty($mobile)) {
+            $query->where('mobile', 'like', "%$mobile%");
+        }
+        if (!empty($program)) {
+            $query->where(function ($q1) use ($program) {
+                $q1->whereHas('purchases', function ($query2) use ($program) {
+                    $query2->whereHas(
+                        'bundle',
+                        function ($q) use ($program) {
+                            $q->whereTranslationLike('title', '%' . $program . '%')
+                                ->orWhere('slug', 'like', "%$program%");
+                        }
+                    )
+                        ->orWhereHas(
+                            'webinar',
+                            function ($q) use ($program) {
+                                $q->whereTranslationLike('title', '%' . $program . '%')
+                                    ->orWhere('slug', 'like', "%$program%");
+                            }
+                        );
+                })
+                    ->orWhereHas('appliedProgram', function ($q) use ($program) {
+                        $q->whereTranslationLike('title', '%' . $program . '%')
+                            ->orWhere('slug', 'like', "%$program%");
+                    });
+            });
+        }
+
+        if (!empty($sort)) {
+            switch ($sort) {
+                case 'sales_classes_asc':
+                    $query->join('sales', 'users.id', '=', 'sales.seller_id')
+                        ->select('users.*', 'sales.seller_id', 'sales.webinar_id', 'sales.refund_at', DB::raw('count(sales.seller_id) as sales_count'))
+                        ->whereNotNull('sales.webinar_id')
+                        ->whereNull('sales.refund_at')
+                        ->groupBy('sales.seller_id')
+                        ->orderBy('sales_count', 'asc');
+                    break;
+                case 'sales_classes_desc':
+                    $query->join('sales', 'users.id', '=', 'sales.seller_id')
+                        ->select('users.*', 'sales.seller_id', 'sales.webinar_id', 'sales.refund_at', DB::raw('count(sales.seller_id) as sales_count'))
+                        ->whereNotNull('sales.webinar_id')
+                        ->whereNull('sales.refund_at')
+                        ->groupBy('sales.seller_id')
+                        ->orderBy('sales_count', 'desc');
+                    break;
+                case 'purchased_classes_asc':
+                    $query->join('sales', 'users.id', '=', 'sales.buyer_id')
+                        ->select('users.*', 'sales.buyer_id', 'sales.refund_at', DB::raw('count(sales.buyer_id) as purchased_count'))
+                        ->whereNull('sales.refund_at')
+                        ->groupBy('sales.buyer_id')
+                        ->orderBy('purchased_count', 'asc');
+                    break;
+                case 'purchased_classes_desc':
+                    $query->join('sales', 'users.id', '=', 'sales.buyer_id')
+                        ->select('users.*', 'sales.buyer_id', 'sales.refund_at', DB::raw('count(sales.buyer_id) as purchased_count'))
+                        ->groupBy('sales.buyer_id')
+                        ->whereNull('sales.refund_at')
+                        ->orderBy('purchased_count', 'desc');
+                    break;
+                case 'purchased_classes_amount_asc':
+                    $query->join('sales', 'users.id', '=', 'sales.buyer_id')
+                        ->select('users.*', 'sales.buyer_id', 'sales.amount', 'sales.refund_at', DB::raw('sum(sales.amount) as purchased_amount'))
+                        ->groupBy('sales.buyer_id')
+                        ->whereNull('sales.refund_at')
+                        ->orderBy('purchased_amount', 'asc');
+                    break;
+                case 'purchased_classes_amount_desc':
+                    $query->join('sales', 'users.id', '=', 'sales.buyer_id')
+                        ->select('users.*', 'sales.buyer_id', 'sales.amount', 'sales.refund_at', DB::raw('sum(sales.amount) as purchased_amount'))
+                        ->groupBy('sales.buyer_id')
+                        ->whereNull('sales.refund_at')
+                        ->orderBy('purchased_amount', 'desc');
+                    break;
+                case 'sales_appointments_asc':
+                    $query->join('sales', 'users.id', '=', 'sales.seller_id')
+                        ->select('users.*', 'sales.seller_id', 'sales.meeting_id', 'sales.refund_at', DB::raw('count(sales.seller_id) as sales_count'))
+                        ->whereNotNull('sales.meeting_id')
+                        ->whereNull('sales.refund_at')
+                        ->groupBy('sales.seller_id')
+                        ->orderBy('sales_count', 'asc');
+                    break;
+                case 'sales_appointments_desc':
+                    $query->join('sales', 'users.id', '=', 'sales.seller_id')
+                        ->select('users.*', 'sales.seller_id', 'sales.meeting_id', 'sales.refund_at', DB::raw('count(sales.seller_id) as sales_count'))
+                        ->whereNotNull('sales.meeting_id')
+                        ->whereNull('sales.refund_at')
+                        ->groupBy('sales.seller_id')
+                        ->orderBy('sales_count', 'desc');
+                    break;
+                case 'purchased_appointments_asc':
+                    $query->join('sales', 'users.id', '=', 'sales.buyer_id')
+                        ->select('users.*', 'sales.buyer_id', 'sales.meeting_id', 'sales.refund_at', DB::raw('count(sales.buyer_id) as purchased_count'))
+                        ->whereNotNull('sales.meeting_id')
+                        ->whereNull('sales.refund_at')
+                        ->groupBy('sales.buyer_id')
+                        ->orderBy('purchased_count', 'asc');
+                    break;
+                case 'purchased_appointments_desc':
+                    $query->join('sales', 'users.id', '=', 'sales.buyer_id')
+                        ->select('users.*', 'sales.buyer_id', 'sales.meeting_id', 'sales.refund_at', DB::raw('count(sales.buyer_id) as purchased_count'))
+                        ->whereNotNull('sales.meeting_id')
+                        ->whereNull('sales.refund_at')
+                        ->groupBy('sales.buyer_id')
+                        ->orderBy('purchased_count', 'desc');
+                    break;
+                case 'purchased_appointments_amount_asc':
+                    $query->join('sales', 'users.id', '=', 'sales.buyer_id')
+                        ->select('users.*', 'sales.buyer_id', 'sales.amount', 'sales.meeting_id', 'sales.refund_at', DB::raw('sum(sales.amount) as purchased_amount'))
+                        ->whereNotNull('sales.meeting_id')
+                        ->whereNull('sales.refund_at')
+                        ->groupBy('sales.buyer_id')
+                        ->orderBy('purchased_amount', 'asc');
+                    break;
+                case 'purchased_appointments_amount_desc':
+                    $query->join('sales', 'users.id', '=', 'sales.buyer_id')
+                        ->select('users.*', 'sales.buyer_id', 'sales.amount', 'sales.meeting_id', 'sales.refund_at', DB::raw('sum(sales.amount) as purchased_amount'))
+                        ->whereNotNull('sales.meeting_id')
+                        ->whereNull('sales.refund_at')
+                        ->groupBy('sales.buyer_id')
+                        ->orderBy('purchased_amount', 'desc');
+                    break;
+                case 'register_asc':
+                    $query->orderBy('created_at', 'asc');
+                    break;
+                case 'register_desc':
+                    $query->orderBy('created_at', 'desc');
+                    break;
+            }
+        }
+
+        if (!empty($group_id)) {
+            // $userIds = GroupUser::where('group_id', $group_id)->pluck('user_id')->toArray();
+            $userIds = Enrollment::where('group_id', $group_id)->pluck('user_id')->toArray();
+
+            $query->whereIn('id', $userIds);
+        }
+
+        if (!empty($status)) {
+            switch ($status) {
+                case 'active_verified':
+                    $query->where('status', 'active')
+                        ->where('verified', true);
+                    break;
+                case 'active_notVerified':
+                    $query->where('status', 'active')
+                        ->where('verified', false);
+                    break;
+                case 'inactive':
+                    $query->where('status', 'inactive');
+                    break;
+                case 'ban':
+                    $query->where('ban', true)
+                        ->whereNotNull('ban_end_at')
+                        ->where('ban_end_at', '>', time());
+                    break;
+            }
+        }
+
+        if (!empty($role_id)) {
+            $query->where('role_id', $role_id);
+        }
+
+        if (!empty($organization_id)) {
+            $query->where('organ_id', $organization_id);
+        }
+
+        //dd($query->get());
+        return $query;
+    }
+
+    public function reserveSeat(Request $request, $is_export_excel = false)
+    {
+        $this->authorize('admin_users_list');
+
+        $query = User::whereHas('student')->whereHas('purchasedFormBundleUnique');
+
+        $salaQuery = Sale::whereNull('refund_at')
+            ->whereHas('buyer')
+            ->where('type', 'form_fee')
+            ->whereNotNull('bundle_id')
+            ->whereNotExists(function ($query) {
+                $query->selectRaw(1)
+                    ->from('sales as s2')
+                    ->whereRaw('s2.bundle_id = sales.bundle_id')
+                    ->where(function ($query) {
+                        $query->where('s2.type', 'bundle')
+                            ->orWhere('s2.type', 'installment_payment')
+                            ->orWhere('s2.type', 'bridging');
+                    })
+                    ->whereRaw('s2.buyer_id = sales.buyer_id');
+            })
+            ->where("payment_method", "!=", 'scholarship')
+            ->with(['buyer', 'bundle'])
+            ->orderBy('buyer_id', 'desc')
+            ->groupBy(['buyer_id', 'bundle_id']);
+
+        $query = (new SaleController())->getSalesFilters($salaQuery, $request);
+
+        $sales = $query->orderBy('created_at', 'desc')->get();
+
+        return response()->json($sales, 200, [], JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE);
+    }
+
+    public function exportExcelReserveSeat(Request $request)
+    {
+        $this->authorize('admin_users_export_excel');
+
+        $users = $this->RegisteredUsers2($request, true);
+
+        if (!empty($request->class_id)) {
+            $studyClass = StudyClass::find($request->class_id);
+            if (!empty($studyClass)) {
+                $users = (new StudyClassController())->RegisteredUsers2($request, $studyClass, true);
+            }
+        }
+
+        $usersExport = new StudentsExport($users, $request->class_id ?? null);
+
+        return Excel::download($usersExport, 'نموذج انشاء حساب.xlsx');
+    }
+
+    public function Enrollers(Request $request, $is_export_excel = false)
+    {
+        $this->authorize('admin_users_list');
+
+        $salaQuery = Sale::whereNull('refund_at')
+            ->whereNotNull(['bundle_id', 'buyer_id'])
+            ->whereHas('buyer')
+            ->whereIn('type', ['bundle', 'installment_payment', 'bridging'])
+            ->where("payment_method", "!=", 'scholarship')
+            ->with(['buyer', 'bundle'])
+            ->orderBy('buyer_id', 'desc')
+            ->groupBy(['buyer_id', 'bundle_id']);
+
+        $query = (new SaleController())->getSalesFilters($salaQuery, $request);
+
+        $sales = $query->orderBy('created_at', 'desc')->get();
+
+        return response()->json($sales, 200, [], JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE);
+    }
+
+    public function Enrollers2(Request $request, $is_export_excel = false)
+    {
+        $this->authorize('admin_users_list');
+
+        $salaQuery = Sale::whereNull('refund_at')
+            ->whereNotNull(['bundle_id', 'buyer_id'])
+            ->whereHas('buyer')
+            ->whereIn('type', ['bundle', 'installment_payment', 'bridging'])
+            ->where("payment_method", "!=", 'scholarship')
+            ->with(['buyer', 'bundle'])
+            ->orderBy('buyer_id', 'desc')
+            ->groupBy(['buyer_id', 'bundle_id']);
+
+        $query = (new SaleController())->getSalesFilters($salaQuery, $request);
+
+        $sales = $query->orderBy('created_at', 'desc')->get();
+
+        if ($is_export_excel) {
+            return $sales;
+        }
+
+        return response()->json($sales, 200, [], JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE);
+    }
+
+    public function exportExcelEnrollers(Request $request)
+    {
+        $this->authorize('admin_users_export_excel');
+
+        $sales = $this->Enrollers2($request, true);
+        if (!empty($request->class_id)) {
+            $studyClass = StudyClass::find($request->class_id);
+            if (!empty($studyClass)) {
+                $sales = (new StudyClassController())->Enrollers($request, $studyClass, true);
+            }
+        }
+        $usersExport = new EnrollersExport($sales, $request->class_id ?? null);
+
+        return Excel::download($usersExport, ' تسجيل البرامج.xlsx');
+    }
+
+    public function directRegister(Request $request, $is_export_excel = false)
+    {
+        $this->authorize('admin_users_list');
+
+        $query = BundleStudent::whereHas('student')->whereNull('class_id')->with(['student.user', 'bundle']);
+
+        if ($is_export_excel) {
+            $bundlstudents = $query->orderBy('student_id', 'desc')->get();
+        } else {
+            $bundlstudents = $query->orderBy('student_id', 'desc')->orderBy('created_at', 'desc')
+                ->get();
+        }
+
+        return response()->json($bundlstudents, 200, [], JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE);
+    }
+
+    public function directRegister2(Request $request, $is_export_excel = false)
+    {
+        $this->authorize('admin_users_list');
+
+        $query = BundleStudent::whereHas('student')->whereNull('class_id')->with(['student.user', 'bundle']);
+
+        if ($is_export_excel) {
+            $bundlstudents = $query->orderBy('student_id', 'desc')->get();
+        } else {
+            $bundlstudents = $query->orderBy('student_id', 'desc')->orderBy('created_at', 'desc')
+                ->get();
+        }
+        if ($is_export_excel) {
+            $bundlstudents = $query->orderBy('student_id', 'desc')->get();
+        } else {
+            $bundlstudents = $query->orderBy('student_id', 'desc')->orderBy('created_at', 'desc')
+                ->get();
+        }
+
+        if ($is_export_excel) {
+            return $bundlstudents;
+        }
+        return response()->json($bundlstudents, 200, [], JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE);
+    }
+
+    public function exportExcelDirectRegister(Request $request)
+    {
+        $this->authorize('admin_users_export_excel');
+
+        $bundlstudents = $this->directRegister2($request, true);
+        if (!empty($request->class_id)) {
+            $studyClass = StudyClass::find($request->class_id);
+            if (!empty($studyClass)) {
+                $bundlstudents = (new StudyClassController())->directRegister($request, $studyClass, true);
+            }
+        }
+        $usersExport = new DirectRegisterExport($bundlstudents, $request->class_id ?? null);
+
+        return Excel::download($usersExport, ' تسجيل مباشر.xlsx');
+    }
+
+    public function getPurchasedClassesData($user)
+    {
+        $manualAddedClasses = Sale::whereNull('refund_at')
+            ->where('buyer_id', $user->id)
+            ->whereNotNull('webinar_id')
+            ->where('sales.manual_added', true)
+            ->where('sales.access_to_purchased_item', true)
+            ->whereHas('webinar')
+            ->with([
+                'webinar',
+            ])
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        $manualDisabledClasses = Sale::whereNull('refund_at')
+            ->where('buyer_id', $user->id)
+            ->whereNotNull('webinar_id')
+            ->where('sales.access_to_purchased_item', false)
+            ->whereHas('webinar')
+            ->with([
+                'webinar',
+            ])
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        $purchasedClasses = Sale::whereNull('refund_at')
+            ->where('buyer_id', $user->id)
+            ->whereNotNull('webinar_id')
+            ->where('sales.access_to_purchased_item', true)
+            ->where('sales.manual_added', false)
+            ->whereHas('webinar')
+            ->with([
+                'webinar',
+            ])
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return [
+            'manualAddedClasses' => $manualAddedClasses,
+            'purchasedClasses' => $purchasedClasses,
+            'manualDisabledClasses' => $manualDisabledClasses,
+        ];
+    }
+
+    public function getPurchasedBundlesData($user)
+    {
+        $manualAddedBundles = Sale::whereNull('refund_at')
+            ->where('buyer_id', $user->id)
+            ->whereNotNull('bundle_id')
+            ->where('sales.manual_added', true)
+            ->where('sales.access_to_purchased_item', true)
+            ->whereHas('bundle')
+            ->with([
+                'bundle',
+            ])
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        $manualDisabledBundles = Sale::whereNull('refund_at')
+            ->where('buyer_id', $user->id)
+            ->whereNotNull('bundle_id')
+            ->where('sales.access_to_purchased_item', false)
+            ->whereHas('bundle')
+            ->with([
+                'bundle',
+            ])
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        $purchasedBundles = Sale::whereNull('refund_at')
+            ->where('buyer_id', $user->id)
+            ->whereNotNull('bundle_id')
+            ->where('sales.access_to_purchased_item', true)
+            ->where('sales.manual_added', false)
+            ->whereHas('bundle')
+            ->with([
+                'bundle',
+            ])
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return [
+            'manualAddedBundles' => $manualAddedBundles,
+            'purchasedBundles' => $purchasedBundles,
+            'manualDisabledBundles' => $manualDisabledBundles,
+        ];
+    }
+
+    public function getPurchasedProductsData($user)
+    {
+        $manualAddedProducts = Sale::whereNull('refund_at')
+            ->where('buyer_id', $user->id)
+            ->whereNotNull('product_order_id')
+            ->where('sales.manual_added', true)
+            ->where('sales.access_to_purchased_item', true)
+            ->whereHas('productOrder')
+            ->with([
+                'productOrder' => function ($query) {
+                    $query->with([
+                        'product',
+                    ]);
+                },
+            ])
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        $manualDisabledProducts = Sale::whereNull('refund_at')
+            ->where('buyer_id', $user->id)
+            ->whereNotNull('product_order_id')
+            ->where('sales.access_to_purchased_item', false)
+            ->whereHas('productOrder')
+            ->with([
+                'productOrder' => function ($query) {
+                    $query->with([
+                        'product',
+                    ]);
+                },
+            ])
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        $purchasedProducts = Sale::whereNull('refund_at')
+            ->where('buyer_id', $user->id)
+            ->whereNotNull('product_order_id')
+            ->where('sales.access_to_purchased_item', true)
+            ->where('sales.manual_added', false)
+            ->whereHas('productOrder')
+            ->with([
+                'productOrder' => function ($query) {
+                    $query->with([
+                        'product',
+                    ]);
+                },
+            ])
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return [
+            'manualAddedProducts' => $manualAddedProducts,
+            'purchasedProducts' => $purchasedProducts,
+            'manualDisabledProducts' => $manualDisabledProducts,
+        ];
+    }
+
+    public function ScholarshipStudent(Request $request, $is_export_excel = false)
+    {
+        $this->authorize('admin_users_list');
+        $query = User::where(['role_name' => Role::$user])->whereHas('purchasedBundles', function ($query) {
+            $query->where("payment_method", 'scholarship');
+        });
+
+        $salaQuery = Sale::whereNull('refund_at')
+            ->whereNotNull('bundle_id')
+            ->whereHas('buyer')
+            ->whereIn('type', ['bundle', 'installment_payment', 'bridging'])
+            ->where("payment_method", "=", 'scholarship')
+            ->with(['buyer', 'bundle'])
+            ->orderBy('buyer_id', 'desc')
+            ->groupBy(['buyer_id', 'bundle_id']);
+
+        $query = (new SaleController())->getSalesFilters($salaQuery, $request);
+
+        if ($is_export_excel) {
+            $sales = $query->orderBy('created_at', 'desc')->get();
+        } else {
+            $sales = $query->orderBy('created_at', 'desc')->get();
+        }
+
+        if ($is_export_excel) {
+            return $sales;
+        }
+
+        $data = [
+            'sales' => $sales,
+        ];
+
+        return response()->json($data, 200, [], JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE);
+    }
+
+    public function exportExcelScholarship(Request $request)
+    {
+        $this->authorize('admin_users_export_excel');
+
+        $sales = $this->ScholarshipStudent($request, true);
+        if (!empty($request->class_id)) {
+            $studyClass = StudyClass::find($request->class_id);
+            if (!empty($studyClass)) {
+                $sales = (new StudyClassController())->ScholarshipStudent($request, $studyClass, true);
+            }
+        }
+        $usersExport = new EnrollersExport($sales, $request->class_id ?? null);
+
+        return Excel::download($usersExport, ' تسجيل المنح الدراسية.xlsx');
+    }
+
+    public function update(Request $request, $url_name, $id)
+    {
+        try {
+            $this->authorize('admin_users_edit');
+
+            $organization = Organization::where('url_name', $url_name)->firstOrFail();
+            if (!$organization) {
+                return response()->json(['message' => 'Organization not found'], 404);
+            }
+            $user = User::findOrFail($id);
+            if (!$user) {
+                return response()->json(['message' => 'User not found'], 404);
+            }
+            $rules = [
+                'full_name' => 'sometimes|min:3|max:128',
+                'role_id' => 'sometimes|exists:roles,id',
+                'email' => 'sometimes|email|unique:users,email,' . $user->id . ',id,deleted_at,NULL',
+                'mobile' => 'sometimes|numeric|unique:users,mobile,' . $user->id . ',id,deleted_at,NULL',
+                'password' => 'sometimes|string',
+                'bio' => 'sometimes|string|min:3|max:48',
+                'about' => 'sometimes|string|min:3',
+                'certificate_additional' => 'sometimes|string|max:255',
+                'status' => ['sometimes', Rule::in(User::$statuses)],
+                'ban_start_at' => 'required_if:ban,on',
+                'ban_end_at' => 'required_if:ban,on',
+                'en_name' => 'sometimes|string|max:255',
+            ];
+
+            if (!empty($user->student)) {
+                $rules['user_code'] = 'required|unique:users,user_code,' . $user->id;
+            }
+
+            $validatedData = $request->validate($rules);
+
+            $user->fill($validatedData);
+
+            if (!empty($validatedData['password'])) {
+                $user->password = User::generatePassword($validatedData['password']);
+            }
+
+            $user->save();
+
+            return response()->json([
+                'message' => 'User updated successfully',
+                'user' => $user->fresh()
+            ], 200);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json([
+                'message' => 'Validation failed',
+                'errors' => $e->errors()
+            ], 422);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'An error occurred',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function destroy($url_name, $id)
+    {
+        $this->authorize('admin_users_delete');
+
+        $organization = Organization::where('url_name', $url_name)->firstOrFail();
+        if (!$organization) {
+            return response()->json(['message' => 'Organization not found'], 404);
+        }
+        $user = User::find($id);
+
+        if ($user) {
+            $user->delete();
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'User deleted successfully'
+        ], 200);
     }
 }

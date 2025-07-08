@@ -44,10 +44,11 @@ use App\Models\StudyClass;
 use Illuminate\Support\Facades\Date;
 use App\Facades\MicrosoftGraph;
 use App\Http\Controllers\Api\Panel\CartController as CartController;
-
+use App\Http\Controllers\Api\Traits\sendError;
 
 class PaymentController extends Controller
 {
+    use sendError;
     protected $order_session_key = 'payment.order_id';
 
 
@@ -326,7 +327,8 @@ class PaymentController extends Controller
                 'msg' => trans('cart.gateway_error'),
                 'status' => 'error'
             ];
-            return sendError(['exception' => $exception], trans('cart.gateway_error'));
+       
+            return $this->sendError(['exception' => $exception], trans('cart.gateway_error'));
         }
     }
 
@@ -347,7 +349,11 @@ class PaymentController extends Controller
                 'msg' => trans('cart.gateway_error'),
                 'status' => 'error'
             ];
-            return sendError(['exception' => $exception->getMessage(), 4], trans('cart.gateway_error'));
+            return $this->sendError(['exception' => $exception->getMessage(), 4], trans('cart.gateway_error'));
+
+            // return response([
+            //     'error'=>trans('cart.gateway_error')
+            // ]);
         }
     }
 

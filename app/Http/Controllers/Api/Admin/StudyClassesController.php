@@ -240,9 +240,23 @@ class StudyClassesController extends Controller
 
         if ($is_export_excel) {
             $users = $query->orderBy('created_at', 'desc')->get();
+
+            // If exporting to Excel, no pagination info needed
+            return response()->json([
+                'data' => $users,
+            ]);
         } else {
-            $users = $query->orderBy('created_at', 'desc')
-                ->get();
+            $users = $query->orderBy('created_at', 'desc')->paginate(20);
+
+            return response()->json([
+                'data' => $users->items(), // Only the current page's data
+                'pagination' => [
+                    'current_page' => $users->currentPage(),
+                    'last_page' => $users->lastPage(),
+                    'per_page' => $users->perPage(),
+                    'total' => $users->total(),
+                ],
+            ]);
         }
 
         $users = (new UserController())->addUsersExtraInfo($users);
@@ -250,8 +264,20 @@ class StudyClassesController extends Controller
         if ($is_export_excel) {
             return $users;
         }
+        $cleanUsers = $users->map(function ($user) {
+            $array = $user->toArray();
 
-        return response()->json($users);
+            // Sanitize all string values to ensure UTF-8
+            array_walk_recursive($array, function (&$value) {
+                if (is_string($value) && !mb_check_encoding($value, 'UTF-8')) {
+                    $value = mb_convert_encoding($value, 'UTF-8', 'UTF-8');
+                }
+            });
+
+            return $array;
+        });
+
+        return response()->json($cleanUsers);
     }
     public function Users($url_name, Request $request, StudyClass $class, $is_export_excel = false)
     {
@@ -293,7 +319,7 @@ class StudyClassesController extends Controller
             $sales = $query->orderBy('created_at', 'desc')->get();
         } else {
 
-            $sales = $query->orderBy('created_at', 'desc')->get();
+            $sales = $query->orderBy('created_at', 'desc')->paginate(20);
         }
 
         if ($is_export_excel) {
@@ -301,8 +327,13 @@ class StudyClassesController extends Controller
         }
 
         return response()->json([
-            'success' => true,
-            'message' => $sales
+            'data' => $sales->items(), // Only the current page's data
+            'pagination' => [
+                'current_page' => $sales->currentPage(),
+                'last_page' => $sales->lastPage(),
+                'per_page' => $sales->perPage(),
+                'total' => $sales->total(),
+            ],
         ]);
     }
     public function Enrollers($url_name, Request $request, StudyClass $class, $is_export_excel = false)
@@ -454,7 +485,7 @@ class StudyClassesController extends Controller
         if ($is_export_excel) {
             $bundlstudents = $query->orderBy('created_at', 'desc')->get();
         } else {
-            $bundlstudents = $query->orderBy('created_at', 'desc')->get();
+            $bundlstudents = $query->orderBy('created_at', 'desc')->paginate(20);
         }
 
         if ($is_export_excel) {
@@ -462,9 +493,14 @@ class StudyClassesController extends Controller
         }
 
         return response()->json([
-            'success' => true,
-            'message' => $bundlstudents
-        ], 200, [], JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE);
+            'data' => $bundlstudents->items(), // Only the current page's data
+            'pagination' => [
+                'current_page' => $bundlstudents->currentPage(),
+                'last_page' => $bundlstudents->lastPage(),
+                'per_page' => $bundlstudents->perPage(),
+                'total' => $bundlstudents->total(),
+            ],
+        ]);
     }
 
     public function requirements(Request $request, StudyClass $class)

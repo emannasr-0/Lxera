@@ -36,5 +36,8 @@ class Student extends Model
         return $this->belongsToMany(Bundle::class,'student_exception_certificate');
 
     }
+    public function user(){
+        return $this->belongsTo(User::class, 'user_id');
+    }
 
 }

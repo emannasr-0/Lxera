@@ -2403,10 +2403,20 @@ class UserController extends Controller
 
         $webinars = $this->coursesListFilter($query, $request)->get();
 
-        return response()->json([
-            'success' => true,
-            'data' => $webinars
-        ]);
+        $cleanWebinars = $webinars->map(function ($webinar) {
+            $array = $webinar->toArray();
+
+            // Sanitize all string values to ensure UTF-8
+            array_walk_recursive($array, function (&$value) {
+                if (is_string($value) && !mb_check_encoding($value, 'UTF-8')) {
+                    $value = mb_convert_encoding($value, 'UTF-8', 'UTF-8');
+                }
+            });
+
+            return $array;
+        });
+
+        return response()->json($cleanWebinars);
     }
 
 

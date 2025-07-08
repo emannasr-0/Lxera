@@ -59,6 +59,7 @@ return [
   'comments' => 'التعليقات',
   'reply' => 'رد',
   'replied' => 'تم الرد',
+  'supporter_replied' => 'رد الرعم',
   'not_replied' => 'لم يتم الرد',
   'report' => 'ابلاغ',
   'report_success' => 'تم ارسال بلاغك.',

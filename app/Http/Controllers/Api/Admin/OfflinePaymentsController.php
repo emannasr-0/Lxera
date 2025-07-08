@@ -50,17 +50,43 @@ class OfflinePaymentsController extends Controller
                 'specifications'
             ])->get();
 
-        $data = [
-            'offlinePayments' => $offlinePayments,
-            'offlineBanks' => $offlineBanks,
-        ];
-
         $user_ids = $request->get('user_ids', []);
 
         if (!empty($user_ids)) {
             $data['users'] = User::select('id', 'full_name')
                 ->whereIn('id', $user_ids)->get();
         }
+
+        $cleanOfflinePayments = $offlinePayments->map(function ($offlinePayment) {
+            $array = $offlinePayment->toArray();
+
+            // Sanitize all string values to ensure UTF-8
+            array_walk_recursive($array, function (&$value) {
+                if (is_string($value) && !mb_check_encoding($value, 'UTF-8')) {
+                    $value = mb_convert_encoding($value, 'UTF-8', 'UTF-8');
+                }
+            });
+
+            return $array;
+        });
+
+        $cleanOfflineBanks = $offlineBanks->map(function ($offlineBank) {
+            $array = $offlineBank->toArray();
+
+            // Sanitize all string values to ensure UTF-8
+            array_walk_recursive($array, function (&$value) {
+                if (is_string($value) && !mb_check_encoding($value, 'UTF-8')) {
+                    $value = mb_convert_encoding($value, 'UTF-8', 'UTF-8');
+                }
+            });
+
+            return $array;
+        });
+
+        $data = [
+            'offlinePayments' => $cleanOfflinePayments,
+            'offlineBanks' => $cleanOfflineBanks,
+        ];
 
         return response()->json($data);
     }
@@ -270,7 +296,7 @@ class OfflinePaymentsController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'The offline payment is approved successfully'
-        ]);    
+        ]);
     }
 
     public function exportExcel(Request $request)

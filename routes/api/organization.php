@@ -29,11 +29,8 @@ use App\Http\Controllers\Api\Admin\SupportsController;
 use App\Http\Controllers\Api\Admin\SupportsQuestionController;
 use App\Http\Controllers\Api\Admin\UsersNotAccessToContentController;
 use App\Http\Controllers\Api\Admin\WebinarCertificateController;
-
-use App\Http\Controllers\Api\Instructor\EmployeeProgressController;
-
-use App\Http\Controllers\Api\Panel\NotificationsController;
-
+use App\Http\Controllers\Api\Admin\EmployeeProgressController;
+use App\Http\Controllers\Api\Admin\NotificationsController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('{url_name}')->group(function () {
@@ -300,6 +297,10 @@ Route::prefix('{url_name}')->group(function () {
                 Route::post('/', [RoleController::class, 'store']);
                 Route::put('/{id}', [RoleController::class, 'update']);
                 Route::delete('/{id}', [RoleController::class, 'destroy']);
+                Route::group(['prefix' => 'permissions'], function () {
+                    Route::get('/', [RoleController::class, 'listPermissions']);
+                    Route::get('/{id}', [RoleController::class, 'showPermissions']);
+                });
             });
 
             // Groups
@@ -325,7 +326,7 @@ Route::prefix('{url_name}')->group(function () {
         Route::get('employee_progress', [EmployeeProgressController::class, 'index']);
         Route::delete('/{bundle_id}/{student_id}/remove', [EmployeeProgressController::class, 'destroy']);
         Route::post('/add_employee', [EmployeeProgressController::class, 'store']);
-        
+
 
         // Support
         Route::group(['prefix' => 'supports'], function () {

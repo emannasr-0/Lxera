@@ -161,7 +161,6 @@ class StudyClassController extends Controller
         return back()->with(['toast' => $toastData]);
     }
 
-
     public function students(StudyClass $class, Request $request, $is_export_excel = false)
     {
 
@@ -270,6 +269,7 @@ class StudyClassController extends Controller
 
         return view('admin.students.index', $data);
     }
+
     public function Users(Request $request, StudyClass $class, $is_export_excel = false)
     {
         $this->authorize('admin_users_list');
@@ -356,6 +356,7 @@ class StudyClassController extends Controller
 
         return view('admin.students.enrollers', $data);
     }
+
     public function Enrollers(Request $request, StudyClass $class, $is_export_excel = false)
     {
         $this->authorize('admin_users_list');

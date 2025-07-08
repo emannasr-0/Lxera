@@ -25,7 +25,6 @@ class BundleStudent extends Pivot
         return $this->belongsTo(Bundle::class, "bundle_id");
     }
 
-
     public function class(){
         return $this->belongsTo(StudyClass::class, "class_id");
     }

@@ -488,6 +488,7 @@ class SalesController extends Controller
 
     public function invoice($url_name, $id)
     {
+
         $organization = Organization::where('url_name', $url_name)->first();
         if (!$organization) {
             return response()->json(['message' => 'Organization not found'], 404);
@@ -498,7 +499,6 @@ class SalesController extends Controller
         $sale = Sale::where('id', $id)
             ->with([
                 'order',
-
                 'buyer' => function ($query) {
                     $query->select('id', 'full_name');
                 },
@@ -535,8 +535,12 @@ class SalesController extends Controller
                 return response()->json($data);
             }
         }
-
-        abort(404);
+        $data = [
+            'invoiceURL' => 'http://127.0.0.1:8000/admin/financial/sales/' . $id . '/invoice',
+            'sale' => $sale,
+            'webinar' => $webinar,
+        ];
+        return response()->json($data);
     }
 
     public function exportExcel(Request $request)

@@ -33,26 +33,26 @@ class RoleController extends Controller
     public function store(Request $request)
     {
         $this->authorize('admin_roles_create');
-
+ 
         $this->validate($request, [
             'name' => 'required|min:3|max:64|unique:roles,name',
             'caption' => 'required|min:3|max:64|unique:roles,caption',
         ]);
-
+ 
         $data = $request->all();
-
+ 
         $role = Role::create([
             'name' => $data['name'],
             'caption' => $data['caption'],
             'is_admin' => (!empty($data['is_admin']) and $data['is_admin'] == 'on'),
             'created_at' => time(),
         ]);
-
+ 
         if ($role->is_admin and $request->has('permissions')) {
             $this->storePermission($role, $data['permissions']);
         }
         Cache::forget('sections');
-
+ 
         return response()->json([
             'status' => 'success',
             'msg' => 'Role Added Successfully'
@@ -120,6 +120,30 @@ class RoleController extends Controller
         return response()->json([
             'status' => 'success',
             'msg' => 'Role Deleted Successfully'
+        ]);
+    }
+
+    public function listPermissions()
+    {
+        $permissions = Permission::with(['sections'])->get();
+        return response()->json([
+            'status' => 'success',
+            'data' => $permissions
+        ]);
+    }
+
+    public function showPermissions($url_name, $id)
+    {
+        $organization = Organization::where('url_name', $url_name)->first();
+        if (!$organization) {
+            return response()->json(['message' => 'Organization not found'], 404);
+        }
+        $permissions = Permission::where('role_id', $id)
+            ->with(['sections'])
+            ->get();
+        return response()->json([
+            'status' => 'success',
+            'data' => $permissions
         ]);
     }
 

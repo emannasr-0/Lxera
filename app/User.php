@@ -35,6 +35,7 @@ use Illuminate\Support\Carbon;
 use App\Models\OrderItem;
 use App\Models\Service;
 use App\Models\ServiceUser;
+use App\Models\Translation\BundleTranslation;
 use App\Models\UserReference;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
@@ -130,6 +131,10 @@ class User extends Authenticatable implements JWTSubject
         return $this->belongsToMany(Group::class, 'enrollments');
     }
 
+    public function programTranslation()
+    {
+        return $this->hasOne(BundleTranslation::class, 'bundle_id', 'program_id');
+    }
     public function hasPermission($section_name)
     {
         // if (self::isAdmin() || self::isUser()) {

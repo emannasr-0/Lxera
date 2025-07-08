@@ -2,6 +2,7 @@
 
 namespace App\Models\Api;
 
+use App\BundleStudent;
 use App\Models\Api\Traits\CheckForSaleTrait;
 use App\Models\Favorite;
 use App\Models\Bundle as Model;
@@ -32,5 +33,9 @@ class Bundle extends Model
     public function teacher()
     {
         return $this->belongsTo('App\Models\Api\User', 'teacher_id', 'id');
+    }
+    public function bundleStudents()
+    {
+        return $this->belongsTo(BundleStudent::class);
     }
 }
