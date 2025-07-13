@@ -49,7 +49,7 @@ class WebinarsController extends Controller
         $data = $this->makeMyClassAndInvitationsData($query, $user, $request);
         $data['pageTitle'] = trans('webinars.webinars_list_page_title');
 
-        return view(getTemplate() . '.panel.webinar.index', $data);
+        return response()->view($data);
     }
 
 

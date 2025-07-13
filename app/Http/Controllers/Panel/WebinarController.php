@@ -591,6 +591,7 @@ class WebinarController extends Controller
             }
         }
 
+
         $webinarRulesRequired = false;
         $directPublicationOfCourses = !empty(getGeneralOptionsSettings('direct_publication_of_courses'));
 

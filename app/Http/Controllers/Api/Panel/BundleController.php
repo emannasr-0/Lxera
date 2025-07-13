@@ -23,9 +23,14 @@ use App\Models\SelectedInstallmentStep;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Gift;
+use App\Models\Group;
 use App\Models\Webinar;
+use App\Student;
+use App\User;
+
 use Illuminate\Support\Facades\Session;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Hash;
 
 class BundleController extends Controller
 {
@@ -514,11 +519,11 @@ class BundleController extends Controller
 
             validateParam($data, $rules);
             if ($itemType === 'bundles') {
-               $item_id = $request->item_id;
-               $item = Bundle::find( $item_id);
+                $item_id = $request->item_id;
+                $item = Bundle::find($item_id);
             } else {
                 $item_id = $request->item_id;
-                 $item = Webinar::find( $item_id);
+                $item = Webinar::find($item_id);
             }
             // $bundle_id = $request->item_id;
             // $bundle = Bundle::find($bundle_id);
@@ -772,60 +777,60 @@ class BundleController extends Controller
         return (new PaymentController())->payStatusJson($request, $order->id);
     }
 
-private function calculatePrice($item, $installment_payment_id, $user, $discountCoupon = null)
-{
-    $financialSettings = getFinancialSettings();
+    private function calculatePrice($item, $installment_payment_id, $user, $discountCoupon = null)
+    {
+        $financialSettings = getFinancialSettings();
 
-    $subTotal         = 0;
-    $totalDiscount    = 0;
-    $tax              = (!empty($financialSettings['tax']) && $financialSettings['tax'] > 0)
-                        ? $financialSettings['tax'] : 0;
-    $taxPrice         = 0;
-    $commissionPrice  = 0;
-    $commission       = 0;
-    $taxIsDifferent   = true;        // keep your original flag
+        $subTotal         = 0;
+        $totalDiscount    = 0;
+        $tax              = (!empty($financialSettings['tax']) && $financialSettings['tax'] > 0)
+            ? $financialSettings['tax'] : 0;
+        $taxPrice         = 0;
+        $commissionPrice  = 0;
+        $commission       = 0;
+        $taxIsDifferent   = true;        // keep your original flag
 
-    /* delegate real work to handleOrderPrices() */
-    $orderPrices      = $this->handleOrderPrices(
-        $item,
-        $installment_payment_id,
-        $user,
-        $taxIsDifferent,
-        $discountCoupon
-    );
+        /* delegate real work to handleOrderPrices() */
+        $orderPrices      = $this->handleOrderPrices(
+            $item,
+            $installment_payment_id,
+            $user,
+            $taxIsDifferent,
+            $discountCoupon
+        );
 
-    $subTotal       += $orderPrices['sub_total'];
-    $totalDiscount  += $orderPrices['total_discount'];
-    $tax             = $orderPrices['tax'];
-    $taxPrice       += $orderPrices['tax_price'];
-    $commission     += $orderPrices['commission'];
-    $commissionPrice+= $orderPrices['commission_price'];
-    $taxIsDifferent  = $orderPrices['tax_is_different'];
+        $subTotal       += $orderPrices['sub_total'];
+        $totalDiscount  += $orderPrices['total_discount'];
+        $tax             = $orderPrices['tax'];
+        $taxPrice       += $orderPrices['tax_price'];
+        $commission     += $orderPrices['commission'];
+        $commissionPrice += $orderPrices['commission_price'];
+        $taxIsDifferent  = $orderPrices['tax_is_different'];
 
-    if ($totalDiscount > $subTotal) {
-        $totalDiscount = $subTotal;
+        if ($totalDiscount > $subTotal) {
+            $totalDiscount = $subTotal;
+        }
+
+        $subTotalWithoutDiscount = $subTotal - $totalDiscount;
+        $productDeliveryFee      = 0;
+
+        $total = $subTotalWithoutDiscount + $taxPrice + $productDeliveryFee;
+        if ($total < 0) {
+            $total = 0;
+        }
+
+        return [
+            'sub_total'            => round($subTotal, 2),
+            'total_discount'       => round($totalDiscount, 2),
+            'tax'                  => $tax,
+            'tax_price'            => round($taxPrice, 2),
+            'commission'           => $commission,
+            'commission_price'     => round($commissionPrice, 2),
+            'total'                => round($total, 2),
+            'product_delivery_fee' => round($productDeliveryFee, 2),
+            'tax_is_different'     => $taxIsDifferent,
+        ];
     }
-
-    $subTotalWithoutDiscount = $subTotal - $totalDiscount;
-    $productDeliveryFee      = 0;
-
-    $total = $subTotalWithoutDiscount + $taxPrice + $productDeliveryFee;
-    if ($total < 0) {
-        $total = 0;
-    }
-
-    return [
-        'sub_total'            => round($subTotal, 2),
-        'total_discount'       => round($totalDiscount, 2),
-        'tax'                  => $tax,
-        'tax_price'            => round($taxPrice, 2),
-        'commission'           => $commission,
-        'commission_price'     => round($commissionPrice, 2),
-        'total'                => round($total, 2),
-        'product_delivery_fee' => round($productDeliveryFee, 2),
-        'tax_is_different'     => $taxIsDifferent,
-    ];
-}
 
     private function handleSelectedInstallment($user, $order, $installment)
     {
@@ -861,151 +866,253 @@ private function calculatePrice($item, $installment_payment_id, $user, $discount
     }
 
 
-public function handleOrderPrices($item, $installment_payment_id = null, $user,
-                                  $taxIsDifferent = false, $discountCoupon = null)
-{
-    // seller → bundles use creator; webinars use teacher
-    $seller = $item instanceof \App\Models\Bundle
-                ? $item->creator
-                : ($item->teacher ?? null);
+    public function handleOrderPrices(
+        $item,
+        $installment_payment_id = null,
+        $user,
+        $taxIsDifferent = false,
+        $discountCoupon = null
+    ) {
+        // seller → bundles use creator; webinars use teacher
+        $seller = $item instanceof \App\Models\Bundle
+            ? $item->creator
+            : ($item->teacher ?? null);
 
-    $financialSettings = getFinancialSettings();
+        $financialSettings = getFinancialSettings();
 
-    $subTotal        = 0;
-    $totalDiscount   = 0;
-    $tax             = (!empty($financialSettings['tax']) && $financialSettings['tax'] > 0)
-                       ? $financialSettings['tax'] : 0;
-    $taxPrice        = 0;
-    $commissionPrice = 0;
+        $subTotal        = 0;
+        $totalDiscount   = 0;
+        $tax             = (!empty($financialSettings['tax']) && $financialSettings['tax'] > 0)
+            ? $financialSettings['tax'] : 0;
+        $taxPrice        = 0;
+        $commissionPrice = 0;
 
-    /* commission percentage */
-    if ($seller) {
-        $commission = $seller->getCommission();              // model method
-    } else {
-        $commission = !empty($financialSettings['commission'])
-                      ? (int)$financialSettings['commission'] : 0;
-    }
-
-    /* --------- (A) Normal pay‑in‑full ---------- */
-    if ($item && empty($installment_payment_id)) {
-
-        $price               = $item->price;
-        $discount            = 0;                  // apply your own coupon logic here
-        $priceWithoutDiscount= $price - $discount;
-
-        if ($tax > 0 && $priceWithoutDiscount > 0) {
-            $taxPrice += $priceWithoutDiscount * $tax / 100;
-        }
-        if ($commission > 0) {
-            $commissionPrice += $priceWithoutDiscount > 0
-                              ? $priceWithoutDiscount * $commission / 100 : 0;
+        /* commission percentage */
+        if ($seller) {
+            $commission = $seller->getCommission();              // model method
+        } else {
+            $commission = !empty($financialSettings['commission'])
+                ? (int)$financialSettings['commission'] : 0;
         }
 
-        $totalDiscount += $discount;
-        $subTotal      += $price;
-    }
+        /* --------- (A) Normal pay‑in‑full ---------- */
+        if ($item && empty($installment_payment_id)) {
 
-    /* --------- (B) Up‑front installment payment ---------- */
-    elseif (!empty($installment_payment_id)) {
+            $price               = $item->price;
+            $discount            = 0;                  // apply your own coupon logic here
+            $priceWithoutDiscount = $price - $discount;
 
-        $installmentOrderPayment = InstallmentOrderPayment::findOrFail($installment_payment_id);
-        $price               = $installmentOrderPayment->amount;
-        $discount            = 0;
-        $priceWithoutDiscount= $price - $discount;
+            if ($tax > 0 && $priceWithoutDiscount > 0) {
+                $taxPrice += $priceWithoutDiscount * $tax / 100;
+            }
+            if ($commission > 0) {
+                $commissionPrice += $priceWithoutDiscount > 0
+                    ? $priceWithoutDiscount * $commission / 100 : 0;
+            }
 
-        if ($tax > 0 && $priceWithoutDiscount > 0) {
-            $taxPrice += $priceWithoutDiscount * $tax / 100;
+            $totalDiscount += $discount;
+            $subTotal      += $price;
         }
-        if ($commission > 0) {
-            $commissionPrice += $priceWithoutDiscount > 0
-                              ? $priceWithoutDiscount * $commission / 100 : 0;
+
+        /* --------- (B) Up‑front installment payment ---------- */ elseif (!empty($installment_payment_id)) {
+
+            $installmentOrderPayment = InstallmentOrderPayment::findOrFail($installment_payment_id);
+            $price               = $installmentOrderPayment->amount;
+            $discount            = 0;
+            $priceWithoutDiscount = $price - $discount;
+
+            if ($tax > 0 && $priceWithoutDiscount > 0) {
+                $taxPrice += $priceWithoutDiscount * $tax / 100;
+            }
+            if ($commission > 0) {
+                $commissionPrice += $priceWithoutDiscount > 0
+                    ? $priceWithoutDiscount * $commission / 100 : 0;
+            }
+
+            $totalDiscount += $discount;
+            $subTotal      += $price;
         }
 
-        $totalDiscount += $discount;
-        $subTotal      += $price;
+        if ($totalDiscount > $subTotal) {
+            $totalDiscount = $subTotal;
+        }
+
+        return [
+            'sub_total'        => round($subTotal, 2),
+            'total_discount'   => round($totalDiscount, 2),
+            'tax'              => $tax,
+            'tax_price'        => round($taxPrice, 2),
+            'commission'       => $commission,
+            'commission_price' => round($commissionPrice, 2),
+            'tax_is_different' => $taxIsDifferent,
+        ];
     }
 
-    if ($totalDiscount > $subTotal) {
-        $totalDiscount = $subTotal;
-    }
 
-    return [
-        'sub_total'        => round($subTotal, 2),
-        'total_discount'   => round($totalDiscount, 2),
-        'tax'              => $tax,
-        'tax_price'        => round($taxPrice, 2),
-        'commission'       => $commission,
-        'commission_price' => round($commissionPrice, 2),
-        'tax_is_different' => $taxIsDifferent,
-    ];
-}
-
-
- public function createOrderAndOrderItems($item, $installment_payment_id,
-                                         array $calculate, $user,
-                                         $discountCoupon = null)
-{
-    $totalCouponDiscount = 0;                      // inject coupon logic if needed
-    $totalAmount         = $calculate['total'] - $totalCouponDiscount;
-
-    /* ---------- 3.1 Order shell ---------- */
-    $order = Order::create([
-        'user_id'            => $user->id,
-        'status'             => Order::$pending,
-        'amount'             => $calculate['sub_total'],
-        'tax'                => $calculate['tax_price'],
-        'total_discount'     => $calculate['total_discount'] + $totalCouponDiscount,
-        'total_amount'       => max($totalAmount, 0),
-        'product_delivery_fee' => $calculate['product_delivery_fee'] ?? null,
-        'created_at'         => time(),
-    ]);
-
-    /* ---------- 3.2 Per‑item prices ---------- */
-    $orderPrices     = $this->handleOrderPrices(
+    public function createOrderAndOrderItems(
         $item,
         $installment_payment_id,
+        array $calculate,
         $user,
-        false,
-        $discountCoupon
-    );
+        $discountCoupon = null
+    ) {
+        $totalCouponDiscount = 0;                      // inject coupon logic if needed
+        $totalAmount         = $calculate['total'] - $totalCouponDiscount;
 
-    $price           = $orderPrices['sub_total'];
-    $totalDiscount   = $orderPrices['total_discount'];
-    $tax             = $orderPrices['tax'];
-    $taxPrice        = $orderPrices['tax_price'];
-    $commission      = $orderPrices['commission'];
-    $commissionPrice = $orderPrices['commission_price'];
+        /* ---------- 3.1 Order shell ---------- */
+        $order = Order::create([
+            'user_id'            => $user->id,
+            'status'             => Order::$pending,
+            'amount'             => $calculate['sub_total'],
+            'tax'                => $calculate['tax_price'],
+            'total_discount'     => $calculate['total_discount'] + $totalCouponDiscount,
+            'total_amount'       => max($totalAmount, 0),
+            'product_delivery_fee' => $calculate['product_delivery_fee'] ?? null,
+            'created_at'         => time(),
+        ]);
 
-    $productDeliveryFee = 0;
-    $allDiscountPrice   = $totalDiscount;
+        /* ---------- 3.2 Per‑item prices ---------- */
+        $orderPrices     = $this->handleOrderPrices(
+            $item,
+            $installment_payment_id,
+            $user,
+            false,
+            $discountCoupon
+        );
 
-    if ($totalCouponDiscount > 0 && $price > 0) {
-        $percent          = ($price / $calculate['sub_total']) * 100;
-        $allDiscountPrice += ($totalCouponDiscount * $percent) / 100;
+        $price           = $orderPrices['sub_total'];
+        $totalDiscount   = $orderPrices['total_discount'];
+        $tax             = $orderPrices['tax'];
+        $taxPrice        = $orderPrices['tax_price'];
+        $commission      = $orderPrices['commission'];
+        $commissionPrice = $orderPrices['commission_price'];
+
+        $productDeliveryFee = 0;
+        $allDiscountPrice   = $totalDiscount;
+
+        if ($totalCouponDiscount > 0 && $price > 0) {
+            $percent          = ($price / $calculate['sub_total']) * 100;
+            $allDiscountPrice += ($totalCouponDiscount * $percent) / 100;
+        }
+
+        $subTotalWithoutDiscount = $price - $allDiscountPrice;
+        $totalAmount             = $subTotalWithoutDiscount + $taxPrice + $productDeliveryFee;
+
+        /* ---------- 3.3 One OrderItem ---------- */
+        OrderItem::create([
+            'user_id'             => $user->id,
+            'order_id'            => $order->id,
+            'webinar_id'          => $item instanceof \App\Models\Webinar ? $item->id : null,
+            'bundle_id'           => $item instanceof \App\Models\Bundle  ? $item->id : null,
+            'installment_payment_id' => $installment_payment_id,
+            'discount_id'         => $discountCoupon?->id,
+            'amount'              => $price,
+            'total_amount'        => $totalAmount,
+            'tax'                 => $tax,
+            'tax_price'           => $taxPrice,
+            'commission'          => $commission,
+            'commission_price'    => $commissionPrice,
+            'product_delivery_fee' => $productDeliveryFee,
+            'discount'            => $allDiscountPrice,
+            'created_at'          => time(),
+        ]);
+
+        return $order;
     }
 
-    $subTotalWithoutDiscount = $price - $allDiscountPrice;
-    $totalAmount             = $subTotalWithoutDiscount + $taxPrice + $productDeliveryFee;
 
-    /* ---------- 3.3 One OrderItem ---------- */
-    OrderItem::create([
-        'user_id'             => $user->id,
-        'order_id'            => $order->id,
-        'webinar_id'          => $item instanceof \App\Models\Webinar ? $item->id : null,
-        'bundle_id'           => $item instanceof \App\Models\Bundle  ? $item->id : null,
-        'installment_payment_id' => $installment_payment_id,
-        'discount_id'         => $discountCoupon?->id,
-        'amount'              => $price,
-        'total_amount'        => $totalAmount,
-        'tax'                 => $tax,
-        'tax_price'           => $taxPrice,
-        'commission'          => $commission,
-        'commission_price'    => $commissionPrice,
-        'product_delivery_fee'=> $productDeliveryFee,
-        'discount'            => $allDiscountPrice,
-        'created_at'          => time(),
-    ]);
+    public function handle(Request $request)
+    {
+        //dd(3);
+        //  Verify request is from WP
+        // if ($request->header('X-API-KEY') !== env('WP_API_KEY')) {
+        //     return response()->json(['error' => 'Unauthorized'], 401);
+        // }
 
-    return $order;
-}
+        $data = $request->validate([
+            'full_name' => 'required|string|max:255',
+            'email' => 'required|email',
+            'mobile' => 'required|string',
+            'password' => 'nullable|string',
+            'item_type' => 'required|in:bundle,webinar',
+            'item_id' => 'required|integer',
+            'amount' => 'required|numeric',
+            // 'payment_reference' => 'nullable|string',
+            // 'payment_gateway' => 'nullable|string',
+        ]);
+
+        // 1.  Create or find user
+        $user = User::firstOrCreate(
+            ['email' => $data['email']],
+            [
+                'full_name' => $data['full_name'],
+                'mobile' => $data['mobile'],
+                'password' => Hash::make($data['password'] ?? '12345678'),
+                'role_name' => 'user',
+                'role_id' => 1,
+                'verified' => 1,
+                'created_at' => now()->timestamp,
+                'updated_at' => now()->timestamp,
+            ]
+        );
+
+        // 2.  Create student profile
+        $student = Student::firstOrCreate(
+            ['user_id' => $user->id],
+            ['en_name' => $data['full_name'], 'email' => $data['email'], 'phone' => $data['mobile']]
+        );
+
+        // 3. Get Bundle or Webinar
+        $item = $data['item_type'] === 'bundle'
+            ? Bundle::findOrFail($data['item_id'])
+            : Webinar::findOrFail($data['item_id']);
+
+        if ($data['item_type'] === 'bundle') {
+            $student->bundles()->syncWithoutDetaching([$item->id]);
+        } else {
+            $group = Group::where('webinar_id', $item->id)->latest()->first();
+            if ($group) {
+                Enrollment::firstOrCreate([
+                    'user_id' => $user->id,
+                    'group_id' => $group->id
+                ]);
+            }
+        }
+
+        // 4.  Create Order + Sale
+        $order = Order::create([
+            'user_id' => $user->id,
+            'status' => 'paid',
+            'amount' => $data['amount'],
+            'tax' => 0,
+            'total_discount' => 0,
+            'total_amount' => $data['amount'],
+            'created_at' => now()->timestamp,
+        ]);
+
+        OrderItem::create([
+            'user_id' => $user->id,
+            'order_id' => $order->id,
+            'webinar_id' => $data['item_type'] === 'webinar' ? $item->id : null,
+            'bundle_id' => $data['item_type'] === 'bundle' ? $item->id : null,
+            'amount' => $data['amount'],
+            'total_amount' => $data['amount'],
+            'created_at' => now()->timestamp,
+        ]);
+
+        Sale::create([
+            'buyer_id' => $user->id,
+            'seller_id' => $item->creator_id ?? 1,
+            'type' => $data['item_type'] === 'bundle' ? 'bundle' : 'webinar',
+            'webinar_id' => $data['item_type'] === 'webinar' ? $item->id : null,
+            'bundle_id' => $data['item_type'] === 'bundle' ? $item->id : null,
+            'payment_method' => $data['payment_gateway'] ?? 'credit',
+            // 'payment_reference' => $data['payment_reference'] ?? '',
+            'amount' => $data['amount'],
+            'total_amount' => $data['amount'],
+            'created_at' => now()->timestamp,
+        ]);
+
+        return response()->json(['status' => 'success', 'message' => 'Sale recorded']);
+    }
 }

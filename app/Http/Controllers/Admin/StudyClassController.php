@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\BundleStudent;
-use App\Exports\BatchStudentsExport;
 use App\Exports\BatchStudentsExportV2;
 use App\Http\Controllers\Controller;
 use App\Imports\BatchStudentImport;
@@ -12,7 +11,6 @@ use App\Models\Group;
 use App\Models\Role;
 use App\Models\Sale;
 use Illuminate\Http\Request;
-
 use App\Models\StudyClass;
 use App\StudentRequirement;
 use App\User;
@@ -64,7 +62,8 @@ class StudyClassController extends Controller
                 'title' => 'إضافة دفعة',
                 'msg' => implode(
                     ', ',
-                    $validator->errors()->all()),
+                    $validator->errors()->all()
+                ),
                 'status' => 'error'
             ];
             return back()->with(['sweetalert' => $toastData]);
@@ -521,7 +520,9 @@ class StudyClassController extends Controller
 
         $query = BundleStudent::whereNull('class_id')
             ->whereHas('student')
-            ->whereHas('bundle',function ($query)  use ($class) {
+            ->whereHas(
+                'bundle',
+                function ($query)  use ($class) {
                     $query->where('batch_id', $class->id);
                 }
             );
