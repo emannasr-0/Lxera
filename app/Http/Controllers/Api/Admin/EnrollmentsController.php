@@ -353,8 +353,6 @@ class EnrollmentsController extends Controller
         ], 422);
     }
 
-
-
     public function blockAccess($url_name, $saleId)
     {
         $this->authorize('admin_enrollment_block_access');

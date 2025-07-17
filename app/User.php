@@ -1138,4 +1138,22 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+    public function scopeFilterBySearch($query, $filters)
+    {
+        return $query->where(function ($q) use ($filters) {
+            if (!empty($filters['user_code'])) {
+                $q->where('user_code', 'like', "%{$filters['user_code']}%");
+            }
+            if (!empty($filters['email'])) {
+                $q->where('email', 'like', "%{$filters['email']}%");
+            }
+            if (!empty($filters['full_name'])) {
+                $q->where('full_name', 'like', "%{$filters['full_name']}%");
+            }
+            if (!empty($filters['mobile'])) {
+                $q->where('mobile', 'like', "%{$filters['mobile']}%");
+            }
+        });
+    }
 }

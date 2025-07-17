@@ -7,6 +7,7 @@ use App\Http\Controllers\Web\WebinarController;
 use App\Http\Controllers\Controller;
 use App\Models\Api\Bundle;
 use App\Models\Api\Certificate;
+use App\Models\Api\Organization;
 use App\Models\Category;
 use App\Models\CourseNoticeboard;
 use App\Models\FAQ;
@@ -32,7 +33,7 @@ class WebinarsController extends Controller
 {
     public function index(Request $request)
     {
-        $user = auth()->user();
+        $user = apiAuth();
 
         if ($user->isUser()) {
             abort(404);
@@ -55,7 +56,7 @@ class WebinarsController extends Controller
 
     public function invitations(Request $request)
     {
-        $user = auth()->user();
+        $user = apiAuth();
 
         $invitedWebinarIds = WebinarPartnerTeacher::where('teacher_id', $user->id)->pluck('webinar_id')->toArray();
 
@@ -207,7 +208,7 @@ class WebinarsController extends Controller
 
     public function create(Request $request)
     {
-        $user = auth()->user();
+        $user = apiAuth();
 
         if (!$user->isTeacher() and !$user->isOrganization()) {
             abort(404);
@@ -238,7 +239,7 @@ class WebinarsController extends Controller
 
     public function store(Request $request)
     {
-        $user = auth()->user();
+        $user = apiAuth();
 
         if (!$user->isTeacher() and !$user->isOrganization()) {
             abort(404);
@@ -283,7 +284,7 @@ class WebinarsController extends Controller
 
     public function storeAll(Request $request)
     {
-        $user = auth()->user();
+        $user = apiAuth();
 
         if (!$user->isTeacher() and !$user->isOrganization()) {
             abort(404);
@@ -414,7 +415,7 @@ class WebinarsController extends Controller
 
     public function update(Request $request, $id)
     {
-        $user = auth()->user();
+        $user = apiAuth();
 
         if (!$user->isTeacher() and !$user->isOrganization()) {
             abort(404);
@@ -557,7 +558,7 @@ class WebinarsController extends Controller
 
     public function edit($id, $step = 1)
     {
-        $user = auth()->user();
+        $user = apiAuth();
         $isOrganization = $user->isOrganization();
 
         if (!$user->isTeacher() and !$user->isOrganization()) {
@@ -683,7 +684,7 @@ class WebinarsController extends Controller
 
     public function updateAll(Request $request, $id)
     {
-        $user = auth()->user();
+        $user = apiAuth();
 
         if (!$user->isTeacher() and !$user->isOrganization()) {
             abort(404);
@@ -827,7 +828,7 @@ class WebinarsController extends Controller
 
     public function destroy(Request $request, $id)
     {
-        $user = auth()->user();
+        $user = apiAuth();
 
         if (!$user->isTeacher() and !$user->isOrganization()) {
             abort(404);
@@ -882,7 +883,7 @@ class WebinarsController extends Controller
 
     public function exportStudentsList($id)
     {
-        $user = auth()->user();
+        $user = apiAuth();
 
         if (!$user->isTeacher() and !$user->isOrganization()) {
             abort(404);
@@ -924,7 +925,7 @@ class WebinarsController extends Controller
 
     public function search(Request $request)
     {
-        $user = auth()->user();
+        $user = apiAuth();
 
         if (!$user->isTeacher() and !$user->isOrganization()) {
             return response('', 422);
@@ -970,7 +971,7 @@ class WebinarsController extends Controller
 
     public function invoice($id)
     {
-        $user = auth()->user();
+        $user = apiAuth();
 
         $sale = Sale::where('buyer_id', $user->id)
             ->where('webinar_id', $id)
@@ -1020,7 +1021,7 @@ class WebinarsController extends Controller
 
     public function purchases(Request $request)
     {
-        $user = auth()->user();
+        $user = apiAuth();
         $webinarIds = $user->getPurchasedCoursesIds();
 
         $query = Webinar::whereIn('id', $webinarIds);
@@ -1162,7 +1163,7 @@ class WebinarsController extends Controller
 
     public function orderItems(Request $request)
     {
-        $user = auth()->user();
+        $user = apiAuth();
         $data = $request->all();
 
         $validator = Validator::make($data, [
@@ -1245,18 +1246,15 @@ class WebinarsController extends Controller
         ], 200);
     }
 
-
     // instructor api function 
     public function getTeacherWebinars(Request $request)
     {
-        $user = auth('api')->user();  // Get authenticated user
+        $user = apiAuth();
 
-        // Check if the user is a teacher, if not return error
-        if (!$user->isTeacher()) {
-            return sendError([], 'You are not authorized to view webinars', 403);
+        if (!$user->isTeacher() && !$user->isAdmin() && !$user->isOrganization()) {
+            return response()->json(['message' => 'You are not authorized to view webinars'], 403);
         }
 
-        // Query for webinars where the teacher is either the creator or partner
         $query = Webinar::where('hasGroup', 1)
             ->where('unattached', 1);
 
@@ -1268,10 +1266,8 @@ class WebinarsController extends Controller
                 });
         });
 
-        // Optionally, you can add pagination
-        $webinars = $query->paginate(10);  // Adjust pagination as needed
+        $webinars = $query->paginate(10);
 
-        // Return the list of webinars
         return response()->json([
             'webinars' => $webinars
         ]);
@@ -1283,19 +1279,22 @@ class WebinarsController extends Controller
             'test' => 'test'
         ]);
     }
-    //return $this->test();
 
-    public function getWebinarsLessons(Request $request, Bundle $bundle = null, $id)
+    public function getWebinarsLessons(Request $request, $url_name, Bundle $bundle = null, $id)
     {
+
+        $organization = Organization::where('url_name', $url_name);
+        if (!$organization) {
+            return response()->json(['message' => 'Organization not found'], 404);
+        }
 
         $requestData = $request->all();
         $webinarController = new WebinarController();
 
-        // Find the webinar by its ID
         $webinar = Webinar::findOrFail($id);
 
         // Get course data using the WebinarController's course method
-        $data = $webinarController->course2($id, true);
+        $data = $webinarController->course($id, true);
         $course = $data['course'];
         $user = $data['user'];
 
@@ -1369,12 +1368,12 @@ class WebinarsController extends Controller
     public function getWebinarContent(Request $request, $id, $step = 4)
     {
 
-        $user = auth('api')->user();
+        $user = apiAuth();
         $isOrganization = $user->isOrganization();
 
 
 
-        if (!$user->isTeacher() && !$user->isOrganization()) {
+        if (!$user->isTeacher() && !$user->isOrganization() && !$user->isAdmin()) {
             return response()->json([
                 'success' => false,
                 'message' => 'Not authorized.'

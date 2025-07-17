@@ -56,7 +56,7 @@ Route::group(['prefix' => '/development'], function () {
         Route::post("/checkout", 'PaymentController@paymentRequest');
     });
 
-    Route::prefix('instructor')->middleware(['api.auth', 'api.level-access:teacher'])->namespace('Instructor')->group(base_path('routes/api/instructor.php'));
+    Route::prefix('instructor')->middleware(['api.auth'])->namespace('Instructor')->group(base_path('routes/api/instructor.php'));
     // Route::middleware('auth:api')->get('learning-page/{id}', [WebinarsController::class, 'getWebinarsLessons']);
     Route::middleware('auth:api')->get('learning-page/{id}', [WebinarsController::class, 'getWebinarsLessons']);
     Route::middleware('auth:api')->get('{bundle}/learning-page/{id}', [WebinarsController::class, 'getWebinarsLessons']);

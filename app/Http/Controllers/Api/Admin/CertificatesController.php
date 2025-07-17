@@ -32,17 +32,26 @@ class CertificatesController extends Controller
 
         $query = $this->filters($query, $request);
 
-        $certificates = $query->with(
-            [
-                'quiz' => function ($query) {
-                    $query->with('webinar');
-                },
-                'student',
-                'quizzesResult'
-            ]
-        )->orderBy('created_at', 'desc')
-            ->get();
+        $certificates = $query->with([
+            'quiz' => function ($query) {
+                $query->with('webinar');
+            },
+            'student',
+            'quizzesResult'
+        ])
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
 
+
+        $certificates->getCollection()->transform(function ($certificate) {
+            $array = $certificate->toArray();
+            array_walk_recursive($array, function (&$value) {
+                if (is_string($value) && !mb_check_encoding($value, 'UTF-8')) {
+                    $value = mb_convert_encoding($value, 'UTF-8', 'UTF-8');
+                }
+            });
+            return $array;
+        });
 
         $data = [
             'certificates' => $certificates,
@@ -61,22 +70,9 @@ class CertificatesController extends Controller
                 ->whereIn('id', $student_ids)->get();
         }
 
-
-        $cleandata = $certificates->map(function ($certificate) {
-            $array = $certificate->toArray();
-
-            // Sanitize all string values to ensure UTF-8
-            array_walk_recursive($array, function (&$value) {
-                if (is_string($value) && !mb_check_encoding($value, 'UTF-8')) {
-                    $value = mb_convert_encoding($value, 'UTF-8', 'UTF-8');
-                }
-            });
-
-            return $array;
-        });
-
-        return response()->json($cleandata);
+        return response()->json($data, 200, [], JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE);
     }
+
 
     private function filters($query, $request)
     {
@@ -109,7 +105,7 @@ class CertificatesController extends Controller
         removeContentLocale();
 
         $templates = CertificateTemplate::orderBy('created_at', 'desc')
-            ->get();
+            ->paginate(10);
 
         return response()->json([
             'success' => true,

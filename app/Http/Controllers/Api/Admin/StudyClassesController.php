@@ -30,7 +30,9 @@ class StudyClassesController extends Controller
      */
     public function index()
     {
-        $classes = StudyClass::all()->map(function ($class) {
+        $classes = StudyClass::paginate(10);
+
+        $classes->getCollection()->transform(function ($class) {
             return [
                 'id' => $class->id,
                 'title' => $class->title,
@@ -45,6 +47,7 @@ class StudyClassesController extends Controller
 
         return response()->json($classes, 200, [], JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE);
     }
+
 
     /**
      * Store a newly created resource in storage.

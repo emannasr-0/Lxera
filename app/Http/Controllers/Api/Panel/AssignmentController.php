@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Panel;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\WebinarAssignmentHistoryResource;
 use App\Http\Resources\WebinarAssignmentResource;
+use App\Models\Api\Organization;
 use App\Models\Sale;
 use App\Models\Webinar;
 use App\Models\Api\WebinarAssignment;
@@ -93,7 +94,7 @@ class AssignmentController extends Controller
 
         $user = apiAuth();
 
-        if (!$user->isOrganization() and !$user->isTeacher()) {
+        if (!$user->isOrganization() && !$user->isTeacher() && !$user->isAdmin()) {
             abort(404);
         }
 
@@ -108,7 +109,7 @@ class AssignmentController extends Controller
         $courseAssignmentsCount = deepClone($query)->count();
 
         $pendingReviewCount = deepClone($query)->whereHas('instructorAssignmentHistories', function ($query) use ($user) {
-            // $query->where('instructor_id', $user->id);
+            $query->where('instructor_id', $user->id);
             $query->where('status', WebinarAssignmentHistory::$pending);
         })->count();
 
@@ -181,9 +182,13 @@ class AssignmentController extends Controller
 
         return $query;
     }
-    public function students(Request $request, $id)
+    public function students(Request $request, $url_name, $id)
     {
-        
+        $organization = Organization::where('url_name', $url_name);
+        if (!$organization) {
+            return response()->json(['message' => 'Organization not found'], 404);
+        }
+
         if (!getFeaturesSettings('webinar_assignment_status')) {
             abort(403);
         }

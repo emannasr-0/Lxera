@@ -389,16 +389,22 @@ class UsersController extends Controller
 
     public function students(Request $request, $is_export_excel = false)
     {
+        $filters = $request->only(['user_code', 'email', 'full_name', 'mobile', 'program', 'status']);
+
+        $userCode = $request->input('user_code');
+        $email = $request->input('email');
+        $fullName = $request->input('full_name');
+        $mobile = $request->input('mobile');
+        $program = $request->input('program');
+        $status = $request->input('status');
+
         $this->authorize('admin_users_list');
 
         $query = User::whereIn('role_name', [Role::$user, Role::$registered_user]);
 
-        $totalStudents = clone $query;
-        $inactiveStudents = clone $query;
-        $banStudents = clone $query;
-        $totalStudents = $totalStudents->count();
-        $inactiveStudents = $inactiveStudents->where('status', 'inactive')->count();
-        $banStudents = $banStudents
+        $totalStudents = (clone $query)->count();
+        $inactiveStudents = (clone $query)->where('status', 'inactive')->count();
+        $banStudents = (clone $query)
             ->where('ban', true)
             ->whereNotNull('ban_end_at')
             ->where('ban_end_at', '>', time())
@@ -407,30 +413,28 @@ class UsersController extends Controller
         $userGroups = Group::where('status', 'active')
             ->orderBy('created_at', 'desc')
             ->get();
-        $query = $this->filters($query, $request);
 
-        if ($is_export_excel) {
-            $users = $query->orderBy('created_at', 'desc')->get();
-        } else {
-            $users = $query->orderBy('created_at', 'desc')->get();
-        }
+        $query = $this->filters($query, $request);
 
         $users = $query->with([
             'student.bundleStudent.bundle',
             'programTranslation'
-        ])->orderBy('created_at', 'desc')->get();
+        ])
+        ->whereHas('bundleStudent.student.user', function ($query) use ($filters) {
+                $query->filterBySearch($filters);
+            })
+        ->orderBy('created_at', 'desc');
 
         if ($is_export_excel) {
-            $users = $query->orderBy('created_at', 'desc')->get();
+            $users = $query->paginate(10);
         } else {
-            $users = $query->orderBy('created_at', 'desc')
-                ->get();
+            $users = $query->get();
         }
 
         $users = $this->addUsersExtraInfo($users);
 
         $category = Category::where('parent_id', '!=', null)->get();
-        $users = $users->map(function ($user) {
+        $users->getCollection()->transform(function ($user) {
             $student = $user->student;
             if ($student) {
                 $user->student_id = $student->id;
@@ -626,11 +630,11 @@ class UsersController extends Controller
     {
 
         $this->authorize('admin_users_list');
-         $query = User::where(['role_name' => Role::$registered_user])->whereDoesntHave('student')->with('programTranslation');
+        $query = User::where(['role_name' => Role::$registered_user])->whereDoesntHave('student')->with('programTranslation');
 
         $query = $this->filters($query, $request);
 
-        $users = $query->orderBy('created_at', 'desc')->get();
+        $users = $query->orderBy('created_at', 'desc')->paginate(10);
 
 
         $users = $this->addUsersExtraInfo($users);
@@ -656,7 +660,7 @@ class UsersController extends Controller
         $users = $this->addUsersExtraInfo($users);
 
         if ($is_export_excel) {
-        return $users;
+            return $users;
         }
         return $users;
         $data = [
@@ -928,7 +932,7 @@ class UsersController extends Controller
 
         $query = (new SaleController())->getSalesFilters($salaQuery, $request);
 
-        $sales = $query->orderBy('created_at', 'desc')->get();
+        $sales = $query->orderBy('created_at', 'desc')->paginate(10);
 
         return response()->json($sales, 200, [], JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE);
     }
@@ -966,7 +970,7 @@ class UsersController extends Controller
 
         $query = (new SaleController())->getSalesFilters($salaQuery, $request);
 
-        $sales = $query->orderBy('created_at', 'desc')->get();
+        $sales = $query->orderBy('created_at', 'desc')->paginate(10);
 
         return response()->json($sales, 200, [], JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE);
     }
@@ -1018,7 +1022,7 @@ class UsersController extends Controller
         $query = BundleStudent::whereHas('student')->whereNull('class_id')->with(['student.user', 'bundle']);
 
         if ($is_export_excel) {
-            $bundlstudents = $query->orderBy('student_id', 'desc')->get();
+            $bundlstudents = $query->orderBy('student_id', 'desc')->paginate(10);
         } else {
             $bundlstudents = $query->orderBy('student_id', 'desc')->orderBy('created_at', 'desc')
                 ->get();
@@ -1231,7 +1235,7 @@ class UsersController extends Controller
         $query = (new SaleController())->getSalesFilters($salaQuery, $request);
 
         if ($is_export_excel) {
-            $sales = $query->orderBy('created_at', 'desc')->get();
+            $sales = $query->orderBy('created_at', 'desc')->paginate(10);
         } else {
             $sales = $query->orderBy('created_at', 'desc')->get();
         }

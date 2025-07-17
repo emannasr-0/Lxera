@@ -1,13 +1,17 @@
 <?php
 
-namespace App\Models\Api ;
- use App\Models\Sale as WebSale ;
+namespace App\Models\Api;
 
- class Sale extends WebSale{
+use App\Models\Sale as WebSale;
+use App\Models\StudyClass;
 
-    public function getDetailsAttribute(){
+class Sale extends WebSale
+{
 
-        return[
+    public function getDetailsAttribute()
+    {
+
+        return [
             'buyer' => $this->buyer->brief,
             'type' => $this->type,
             'payment_method' => $this->payment_method,
@@ -16,16 +20,15 @@ namespace App\Models\Api ;
             'discount' => $this->discount,
             'total_amount' => $this->total_amount,
             'income' => $this->getIncomeItem(),
-            'webinar' => ($this->webinar_id) ? $this->webinar->brief: null,
-            'meeting' => ($this->meeting_id) ? $this->meeting->details: null,
-      
-           
+            'webinar' => ($this->webinar_id) ? $this->webinar->brief : null,
+            'meeting' => ($this->meeting_id) ? $this->meeting->details : null,
         ];
     }
 
-    public function scopeHandleFilters($query){
+    public function scopeHandleFilters($query)
+    {
 
-        $request=request() ;
+        $request = request();
         $from = $request->input('from');
         $to = $request->input('to');
         $student_id = $request->input('student_id');
@@ -63,10 +66,10 @@ namespace App\Models\Api ;
         }
 
         return $query;
-
     }
 
-    public function getItemTypeAttribute(){
+    public function getItemTypeAttribute()
+    {
 
         if ($this->webinar_id) {
             $type = 'class';
@@ -76,9 +79,8 @@ namespace App\Models\Api ;
             $type = null;
         }
 
-        return  $type ;
+        return  $type;
     }
-
 
     public function webinar()
     {
@@ -125,5 +127,8 @@ namespace App\Models\Api ;
         return $this->hasOne('App\Models\SaleLog', 'sale_id', 'id');
     }
 
-
- }
+    public function class()
+    {
+        return $this->belongsTo(StudyClass::class, 'class_id');
+    }
+}

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Instructor;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\WebinarAssignmentHistoryResource;
 use App\Http\Resources\WebinarAssignmentResource;
+use App\Models\Api\Organization;
 use App\Models\Reward;
 use App\Models\RewardAccounting;
 use App\Models\Sale;
@@ -49,7 +50,7 @@ class AssignmentController extends Controller
                 $query->where('instructor_id', $user->id);
             },
         ])->orderBy('created_at', 'desc')
-            ->get();
+            ->paginate(10);
 
         return apiResponse2(1, 'retrieved', trans('api.public.retrieved'),
             [
@@ -153,8 +154,13 @@ class AssignmentController extends Controller
         abort(404);
     }
 
-    public function submmision(Request $request,$id)
+    public function submmision($url_name,$id)
     {
+        $organization = Organization::where('url_name', $url_name);
+        if (!$organization) {
+            return response()->json(['message' => 'Organization not found'], 404);
+        }
+
         if (!getFeaturesSettings('webinar_assignment_status')) {
             abort(403);
         }
@@ -237,7 +243,6 @@ class AssignmentController extends Controller
         abort(404);
     }
 
-
     public function setGrade(Request $request, $historyId)
     {
         $user = apiAuth();
@@ -280,6 +285,4 @@ class AssignmentController extends Controller
         return apiResponse2(1, 'stored', trans('api.public.stored'));
 
     }
-
-
 }

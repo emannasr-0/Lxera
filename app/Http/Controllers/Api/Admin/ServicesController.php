@@ -37,7 +37,7 @@ class ServicesController extends Controller
      */
     public function index()
     {
-        $services = Service::all();
+        $services = Service::paginate(10);
         return response()->json([
             'success' => true,
             'data' => $services

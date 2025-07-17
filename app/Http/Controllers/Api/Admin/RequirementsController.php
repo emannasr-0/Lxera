@@ -18,10 +18,18 @@ class RequirementsController extends Controller
 {
     public function index(Request $request)
     {
+        $filters = $request->only(['user_code', 'email', 'full_name', 'mobile']);
+
         $requirements = StudentRequirement::with([
             'bundleStudent.bundle',
-            'bundleStudent.student'
-        ])->orderByDesc('created_at')->get();
+            'bundleStudent.student',
+            'bundleStudent.student.user',
+        ])
+            ->whereHas('bundleStudent.student.user', function ($query) use ($filters) {
+                $query->filterBySearch($filters);
+            })
+            ->orderByDesc('created_at')
+            ->paginate(10);
 
         return response()->json([
             'success' => true,

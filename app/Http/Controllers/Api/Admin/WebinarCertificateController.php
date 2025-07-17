@@ -29,7 +29,19 @@ class WebinarCertificateController extends Controller
             'bundle',
             'webinar.teacher',
         ])->orderBy('created_at', 'desc')
-            ->get();
+            ->paginate(10);
+
+        $certificates->getCollection()->transform(function ($certificate) {
+            $array = $certificate->toArray();
+
+            array_walk_recursive($array, function (&$value) {
+                if (is_string($value) && !mb_check_encoding($value, 'UTF-8')) {
+                    $value = mb_convert_encoding($value, 'UTF-8', 'UTF-8');
+                }
+            });
+
+            return $array;
+        });
 
         $data = [
             'certificates' => $certificates,
@@ -60,22 +72,9 @@ class WebinarCertificateController extends Controller
                 ->whereIn('id', $bundleIds)->get();
         }
 
-  
-    $cleandata = $certificates->map(function ($certificate) {
-            $array = $certificate->toArray();
-
-            // Sanitize all string values to ensure UTF-8
-            array_walk_recursive($array, function (&$value) {
-                if (is_string($value) && !mb_check_encoding($value, 'UTF-8')) {
-                    $value = mb_convert_encoding($value, 'UTF-8', 'UTF-8');
-                }
-            });
-
-            return $array;
-        });
-
-        return response()->json($cleandata);
+        return response()->json($data, 200, [], JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE);
     }
+
 
     private function filters($query, $request)
     {

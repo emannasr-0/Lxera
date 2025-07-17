@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\WebinarController;
+use App\Http\Controllers\Api\Instructor\AssignmentController as InstructorAssignmentController;
 use App\Http\Controllers\Api\Panel\AssignmentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Instructor\WebinarsController;
@@ -73,9 +74,6 @@ Route::prefix('{url_name}')->group(function () {
         });
         //  Route::get('sales', ['uses' => 'SalesController@list']);
         Route::group(['prefix' => 'meetings'], function () {
-            Route::get('/', function () {
-                dd('ff');
-            });
 
             Route::get('/requests', ['uses' => 'ReserveMeetingController@requests']);
             Route::post('/create-link', ['uses' => 'ReserveMeetingController@createLink']);
@@ -104,13 +102,18 @@ Route::prefix('{url_name}')->group(function () {
             //bundles
             Route::get('/bundles', [BundleController::class, 'index']);
             Route::get('/bundle/courses', [BundleController::class, 'courses']);
-            Route::get('/bundle/course/learning_page', [BundleController::class, 'course_learning']);
             Route::get('/{bundle}/course/learning/{id}', [WebinarsController::class, 'getWebinarsLessons']);
 
             //assignments
             Route::get('/my-courses-assignments', [AssignmentController::class, 'myCoursesAssignments']);
             Route::get('assignments/{id}/students', [AssignmentController::class, 'students']);
             // Route::get('course/learning/{id}?type=assignment&item={bundle}&student={id}',[WebinarsController::class, 'getWebinarsLessons']);
+            Route::group(['prefix' => 'assignments'], function () {
+                Route::get('/{assignment}/students', [InstructorAssignmentController::class, 'submmision']);
+                Route::get('/students', ['uses' => 'AssignmentController@students']);
+                Route::get('/', [InstructorAssignmentController::class, 'index']);
+                Route::post('/histories/{assignment_history}/rate', ['uses' => 'AssignmentController@setGrade']);
+            });
 
             //quizzes
             Route::get('/quizzes', [QuizzesController::class, 'index']);

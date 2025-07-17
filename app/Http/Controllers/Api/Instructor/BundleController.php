@@ -6,6 +6,7 @@ use App\Exports\WebinarStudents;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Panel\WebinarController;
 use App\Http\Resources\BundleResource;
+use App\Models\Api\Organization;
 use App\Models\Bundle;
 use App\Models\Sale;
 use Illuminate\Http\Request;
@@ -162,13 +163,17 @@ class BundleController extends Controller
     }
 
 
-    public function courses(Request $request)
+    public function courses($url_name, Request $request)
     {
+        $organization = Organization::where('url_name', $url_name);
+        if (!$organization) {
+            return response()->json(['message' => 'Organization not found'], 404);
+        }
         $user = apiAuth();
 
         $bundle = Bundle::findOrFail($request->id);
 
-        if (!$user->isTeacher() and !$user->isOrganization() and !$bundle->isPartnerTeacher($user->id)) {
+        if (!$user->isTeacher() && !$user->isOrganization() && !$user->isAdmin() && !$bundle->isPartnerTeacher($user->id)) {
             abort(404);
         }
 
@@ -218,86 +223,91 @@ class BundleController extends Controller
         abort(404);
     }
 
-    public function course_learning_page(Request $request, Bundle $bundle = null, $id)
-      {
-          return response()->json([
-            'test'=>$bundle
-          ]);
-          $requestData = $request->all();
-          $webinarController = new WebinarController();
-   
-          // Find the webinar by its ID
-          $webinar = Webinar::findOrFail($id);
-   
-          // Get course data using the WebinarController's course method
-          $data = $webinarController->course2($id, true);
-          $course = $data['course'];
-          $user = $data['user'];
-   
-          // Set default itemId and itemName
-          $itemId = $course->id;
-          $itemName = 'webinar_id';
-   
-          // If the course is not unattached and there's a bundle, switch itemId to bundle's ID
-          if (empty($course->unattached) && !empty($bundle)) {
-              $itemId = $bundle->id;
-              $itemName = "bundle_id";
-          }
-   
-          // Check installment content limitation
-          $installmentLimitation = $webinarController->installmentContentLimitation($user, $itemId, $itemName);
-          if ($installmentLimitation != "ok") {
-              return response()->json([
-                  'success' => false,
-                  'message' => $installmentLimitation
-              ], 403);
-          }
-   
-          // Check if the user has bought the course or if they are eligible
-          if (!$data || (!$data['hasBought'] && empty($course->getInstallmentOrder()))) {
-              return response()->json([
-                  'success' => false,
-                  'message' => 'You are not authorized to access this course.'
-              ], 403);
-          }
-   
-          // Check if type is 'assignment' and add assignment data to response if necessary
-          if (!empty($requestData['type']) && $requestData['type'] == 'assignment' && !empty($requestData['item'])) {
-              $assignmentData = $this->getAssignmentData($course, $requestData);
-              $data = array_merge($data, $assignmentData);
-          }
-   
-          // If the user is not the creator, teacher, admin, or partner, check for unread noticeboards
-          if ($course->creator_id != $user->id && $course->teacher_id != $user->id && !$user->isAdmin() && !$course->isPartnerTeacher($user->id)) {
-              $unReadCourseNoticeboards = CourseNoticeboard::where('webinar_id', $course->id)
-                  ->whereDoesntHave('noticeboardStatus', function ($query) use ($user) {
-                      $query->where('user_id', $user->id);
-                  })
-                  ->count();
-   
-              if ($unReadCourseNoticeboards) {
-                  $url = $course->getNoticeboardsPageUrl();
-                  return response()->json([
-                      'success' => false,
-                      'redirect_url' => $url,
-                      'message' => 'You have unread noticeboards. Redirecting to the noticeboard page.'
-                  ], 403);
-              }
-          }
-   
-          // Add course certificate data if available
-          if ($course->certificate) {
-              $data["courseCertificate"] = Certificate::where('type', 'course')
-                  ->where('student_id', $user->id)
-                  ->where('webinar_id', $course->id)
-                  ->first();
-          }
-   
-          // Return data as JSON
-          return response()->json([
-              'success' => true,
-              'message' => 'Course learning data retrieved successfully.',
-              'data' => $data
-          ], 200);
-      }
+    public function course_learning_page(Request $request, $url_name, Bundle $bundle = null, $id)
+    {
+        $organization = Organization::where('url_name', $url_name);
+        if (!$organization) {
+            return response()->json(['message' => 'Organization not found'], 404);
+        }
+
+        return response()->json([
+            'test' => $bundle
+        ]);
+        $requestData = $request->all();
+        $webinarController = new WebinarController();
+
+        // Find the webinar by its ID
+        $webinar = Webinar::findOrFail($id);
+
+        // Get course data using the WebinarController's course method
+        $data = $webinarController->course2($id, true);
+        $course = $data['course'];
+        $user = $data['user'];
+
+        // Set default itemId and itemName
+        $itemId = $course->id;
+        $itemName = 'webinar_id';
+
+        // If the course is not unattached and there's a bundle, switch itemId to bundle's ID
+        if (empty($course->unattached) && !empty($bundle)) {
+            $itemId = $bundle->id;
+            $itemName = "bundle_id";
+        }
+
+        // Check installment content limitation
+        $installmentLimitation = $webinarController->installmentContentLimitation($user, $itemId, $itemName);
+        if ($installmentLimitation != "ok") {
+            return response()->json([
+                'success' => false,
+                'message' => $installmentLimitation
+            ], 403);
+        }
+
+        // Check if the user has bought the course or if they are eligible
+        if (!$data || (!$data['hasBought'] && empty($course->getInstallmentOrder()))) {
+            return response()->json([
+                'success' => false,
+                'message' => 'You are not authorized to access this course.'
+            ], 403);
+        }
+
+        // Check if type is 'assignment' and add assignment data to response if necessary
+        if (!empty($requestData['type']) && $requestData['type'] == 'assignment' && !empty($requestData['item'])) {
+            $assignmentData = $this->getAssignmentData($course, $requestData);
+            $data = array_merge($data, $assignmentData);
+        }
+
+        // If the user is not the creator, teacher, admin, or partner, check for unread noticeboards
+        if ($course->creator_id != $user->id && $course->teacher_id != $user->id && !$user->isAdmin() && !$course->isPartnerTeacher($user->id)) {
+            $unReadCourseNoticeboards = CourseNoticeboard::where('webinar_id', $course->id)
+                ->whereDoesntHave('noticeboardStatus', function ($query) use ($user) {
+                    $query->where('user_id', $user->id);
+                })
+                ->count();
+
+            if ($unReadCourseNoticeboards) {
+                $url = $course->getNoticeboardsPageUrl();
+                return response()->json([
+                    'success' => false,
+                    'redirect_url' => $url,
+                    'message' => 'You have unread noticeboards. Redirecting to the noticeboard page.'
+                ], 403);
+            }
+        }
+
+        // Add course certificate data if available
+        if ($course->certificate) {
+            $data["courseCertificate"] = Certificate::where('type', 'course')
+                ->where('student_id', $user->id)
+                ->where('webinar_id', $course->id)
+                ->first();
+        }
+
+        // Return data as JSON
+        return response()->json([
+            'success' => true,
+            'message' => 'Course learning data retrieved successfully.',
+            'data' => $data
+        ], 200);
+    }
 }
