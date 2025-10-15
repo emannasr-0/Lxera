@@ -1,0 +1,43 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('bridging_requests', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedInteger("user_id")->nullable();
+            $table->unsignedBigInteger("service_request_id")->nullable();
+            $table->unsignedInteger('bridging_id')->nullable();
+            $table->unsignedInteger('from_bundle_id')->nullable();
+            $table->unsignedInteger('to_bundle_id')->nullable();
+            $table->string('status')->default('pending');
+
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreign('service_request_id')->references('id')->on('service_user')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreign('bridging_id')->references('id')->on('bundles')->cascadeOnUpdate()->nullOnDelete();
+            $table->foreign('from_bundle_id')->references('id')->on('bundles')->cascadeOnUpdate()->nullOnDelete();
+            $table->foreign('to_bundle_id')->references('id')->on('bundles')->cascadeOnUpdate()->nullOnDelete();
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('bridging_requests');
+    }
+};

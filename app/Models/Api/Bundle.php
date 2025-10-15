@@ -1,0 +1,44 @@
+<?php
+
+namespace App\Models\Api;
+
+use App\BundleStudent;
+use App\Models\Api\Traits\CheckForSaleTrait;
+use App\Models\Favorite;
+use App\Models\Bundle as Model;
+use App\Models\Traits\FilterBySearchTrait;
+
+class Bundle extends Model
+{
+    use CheckForSaleTrait;
+    use FilterBySearchTrait;
+
+    public function getIsFavoriteAttribute()
+    {
+        if (!apiAuth()) {
+            return null;
+        }
+        return (bool)Favorite::where('bundle_id', $this->id)
+            ->where('user_id', apiAuth()->id)
+            ->first();
+    }
+
+    public function bundleWebinars()
+    {
+        return $this->hasMany('App\Models\Api\BundleWebinar', 'bundle_id', 'id');
+    }
+
+    public function webinars()
+    {
+        //  return $this->hasManyThrough('App\Models\Webinar', 'App\Models\BundleWebinar', 'bundle_id', 'id');
+    }
+    public function teacher()
+    {
+        return $this->belongsTo('App\Models\Api\User', 'teacher_id', 'id');
+    }
+    public function bundleStudents()
+    {
+        return $this->belongsTo(BundleStudent::class);
+    }
+    
+}
