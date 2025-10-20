@@ -30,7 +30,7 @@
                 @endphp
                 <section
                     class="bg-secondary-acadima position-relative col-xl-9 col-12 justify-content-center align-items-center rounded-sm mb-80 py-35 px-0">
-                    <h2 class="mb-25 col-12 text-light">
+                    <h2 class="mb-25 col-12 text-dark">
                         {{ clean($studentBundle->bundle->title, 't') }}</h2>
                     @if (empty($studentBundle->studentRequirement))
                      @if ($studentBundle->status == 'pending')
@@ -41,7 +41,7 @@
                         </div>
                      @elseif ($studentBundle->status == 'fee_rejected')
                         <div class="w-100 text-center">
-                            <p class="alert alert-danger text-center text-white mx-30">
+                            <p class="alert alert-danger text-center text-dark mx-30">
                                 طلبك لحجز مقعد دراسي تم رفضه من قبل الإدارة المالية لمعرفة السبب اضغط هنا
                             </p>
                             <a href="/panel/financial/offline-payments"
@@ -57,11 +57,11 @@
                             </div> --}}
                         @else
                             <div class="w-100 text-center">
-                                <p class="alert alert-info text-center mx-30 text-light" >
+                                <p class="alert alert-info text-center mx-30 text-dark" >
                                     لم يتم رفع متطلبات القبول بعد ، يرجي الضعط علي الزر للذهاب لصفحة متطلبات القبول
-                                </p>
+                                </p> 
                                 <a href="/panel/bundles/{{ $studentBundle->id }}/requirements"
-                                    class="btn btn-acadima-primary p-5 mt-20 bg-button-acadima text-dark">للذهاب لرفع ملفات متطلبات القبول اضغط
+                                    class="btn btn-acadima-primary p-5 mt-20 bg-button-acadima ">للذهاب لرفع ملفات متطلبات القبول اضغط
                                     هنا</a>
                             </div>
                         @endif

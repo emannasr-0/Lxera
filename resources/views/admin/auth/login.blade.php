@@ -17,7 +17,7 @@
         flex-wrap: wrap;
     }
     .cs-btn{
-        background-color:#c14b93 !important;
+        background-color:#1024dd !important;
         width:100%;
         height:50px;
         color: #fff;
@@ -41,7 +41,7 @@
         background-color: #fff !important;
     }
     .bg-button-acadima {
-        background-color: #c14b93 !important;
+        background-color: #1024dd !important;
     }
     .text-cyan {
     color: #CCF5FF !important;
@@ -51,7 +51,7 @@
     color: #ccf5ffa4 !important;
     }
     .text-pink {
-        color: #c14b93 !important;
+        color: #1024dd !important;
         font-size:16px;
         }
     .border-radius-lg {
@@ -92,7 +92,7 @@
     <div class="p-4 m-3 ">
     <div class="col-7 col-md-7 p-0 mb-5 mt-3 mt-md-auto mx-auto d-flex flex-column align-items-center">
 
-        <img src="{{ asset('store/Acadima/acadima-logo.webp') }}" alt="logo" width="80%" class="">
+        <img src="{{ asset('store/Acadima/logo2.webp') }}" alt="logo" width="80%" class="">
         </div>
 
         <h4 class="text-pink font-weight-normal text-left">

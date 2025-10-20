@@ -24,7 +24,7 @@
         @foreach ($webinarsOrders as $webinarsOrder)
             <section
                 class="bg-secondary-acadima position-relative col-xl-9 col-12 justify-content-center align-items-center rounded-sm mb-80 py-35 px-0">
-                <h2 class="mb-25 col-12 text-light">
+                <h2 class="mb-25 col-12 text-dark">
                     {{ clean($webinarsOrder->webinar->title, 't') }}</h2>
 
                 @if ($webinarsOrder->status == 'waiting')

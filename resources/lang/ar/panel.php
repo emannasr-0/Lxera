@@ -152,7 +152,7 @@ return [
   'sign_out'  => 'تسجيل الخروج',
 
   // academic_info
-  'academic_info' => 'بيانات الاكاديمية',
+  'academic_info' => 'بيانات المستخدم',
 
   // personal card
   'personal_card_stucode' => 'كود الطالب',

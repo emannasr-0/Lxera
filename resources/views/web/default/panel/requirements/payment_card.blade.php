@@ -49,7 +49,7 @@
 
                                 <div class="mt-20 d-flex flex-column">
 
-                                    <button type="button" class="btn btn-primary"
+                                    <button type="button" class="btn btn-acadima-primary"
                                         disabled>{{ trans('panel.purchased') }}</button>
 
                                 </div>
@@ -163,11 +163,11 @@
 
                                 <div class="mt-20 d-flex flex-column">
                                     @if ($hasBought or !empty($bundleData['bundle']->bundle->getInstallmentOrder()))
-                                        <button type="button" class="btn btn-primary"
+                                        <button type="button" class="btn btn-acadima-primary"
                                             disabled>{{ trans('panel.purchased') }}</button>
                                     @elseif($bundleData['bundle']->bundle->price > 0)
                                         <button type="{{ $canSale ? 'submit' : 'button' }}"
-                                            @if (!$canSale) disabled @endif class="btn btn-primary">
+                                            @if (!$canSale) disabled @endif class="btn btn-acadima-primary">
                                             @if (!$canSale)
                                                 {{ trans('update.disabled_add_to_cart') }}
                                             @else

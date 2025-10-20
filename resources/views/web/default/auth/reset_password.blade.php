@@ -31,7 +31,7 @@
             color: #000 !important;
         }
         .cs-btn{
-        background-color:#c14b93 !important;
+        background-color:#1024dd !important;
         width:100%;
         height:50px;
         color:#fff;
@@ -49,7 +49,7 @@
             color: #ccf5ffa4;
         }
         .text-pink {
-        color: #c14b93 !important;
+        color: #1024dd !important;
         font-size:16px;
         }
         .ltr {
@@ -79,14 +79,14 @@
 
     <div class="login-container p-3 p-lg-5 m-md-3  bg-secondary-acadima border-radius-lg shadow border">
         <div class="col-7 col-md-7 p-0 mb-0 mb-lg-5 mt-3 mt-md-auto mx-auto d-flex flex-column align-items-center">
-            <img src="{{ asset('store/Acadima/acadima-logo.webp') }}" alt="logo" width="70%" class="">
+            <img src="{{ asset('store/Acadima/logo2.webp') }}" alt="logo" width="70%" class="">
             
         </div>
         <h1 class="font-20 font-weight-bold mt-3 ltr" style="display: flex; align-items: center; gap: 8px;">
                     <svg width="34" height="29" viewBox="0 0 34 29" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M22 27C22 23.3181 17.5228 20.3333 12 20.3333C6.47715 20.3333 2 23.3181 2 27M32 12L25.3333 18.6667L22 15.3333M12 15.3333C8.3181 15.3333 5.33333 12.3486 5.33333 8.66667C5.33333 4.98477 8.3181 2 12 2C15.6819 2 18.6667 4.98477 18.6667 8.66667C18.6667 12.3486 15.6819 15.3333 12 15.3333Z"
-                            stroke="#c14b93" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                            stroke="#1024dd" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                     <!-- {{ trans('auth.reset_password') }} -->
                       Reset Password
