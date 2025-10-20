@@ -138,7 +138,7 @@
                     </div>
 
                     <div class="col-12 col-lg-2 d-flex align-items-center justify-content-end">
-                        <button type="submit" class="btn btn-sm btn-primary w-100 mt-2">{{ trans('public.show_results') }}</button>
+                        <button type="submit" class="btn btn-sm btn-acadima-primary w-100 mt-2">{{ trans('public.show_results') }}</button>
                     </div>
                 </div>
             </form>

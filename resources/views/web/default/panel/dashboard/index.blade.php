@@ -56,7 +56,7 @@
     <section class="dashboard ">
 
         <div class="mt-10 d-flex align-items-start align-items-md-center justify-content-between flex-column flex-md-row">
-            <h1 class="section-title text-color p-20">{{ trans('panel.dashboard') }}</h1>
+            <h1 class="section-title text-color px-20">{{ trans('panel.dashboard') }}</h1>
 
             @if (!$authUser->isUser())
                 <div
@@ -121,7 +121,7 @@
                                 {{ $authUser->user_code }}</li>
                             <li class="mt-1 text-gray font-16 font-weight-bold text-left">
                                 {{ trans('panel.personal_card_email') }} :
-                                {{ $authUser->user_code }}@anasacademy.uk</li>
+                                {{ $authUser->user_code }}@lxera.com</li>
                             <li class="mt-1 text-gray font-16 font-weight-bold text-left">
                                 {{ trans('panel.personal_card_password') }}:
                                 SD$$2025</li>
@@ -189,12 +189,12 @@
                                 <span class="font-16 text-dark font-weight-500 text-center pb-10">
                                     {{ trans('panel.microsoft') }}
                                 </span>
-                                <a target="_blank" rel="noopener noreferrer" class="btn btn-primary mt-10" style=""
+                                <a target="_blank" rel="noopener noreferrer" class="btn btn-acadima-primary mt-10" style=""
                                     href="https://go.microsoft.com/fwlink/?linkid=2187217&amp;clcid=0x409&amp;culture=en-us&amp;country=us/">
                                     {{ trans('panel.download_here') }}
                                 </a>
 
-                                <a target="_blank" rel="noopener noreferrer" class="btn btn-primary mt-10" style=""
+                                <a target="_blank" rel="noopener noreferrer" class="btn btn-acadima-primary mt-10" style=""
                                     href="https://portal.office.com/">
                                     {{ trans('panel.login_here') }}
 
@@ -218,7 +218,7 @@
                                             <div class="col-4">
                                                 <ul class="list-inline-group text-right mb-1 pl-0">
                                                     <li class="list-inline-item mr-0 font-12"><i
-                                                            class="feather icon-more-vertical- font-20 text-light"></i>
+                                                            class="feather icon-more-vertical- font-20 text-dark"></i>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -238,7 +238,7 @@
                                                             <div class="media-body">
                                                                 <a href="{{ $bundleSale->bundle->content_table }}"
                                                                     target="_blank">
-                                                                    <h5 class="font-16 mb-1 text-light">
+                                                                    <h5 class="font-16 mb-1 text-dark">
                                                                         {{ $bundleSale->bundle->title }}
                                                                         <i
                                                                             class="feather icon-download-cloud float-right"></i>
@@ -525,7 +525,7 @@
 
                                     <div>
                                         <button type="button" data-id="{{ $getUnreadNoticeboard->id }}"
-                                            class="js-noticeboard-info btn btn-sm btn-border-white">{{ trans('panel.more_info') }}</button>
+                                            class="js-noticeboard-info btn btn-sm btn-acadima-primary">{{ trans('panel.more_info') }}</button>
                                         <input type="hidden" class="js-noticeboard-message"
                                             value="{{ $getUnreadNoticeboard->message }}">
                                     </div>

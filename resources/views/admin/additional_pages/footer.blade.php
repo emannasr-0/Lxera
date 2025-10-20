@@ -1,4 +1,3 @@
-@extends('admin.layouts.app')
 
 @php
     $columns = ['first_column','second_column','third_column','forth_column']
@@ -8,83 +7,116 @@
     <link rel="stylesheet" href="/assets/vendors/summernote/summernote-bs4.min.css">
 @endpush
 
-@section('content')
-    <section class="section">
-        <div class="section-header">
-            <h1>{{ trans('admin/main.footer') }}</h1>
-            <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ getAdminPanelUrl() }}">{{ trans('admin/pages/dashboard.dashboard') }}</a></div>
-                <div class="breadcrumb-item">{{ trans('admin/pages/setting.footer') }}</div>
-            </div>
-        </div>
 
-        <div class="section-body">
+   
 
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-body">
+    <footer class="footer position-relative user-select-none" style="background-color: #333; z-index: 100;">
+    {{--
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class=" footer-subscribe d-block d-md-flex align-items-center justify-content-between">
+                    <div class="flex-grow-1">
+                        <strong>{{ trans('footer.join_us_today') }}</strong>
+                        <span class="d-block mt-5 text-white">{{ trans('footer.subscribe_content') }}</span>
+                    </div>
+                    <div class="subscribe-input bg-white p-10 flex-grow-1 mt-30 mt-md-0">
+                        <form action="/newsletters" method="post">
+                            {{ csrf_field() }}
 
-                            <ul class="nav nav-pills" id="myTab3" role="tablist">
-                                @foreach($columns as $column)
-                                    <li class="nav-item">
-                                        <a class="nav-link {{ $loop->iteration == 1 ? 'active' : '' }}" id="{{ $column }}-tab" data-toggle="tab" href="#{{ $column }}" role="tab" aria-controls="{{ $column }}" aria-selected="true">{{ trans('admin/pages/setting.footer_'.$column) }}</a>
-                                    </li>
-                                @endforeach
-                            </ul>
-
-                            <div class="tab-content" id="myTabContent2">
-                                @foreach($columns as $column)
-                                    <div class="tab-pane mt-3 fade {{ $loop->iteration == 1 ? 'show active' : '' }}" id="{{ $column }}" role="tabpanel" aria-labelledby="{{ $column }}-tab">
-                                        <div class="row">
-                                            <div class="col-12 col-md-6">
-                                                <form action="{{ getAdminPanelUrl() }}/additional_page/footer/store" method="post">
-                                                    {{ csrf_field() }}
-
-                                                    @if(!empty(getGeneralSettings('content_translate')))
-                                                        <div class="form-group">
-                                                            <label class="input-label">{{ trans('auth.language') }}</label>
-                                                            <select name="locale" class="form-control js-edit-content-locale">
-                                                                @foreach($userLanguages as $lang => $language)
-                                                                    <option value="{{ $lang }}" @if(mb_strtolower(request()->get('locale', $selectedLocal)) == mb_strtolower($lang)) selected @endif>{{ $language }}</option>
-                                                                @endforeach
-                                                            </select>
-                                                            @error('locale')
-                                                            <div class="invalid-feedback">
-                                                                {{ $message }}
-                                                            </div>
-                                                            @enderror
-                                                        </div>
-                                                    @else
-                                                        <input type="hidden" name="locale" value="{{ getDefaultLocale() }}">
-                                                    @endif
-
-                                                    <div class="form-group">
-                                                        <label>{{ trans('admin/main.title') }}</label>
-                                                        <input type="text" name="value[{{ $column }}][title]" value="{{ (!empty($value) and !empty($value[$column]) and !empty($value[$column]['title'])) ? $value[$column]['title'] : old('title') }}" class="form-control "/>
-                                                    </div>
-
-                                                    <div class="form-group">
-                                                        <label>{{ trans('admin/main.content') }}</label>
-                                                        <textarea type="text" name="value[{{ $column }}][value]" class="summernote form-control">{{ (!empty($value) and !empty($value[$column]) and !empty($value[$column]['value'])) ? $value[$column]['value'] : old('value') }}</textarea>
-                                                    </div>
-
-                                                    <button type="submit" class="btn btn-primary">{{ trans('admin/main.submit') }}</button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
+                            <div class="form-group d-flex align-items-center m-0">
+                                <div class="w-100">
+                                    <input type="text" name="newsletter_email" class="form-control border-0 @error('newsletter_email') is-invalid @enderror" placeholder="{{ trans('footer.enter_email_here') }}"/>
+                                    @error('newsletter_email')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <button type="submit" class="btn btn-primary rounded-pill">{{ trans('footer.join') }}</button>
                             </div>
-
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-@endsection
+    </div>
+
+    @php
+        $columns = ['first_column','second_column','third_column','forth_column'];
+    @endphp
+
+    <div class="container">
+        <div class="row">
+
+            @foreach ($columns as $column)
+                <div class="col-6 col-md-3">
+                    @if (!empty($footerColumns[$column]))
+                        @if (!empty($footerColumns[$column]['title']))
+                            <span class="header d-block text-white font-weight-bold">{{ $footerColumns[$column]['title'] }}</span>
+                        @endif
+
+                        @if (!empty($footerColumns[$column]['value']))
+                            <div class="mt-20">
+                                {!! $footerColumns[$column]['value'] !!}
+                            </div>
+                        @endif
+                    @endif
+                </div>
+            @endforeach
+
+        </div>
+
+        <div class="mt-40 border-blue py-25 d-flex align-items-center justify-content-between">
+            <div class="footer-logo">
+                <a href="https://anasacademy.uk/">
+                    @if (!empty($generalSettings['footer_logo']))
+                        <img src="{{ $generalSettings['footer_logo'] }}" class="img-cover" alt="footer logo">
+                    @endif
+                </a>
+            </div>
+            <div class="footer-social">
+                @if (!empty($socials) and count($socials))
+                    @foreach ($socials as $social)
+                        <a href="{{ $social['link'] }}">
+                            <img src="{{ $social['image'] }}" alt="{{ $social['title'] }}" class="mr-15">
+                        </a>
+                    @endforeach
+                @endif
+            </div>
+        </div>
+    </div>
+--}}
+    {{-- @if (getOthersPersonalizationSettings('platform_phone_and_email_position') == 'footer') --}}
+    <div class="footer-copyright-card">
+        <div class="container d-flex align-items-center justify-content-center py-15">
+            <div class="font-14 text-white ltr"><a class="text-white" href="https://lxera.com/">All rights reserved 2025 ©
+                    Lxera.</a> </div>
+
+            {{-- <div class="d-flex align-items-center justify-content-center">
+                    @if (!empty($generalSettings['site_phone']))
+                        <div class="d-flex align-items-center text-white font-14">
+                            <i data-feather="phone" width="20" height="20" class="mr-10"></i>
+                            {{ $generalSettings['site_phone'] }}
+                        </div>
+                    @endif
+
+                    @if (!empty($generalSettings['site_email']))
+                        <div class="border-left mx-5 mx-lg-15 h-100"></div>
+
+                        <div class="d-flex align-items-center text-white font-14">
+                            <i data-feather="mail" width="20" height="20" class="mr-10"></i>
+                            {{ $generalSettings['site_email'] }}
+                        </div>
+                    @endif
+                </div> --}}
+        </div>
+    </div>
+    {{-- @endif --}}
+
+</footer>
+
 
 @push('scripts_bottom')
     <script src="/assets/vendors/summernote/summernote-bs4.min.js"></script>
 @endpush
+
+

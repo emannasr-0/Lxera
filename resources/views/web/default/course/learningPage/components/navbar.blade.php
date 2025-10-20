@@ -16,7 +16,7 @@
         <div class="">
             <a class="navbar-brand d-flex align-items-center justify-content-center mr-0" href="/">
                 @if(!empty($generalSettings['logo']))
-                    <img src="{{ asset('store/Acadima/acadima-logo.webp') }}" class="img-cover" alt="site logo">
+                    <img src="{{ asset('store/Acadima/logo2.webp') }}" class="img-cover" alt="site logo">
                 @endif
             </a>
 

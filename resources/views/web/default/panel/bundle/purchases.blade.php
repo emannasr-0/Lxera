@@ -27,7 +27,7 @@
     <section class="mt-25">
         @if (!empty($sales) and !$sales->isEmpty())
             <div
-                class="d-flex align-items-start align-items-md-center justify-content-between flex-column flex-md-row mt-50 mt-lg-80 ">
+                class="d-flex align-items-start align-items-md-center justify-content-between flex-column flex-md-row mt-50 ">
                 <h2 class="section-title text-pink">{{ trans('panel.registered_programs') }} </h2>
             </div>
             @foreach ($sales as $sale)
@@ -50,7 +50,7 @@
 
                             <h2 class="section-title after-line text-pink">{{ trans('product.courses') }} {{ $item->title }}</h2>
                             @if ($item->content_table && $item->start_date <= time() && $hasActiveWebinars && $sale->access_to_purchased_item)
-                                <a href="{{ $item->content_table }}" class="text-cyan  mr-50 font-weight-bold"
+                                <a href="{{ $item->content_table }}" class="text-pink  mr-50 font-weight-bold"
                                     target="_blank" style="font-size:18px">
                                     {{trans('panel.download_schedule')}}<!-- You can customize the button text here -->
                                 </a>
@@ -162,7 +162,7 @@
                                                                         disabled>اضغط هنا للذهاب للمحاضرا</button>
                                                                 @endif --}}
 
-                                                                <a class="btn btn-primary"
+                                                                <a class="btn btn-acadima-primary"
                                                                     href="{{ $bundleWebinar->getWebinarLearningPageUrl() }}"
                                                                     target="_blank" rel="noopener noreferrer">{{trans('panel.lecture')}}
                                                                 </a>

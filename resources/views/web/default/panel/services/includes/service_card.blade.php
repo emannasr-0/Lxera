@@ -5,9 +5,9 @@
 </style>
 @isset($service)
     <div
-        class="module-box bg-secondary-acadima rounded-sm panel-shadow py-30 d-flex align-items-center justify-content-center mt-0 h-100 w-100">
-        <div class="d-flex flex-column service-card px-20 text-center" style="align-items: center;">
-            <img src="{{ asset('store/Acadima/acad-logo.webp') }}" width="50%" alt="anas academy">
+        class="module-box bg-secondary-acadima rounded-sm panel-shadow py-30 d-flex  mt-0 h-100 w-100">
+        <div class="d-flex flex-column service-card px-20 text-center justify-content-between" style="align-items: center;">
+            <img src="{{ asset('store/Acadima/reviwebg.png') }}" width="50%" alt="anas academy">
 
             @isset($service->title)
                 <h1 class="text-secondary font-weight-bold text-center pb-10 mt-10">
@@ -34,7 +34,7 @@
             @endisset
 
             @isset($service->apply_link)
-                <a target="_self" rel="noopener noreferrer" class="btn btn-primary mt-10 px-50" style=""
+                <a target="_self" rel="noopener noreferrer" class="btn btn-acadima-primary mt-10 px-50" style=""
                     href="{{ $service->apply_link }}">
                     {{trans('panel.submit_request')}}
                 </a>

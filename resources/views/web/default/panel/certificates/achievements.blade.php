@@ -113,7 +113,7 @@
                     </div>
                 </div>
                 <div class="col-12 col-lg-2 d-flex align-items-center justify-content-end">
-                    <button type="submit" class="btn btn-sm btn-primary w-100 mt-2">{{ trans('public.show_results') }}</button>
+                    <button type="submit" class="btn btn-sm btn-acadima-primary w-100 mt-2">{{ trans('public.show_results') }}</button>
                 </div>
             </form>
         </div>
@@ -303,9 +303,9 @@
                                     <tr>
                                         <td class="text-left">
                                             <span class="d-block text-light font-weight-500">{{ $bundleCertificate->title }}</span>
-                                            <span class="d-block font-12 text-light mt-5">{{ $bundleCertificate->bundle->title }}</span>
+                                            <span class="d-block font-12 text-dark mt-5">{{ $bundleCertificate->bundle->title }}</span>
                                         </td>
-                                        <td class="align-middle text-light">
+                                        <td class="align-middle text-dark">
 
 
 
@@ -325,8 +325,8 @@
                                                     </button> --}}
                                                     {{-- <div class="dropdown-menu"> --}}
 
-                                                        <a href="/panel/bundle/{{$bundleCertificate->bundle->id}}/showCertificate" target="_blank" class="btn btn-sm btn-primary">{{trans('panel.download_certificate_as_image')}}</a>
-                                                        <a href="/panel/bundle/{{$bundleCertificate->bundle->id}}/showCertificate/pdf" target="_blank" class="btn btn-sm btn-primary">{{trans('panel.download_certificate_as_pdf')}}</a>
+                                                        <a href="/panel/bundle/{{$bundleCertificate->bundle->id}}/showCertificate" target="_blank" class="btn btn-sm btn-acadima-primary">{{trans('panel.download_certificate_as_image')}}</a>
+                                                        <a href="/panel/bundle/{{$bundleCertificate->bundle->id}}/showCertificate/pdf" target="_blank" class="btn btn-sm btn-acadima-primary">{{trans('panel.download_certificate_as_pdf')}}</a>
 
                                                     {{-- </div> --}}
                                                 {{-- </div> --}}

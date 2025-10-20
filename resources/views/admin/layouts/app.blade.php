@@ -52,6 +52,7 @@
                 @yield('content')
 
             </div>
+            @include('admin.additional_pages.footer')
         </div>
         
         @stack('models')

@@ -285,7 +285,7 @@
     --gray300: #ececec;
     --gray200: #f1f1f1;
     --gray100: #f9f9f9;
-    --acadima-pink: #c14b93;
+    --acadima-pink: #1024dd;
     --acadima-black: #0e0e0e;
     --acadima-gray: #888888;
     --acadima-darkblue: #141F25;
@@ -434,7 +434,7 @@ a {
 }
 a,
 a:hover {
-    color: var(--acadima-pink);
+    color: #1024dd;
 }
 a:hover {
     text-decoration: underline;
@@ -583,7 +583,7 @@ input[type="checkbox"]:checked::before {
     content: "";
     width: 6px;
     height: 6px;
-    background-color: var(--acadima-pink);
+    background-color: #1024dd;
     border-radius: 50%;
     position: absolute;
     top: 50%;
@@ -13782,7 +13782,7 @@ a.badge-circle-gray100:focus {
     left: 50%;
     width: 85%;
     height: 5px;
-    background-color: var(--primary);
+    background-color: var(--acadima-pink);
     border-radius: 5px;
     transform: translate(-50%, 17px);
 }
@@ -15095,7 +15095,7 @@ img[alt="Admin"] {
     position: absolute;
     inset: 0;
     opacity: 0.15;
-    background-color: #000;
+    background-color: #333;
     z-index: 1;
 }
 .time-counter-down .time-item {
@@ -15207,7 +15207,7 @@ img[alt="Admin"] {
     transition: all 0.3s ease;
 }
 .custom-pagination li a:hover {
-    background-color: var(--primary);
+    background-color: var(--acadima-pink);
     color: #fff;
     transition: all 0.3s ease;
 }
@@ -15235,8 +15235,8 @@ img[alt="Admin"] {
     border-radius: 50%;
 }
 .custom-pagination li span.active {
-    border: 1px solid var(--primary);
-    background-color: var(--primary);
+    border: 1px solid var(--acadima-pink);
+    background-color: var(--acadima-pink);
     color: #fff;
 }
 .custom-pagination li:last-child {
@@ -16428,7 +16428,7 @@ img[alt="Admin"] {
     background-color: #fff;
 }
 .webinar-card.webinar-list .image-box {
-    width: 120px;
+    width: 15%;
     height: auto;
     max-height: 100%;
     border-radius: 10px 0 0 10px;
@@ -17089,7 +17089,7 @@ img[alt="Admin"] {
 }
 .installment-card {
     border-radius: 15px;
-    border: 2px solid var(--acadima-pink);
+    border: 2px solid #1024dd;
     background-color: transparent !important;
 }
 .installment-card .card-progress {
@@ -19121,7 +19121,7 @@ img[alt="Admin"] {
     transition: all 0.3s ease;
 }
 .webinar-progress .progress-item .progress-icon:hover {
-    background-color: var(--primary);
+    background-color: var(--acadima-pink);
     transition: all 0.3s ease;
 }
 .webinar-progress .progress-item .progress-icon.active {
@@ -19326,19 +19326,19 @@ img[alt="Admin"] {
 }
 .btn-primary {
     color: var(--primary-btn-color);
-    background-color: var(--primary);
-    border-color: var(--primary-border);
-    box-shadow: var(--primary-btn-shadow);
+    background-color: var(--acadima-pink);
+    border-color: var(--acadima-pink);
+    box-shadow: var(--acadima-pink);
     transition: all 0.3s;
 }
 .btn-primary:active,
 .btn-primary:focus,
 .btn-primary:hover,
 .btn-primary:not(:disabled):not(.disabled):active {
-    color: var(--primary-btn-color-hover);
-    background-color: var(--primary-hover);
-    border-color: var(--primary-border-hover);
-    box-shadow: var(--primary-btn-shadow-hover);
+    color: var(--acadima-pink);
+    background-color: #fff;
+    border-color: var(--acadima-pink);
+    box-shadow: var(--acadima-pink);
     transition: all 0.3s;
 }
 .btn-primary.disabled,
@@ -19407,7 +19407,7 @@ img[alt="Admin"] {
 .custom-control-input:checked ~ .custom-control-label:before,
 .custom-control-input:not(:disabled):active ~ .custom-control-label:before {
     color: var(--primary-btn-color) !important;
-    background-color: var(--primary) !important;
+    background-color: var(--acadima-pink) !important;
     border-color: var(--primary-border) !important;
     box-shadow: none;
 }
@@ -19434,9 +19434,13 @@ img[alt="Admin"] {
     background-color: #1024dd !important;
     border-color: #1024dd !important;
 }
-span{
+.btn-acadima-primary:hover {
     color: #1024dd !important;
+    background-color: #fff !important;
+    border-color: #1024dd !important;
+
 }
+
 
 
 a, a:hover {

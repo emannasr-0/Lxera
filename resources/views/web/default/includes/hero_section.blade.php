@@ -12,7 +12,7 @@
         width: 100%;
         height: 50vh;
         /* background-color: #ED1088; */
-        background-image:url('{{ asset('store/Acadima/Header005.png') }}');
+        background-image:url('{{ asset('store/Acadima/hero-placeholder.png') }}');
         background-color:#fff;
         background-position: center;
         background-repeat: no-repeat;

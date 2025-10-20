@@ -54,10 +54,14 @@
         <div class="d-flex justify-content-end">
             @include(getTemplate() . '.panel.includes.sidebar')
 
-            <div class="panel-content ">
+            <div class="panel-content" style="min-height: 65vh;">
                 @yield('content')
             </div>
+
+            
         </div>
+                    @include('web.default.includes.footer')
+
 
         @include('web.default.includes.advertise_modal.index')
     </div>

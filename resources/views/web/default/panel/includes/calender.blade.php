@@ -158,8 +158,8 @@
     <div class="row_cal">
         <div class="col_cal">
             <div class="d-flex_cal justify-content-between_cal my-15 my-lg-0">
-                <button class="btn btn-primary" id="prev-month">{{ trans('panel.previous_month') }}</button>
-                <button class="btn btn-primary" id="next-month">{{ trans('panel.next_month') }}</button>
+                <button class="btn btn-acadima-primary" id="prev-month">{{ trans('panel.previous_month') }}</button>
+                <button class="btn btn-acadima-primary" id="next-month">{{ trans('panel.next_month') }}</button>
             </div>
             <div class="table-container">
             <table class="table ">

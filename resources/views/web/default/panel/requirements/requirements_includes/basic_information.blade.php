@@ -2,7 +2,7 @@
     action="/panel/bundles/{{ $studentBundleId }}/requirements">
     {{ csrf_field() }}
 
-    <h1 class="section-title after-line text-center text-light g-3">نموذج تقديم متطلبات القبول</h1>
+    <h1 class="section-title after-line text-center g-3">نموذج تقديم متطلبات القبول</h1>
 
     <div class="row mt-20 p-5">
 
@@ -10,7 +10,7 @@
         <div class="col-12 col-lg-6">
 
             <div class="form-group p-5 ">
-                <label class="text-light" for="user_code">رقم الطالب *</label>
+                <label class="" for="user_code">رقم الطالب *</label>
                 <input type="text" name="user_code" id="user_code"
                     class="form-control @error('user_code')  is-invalid @enderror" required readonly
                     value="{{ $user_code }}" />
@@ -25,7 +25,7 @@
 
 
             <div class="form-group p-5 ">
-                <label class="text-light" for="program">البرنامج المراد التسجيل فيه *</label>
+                <label class="" for="program">البرنامج المراد التسجيل فيه *</label>
 
 
                 <input type="text" name="program" id="program"
@@ -41,7 +41,7 @@
 
 
             <div class="form-group p-5 ">
-                <label class="text-light" for="specialization">التخصص المطلوب *</label>
+                <label class="" for="specialization">التخصص المطلوب *</label>
 
                 <input type="text" name="specialization" id="specialization"
                     class="form-control @error('specialization')  is-invalid @enderror" required readonly
@@ -56,7 +56,7 @@
 
 
             <div class="form-group p-5 ">
-                <label class="text-light" for="identity_type">اختر نوع الهوية المرفقة *</label>
+                <label class="" for="identity_type">اختر نوع الهوية المرفقة *</label>
                 <select id="identity_type" class="form-control d-block @error('identity_type')  is-invalid @enderror"
                     name="identity_type" required>
                     <option value="" class="placeholder" disabled
@@ -75,7 +75,7 @@
             </div>
 
             <div class="form-group p-5 {{ old('identity_type') != '' ? 'd-block' : 'd-none' }}" id="identity_attach">
-                <label class="text-light" for="identity_attachment">ارفق صورة {{ old('identity_type') }} *</label>
+                <label class="" for="identity_attachment">ارفق صورة {{ old('identity_type') }} *</label>
                 <input type="file" name="identity_attachment" id="identity_attachment"
                     class="form-control @error('identity_attachment')  is-invalid @enderror" placeholder="" required
                     value="{{ old('identity_attachment') }}" accept=".pdf,.jpeg,.jpg,.png" />
@@ -110,8 +110,8 @@
                 </div>
             --}}
             <div class="form-group p-5 ">
-                <label class="text-light" for="study_purpose">الغرض من الدراسة*</label>
-                <p class="text-light font-italic">
+                <label class="" for="study_purpose">الغرض من الدراسة*</label>
+                <p class=" font-italic">
                     أكتب فقرة لا تقل عن 250 كلمة تشرح فيها أسباب رغبتك في الالتحاق بالبرنامج المقدم إليه (Statement of Purpose)
                 </p>
                 <textarea name="study_purpose" id=""  rows="15" minlength="250" class="form-control mt-5" required></textarea>
@@ -125,7 +125,7 @@
 
 
     {{-- addmission requirements --}}
-    <div class="col-12 col-lg-5 ml-20 text-light">
+    <div class="col-12 col-lg-5 ml-20 ">
         @include('web.default.panel.requirements.requirements_includes.program_requirements')
     </div>
     </div>
@@ -133,7 +133,7 @@
 
     <div class="d-flex align-items-baseline">
         <input type="checkbox" name="accept" class="d-inline-block mr-10" required>
-        <p class="text-light">اقر أنا المسجل بياناتي اعلاه بموافقتي على لائحة الحقوق والوجبات واحكام وشروط القبول والتسجيل، كما أقر
+        <p class="">اقر أنا المسجل بياناتي اعلاه بموافقتي على لائحة الحقوق والوجبات واحكام وشروط القبول والتسجيل، كما أقر
             بالتزامي
             التام بمضمونها، وبمسؤوليتي التامة عن أية مخالفات قد تصدر مني لها ، مما يترتب عليه كامل الأحقية للاكاديمية في
             مسائلتي عن تلك المخالفات والتصرفات المخالفة للوائح المشار إليها في عقد اتفاقية التحاق متدربـ/ـة
@@ -143,7 +143,7 @@
     </div>
 
 
-    <button type="submit" name="submit" id="btn_submit" class="btn btn-primary mt-20" data-alt-text="جاري إرسال طلبك"
+    <button type="submit" name="submit" id="btn_submit" class="btn btn-acadima-primary mt-20" data-alt-text="جاري إرسال طلبك"
         data-submit-text="اضغط لإرسال متطلبات القبول" value="form_submit">اضغط لإرسال متطلبات القبول</button>
 
 

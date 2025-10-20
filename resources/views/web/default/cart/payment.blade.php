@@ -11,11 +11,11 @@
 
 
     @php
-        $title = "<h1 class='font-30 text-white font-weight-bold'>
+        $title = "<h1 class='font-30 text-secondary font-weight-bold'>
             <!-- " . trans('cart.checkout') . ' --> 
              Complete Payment
         </h1>';
-        $subTitle = "<span class='payment-hint font-20 text-white d-block'>";
+        $subTitle = "<span class='payment-hint font-20 text-dark d-block'>";
 
         if ($count > 0) {
             $subTitle .= $total . ' ريال سعودي ' . trans('cart.for_items', ['count' => $count]);
