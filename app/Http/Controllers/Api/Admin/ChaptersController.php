@@ -75,37 +75,40 @@ class ChaptersController extends Controller
             ->map(function ($chapter) {
                 return [
                     'chapter' => $chapter->only(['id', 'title', 'status', 'created_at', 'order', 'translations']),
-                    'items' => $chapter->chapterItems
-                        ->sortBy('order') // Sort chapter items by 'order'
-                        ->values()
-                        ->map(function ($item) {
-                            $details = null;
+                   'items' => $chapter->chapterItems
+    ->sortBy(function ($item) {
+        return is_null($item->order) ? PHP_INT_MAX : $item->order;
+    })
+    ->values()
+    ->map(function ($item) {
+        $details = null;
 
-                            switch ($item->type) {
-                                case WebinarChapterItem::$chapterQuiz:
-                                    $details = $item->quiz;
-                                    break;
-                                case WebinarChapterItem::$chapterAssignment:
-                                    $details = $item->assignment;
-                                    break;
-                                case WebinarChapterItem::$chapterFile:
-                                    $details = $item->file;
-                                    break;
-                                case WebinarChapterItem::$chapterSession:
-                                    $details = $item->session;
-                                    break;
-                                case WebinarChapterItem::$chapterTextLesson:
-                                    $details = $item->textLesson;
-                                    break;
-                            }
+        switch ($item->type) {
+            case WebinarChapterItem::$chapterQuiz:
+                $details = $item->quiz;
+                break;
+            case WebinarChapterItem::$chapterAssignment:
+                $details = $item->assignment;
+                break;
+            case WebinarChapterItem::$chapterFile:
+                $details = $item->file;
+                break;
+            case WebinarChapterItem::$chapterSession:
+                $details = $item->session;
+                break;
+            case WebinarChapterItem::$chapterTextLesson:
+                $details = $item->textLesson;
+                break;
+        }
 
-                            return [
-                                'type' => $item->type,
-                                'order' => $item->order,
-                                'created_at' => $item->created_at,
-                                'details' => $details,
-                            ];
-                        }),
+        return [
+            'type' => $item->type,
+            'order' => $item->order,
+            'created_at' => $item->created_at,
+            'details' => $details,
+        ];
+    }),
+
                 ];
             }),
     ];
@@ -141,7 +144,7 @@ class ChaptersController extends Controller
                 $teacher = $webinar->creator;
                 $status = (!empty($data['status']) and $data['status'] == 'on') ? WebinarChapter::$chapterActive : WebinarChapter::$chapterInactive;
 
-           
+
                 $lastOrder = WebinarChapter::where('webinar_id', $webinar->id)->max('order') ?? 0;
                 $newOrder = $lastOrder + 1;
 
