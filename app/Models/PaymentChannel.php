@@ -15,13 +15,13 @@ class PaymentChannel extends Model
         'Instamojo', 'Iyzipay', 'Izipay', 'KlarnaCheckout', 'MercadoPago', 'Midtrans',
         'Mollie', 'Ngenius', 'Payfort', 'Payhere', 'Payku', 'Paylink', 'Paypal',
         'Paysera', 'Paystack', 'Paytm', 'Payu', 'Razorpay', 'Robokassa', 'Sslcommerz',
-        'Stripe', 'Toyyibpay', 'Voguepay', 'YandexCheckout', 'Zarinpal', 'JazzCash',
-        'Redsys'
+        'Stripe', 'Toyyibpay', 'Voguepay', 'YandexCheckout', 'Zarinpal', 'JazzCash', 'Paymob'
+       , 'Redsys'
     ];
 
     static $gatewayIgnoreRedirect = [
         'Paytm', 'Payu', 'Zarinpal', 'Stripe', 'Paysera', 'Cashu',
-        'MercadoPago', 'Payhere', 'Authorizenet', 'Voguepay', 'Payku', 'KlarnaCheckout', 'Izipay', 'Iyzipay',
+        'MercadoPago', 'Payhere', 'Authorizenet', 'Voguepay', 'Payku', 'Paymob', 'KlarnaCheckout', 'Izipay', 'Iyzipay',
         'JazzCash', 'Redsys'
     ];
 
