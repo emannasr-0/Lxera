@@ -1,4 +1,3 @@
-
 <!DOCTYPE html
     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml"
@@ -256,115 +255,130 @@
             border-radius: 12px !important;
             background-color: #F4F5F6 !important;
         }
+
+        #templateContainer {
+            border: 1px solid #cccccc !important;
+        }
+        a {
+            text-decoration: none;
+            color: #1024dd;
+        }
     </style>
 </head>
 
 <body class="body"
     style="-webkit-text-size-adjust: none; padding: 0; margin: 0; display: block; min-width: 100%; width: 100%;">
     <!--*|IF:MC_PREVIEW_TEXT|*--> <!--[if !gte mso 9]><!--> <span class="mcnPreviewText"
-        style="font-size: 0px; line-height: 0px; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden; visibility: hidden; mso-hide: all; display: none;"></span>
+        style="font-size: 0px; line-height: 0px;  opacity: 0; overflow: hidden; visibility: hidden; mso-hide: all; display: none;"></span>
     <!--<![endif]--> <!--*|END:IF|*-->
     <table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#fff">
         <tr>
             <td align="center" valign="top"> <!-- Main -->
-                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <table cellpadding="0" cellspacing="0" id="templateContainer" style="min-height: 400px; min-width: 450px;">
                     <tr>
-                        <td align="center">
-                            <table width="650" border="0" cellspacing="0" cellpadding="0" class="mobile-shell">
+                        <td align="center" valign="top">
+                            <!-- BEGIN PREHEADER // -->
+                            <table border="0" cellpadding="0" cellspacing="0" width="100%" id="templatePreheader">
                                 <tr>
-                                    <td class="td"
-                                        style="width:650px; min-width:650px; font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal;">
-                                        <!-- Header -->
-                                        <table align="center" width="100%" border="0" cellspacing="0"
-                                            cellpadding="0" bgcolor="#fff">
-                                            <tr align="center">
-                                                <td
-                                                    style="padding: 14px;border-radius:12px 12px 0 0; border:none; background-repeat: no-repeat;background-size:cover; background-color:#c14b93; background-image: url('{{ asset('store/Acadima/Header005.png') }}'); ">
-                                                    <img class="img" width="20%"
-                                                        src="{{ asset('store/1/logoo.png') }}"
-                                                        class="img-cover"
-                                                    > 
-                                                </td>
-                                            </tr>
-                                        </table> <!-- END Header --> <!--content-->
-                                        <table class="message" width="100%" border="0" cellspacing="0"
-                                            cellpadding="0" style="direction: rtl !important; text-align: right; background-color: #fff; color: #000">
-                                            <tr>
-                                                <td style="padding:0px 10px;">
-                                                    <table width="100%" border="0" cellspacing="0" cellpadding="0"
-                                                        style="direction: rtl !important;min-width: 100% !important;">
-                                                        <tr class="text-light">
-                                                            @yield('body')
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                        </table> <!--end content--> <!-- Footer -->
-
-                                        <table width="100%" border="0" cellspacing="0" cellpadding="0"
-                                            bgcolor="#fff" style="border-radius:0 0 12px 12px">
-                                            <tr>
-                                                <td class="footer"
-                                                    style="padding:0px 20px; background-color: #0e0e0e; background-repeat: no-repeat; border-collapse:collapse; font-size:0px;line-height:0px; background-size:100% 100%;border-radius: 0 0 12px 12px;">
-
-                                                    <table width="100%" border="0" cellspacing="0"
-                                                        cellpadding="0">
-                                                        <tr style="display: flex; padding:10px;">
-                                                            <td class="img" width="50%"><a
-                                                                    href="https://anasacademy.uk/" target="_blank"
-                                                                    style="color: #fff; text-decoration: none; height:auto;">
-                                                                    <img class="img-cover"
-                                                                    src="{{ asset('store/1/logoo.png') }}"
-                                                                    alt="logoo"
-                                                                    style="float: left !important;-ms-interpolation-mode: bicubic;height:auto;padding:10px; width: 135px !important;" /></a>
-                                                            </td>
-
-                                                            <td class="img d"
-                                                                style="text-align: right;padding-top: 10px; float: right;"
-                                                                width="50%"><a
-                                                                    href="https://x.com/acadimacollege"
-                                                                    target="_blank"
-                                                                    style="color: #141F25; text-decoration: none;"></a><a
-                                                                    href="https://www.linkedin.com/company/acadima-college/posts/?feedView=all"
-                                                                    target="_blank"
-                                                                    style="color: #141F25; text-decoration: none;"><img
-                                                                        src="https://anasacademy.uk/wp-content/uploads/2021/10/Layer-4-1.png"
-                                                                        width="30" height="30"
-                                                                        mc:edit="image_15"
-                                                                        style="-ms-interpolation-mode: bicubic; max-width: 40px; margin: 0 5px !important;"
-                                                                        border="0" alt=""></a><a
-                                                                    href="https://www.instagram.com/acadimacollege"
-                                                                    target="_blank"
-                                                                    style="color: #141F25; text-decoration: none;"><img
-                                                                        src="https://anasacademy.uk/wp-content/uploads/2021/10/Layer-5-1.png"
-                                                                        width="30" height="30"
-                                                                        mc:edit="image_15"
-                                                                        style="-ms-interpolation-mode: bicubic; max-width: 40px; margin: 0 5px !important;"
-                                                                        border="0" alt=""></a><a
-                                                                    href="https://www.youtube.com/channel/UCglrBLCkL6YnRZYy69-TwUw"
-                                                                    target="_blank"
-                                                                    style="color: #141F25; text-decoration: none;"><img
-                                                                        src="https://anasacademy.uk/wp-content/uploads/2021/10/Layer-3-1.png"
-                                                                        width="30" height="30"
-                                                                        mc:edit="image_13"
-                                                                        style="-ms-interpolation-mode: bicubic; max-width: 40px; margin: 0 5px !important;"
-                                                                        border="0" alt=""></a>
-                                                            </td>
-                                                        </tr>
-
-
-                                                    </table>
-                                                </td>
-                                            </tr>
-
-                                        </table>
-
+                                    <td class="headerContent py-4 mt-35" width="100%"
+                                        style="background: #fff; border-top: 5px solid #1EDFBA; text-align: center; padding-top:20px; padding-bottom:20px;">
+                                        <a href="">
+                                            <img class="img" width="30%"
+                                                src="{{ asset('store/Acadima/logo2.webp') }}" class="img-cover"
+                                                alt="clerax">
+                                        </a>
+                                        <h1 style="text-align: center; margin-top: 20px; color:#576266 !important;">
+                                            Welcome to Lxera</h1>
                                     </td>
                                 </tr>
                             </table>
+                            <!-- // END PREHEADER -->
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" valign="top">
+                            <!-- BEGIN BODY // -->
+                            <table border="0" cellpadding="0" cellspacing="0" width="100%" id="templateBody">
+                                <tr>
+                                    @yield('body')
+
+                                </tr>
+                            </table>
+                            <!-- // END BODY -->
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" valign="top">
+                            <!-- BEGIN FOOTER // -->
+                            <table border="0" cellpadding="0" cellspacing="0" width="100%" id="templateFooter">
+                                <tr>
+                                    {{-- <td valign="top" class="footerContent"
+                                            style="padding-top:0; padding-bottom:40px; background-color: #fff;"
+                                            mc:edit="footer_content02">
+                                            @yield('cancel')
+                                        </td> --}}
+                                    <td class=""
+                                        style="padding-left:20px; padding-right: 20px; padding-top:15px; padding-bottom: 15px; text-align: center;">
+                                        <h4 class="font-14 text-white " style="margin: 0; direction: rtl;">
+
+                                            {{-- {{ trans('panel.powered_by_lxera') }} --}}
+                                            Powered by 
+                                            <a class="text-white" style="color: #1024dd;"
+                                                href="https://lxera.com/">Lxera</a>
+                                        </h4>
+
+                                        {{-- <h4 class="font-14 text-white " style="margin: 0; direction: rtl;">
+
+                                            {{ trans('panel.copyrights') }}
+
+                                        </h4> --}}
+                                    </td>
+                                </tr>
+                                <!--    <tr
+                                        style="display: flex; padding:10px; justify-content: space-between; align-items:center">
+                                        {{-- <td class="img" width="50%"><a href="https://clerax.com/" target="_blank"
+                                                style="color: #fff; text-decoration: none; height:auto;">
+                                                <img class="img-cover" src="{{ asset('store/new/cleraxLogo.png') }}"
+                                                    alt="logoo"
+                                                    style="float: left !important;-ms-interpolation-mode: bicubic;height:auto;padding:10px; width: 135px !important;" /></a>
+                                        </td> --}}
+
+                                            <td class="img d" style="text-align: right;padding-top: 10px; float: right;"
+                                            width="50%">
+                                            <a {{-- href="https://x.com/acadimacollege" --}} target="_blank"
+                                                style=" text-decoration: none;"><img
+                                                    src="{{ asset('store/new/x.png') }}" width="20" height="20"
+                                                    mc:edit="image_15"
+                                                    style=" max-width: 60px; margin: 0 5px !important;background:#fff; padding: 5px; border-radius: 50%;"
+                                                    border="0" alt=""></a>
+
+                                            <a {{-- href="https://www.linkedin.com/company/acadima-college/" --}} target="_blank"
+                                                style="color: #141F25; text-decoration: none;"><img
+                                                    src="{{ asset('store/new/ln.png') }}" width="20" height="20"
+                                                    mc:edit="image_15"
+                                                    style=" max-width: 60px; margin: 0 5px !important;background:#fff; padding: 5px; border-radius: 50%;"
+                                                    border="0" alt=""></a>
+                                            <a {{-- href="https://www.instagram.com/acadimacollege/" --}} target="_blank"
+                                                style="color: #141F25; text-decoration: none;"><img
+                                                    src="{{ asset('store/new/ig.png') }}" width="20" height="20"
+                                                    mc:edit="image_15"
+                                                    style=" max-width: 60px; margin: 0 5px !important;background:#fff; padding: 5px; border-radius: 50%;"
+                                                    border="0" alt=""></a>
+                                            <a {{-- href="https://www.facebook.com/profile.php?id=61575312548855" --}} target="_blank"
+                                                style="color: #141F25; text-decoration: none;"><img
+                                                    src="{{ asset('store/new/fb.png') }}" width="15"
+                                                    height="15" mc:edit="image_13"
+                                                    style=" max-width: 60px; margin: 0 5px !important;background:#fff; padding: 4px; border-radius: 50%;"
+                                                    border="0" alt=""></a>
+                                        </td>
+                                        
+                                    </tr>-->
+                            </table>
+                            <!-- // END FOOTER -->
                         </td>
                     </tr>
                 </table>
+                <!-- // END TEMPLATE -->
             </td>
         </tr>
     </table>
