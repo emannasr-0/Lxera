@@ -81,7 +81,7 @@
                     <div class="col-12">
                         <div class="webinar-card webinar-list d-flex">
                             <div class="image-box">
-                                <img src="{{ $webinar->getImage() }}" class="img-cover" alt="">
+                                <img src="{{ asset('store/Acadima/middle-section.png') }}" class="img-cover" alt="">
 
                                 @switch($webinar->status)
                                     @case(\App\Models\Webinar::$active)

@@ -7,7 +7,8 @@
     $footerColumns = getFooterColumns();
 @endphp
 
-<footer class="footer bg-primary-acadima position-relative user-select-none">{{--
+<footer class="footer position-relative user-select-none" style="background-color: #333; z-index: 100;" >
+    {{--
     <div class="container">
         <div class="row">
             <div class="col-12">
@@ -43,14 +44,14 @@
     <div class="container">
         <div class="row">
 
-            @foreach($columns as $column)
+            @foreach ($columns as $column)
                 <div class="col-6 col-md-3">
-                    @if(!empty($footerColumns[$column]))
-                        @if(!empty($footerColumns[$column]['title']))
+                    @if (!empty($footerColumns[$column]))
+                        @if (!empty($footerColumns[$column]['title']))
                             <span class="header d-block text-white font-weight-bold">{{ $footerColumns[$column]['title'] }}</span>
                         @endif
 
-                        @if(!empty($footerColumns[$column]['value']))
+                        @if (!empty($footerColumns[$column]['value']))
                             <div class="mt-20">
                                 {!! $footerColumns[$column]['value'] !!}
                             </div>
@@ -64,14 +65,14 @@
         <div class="mt-40 border-blue py-25 d-flex align-items-center justify-content-between">
             <div class="footer-logo">
                 <a href="https://anasacademy.uk/">
-                    @if(!empty($generalSettings['footer_logo']))
+                    @if (!empty($generalSettings['footer_logo']))
                         <img src="{{ $generalSettings['footer_logo'] }}" class="img-cover" alt="footer logo">
                     @endif
                 </a>
             </div>
             <div class="footer-social">
-                @if(!empty($socials) and count($socials))
-                    @foreach($socials as $social)
+                @if (!empty($socials) and count($socials))
+                    @foreach ($socials as $social)
                         <a href="{{ $social['link'] }}">
                             <img src="{{ $social['image'] }}" alt="{{ $social['title'] }}" class="mr-15">
                         </a>
@@ -81,20 +82,21 @@
         </div>
     </div>
 --}}
-    @if(getOthersPersonalizationSettings('platform_phone_and_email_position') == 'footer')
-        <div class="footer-copyright-card">
-            <div class="container d-flex align-items-center justify-content-center py-15">
-                <div class="font-14 text-white">© 2025 Acadima. All rights reserved.</div>
+    {{-- @if (getOthersPersonalizationSettings('platform_phone_and_email_position') == 'footer') --}}
+    <div class="footer-copyright-card">
+        <div class="container d-flex align-items-center justify-content-center py-15">
+            <div class="font-14 text-white ltr"><a class="text-white" href="https://lxera.com/">All rights reserved 2025 ©
+                    Lxera.</a> </div>
 
-                {{-- <div class="d-flex align-items-center justify-content-center">
-                    @if(!empty($generalSettings['site_phone']))
+            {{-- <div class="d-flex align-items-center justify-content-center">
+                    @if (!empty($generalSettings['site_phone']))
                         <div class="d-flex align-items-center text-white font-14">
                             <i data-feather="phone" width="20" height="20" class="mr-10"></i>
                             {{ $generalSettings['site_phone'] }}
                         </div>
                     @endif
 
-                    @if(!empty($generalSettings['site_email']))
+                    @if (!empty($generalSettings['site_email']))
                         <div class="border-left mx-5 mx-lg-15 h-100"></div>
 
                         <div class="d-flex align-items-center text-white font-14">
@@ -103,8 +105,8 @@
                         </div>
                     @endif
                 </div> --}}
-            </div>
         </div>
-    @endif
+    </div>
+    {{-- @endif --}}
 
 </footer>

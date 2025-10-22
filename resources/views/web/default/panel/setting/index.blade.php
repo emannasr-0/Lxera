@@ -113,7 +113,7 @@
                     data-title="{{ trans('update.delete_account_modal_hint') }}">{{ trans('update.delete_account') }}</a>
             @endif -->
 
-            <button type="button" id="saveData" class="btn btn-sm btn-acadima-pink ml-15">{{ trans('public.save') }}</button>
+            <button type="button" id="saveData" class="btn btn-sm btn-acadima-primary ml-15">{{ trans('public.save') }}</button>
         </div>
     </div>
 @endsection

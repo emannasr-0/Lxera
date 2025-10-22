@@ -195,7 +195,7 @@ $custom-control-indicator-bg:$primary;*/
 
 .notification-card:hover {
   box-shadow: 0 10px 30px 0 rgba(89, 159, 175, 0.3) !important;
-  border: 3px solid var(--primary) !important;
+  border: 3px solid #1024dd !important;
   transition: all 0.3s ease;
 }
 

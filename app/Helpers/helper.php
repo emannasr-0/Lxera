@@ -695,7 +695,7 @@ function currencySign($currency = null)
             return '¥';
             break;
         case 'AED':
-            return 'د.إ';
+            return 'AED';
             break;
         case 'SAR':
             return 'ر.س';

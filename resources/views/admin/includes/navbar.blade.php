@@ -1,12 +1,12 @@
-<button type="button" class="sidebar-close">
-    <i class="fa fa-times"></i>
+<button type="button" class="sidebar-close" style="left:0;">
+    <i class="fa fa-times text-dark"></i>
 </button>
 
 <div class="navbar-bg"></div>
 
 <nav class="navbar navbar-expand-lg main-navbar">
 
-    <form class="form-inline mr-auto">
+    <form class="form-inline  mb-0">
         <ul class="navbar-nav mr-3">
             <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="fas fa-bars"></i></a></li>
             <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i class="fas fa-search"></i></a></li>
@@ -14,7 +14,7 @@
     </form>
     <ul class="navbar-nav navbar-right">
 
-    <li class="dropdown dropdown-list-toggle">
+    {{-- <li class="dropdown dropdown-list-toggle">
                 <a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg">
                     <i class="fa fa-info-circle"></i>
                 </a>
@@ -31,7 +31,7 @@
                             </a>
                     </div>
                 </div>
-            </li>
+            </li> --}}
 
         @can('admin_notifications_list')
             <li class="dropdown dropdown-list-toggle">
@@ -70,7 +70,7 @@
         @endcan
 
         <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-                <img alt="image" src="{{ $authUser->getAvatar() }}" class="rounded-circle mr-1">
+                <img alt="image" src="{{ $authUser->getAvatar() }}" class="mr-1">
                 <div class="d-sm-none d-lg-inline-block">{{ $authUser->full_name }}</div>
             </a>
 

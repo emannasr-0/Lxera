@@ -1,5 +1,5 @@
 <div>
-    <h2 class="mt-20 mb-20">متطلبات القبول في برنامج {{ $program->slug }}</h2>
+    <h2 class="mt-20 mb-20 text-secondary">متطلبات القبول في برنامج {{ $program->slug }}</h2>
     <ol type="1" class="ml-15">
         @foreach ($program->categoryRequirements as $requirement)
             <li style="list-style: inherit" class="mb-15">

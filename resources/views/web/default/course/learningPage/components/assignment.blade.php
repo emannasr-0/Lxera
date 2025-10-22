@@ -173,7 +173,7 @@
                                         <div class="invalid-feedback"></div>
                                     </div>
 
-                                    <button type="button" class="js-save-history-message btn btn-primary btn-sm">{{ trans('update.send') }}</button>
+                                    <button type="button" class="js-save-history-message btn btn-acadima-primary btn-sm">{{ trans('update.send') }}</button>
                                 </div>
                             </div>
                         </form>
@@ -216,7 +216,7 @@
                                         <img src="{{ $message->sender->getAvatar(50) }}" class="img-cover rounded-circle" alt="{{ $message->sender->full_name }}">
                                     </div>
                                     <div class="ml-10">
-                                        <h4 class="font-14 font-weight-500 text-light">{{ $message->sender->full_name }}</h4>
+                                        <h4 class="font-14 font-weight-500 text-dark">{{ $message->sender->full_name }}</h4>
                                         <span class="d-block font-12 text-gray">{{ dateTimeFormat($message->created_at, 'j M Y | H:i') }}</span>
                                     </div>
                                     <div class="ml-auto">

@@ -12,7 +12,9 @@
 
     <section class="container mt-45">
 
+
         @if(!empty($totalCashbackAmount))
+
             <div class="d-flex align-items-center mb-25 p-15 success-transparent-alert">
                 <div class="success-transparent-alert__icon d-flex align-items-center justify-content-center">
                     <i data-feather="credit-card" width="18" height="18" class=""></i>
