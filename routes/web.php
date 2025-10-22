@@ -261,15 +261,31 @@ Route::group(['namespace' => 'Web', 'middleware' => ['check_mobile_app', 'impers
         Route::post('/{id}/availableTimes', 'UserController@availableTimes');
         Route::post('/{id}/send-message', 'UserController@sendMessage');
     });
+    Route::get('/payments/paymob/redirect', 'PaymentPaymobController@paymobRedirect')->name('paymob.redirect');
 
     Route::group(['prefix' => 'payments'], function () {
-        Route::post('/payment-request', 'PaymentController@paymentRequest');
-        Route::get('/verify/{gateway}', ['as' => 'payment_verify', 'uses' => 'PaymentController@paymentVerify']);
-        Route::post('/verify/{gateway}', ['as' => 'payment_verify_post', 'uses' => 'PaymentController@paymentVerify']);
-        Route::get('/status', 'PaymentController@payStatus');
-        Route::get('/status/{order_id}', 'PaymentController@payStatus');
-        Route::get('/payku/callback/{id}', 'PaymentController@paykuPaymentVerify')->name('payku.result');
+        Route::any('/payment-request', 'PaymentPaymobController@paymentRequest');
+
+        Route::get('/verify/{gateway}', ['as' => 'payment_verify', 'uses' => 'PaymentPaymobController@paymentVerify']);
+        Route::post('/verify/{gateway}', ['as' => 'payment_verify_post', 'uses' => 'PaymentPaymobController@paymentVerify']);
+
+        Route::get('/status', 'PaymentPaymobController@payStatus');
+        Route::get('/status/{order_id}', 'PaymentPaymobController@payStatus');
+
+        // Paymob Transaction Processed Webhook (server-to-server)
+        Route::post('/paymob/webhook', 'PaymentPaymobController@paymobWebhook')->name('paymob.webhook');
+
+        Route::get('/payku/callback/{id}', 'PaymentPaymobController@paykuPaymentVerify')->name('payku.result');
     });
+
+    // Route::group(['prefix' => 'payments'], function () {
+    //     Route::post('/payment-request', 'PaymentController@paymentRequest');
+    //     Route::get('/verify/{gateway}', ['as' => 'payment_verify', 'uses' => 'PaymentController@paymentVerify']);
+    //     Route::post('/verify/{gateway}', ['as' => 'payment_verify_post', 'uses' => 'PaymentController@paymentVerify']);
+    //     Route::get('/status', 'PaymentController@payStatus');
+    //     Route::get('/status/{order_id}', 'PaymentController@payStatus');
+    //     Route::get('/payku/callback/{id}', 'PaymentController@paykuPaymentVerify')->name('payku.result');
+    // });
 
     Route::group(['prefix' => 'subscribes'], function () {
         Route::get('/apply/{webinarSlug}', 'SubscribeController@apply');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\BundleStudent;
+use App\Exports\BundleStatisticsExport;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Panel\WebinarStatisticController;
 use App\Mail\SendNotifications;
@@ -26,10 +27,18 @@ use App\Models\Ticket;
 use App\Models\Translation\BundleTranslation;
 use App\Models\Webinar;
 use App\Student;
+use Carbon\Carbon;
+use App\Exports\ReferredStudentsExport;
+use App\Exports\SingleBundleUserCodesExport;
+use App\Exports\StudentStatisticsExport;
+use App\Models\AccountCharge;
+use App\Models\BalanceRequest;
+use Illuminate\Support\Facades\Mail;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
 
 class BundleController extends Controller
 {
@@ -247,12 +256,14 @@ class BundleController extends Controller
 
         $type = $request->get('type', 'program');
         if (!in_array($type, ['program', 'bridging'])) {
-            return view('errors.404');
+            abort(404);
         }
         $categories = Category::where('parent_id', null)->get();
         $study_classes = StudyClass::get();
         $students = Student::get();
-        $webinars=Webinar::get();
+        $webinars = Webinar::get();
+        $instructors = User::where('role_name', 'teacher')->get();
+        // dd($instructors);
         $certificates = CertificateTemplate::where('type', 'bundle')->get();
         $data = [
             'pageTitle' => trans('update.new_bundle'),
@@ -260,7 +271,8 @@ class BundleController extends Controller
             'certificates' => $certificates,
             'study_classes' => $study_classes,
             'students' => $students,
-            'webinars'=>$webinars,
+            'webinars' => $webinars,
+            'instructors' => $instructors,
         ];
 
         return view('admin.bundles.create', $data);
@@ -295,7 +307,7 @@ class BundleController extends Controller
         $this->validate($request, $rules);
 
         if (!in_array($type, ['program', 'bridging'])) {
-            return view('errors.404');
+            abort(404);
         }
 
         $data = $request->all();
@@ -343,7 +355,16 @@ class BundleController extends Controller
             $data['content_table'] = $request->input('content_table');
         }
 
-        //  dd($request->input('content_table'));
+        if ($request->hasFile('academic_guide')) {
+            $file = $request->file('academic_guide');
+            $originalName = time() . '_' . $file->getClientOriginalName();
+            $destinationPath = public_path('uploads');
+            $file->move($destinationPath, $originalName);
+            $data['academic_guide'] = config('app.url') . 'uploads/' . $originalName; // Adjust the URL as needed
+
+        }
+
+        // dd($request->input('academic_guide'));
 
         $bundle = Bundle::create([
             'slug' => $data['slug'],
@@ -369,12 +390,13 @@ class BundleController extends Controller
             'has_certificate' => $data['has_certificate'],
             'hasGroup' => $data['hasGroup'] ?? 0,
             'content_table' => $data['content_table'] ?? null,
+            'academic_guide' => $data['academic_guide'] ?? null,
             'batch_id' => $data['batch_id'] ?? null,
             'type' => $data['type'] ?? 'program',
             'partner_instructor' => !empty($data['partner_instructor']) ? true : false,
         ]);
 
-     
+
         if ($bundle) {
 
 
@@ -383,6 +405,13 @@ class BundleController extends Controller
                 // Attach the student IDs to the bundle using the relationship's attach method
                 $bundle->studentsExcluded()->attach($studentIds);
             }
+
+            $instructorIds = $request->input('instructor_id', []); // Get selected student IDs
+            if (!empty($instructorIds)) {
+                // Attach the student IDs to the bundle using the relationship's attach method
+                $bundle->instructorBunldlWebinar()->attach($instructorIds);
+            }
+
 
             $courseIds = $request->input('course_id', []);
             if (!empty($courseIds)) {
@@ -410,7 +439,6 @@ class BundleController extends Controller
             if (!empty($request->get('partner_instructor')) and !empty($request->get('partners'))) {
 
                 $bundle->PartnerTeachers()->sync($request->get('partners', []));
-
             }
         }
 
@@ -438,9 +466,6 @@ class BundleController extends Controller
             }
         }
 
-
-
-
         return redirect(getAdminPanelUrl() . '/bundles/' . $bundle->id . '/edit?locale=' . $data['locale'] . '&type=' . $bundle->type)->withInput();
     }
 
@@ -464,7 +489,7 @@ class BundleController extends Controller
             ->first();
 
         if (empty($bundle)) {
-            return view('errors.404');
+            abort(404);
         }
 
         $locale = $request->get('locale', app()->getLocale());
@@ -490,10 +515,10 @@ class BundleController extends Controller
             // })
             ->get();
         $students = Student::get();
-        $webinars=Webinar::get();
+        $webinars = Webinar::get();
 
         $studentsForBundle = $bundle->students;
-
+        $instructors = User::where('role_name', 'teacher')->get();
 
         $data = [
             'pageTitle' => trans('admin/main.edit') . ' | ' . $bundle->title,
@@ -511,7 +536,8 @@ class BundleController extends Controller
             'students' => $students,
             'studentsForBundles' => $studentsForBundle,
             'bundlePartnerTeacher' => $bundle->bundlePartnerTeacher,
-            'webinars'=>$webinars,
+            'webinars' => $webinars,
+            'instructors' => $instructors,
         ];
 
         return view('admin.bundles.create', $data);
@@ -577,6 +603,22 @@ class BundleController extends Controller
             $data['content_table'] = $bundle->content_table; // Keep the existing value if no new upload
         }
 
+        if ($request->hasFile('academic_guide')) {
+            $file = $request->file('academic_guide');
+            $originalName = time() . '_' . $file->getClientOriginalName();
+            $destinationPath = public_path('uploads');
+            $file->move($destinationPath, $originalName);
+            $data['academic_guide'] = config('app.url') . 'uploads/' . $originalName; // Adjust the URL as needed
+
+        }
+        // if ($request->hasFile('academic_guide')) {
+        //     $file = $request->file('academic_guide');
+        //     // Proceed with file handling here
+        // } else {
+        //     // File wasn't uploaded
+        //     dd('No file uploaded.');
+        // }
+        // dd($request->input('academic_guide'));
         // $data['status'] = $publish ? Bundle::$active : ($reject ? Bundle::$inactive : ($isDraft ? Bundle::$isDraft : Bundle::$pending));
         $data['updated_at'] = time();
         $data['subscribe'] = !empty($data['subscribe']) ? true : false;
@@ -674,22 +716,25 @@ class BundleController extends Controller
             'has_certificate' => $data['has_certificate'],
             'hasGroup' => $data['hasGroup'] ?? 0,
             'content_table' => $data['content_table'] ?? null,
+            'academic_guide' => $data['academic_guide'] ?? null,
             'type' => $data['type'] ??  $bundle->type,
             'partner_instructor' => !empty($data['partner_instructor']) ? true : false,
         ]);
 
         if ($bundle) {
             $studentIds = $request->input('student_id', []); // Get selected student IDs
-
+            $instructorIds = $request->input('instructor_id', []); // Get selected student IDs
+            // dd($instructorIds);
+            $bundle->instructorBunldlWebinar()->sync($instructorIds);
 
             $bundle->studentsExcluded()->sync($studentIds);
 
             $courseIds = $request->input('course_id', []);
-        
-                //$bundle->bundleProfessionalWebinars()->sync($courseIds); // Or use pivot data if needed
-            
-            Certificate::where('bundle_id', $bundle->id)->whereHas('student', function($query) use ($studentIds){
-                $query->whereHas('student', function($q) use ($studentIds){
+
+            $bundle->bundleProfessionalWebinars()->sync($courseIds); // Or use pivot data if needed
+
+            Certificate::where('bundle_id', $bundle->id)->whereHas('student', function ($query) use ($studentIds) {
+                $query->whereHas('student', function ($q) use ($studentIds) {
                     $q->whereIn('id', $studentIds);
                 });
             })->delete();
@@ -802,10 +847,10 @@ class BundleController extends Controller
                 ->pluck('id')
                 ->toArray();
 
-          $bundleUsersIds=$bundle->bundleSalesBridging->pluck('buyer_id');
-     
-         $query=User::whereIn('id', $bundleUsersIds);
-         // dd( $bundleUsersIds,$bundle->id);
+            $bundleUsersIds = $bundle->bundleSalesBridging->pluck('buyer_id');
+
+            $query = User::whereIn('id', $bundleUsersIds);
+            // dd( $bundleUsersIds,$bundle->id);
             // $query = User::join('sales', 'sales.buyer_id', 'users.id')
             //     ->leftJoin('webinar_reviews', function ($query) use ($bundle) {
             //         $query->on('webinar_reviews.creator_id', 'users.id')
@@ -821,7 +866,7 @@ class BundleController extends Controller
             $students = $this->studentsListsFilters($bundle, $query, $request)
                 ->orderBy('users.created_at', 'desc')
                 ->paginate(10);
-               // dd($students);
+            // dd($students);
 
             $userGroups = Group::where('status', 'active')
                 ->orderBy('created_at', 'desc')
@@ -859,12 +904,12 @@ class BundleController extends Controller
                 $user = User::find($student->id); // Get the user associated with the student
                 $student = $user->student; // Get the student instance
                 $bundleStudent = $student->bundleStudent()->where('bundle_id', $bundle->id)->first(); // Get the bundleStudent for the specific bundle
-               // dump( $bundleStudent,$student->bundleStudent);
-             
-                    $gpa = $bundleStudent->gpa??null; 
-                    // Access the GPA from the BundleStudent model
-              
-               // dd($bundleStudent->gpa,$bundleStudent);
+                // dump( $bundleStudent,$student->bundleStudent);
+
+                $gpa = $bundleStudent->gpa ?? null;
+                // Access the GPA from the BundleStudent model
+
+                // dd($bundleStudent->gpa,$bundleStudent);
 
                 $learnings = ($learnings > 0 and $webinarCount > 0) ? round($learnings / $webinarCount, 2) : 0;
 
@@ -899,7 +944,7 @@ class BundleController extends Controller
                     $student->learning = $learnings;
                 }
             }
-          //  dd('');
+            //  dd('');
 
             $roles = Role::all();
 
@@ -912,13 +957,13 @@ class BundleController extends Controller
                 'totalStudents' => $students->total(),
                 'totalActiveStudents' => $students->total() - $totalExpireStudents,
                 'totalExpireStudents' => $totalExpireStudents,
-              
+
             ];
 
             return view('admin.bundles.students', $data);
         }
 
-        return view('errors.404');
+        abort(404);
     }
 
     private function studentsListsFilters($bundle, $query, $request)
@@ -1036,7 +1081,7 @@ class BundleController extends Controller
             return redirect(getAdminPanelUrl("/bundles/{$bundle->id}/students"))->with(['toast' => $toastData]);
         }
 
-        return view('errors.404');
+        abort(404);
     }
 
     public function search(Request $request)
@@ -1054,7 +1099,7 @@ class BundleController extends Controller
 
     public function statistics(Request $request)
     {
-        $this->authorize('admin_programs_statistics_bundles_list');
+        // $this->authorize('admin_programs_statistics_bundles_list');
 
         removeContentLocale();
 
@@ -1129,6 +1174,236 @@ class BundleController extends Controller
 
         return view('admin.bundles.statistics', $data);
     }
+
+
+    public function BundleStatisticsExportExcel(Request $request)
+    {
+        $query = Bundle::query();
+
+        $query = $this->handleFilters($query, $request)
+            ->with([
+                'category',
+                'teacher' => function ($qu) {
+                    $qu->select('id', 'full_name');
+                },
+                'sales' => function ($query) {
+                    $query->whereNull('refund_at');
+                }
+            ])
+            ->withCount(['bundleWebinars']);
+
+        $bundles = $query->get();
+
+        foreach ($bundles as $bundle) {
+            $giftsIds = \App\Models\Gift::query()->where('bundle_id', $bundle->id)
+                ->where('status', 'active')
+                ->where(function ($query) {
+                    $query->whereNull('date')->orWhere('date', '<', time());
+                })
+                ->whereHas('sale')
+                ->pluck('id')
+                ->toArray();
+
+            $sales = \App\Models\Sale::query()
+                ->where(function ($query) use ($bundle, $giftsIds) {
+                    $query->where('bundle_id', $bundle->id)
+                        ->orWhereIn('gift_id', $giftsIds);
+                })
+                ->whereNull('refund_at')
+                ->get();
+
+            $bundle->sales = $sales;
+        }
+
+        return Excel::download(new BundleStatisticsExport($bundles), 'bundle_statistics.xlsx');
+    }
+
+    public function exportBundleUserCodes(Request $request, $bundleId)
+    {
+        $bundle = Bundle::with([
+            'formFeeSales2.buyer',
+            'bundleSales.buyer',
+            'directRegister.student.registeredUser',
+            'scholarshipSales.buyer',
+        ])->findOrFail($bundleId);
+
+        return Excel::download(new SingleBundleUserCodesExport($bundle), 'bundle_user_codes_' . $bundle->id . '.xlsx');
+    }
+
+
+    public function studentStatistics(Request $request)
+    {
+        $month = $request->get('month');
+        $userCode = $request->get('user_code'); // 👈 Add this
+
+        $query = Student::query()
+            ->select('students.friend_code', DB::raw('COUNT(*) as student_count'), 'users.full_name as referrer_name')
+            ->join('users', 'users.user_code', '=', 'students.friend_code')
+            ->whereNotNull('students.friend_code')
+            ->groupBy('students.friend_code', 'users.full_name');
+
+        if ($month) {
+            $startDate = Carbon::createFromFormat('Y-m', $month)->startOfMonth();
+            $endDate = Carbon::createFromFormat('Y-m', $month)->endOfMonth();
+
+            $query->whereBetween('students.created_at', [$startDate, $endDate]);
+        }
+
+        if ($userCode) {
+            $query->where('students.friend_code', $userCode); // 👈 Filter by referrer user code
+        }
+
+        $friendCodeStats = $query->get();
+
+        return view('admin.students.statisticsStudents', [
+            'pageTitle' => 'إحصائيات الطلاب حسب كود الصديق',
+            'friendCodeStats' => $friendCodeStats,
+            'selectedMonth' => $month,
+            'selectedUserCode' => $userCode, // 👈 Pass to view
+        ]);
+    }
+    public function studentBalance(Request $request)
+    {
+        $query = User::query()->whereIn('role_name', ['user']); // حسب عندك
+
+        if ($request->filled('name')) {
+            $query->where('full_name', 'like', "%{$request->name}%");
+        }
+
+        if ($request->filled('email')) {
+            $query->where('email', 'like', "%{$request->email}%");
+        }
+
+        if ($request->filled('user_code')) {
+            $query->where('user_code', 'like', "%{$request->user_code}%");
+        }
+
+        $students = $query->paginate(20);
+
+        return view('admin.students.balances', compact('students'))
+            ->with('pageTitle', 'رصيد الطلاب');
+    }
+
+    public function updateBalance(Request $request, User $user)
+    {
+        $request->validate([
+            'balance' => 'required|numeric|min:0',
+        ]);
+
+        $user->balance = $request->balance;
+        $user->save();
+
+        return redirect()->back()->with('success', 'تم تحديث رصيد الطالب بنجاح');
+    }
+
+
+    public function exportStudentStatistics(Request $request)
+    {
+        $month = $request->get('month');
+        $userCode = $request->get('user_code');
+
+        $query = Student::query()
+            ->select('students.friend_code', DB::raw('COUNT(*) as student_count'), 'users.full_name as referrer_name')
+            ->join('users', 'users.user_code', '=', 'students.friend_code')
+            ->whereNotNull('students.friend_code')
+            ->groupBy('students.friend_code', 'users.full_name');
+
+        if ($month) {
+            $startDate = Carbon::createFromFormat('Y-m', $month)->startOfMonth();
+            $endDate = Carbon::createFromFormat('Y-m', $month)->endOfMonth();
+
+            $query->whereBetween('students.created_at', [$startDate, $endDate]);
+        }
+
+        if ($userCode) {
+            $query->where('students.friend_code', $userCode);
+        }
+
+        $friendCodeStats = $query->get();
+
+        return Excel::download(new StudentStatisticsExport($friendCodeStats), 'student_statistics.xlsx');
+    }
+
+    // public function studentsReferredByCode(Request $request, $code)
+    // {
+    //     $month = $request->get('month');
+    //     $saleStatus = $request->get('sale_status'); // 'with_sale', 'without_sale'
+
+    //     // Start with query builder (no ->get() yet!)
+    //     $studentsQuery = Student::where('friend_code', $code);
+
+    //     if ($month) {
+    //         $startDate = Carbon::createFromFormat('Y-m', $month)->startOfMonth();
+    //         $endDate = Carbon::createFromFormat('Y-m', $month)->endOfMonth();
+    //         $studentsQuery->whereBetween('created_at', [$startDate, $endDate]);
+    //     }
+
+    //     if ($saleStatus === 'with_sale') {
+    //         $studentsQuery->whereHas('registeredUser.sales');
+    //     } elseif ($saleStatus === 'without_sale') {
+    //         $studentsQuery->whereDoesntHave('registeredUser.sales');
+    //     }
+
+    //     // Eager load and get the results
+    //     $students = $studentsQuery->with('registeredUser')->get();
+
+    //     $referrer = User::where('user_code', $code)->first();
+
+    //     return view('admin.students.referredStudentsList', [
+    //         'students' => $students,
+    //         'referrer' => $referrer,
+    //         'selectedMonth' => $month,
+    //         'saleStatus' => $saleStatus,
+    //     ]);
+    // }
+
+    public function studentsReferredByCode($code, Request $request)
+    {
+        $month = $request->get('month');
+        $saleStatus = $request->get('sale_status');
+        $studentUserCode = $request->get('user_code'); // 👈 Filtering by users.user_code
+
+        $studentsQuery = Student::where('friend_code', $code)
+            ->whereHas('registeredUser', function ($query) use ($studentUserCode) {
+                if ($studentUserCode) {
+                    $query->where('user_code', $studentUserCode);
+                }
+            });
+
+        if ($month) {
+            $startDate = Carbon::createFromFormat('Y-m', $month)->startOfMonth();
+            $endDate = Carbon::createFromFormat('Y-m', $month)->endOfMonth();
+            $studentsQuery->whereBetween('created_at', [$startDate, $endDate]);
+        }
+
+        $studentsWithSalesIds = Sale::whereIn('buyer_id', function ($query) use ($code) {
+            $query->select('user_id')
+                ->from('students')
+                ->where('friend_code', $code);
+        })->pluck('buyer_id')->unique()->toArray();
+
+        if ($saleStatus === 'with_sale') {
+            $studentsQuery->whereIn('user_id', $studentsWithSalesIds);
+        } elseif ($saleStatus === 'without_sale') {
+            $studentsQuery->whereNotIn('user_id', $studentsWithSalesIds);
+        } elseif ($saleStatus === 'form_fee') {
+            $studentsQuery->whereIn('user_id', $studentsWithSalesIds)
+                ->whereHas('registeredUser', function ($query) {
+                    $query->where('role_id', 13);
+                });
+        }
+
+        $students = $studentsQuery->get();
+        $referrer = User::where('user_code', $code)->first();
+
+        return view('admin.students.referredStudentsList', [
+            'students' => $students,
+            'referrer' => $referrer,
+            'selectedMonth' => $month,
+            'selectedUserCode' => $studentUserCode,
+        ]);
+    }
+
 
     public function groups(Request $request, Bundle $bundle, $is_export_excel = false)
     {

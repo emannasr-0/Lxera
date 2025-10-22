@@ -123,7 +123,7 @@ class PaymentController extends Controller
             $redirect_url = $channelManager->paymentRequest($order);
 
 
-            if (in_array($paymentChannel->class_name, ['Paytm', 'Payu', 'Zarinpal', 'Stripe', 'Paysera', 'Cashu', 'Iyzipay', 'MercadoPago'])) {
+            if (in_array($paymentChannel->class_name, ['Paytm', 'Payu', 'Zarinpal', 'Stripe', 'Paysera', 'Cashu', 'Iyzipay', 'MercadoPago', 'Paymob'])) {
 
                 return $redirect_url;
             }

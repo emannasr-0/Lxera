@@ -1,17 +1,16 @@
 @extends('admin.layouts.app')
 
 @push('libraries_top')
-
 @endpush
 
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h1>{{ $pageTitle  }}</h1>
+            <h1>{{ $pageTitle }}</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ getAdminPanelUrl() }}">{{trans('admin/main.dashboard')}}</a>
+                <div class="breadcrumb-item active"><a href="{{ getAdminPanelUrl() }}">{{ trans('admin/main.dashboard') }}</a>
                 </div>
-                <div class="breadcrumb-item">{{trans('admin/main.classes')}}</div>
+                <div class="breadcrumb-item">{{ trans('admin/main.classes') }}</div>
 
                 <div class="breadcrumb-item">{{ $pageTitle }}</div>
             </div>
@@ -27,7 +26,8 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label class="input-label">عنوان البرنامج</label>
-                                    <input name="title" type="text" class="form-control" value="{{ request()->get('title') }}">
+                                    <input name="title" type="text" class="form-control"
+                                        value="{{ request()->get('title') }}">
                                 </div>
                             </div>
 
@@ -37,15 +37,19 @@
                                     <select name="category_id" data-plugin-selectTwo class="form-control populate">
                                         <option value="">كل الاقسام</option>
 
-                                        @foreach($categories as $category)
-                                            @if(!empty($category->subCategories) and count($category->subCategories))
-                                                <optgroup label="{{  $category->title }}">
-                                                    @foreach($category->subCategories as $subCategory)
-                                                        <option value="{{ $subCategory->id }}" @if(request()->get('category_id') == $subCategory->id) selected="selected" @endif>{{ $subCategory->title }}</option>
+                                        @foreach ($categories as $category)
+                                            @if (!empty($category->subCategories) and count($category->subCategories))
+                                                <optgroup label="{{ $category->title }}">
+                                                    @foreach ($category->subCategories as $subCategory)
+                                                        <option value="{{ $subCategory->id }}"
+                                                            @if (request()->get('category_id') == $subCategory->id) selected="selected" @endif>
+                                                            {{ $subCategory->title }}</option>
                                                     @endforeach
                                                 </optgroup>
                                             @else
-                                                <option value="{{ $category->id }}" @if(request()->get('category_id') == $category->id) selected="selected" @endif>{{ $category->title }}</option>
+                                                <option value="{{ $category->id }}"
+                                                    @if (request()->get('category_id') == $category->id) selected="selected" @endif>
+                                                    {{ $category->title }}</option>
                                             @endif
                                         @endforeach
                                     </select>
@@ -54,12 +58,14 @@
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label class="input-label">{{'الدفعة الدراسية'}}</label>
+                                    <label class="input-label">{{ 'الدفعة الدراسية' }}</label>
                                     <select name="batch" data-plugin-selectTwo class="form-control populate">
                                         <option value="">كل الدفعات</option>
 
-                                        @foreach($batches as $batch)
-                                            <option value="{{ $batch->id }}" @if(request()->get('batch') == $batch->id) selected="selected" @endif>{{ $batch->title }}</option>
+                                        @foreach ($batches as $batch)
+                                            <option value="{{ $batch->id }}"
+                                                @if (request()->get('batch') == $batch->id) selected="selected" @endif>
+                                                {{ $batch->title }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -68,7 +74,8 @@
                             <div class="col-md-3">
                                 <div class="form-group mt-1">
                                     <label class="input-label mb-4"> </label>
-                                    <input type="submit" class="text-center btn btn-primary w-100" value="{{trans('admin/main.show_results')}}">
+                                    <input type="submit" class="text-center btn btn-primary w-100"
+                                        value="{{ trans('admin/main.show_results') }}">
                                 </div>
                             </div>
                         </div>
@@ -87,29 +94,38 @@
                             @endcan
                         </div> --}}
 
+
+
                         <div class="card-body">
                             <div class="table-responsive">
+                                <a href="{{ route('admin.bundles.statistics.export', request()->query()) }}"
+                                    class="btn btn-primary">
+                                    تصدير إلى Excel
+                                </a>
+
                                 <table class="table table-striped font-14 ">
                                     <tr>
-                                        <th>{{trans('admin/main.id')}}</th>
-                                        <th class="text-left">{{trans('admin/main.title')}}</th>
+                                        <th>{{ trans('admin/main.id') }}</th>
+                                        <th class="text-left">{{ trans('admin/main.title') }}</th>
                                         <th class="text-center">الدفعة</th>
                                         <th>عدد طلبة حجز مقعد</th>
                                         <th>عدد طلبة تسجيل برامج</th>
                                         <th>عدد طلبة تسجيل مباشر</th>
                                         <th>عدد طلبة منح دراسية</th>
+                                        <th>تصدير الأكواد</th>
 
                                     </tr>
 
-                                    @foreach($bundles as $bundle)
+                                    @foreach ($bundles as $bundle)
                                         <tr class="text-center">
                                             <td>{{ $bundle->id }}</td>
                                             <td width="18%" class="text-left">
-                                                <a class="text-primary mt-0 mb-1 font-weight-bold" href="{{ $bundle->getUrl() }}">{{ $bundle->title }}</a>
-                                                @if(!empty($bundle->category->title))
+                                                <a class="text-primary mt-0 mb-1 font-weight-bold">{{ $bundle->title }}</a>
+                                                @if (!empty($bundle->category->title))
                                                     <div class="text-small">{{ $bundle->category->title }}</div>
                                                 @else
-                                                    <div class="text-small text-warning">{{trans('admin/main.no_category')}}</div>
+                                                    <div class="text-small text-warning">
+                                                        {{ trans('admin/main.no_category') }}</div>
                                                 @endif
                                             </td>
 
@@ -117,7 +133,7 @@
 
                                             <td>
                                                 <span class="text-primary mt-0 mb-1 font-weight-bold">
-                                                    {{ $bundle->formFeeSales->count() }}
+                                                    {{ $bundle->formFeeSales()->count() }}
                                                 </span>
                                             </td>
                                             <td>
@@ -134,6 +150,12 @@
                                                 <span class="text-primary mt-0 mb-1 font-weight-bold">
                                                     {{ $bundle->scholarshipSales->count() }}
                                                 </span>
+                                            </td>
+                                            <td>
+                                                <a href="{{ route('admin.bundles.export.usercodes', $bundle->id) }}"
+                                                    class="btn btn-sm btn-primary">
+                                                    <i class="fa fa-file-excel"></i> اكواد الطلاب
+                                                </a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -153,5 +175,4 @@
 @endsection
 
 @push('scripts_bottom')
-
 @endpush
