@@ -153,6 +153,7 @@ return [
 
   // academic_info
   'academic_info' => 'بيانات المستخدم',
+  'powered_by_lxera'=>'جميع الحقوق محفوظة لشركة ',
 
   // personal card
   'personal_card_stucode' => 'كود الطالب',

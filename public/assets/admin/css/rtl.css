@@ -82,7 +82,15 @@ h1, h2, h3, h4, h5, h6, p, a, span, input, textarea, select, option, label {
 
 .main-content {
   padding-right: 280px;
-  padding-left: 30px; }
+  padding-left: 30px; 
+}
+
+@media (max-width: 1024px) {
+  .main-content {
+    padding-right: 15px;
+    padding-left: 15px;
+   }
+}
 
 .section .section-header {
   font: normal normal 24px "IRANSans Bold"; }

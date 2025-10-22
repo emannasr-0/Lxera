@@ -136,8 +136,10 @@
                     @include('web.default.includes.top_nav.currency')
 
                     
-                    @if (!empty($localLanguage) and count($localLanguage) > 1 and (session::get('impersonated') == null) )
-                        <form action="/locale" method="post" class="mr-15 mx-md-20">
+
+
+@if (!empty($localLanguage) and count($localLanguage) > 1 and (session::get('impersonated') == null) )
+                    <form action="/locale" method="post" class="mr-15 mx-md-20">
                             {{ csrf_field() }}
 
                             <input type="hidden" name="locale">

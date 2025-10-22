@@ -12,6 +12,8 @@ use App\Models\RewardAccounting;
 use App\Models\UserMeta;
 use App\Models\Follow;
 use App\User;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -387,7 +389,88 @@ class UsersController extends Controller
         return apiResponse2(1, 'success', "requirements uploaded successfully, wait to be reviewed");
     }
 
-    public function students(Request $request, $is_export_excel = false)
+    // public function students(Request $request, $is_export_excel = false)
+    // {
+    //     $filters = $request->only(['user_code', 'email', 'full_name', 'mobile', 'status']);
+    //     $filtersTwo = $request->only(['title']);
+
+    //     $this->authorize('admin_users_list');
+
+    //     $query = User::whereIn('role_name', [Role::$user, Role::$registered_user]);
+
+    //     if ($request->has('status')) {
+    //         $query->where('status', $request->input('status'));
+    //     }
+
+    //     $totalStudents = (clone $query)->count();
+    //     $inactiveStudents = (clone $query)->where('status', 'inactive')->count();
+    //     $banStudents = (clone $query)
+    //         ->where('ban', true)
+    //         ->whereNotNull('ban_end_at')
+    //         ->where('ban_end_at', '>', time())
+    //         ->count();
+
+    //     $userGroups = Group::where('status', 'active')
+    //         ->orderBy('created_at', 'desc')
+    //         ->get();
+
+    //     $query = $this->filters($query, $request);
+
+    //     $users = $query->with([
+    //         'student.bundleStudent.bundle',
+    //         'programTranslation',
+    //         'student.user'
+    //     ])->filterBySearch($filters)
+    //         ->whereHas('programTranslation', function ($q) use ($filtersTwo) {
+    //             $q->filterBySearch($filtersTwo);
+    //         })
+    //         ->orderBy('created_at', 'desc');
+
+    //     $limit = $request->input('limit');
+    //     if ($is_export_excel) {
+    // $users = $limit ? $query->paginate((int) $limit) : $query->get();
+    //     } else {
+
+    //         $users = $limit ? $query->limit($limit)->get() : $query->get(); // في حالة عادية
+    //     }
+
+    //     $users = $this->addUsersExtraInfo($users);
+
+    //     $category = Category::where('parent_id', '!=', null)->get();
+    //     $users->getCollection()->transform(function ($user) {
+    //         $student = $user->student;
+    //         if ($student) {
+    //             $user->student_id = $student->id;
+    //             $user->identity_img = $student->identity_img;
+    //             $user->bundles = $student->bundleStudent ? $student->bundleStudent->map(function ($bundleStudent) {
+    //                 return $bundleStudent->bundle;
+    //             }) : collect();
+    //         } else {
+    //             $user->student_id = null;
+    //             $user->identity_img = null;
+    //             $user->bundles = collect();
+    //         }
+    //         $user->program = $user->programTranslation ?? null;
+    //         return $user;
+    //     });
+
+    //     $statusOptions = $this->getStatusOptions();
+
+    //     $data = [
+    //         'students' => $users,
+    //         'statusOptions' => $statusOptions,
+    //         'category' => $category,
+    //         'totalStudents' => $totalStudents,
+    //         'inactiveStudents' => $inactiveStudents,
+    //         'banStudents' => $banStudents,
+    //         // 'userGroups' => $userGroups
+    //     ];
+
+    //     return response()->json($data, 200, [], JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE);
+    // }
+
+
+    public function students(Request $request /*, $orgSlug = null */)
     {
         $filters = $request->only(['user_code', 'email', 'full_name', 'mobile', 'status']);
         $filtersTwo = $request->only(['title']);
@@ -396,25 +479,17 @@ class UsersController extends Controller
 
         $query = User::whereIn('role_name', [Role::$user, Role::$registered_user]);
 
-        if ($request->has('status')) {
+        if ($request->filled('status')) {
             $query->where('status', $request->input('status'));
         }
 
-        $totalStudents = (clone $query)->count();
+        $totalStudents   = (clone $query)->count();
         $inactiveStudents = (clone $query)->where('status', 'inactive')->count();
-        $banStudents = (clone $query)
-            ->where('ban', true)
-            ->whereNotNull('ban_end_at')
-            ->where('ban_end_at', '>', time())
-            ->count();
-
-        $userGroups = Group::where('status', 'active')
-            ->orderBy('created_at', 'desc')
-            ->get();
+        $banStudents     = (clone $query)->where('ban', true)->whereNotNull('ban_end_at')->where('ban_end_at', '>', time())->count();
 
         $query = $this->filters($query, $request);
 
-        $users = $query->with([
+        $query = $query->with([
             'student.bundleStudent.bundle',
             'programTranslation',
             'student.user'
@@ -424,48 +499,61 @@ class UsersController extends Controller
             })
             ->orderBy('created_at', 'desc');
 
-        $limit = $request->input('limit');
+        $limit       = $request->integer('limit');                  // null or int
+        $isExport    = $request->boolean('export_excel', false);    // ?export_excel=1
 
-        if ($is_export_excel) {
-            $users = $query->paginate($limit ?? 10); // في حالة تصدير اكسل
+        // Export: get ALL if no limit, otherwise paginate by limit
+        if ($isExport) {
+            $users = $limit ? $query->paginate($limit) : $query->get();
         } else {
-            $users = $limit ? $query->limit($limit)->get() : $query->get(); // في حالة عادية
+            $users = $limit ? $query->limit($limit)->get() : $query->get();
         }
 
-        $users = $this->addUsersExtraInfo($users);
+        // Ensure addUsersExtraInfo works for both paginator and collection
+        $isPaginator = $users instanceof LengthAwarePaginator || $users instanceof Paginator;
+        $collection  = $isPaginator ? $users->getCollection() : $users;
 
-        $category = Category::where('parent_id', '!=', null)->get();
-        $users->getCollection()->transform(function ($user) {
+        $collection = $this->addUsersExtraInfo($collection);
+
+        // Transform consistently
+        $transformFn = function ($user) {
             $student = $user->student;
             if ($student) {
-                $user->student_id = $student->id;
+                $user->student_id  = $student->id;
                 $user->identity_img = $student->identity_img;
-                $user->bundles = $student->bundleStudent ? $student->bundleStudent->map(function ($bundleStudent) {
-                    return $bundleStudent->bundle;
-                }) : collect();
+                $user->bundles = $student->bundleStudent
+                    ? $student->bundleStudent->map(fn($bs) => $bs->bundle)
+                    : collect();
             } else {
-                $user->student_id = null;
+                $user->student_id  = null;
                 $user->identity_img = null;
                 $user->bundles = collect();
             }
             $user->program = $user->programTranslation ?? null;
             return $user;
-        });
+        };
+
+        $collection = $collection->map($transformFn);
+
+        if ($isPaginator) {
+            $users->setCollection($collection);
+        } else {
+            $users = $collection;
+        }
 
         $statusOptions = $this->getStatusOptions();
+        $category      = Category::whereNotNull('parent_id')->get();
 
-        $data = [
-            'students' => $users,
-            'statusOptions' => $statusOptions,
-            'category' => $category,
-            'totalStudents' => $totalStudents,
+        return response()->json([
+            'students'        => $users,
+            'statusOptions'   => $statusOptions,
+            'category'        => $category,
+            'totalStudents'   => $totalStudents,
             'inactiveStudents' => $inactiveStudents,
-            'banStudents' => $banStudents,
-            // 'userGroups' => $userGroups
-        ];
-
-        return response()->json($data, 200, [], JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE);
+            'banStudents'     => $banStudents,
+        ], 200, [], JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE);
     }
+
 
     public function students2(Request $request, $is_export_excel = false)
     {

@@ -1,12 +1,12 @@
-<button type="button" class="sidebar-close">
-    <i class="fa fa-times"></i>
+<button type="button" class="sidebar-close" style="left:0;">
+    <i class="fa fa-times text-dark"></i>
 </button>
 
 <div class="navbar-bg"></div>
 
 <nav class="navbar navbar-expand-lg main-navbar">
 
-    <form class="form-inline mr-auto mb-0">
+    <form class="form-inline  mb-0">
         <ul class="navbar-nav mr-3">
             <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="fas fa-bars"></i></a></li>
             <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i class="fas fa-search"></i></a></li>
