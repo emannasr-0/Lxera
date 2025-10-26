@@ -79,6 +79,7 @@ Route::group(['namespace' => 'Panel', 'prefix' => 'panel', 'middleware' => ['che
 
         Route::group(['prefix' => 'purchases'], function () {
             Route::get('/', 'WebinarController@purchases');
+            Route::get('/webinar', 'WebinarController@purchasesWebinar');
             Route::post('/getJoinInfo', 'WebinarController@getJoinInfo');
         });
 
@@ -522,7 +523,7 @@ Route::group(['namespace' => 'Panel', 'prefix' => 'panel', 'middleware' => ['che
         Route::get('/{noticeboard_id}/saveStatus', 'CourseNoticeboardController@saveStatus');
     });
 
-    Route::group(['prefix' => 'forums', 'middleware' => 'can:student_showForums'], function () {
+    Route::group(['prefix' => 'forums'], function () {
         Route::get('/topics', 'ForumsController@topics');
         Route::get('/topics/{id}/removeBookmarks', 'ForumsController@removeBookmarks');
         Route::get('/posts', 'ForumsController@posts');

@@ -541,7 +541,7 @@
 
 
 
-                                            {{-- <div class="form-group mt-30 d-flex align-items-center justify-content-between">
+                                        <div class="form-group mt-30 d-flex align-items-center justify-content-between">
                                                 <label class="" for="forumSwitch">{{ trans('update.course_forum') }}</label>
                                                 <div class="custom-control custom-switch">
                                                     <input type="checkbox" name="forum" class="custom-control-input" id="forumSwitch" {{ !empty($webinar) && $webinar->forum ? 'checked' : ''  }}>
@@ -571,7 +571,7 @@
                                                     <input type="checkbox" name="enable_waitlist" class="custom-control-input" id="enable_waitlistSwitch" {{ (!empty($webinar) and $webinar->enable_waitlist) ? 'checked' : ''  }}>
                                                     <label class="custom-control-label" for="enable_waitlistSwitch"></label>
                                                 </div>
-                                            </div> --}}
+                                            </div> 
 
                                             <div class="form-group mt-15" style="display: none">
                                                 <label class="input-label">{{ trans('update.access_days') }}</label>

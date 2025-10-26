@@ -238,6 +238,9 @@
                                 <li class="mt-5 {{ request()->is('panel/webinars/purchases') ? 'active' : '' }}">
                                     <a href="/panel/webinars/purchases">{{ trans('panel.courses_tt') }}</a>
                                 </li>
+                                <li class="mt-5 {{ request()->is('panel/webinars/purchases/webinar') ? 'active' : '' }}">
+                                    <a href="/panel/webinars/purchases/webinar">مشترياتي</a>
+                                </li>
                             @endif
                         @endif
 
@@ -684,7 +687,7 @@
         @endif
 
         @if (getFeaturesSettings('forums_status'))
-            @can('student_showForums')
+          
                 <li
                     class="sidenav-item {{ (request()->is('panel/forums') or request()->is('panel/forums/*')) ? 'sidenav-item-active' : '' }}">
                     <a class="d-flex align-items-center" data-toggle="collapse" href="#forumsCollapse" role="button"
@@ -715,7 +718,7 @@
                         </ul>
                     </div>
                 </li>
-            @endcan
+ 
         @endif
 
 

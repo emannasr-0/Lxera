@@ -36,7 +36,7 @@ class WebinarController extends Controller
     use CheckContentLimitationTrait;
     use InstallmentsTrait;
 
-    public function course($id, $justReturnData = false)
+    public function course($slug,$id, $justReturnData = false)
     {
         $user = null;
 
@@ -46,13 +46,6 @@ class WebinarController extends Controller
             $user = apiAuth();
         }
 
-
-        if (!$justReturnData) {
-            $contentLimitation = $this->checkContentLimitation($user, true);
-            if ($contentLimitation != "ok") {
-                return $contentLimitation;
-            }
-        }
 
         $course = Webinar::where('id', $id)
             ->with([
@@ -163,7 +156,6 @@ class WebinarController extends Controller
             ])
             // ->where('status', 'active')
             ->first();
-
         if (empty($course)) {
             return $justReturnData ? false : back();
         }
