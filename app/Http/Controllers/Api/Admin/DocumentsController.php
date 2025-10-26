@@ -121,6 +121,147 @@ class DocumentsController extends Controller
             'types_options' => $typeOptions,
         ]);
     }
+    public function indexusers(Request $request)
+{
+    $this->authorize('admin_documents_list');
+    app()->setLocale('ar');
+
+    // نبدأ استعلام الـ documents
+    $documentsQuery = Accounting::query();
+
+    $from = $request->input('from');
+    $to = $request->input('to');
+    $user = $request->input('user');
+    $webinar = $request->input('webinar');
+    $type = $request->input('type');
+    $typeAccount = $request->input('type_account');
+
+    // فلترة بالتاريخ
+    $documentsQuery = fromAndToDateFilter($from, $to, $documentsQuery, 'created_at');
+
+    // فلترة بالمستخدمين لو محددين
+    if (!empty($user)) {
+        $documentsQuery->whereIn('user_id', $user);
+    }
+
+    // فلترة أخرى حسب الشروط
+    if (!empty($webinar)) {
+        $documentsQuery->where('webinar_id', $webinar);
+    }
+
+    if (!empty($type) && $type !== 'all') {
+        $documentsQuery->where('type', $type);
+    }
+
+    if (!empty($typeAccount) && $typeAccount !== 'all') {
+        $documentsQuery->where('type_account', $typeAccount);
+    }
+
+    // نحصل على كل المستخدمين الموجودين فعلاً في documents
+    $userIds = $documentsQuery->pluck('user_id')->unique()->filter(); // إزالة nulls
+
+    // نجلب أسماء هؤلاء المستخدمين فقط
+    $users = User::whereIn('id', $userIds)
+        ->whereNull('deleted_at')
+        ->select('id', 'full_name')
+        ->get();
+
+    return response()->json([
+        'users' => $users,
+    ]);
+}
+
+    // public function indexusers(Request $request)
+    // {
+    //     $this->authorize('admin_documents_list');
+    //     app()->setLocale('ar');
+    //     $documentsQuery = Accounting::query();
+    //     $users = User::whereNull('deleted_at')->get()->keyBy('id');
+
+    //     $from = $request->input('from');
+    //     $to = $request->input('to');
+    //     $user = $request->input('user');
+    //     $webinar = $request->input('webinar');
+    //     $type = $request->input('type');
+    //     $typeAccount = $request->input('type_account');
+
+    //     $documentsQuery = fromAndToDateFilter($from, $to, $documentsQuery, 'created_at');
+
+    //     if (!empty($user)) {
+    //         $documentsQuery->whereIn('user_id', $user);
+    //     }
+
+    //     $webinarModel = null;
+    //     if (!empty($webinar)) {
+    //         $documentsQuery->where('webinar_id', $webinar);
+    //         $webinarModel = Webinar::find($webinar);
+    //     }
+
+
+    //     if (!empty($type) && $type !== 'all') {
+    //         $documentsQuery->where('type', $type);
+    //     }
+
+    //     if (!empty($typeAccount) && $typeAccount !== 'all') {
+    //         $documentsQuery->where('type_account', $typeAccount);
+    //     }
+
+    //     $documents = $documentsQuery->orderBy('created_at', 'desc')
+    //         ->orderBy('id', 'desc')
+    //         ->paginate(10);
+
+    //     $amountTypeOptions = $this->amountTypeOptions();
+    //     $typeOptions = $this->typeOptions();
+
+    //     $transformedDocuments = $documents->map(function ($doc) {
+    //         $title = null;
+    //         $program = null;
+
+    //         if ($doc->is_cashback) {
+    //             $title = trans('update.cashback');
+    //         } elseif ($doc->webinar_id) {
+    //             $title = trans('admin/main.item_purchased');
+    //             $program = $doc->webinar ? $doc->webinar->title : null;
+    //         } elseif ($doc->bundle_id) {
+    //             $title = trans('update.bundle_purchased');
+    //             $program = $doc->bundle ? $doc->bundle->title : null;
+    //         } elseif ($doc->product_id) {
+    //             $title = trans('update.product_purchased');
+    //             $program = $doc->product ? $doc->product->title : null;
+    //         } elseif ($doc->meeting_time_id) {
+    //             $title = trans('admin/main.item_purchased') . ' (' . trans('admin/main.meeting') . ')';
+    //         } elseif ($doc->subscribe_id) {
+    //             $title = trans('admin/main.purchased_subscribe');
+    //         } elseif ($doc->promotion_id) {
+    //             $title = trans('admin/main.purchased_promotion');
+    //         } elseif ($doc->registration_package_id) {
+    //             $title = trans('update.purchased_registration_package');
+    //         } elseif ($doc->store_type == Accounting::$storeManual) {
+    //             $title = trans('admin/main.manual_document');
+    //         } else {
+    //             $title = $doc->is_cashback ? $doc->description : trans('admin/main.automatic_document');
+    //         }
+
+    //         return [
+
+    //             'user' => $doc->user ? $doc->user->full_name : null,
+
+    //         ];
+    //     });
+
+    //     return response()->json([
+    //         'pagination' => [
+    //             'total' => $documents->total(),
+    //             'per_page' => $documents->perPage(),
+    //             'current_page' => $documents->currentPage(),
+    //             'last_page' => $documents->lastPage(),
+    //             'next_page_url' => $documents->nextPageUrl(),
+    //             'prev_page_url' => $documents->previousPageUrl(),
+    //         ],
+    //         'data' => $transformedDocuments,
+
+    //     ]);
+    // }
 
     public function store($url_name, Request $request)
     {
