@@ -1246,7 +1246,7 @@ class WebinarsController extends Controller
         ], 200);
     }
 
-    // instructor api function 
+    // instructor api function
     public function getTeacherWebinars(Request $request)
     {
         $user = apiAuth();
@@ -1521,4 +1521,34 @@ class WebinarsController extends Controller
             'data' => $data
         ], 200);
     }
+
+  public function getWebinarCount(Request $request)
+{
+    $user = apiAuth(); 
+
+    if ($user->isUser()) {
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Unauthorized access.'
+        ], 403);
+    }
+
+    // تحديد عدد الويبينارات حسب نوع المستخدم
+    $query = Webinar::query();
+
+    if ($user->isTeacher()) {
+        $query->where('teacher_id', $user->id);
+    } elseif ($user->isOrganization()) {
+        $query->where('creator_id', $user->id);
+    }
+
+    $count = $query->count();
+
+    return response()->json([
+        'status' => 'success',
+        'webinar_count' => $count
+    ]);
+}
+
+
 }

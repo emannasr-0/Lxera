@@ -12,49 +12,90 @@ use App\Http\Controllers\Controller;
 
 class PrerequisiteController extends Controller
 {
-   public function store(Request $request)
-{
-    $this->authorize('admin_webinars_edit');
+    public function store(Request $request)
+    {
+        $this->authorize('admin_webinars_edit');
 
-    $data = $request->all();
+        $data = $request->all();
 
-    $validator = Validator::make($data, [
-        'webinar_id' => 'required',
-        'prerequisite_id' => [
-            'required',
-            Rule::unique('prerequisites', 'prerequisite_id')
-                ->where('webinar_id', $data['webinar_id']),
-        ],
-    ]);
+        $validator = Validator::make($data, [
+            'webinar_id' => 'required',
+            'prerequisite_id' => [
+                'required',
+                Rule::unique('prerequisites', 'prerequisite_id')
+                    ->where('webinar_id', $data['webinar_id']),
+            ],
+        ]);
 
-    // ✅ تحقق مخصص: لا يمكن أن تكون الدورة شرطًا لنفسها
-    $validator->after(function ($validator) use ($data) {
-        if (!empty($data['webinar_id']) && $data['webinar_id'] == $data['prerequisite_id']) {
-            $validator->errors()->add('prerequisite_id', 'A webinar cannot be a prerequisite of itself.');
+        // ✅ Custom validation: a webinar cannot be a prerequisite of itself
+        $validator->after(function ($validator) use ($data) {
+            if (!empty($data['webinar_id']) && $data['webinar_id'] == $data['prerequisite_id']) {
+                $validator->errors()->add('prerequisite_id', 'A webinar cannot be a prerequisite of itself.');
+            }
+        });
+
+        if ($validator->fails()) {
+            return response([
+                'code' => 422,
+                'errors' => $validator->errors(),
+            ], 422);
         }
-    });
 
-    if ($validator->fails()) {
-        return response([
-            'code' => 422,
-            'errors' => $validator->errors(),
-        ], 422);
+        $required = (!empty($data['required']) && $data['required'] == 'on') ? true : false;
+
+        // ✅ Create prerequisite
+        Prerequisite::create([
+            'webinar_id' => $data['webinar_id'],
+            'prerequisite_id' => $data['prerequisite_id'],
+            'required' => $required,
+            'created_at' => time(),
+        ]);
+
+        // ✅ Reload webinar with all prerequisites and related data
+        $webinar = Webinar::with([
+            'prerequisites' => function ($query) {
+                $query->with(['prerequisiteWebinar.teacher']);
+            }
+        ])->find($data['webinar_id']);
+
+        if (!$webinar) {
+            return response()->json([
+                'code' => 404,
+                'message' => 'Webinar not found.'
+            ], 404);
+        }
+
+        // ✅ Build data just like in list() method
+        $responseData = [];
+
+        foreach ($webinar->prerequisites as $prerequisite) {
+            $prerequisiteWebinar = $prerequisite->prerequisiteWebinar;
+
+            if (!$prerequisiteWebinar) {
+                continue;
+            }
+
+            $responseData[] = [
+                'id' => $prerequisite->id,
+                'webinar_id' => $webinar->id,
+                'title' => $prerequisiteWebinar->title,
+                'instructor' => $prerequisiteWebinar->teacher ? $prerequisiteWebinar->teacher->full_name : null,
+                'price' => handlePrice($prerequisiteWebinar->price),
+                'raw_price' => $prerequisiteWebinar->price,
+                'publish_date' => dateTimeFormat($prerequisiteWebinar->created_at, 'j F Y | H:i'),
+                'required' => $prerequisite->required ? trans('public.yes') : trans('public.no'),
+                'is_required' => $prerequisite->required,
+            ];
+        }
+
+        return response()->json([
+            'code' => 200,
+            'message' => 'Prerequisite added successfully.',
+            'webinar_id' => $webinar->id,
+            'prerequisites' => $responseData,
+        ], 200);
     }
 
-    $required = (!empty($data['required']) && $data['required'] == 'on') ? true : false;
-
-    $prerequisite = Prerequisite::create([
-        'webinar_id' => $data['webinar_id'],
-        'prerequisite_id' => $data['prerequisite_id'],
-        'required' => $required,
-        'created_at' => time(),
-    ]);
-
-    return response()->json([
-        'code' => 200,
-        'data' => $prerequisite
-    ], 200);
-}
 
 
     public function edit(Request $request, $id)

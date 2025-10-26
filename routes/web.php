@@ -82,7 +82,7 @@ Route::group(['namespace' => 'Auth', 'middleware' => ['check_mobile_app', 'share
 
     Route::get('/linkedin', 'SocialiteController@redirectToLinkedIn')->name('login.linkedin');
     Route::get('/linkedin/callback', 'SocialiteController@handleLinkedInCallback');
-    
+
     Route::get('/Apple', 'SocialiteController@redirectToApple')->name('login.apple');
     Route::get('/Apple/callback', 'SocialiteController@handleAppleCallback');
 
@@ -167,7 +167,7 @@ Route::group(['namespace' => 'Web', 'middleware' => ['check_mobile_app', 'impers
             Route::post('/assignment/{assignmentId}/history/{historyId}/message', 'AssignmentHistoryController@storeMessage');
             Route::post('/assignment/{assignmentId}/history/{historyId}/setGrade', 'AssignmentHistoryController@setGrade');
 
-          
+
 
             Route::get('/assignment/{assignmentId}/history/{historyId}/message/{messageId}/downloadAttach', 'AssignmentHistoryController@downloadAttach');
 

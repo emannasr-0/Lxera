@@ -188,14 +188,40 @@ class RoleController extends Controller
         ]);
     }
 
-    public function listPermissions()
-    {
-        $permissions = Section::get();
-        return response()->json([
-            'status' => 'success',
-            'data' => $permissions
-        ]);
+   public function listPermissions()
+{
+    // جلب كل الـ sections
+    $sections = Section::all();
+
+    // بناء هيكل هرمي: كل قسم يحتوي على صلاحياته (permissions)
+    $data = [];
+
+    foreach ($sections as $section) {
+        // فقط الأقسام الرئيسية (التي ليس لديها section_group_id)
+        if (is_null($section->section_group_id)) {
+            $children = $sections->where('section_group_id', $section->id)->values();
+
+            $data[] = [
+                'id' => $section->id,
+                'name' => $section->name,
+                'caption' => $section->caption,
+                'permissions' => $children->map(function ($child) {
+                    return [
+                        'id' => $child->id,
+                        'name' => $child->name,
+                        'caption' => $child->caption,
+                    ];
+                })->toArray()
+            ];
+        }
     }
+
+    return response()->json([
+        'status' => 'success',
+        'data' => $data
+    ]);
+}
+
 
     public function showPermissions($url_name, $id)
     {

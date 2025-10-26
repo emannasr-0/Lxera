@@ -25,17 +25,17 @@ class BundleController extends Controller
      */
     public function index()
     {
+
         $user = apiAuth();
 
         $query = Bundle::where(function ($query) use ($user) {
             $query->where('bundles.teacher_id', $user->id);
             $query->orWhere('bundles.creator_id', $user->id);
         });
-
-        $bundlesHours = deepClone($query)->join('bundle_webinars', 'bundle_webinars.bundle_id', 'bundles.id')
-            ->join('webinars', 'webinars.id', 'bundle_webinars.webinar_id')
-            ->select('bundles.*', DB::raw('sum(webinars.duration) as duration'))
-            ->sum('duration');
+        $bundlesHours = deepClone($query)
+            ->join('bundle_webinars', 'bundle_webinars.bundle_id', '=', 'bundles.id')
+            ->join('webinars', 'webinars.id', '=', 'bundle_webinars.webinar_id')
+            ->sum('webinars.duration');
 
         $query->with([
             /*'reviews' => function ($query) {

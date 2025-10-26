@@ -16,10 +16,13 @@ use Illuminate\Http\Request;
 
 class LearningPageController extends Controller
 {
-    use LearningPageMixinsTrait, LearningPageAssignmentTrait, LearningPageItemInfoTrait,
-        LearningPageNoticeboardsTrait, LearningPageForumTrait;
+    use LearningPageMixinsTrait,
+        LearningPageAssignmentTrait,
+        LearningPageItemInfoTrait,
+        LearningPageNoticeboardsTrait,
+        LearningPageForumTrait;
 
-    public function index(Request $request,Bundle $bundle=null, $id)
+    public function index(Request $request, Bundle $bundle = null, $id)
     {
         $requestData = $request->all();
 
@@ -30,10 +33,10 @@ class LearningPageController extends Controller
 
         $course = $data['course'];
         $user = $data['user'];
-        $itemId= $course->id;
-        $itemName= 'webinar_id';
+        $itemId = $course->id;
+        $itemName = 'webinar_id';
 
-        if(empty($course->unattached) && !empty($bundle)){
+        if (empty($course->unattached) && !empty($bundle)) {
             $itemId = $bundle->id;
             $itemName = "bundle_id";
         }
@@ -49,10 +52,17 @@ class LearningPageController extends Controller
         }
 
         if (!empty($requestData['type']) and $requestData['type'] == 'assignment' and !empty($requestData['item'])) {
-
             $assignmentData = $this->getAssignmentData($course, $requestData);
 
-            $data = array_merge($data, $assignmentData);
+            // لو الدالة رجعت View، نستخرج بياناتها أو نتجاهل الدمج
+            if ($assignmentData instanceof \Illuminate\View\View) {
+                // لو عايز تستخدم الـ data اللي جوه الـ View:
+                $assignmentData = $assignmentData->getData();
+            }
+
+            if (is_array($assignmentData)) {
+                $data = array_merge($data, $assignmentData);
+            }
         }
 
         if ($course->creator_id != $user->id and $course->teacher_id != $user->id and !$user->isAdmin() and !$course->isPartnerTeacher($user->id)) {
@@ -79,7 +89,8 @@ class LearningPageController extends Controller
         return view('web.default.course.learningPage.index', $data);
     }
 
-    public function api_index(Request $request,Bundle $bundle=null, $id){
+    public function api_index(Request $request, Bundle $bundle = null, $id)
+    {
         $requestData = $request->all();
         $webinarController = new WebinarController();
 
@@ -88,10 +99,10 @@ class LearningPageController extends Controller
 
         $course = $data['course'];
         $user = $data['user'];
-        $itemId= $course->id;
-        $itemName= 'webinar_id';
+        $itemId = $course->id;
+        $itemName = 'webinar_id';
 
-        if(empty($course->unattached) && !empty($bundle)){
+        if (empty($course->unattached) && !empty($bundle)) {
             $itemId = $bundle->id;
             $itemName = "bundle_id";
         }

@@ -107,7 +107,7 @@
                                 </div>
 
                                 @include(getTemplate() . '.includes.webinar.rate',['rate' => $bundle->getRate()])
- 
+
                                 <div class="webinar-price-box mt-15">
                                     @if($bundle->price > 0)
                                         @if($bundle->bestTicket() < $bundle->price)

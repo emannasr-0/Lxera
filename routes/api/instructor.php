@@ -1,17 +1,21 @@
 <?php
 
-use App\Http\Controllers\Admin\WebinarController;
-use App\Http\Controllers\Api\Instructor\AssignmentController as InstructorAssignmentController;
-use App\Http\Controllers\Api\Panel\AssignmentController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\Instructor\WebinarsController;
-use App\Http\Controllers\Api\Instructor\BundleController;
+use App\Http\Controllers\Admin\WebinarController;
 use App\Http\Controllers\Api\Panel\QuizzesController;
+use App\Http\Controllers\Api\Panel\AssignmentController;
 use App\Http\Controllers\Api\Web\CertificatesController;
+use App\Http\Controllers\Api\Instructor\BundleController;
+use App\Http\Controllers\Api\Instructor\NotificationsController;
+use App\Http\Controllers\Api\Instructor\WebinarsController;
+use App\Http\Controllers\Api\Instructor\AssignmentController as InstructorAssignmentController;
 
 Route::prefix('{url_name}')->group(function () {
     Route::group([], function () {
-
+ Route::group(['prefix' => 'notifications'], function () {
+            Route::get('/', [NotificationsController::class, 'list']);
+            Route::post('/{id}/seen', [NotificationsController::class, 'seen'])->name('notifications.seen');
+        });
         Route::group(['prefix' => 'webinars', 'middleware' => 'can:student_showClasses'], function () {
             Route::group(['middleware' => 'user.not.access'], function () {
                 Route::get('/', [WebinarController::class, 'index']);
@@ -97,6 +101,7 @@ Route::prefix('{url_name}')->group(function () {
             //webinars
             Route::get('/webinars', [WebinarsController::class, 'getTeacherWebinars']);
             Route::get('/webinars_content', [WebinarsController::class, 'getWebinarContent']);
+            Route::get('/webinars_count', [WebinarsController::class, 'getWebinarCount']);
             Route::get('/webinar_learning-page/{id}', [WebinarsController::class, 'getWebinarsLessons']);
 
             //bundles
