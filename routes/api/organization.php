@@ -316,6 +316,7 @@ Route::prefix('{url_name}')->group(function () {
             // Balances
             Route::prefix('documents')->group(function () {
                 Route::get('/', [DocumentsController::class, 'index']);
+                Route::get('/users', [DocumentsController::class, 'indexusers']);
                 Route::post('/', [DocumentsController::class, 'store']);
             });
 
