@@ -146,7 +146,7 @@ Route::group(['namespace' => 'Web', 'middleware' => ['check_mobile_app', 'impers
     Route::get('assignment/histories/{historyId}', 'AssignmentHistoryController@deleteGraduationProject');
 
     Route::group(['prefix' => 'course'], function () {
-        // Route::get('/{slug}', 'WebinarController@course');
+        Route::get('/{slug}/{id}', 'WebinarController@course');
         Route::get('/{slug}/file/{file_id}/download', 'WebinarController@downloadFile');
         Route::get('/{slug}/file/{file_id}/showHtml', 'WebinarController@showHtmlFile');
         Route::get('/{slug}/lessons/{lesson_id}/read', 'WebinarController@getLesson');
@@ -398,33 +398,33 @@ Route::group(['namespace' => 'Web', 'middleware' => ['check_mobile_app', 'impers
     //     });
     // });
 
-    // Route::group(['prefix' => 'forums'], function () {
-    //     Route::get('/', 'ForumController@index');
-    //     Route::get('/create-topic', 'ForumController@createTopic');
-    //     Route::post('/create-topic', 'ForumController@storeTopic');
-    //     Route::get('/search', 'ForumController@search');
+    Route::group(['prefix' => 'forums'], function () {
+        Route::get('/', 'ForumController@index');
+        Route::get('/create-topic', 'ForumController@createTopic');
+        Route::post('/create-topic', 'ForumController@storeTopic');
+        Route::get('/search', 'ForumController@search');
 
-    //     Route::group(['prefix' => '/{slug}/topics'], function () {
-    //         Route::get('/', 'ForumController@topics');
-    //         Route::post('/{topic_slug}/likeToggle', 'ForumController@topicLikeToggle');
-    //         Route::get('/{topic_slug}/edit', 'ForumController@topicEdit');
-    //         Route::post('/{topic_slug}/edit', 'ForumController@topicUpdate');
-    //         Route::post('/{topic_slug}/bookmark', 'ForumController@topicBookmarkToggle');
-    //         Route::get('/{topic_slug}/downloadAttachment/{attachment_id}', 'ForumController@topicDownloadAttachment');
+        Route::group(['prefix' => '/{slug}/topics'], function () {
+            Route::get('/', 'ForumController@topics');
+            Route::post('/{topic_slug}/likeToggle', 'ForumController@topicLikeToggle');
+            Route::get('/{topic_slug}/edit', 'ForumController@topicEdit');
+            Route::post('/{topic_slug}/edit', 'ForumController@topicUpdate');
+            Route::post('/{topic_slug}/bookmark', 'ForumController@topicBookmarkToggle');
+            Route::get('/{topic_slug}/downloadAttachment/{attachment_id}', 'ForumController@topicDownloadAttachment');
 
-    //         Route::group(['prefix' => '/{topic_slug}/posts'], function () {
-    //             Route::get('/', 'ForumController@posts');
-    //             Route::post('/', 'ForumController@storePost');
-    //             Route::post('/report', 'ForumController@storeTopicReport');
-    //             Route::get('/{post_id}/edit', 'ForumController@postEdit');
-    //             Route::post('/{post_id}/edit', 'ForumController@postUpdate');
-    //             Route::post('/{post_id}/likeToggle', 'ForumController@postLikeToggle');
-    //             Route::post('/{post_id}/un_pin', 'ForumController@postUnPin');
-    //             Route::post('/{post_id}/pin', 'ForumController@postPin');
-    //             Route::get('/{post_id}/downloadAttachment', 'ForumController@postDownloadAttachment');
-    //         });
-    //     });
-    // });
+            Route::group(['prefix' => '/{topic_slug}/posts'], function () {
+                Route::get('/', 'ForumController@posts');
+                Route::post('/', 'ForumController@storePost');
+                Route::post('/report', 'ForumController@storeTopicReport');
+                Route::get('/{post_id}/edit', 'ForumController@postEdit');
+                Route::post('/{post_id}/edit', 'ForumController@postUpdate');
+                Route::post('/{post_id}/likeToggle', 'ForumController@postLikeToggle');
+                Route::post('/{post_id}/un_pin', 'ForumController@postUnPin');
+                Route::post('/{post_id}/pin', 'ForumController@postPin');
+                Route::get('/{post_id}/downloadAttachment', 'ForumController@postDownloadAttachment');
+            });
+        });
+    });
 
     Route::group(['prefix' => 'cookie-security'], function () {
         Route::post('/all', 'CookieSecurityController@setAll');
