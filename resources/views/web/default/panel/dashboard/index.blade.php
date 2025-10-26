@@ -47,7 +47,7 @@
         margin-bottom: 0 !important;
     }
      .text-color{
-        color:#1024dd;  
+        color:#1024dd;
     }
 
 

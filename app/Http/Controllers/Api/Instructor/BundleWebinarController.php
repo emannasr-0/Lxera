@@ -11,7 +11,6 @@ class BundleWebinarController extends Controller
 {
     public function index($id)
     {
-
         $user = apiAuth();
         $bundle = Bundle::where('id', $id)
             ->where(function ($query) use ($user) {
