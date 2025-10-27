@@ -157,8 +157,8 @@ $custom-control-indicator-bg:$primary;*/
 
 .conversation-box {
   border-radius: 10px;
-  border: solid 1px #ececec;
-  background-color: #141F25;
+  border: solid 1px rgba(234, 237, 244);
+  background-color:  rgba(234, 237, 244);
 }
 /* 
 .selected-row {

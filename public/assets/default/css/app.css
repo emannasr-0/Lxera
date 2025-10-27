@@ -286,6 +286,7 @@
     --gray200: #f1f1f1;
     --gray100: #f9f9f9;
     --acadima-pink: #1024dd;
+    --acadima-light: rgba(234, 237, 244);
     --acadima-black: #0e0e0e;
     --acadima-gray: #888888;
     --acadima-darkblue: #141f25;
@@ -16897,7 +16898,7 @@ img[alt="Admin"] {
     min-height: 40px;
     height: 40px;
     max-height: 40px;
-    background-color: rgba(234, 237, 244) !important;
+    background-color: var(--acadima-light) !important;
     border-radius: 50%;
 }
 .chapter-icon2 {
@@ -19448,4 +19449,7 @@ a:hover {
 
 .text-secondary {
     color: #1024dd !important;
+}
+.bg-acadima-light {
+    background-color: var(--acadima-light) !important;
 }
