@@ -155,7 +155,7 @@
 
                                 @foreach($supports as $support)
                                     <tr class="@if(!empty($selectSupport) and $selectSupport->id == $support->id) selected-row @endif">
-                                        <td class="text-center text-light">{{ $support->serial_number }}</td>
+                                        <td class="text-center text-dark">{{ $support->serial_number }}</td>
                                         <td class="text-left">
                                             <a href="/panel/support/tickets/{{ $support->id }}/conversations" class="">
                                                 <div class="user-inline-avatar d-flex align-items-center">
@@ -163,14 +163,14 @@
                                                         <img src="/assets/default/img/support.png" class="img-cover" alt="">
                                                     </div>
                                                     <div class="ml-10">
-                                                        <span class="d-block font-14 text-light font-weight-500">{{ $support->title }}</span>
+                                                        <span class="d-block font-14 text-dark font-weight-500">{{ $support->title }}</span>
                                                     </div>
                                                 </div>
                                             </a>
                                         </td>
 
                                         <td class="text-center align-middle">
-                                            <span class="font-weight-500 text-light font-14 d-block">{{ $support->department->title }}</span>
+                                            <span class="font-weight-500 text-dark font-14 d-block">{{ $support->department->title }}</span>
                                         </td>
                                         
 
@@ -202,8 +202,8 @@
                         <div class="col-12 col-lg-6 border-left border-gray300">
                             <div class="conversation-box p-15 d-flex align-items-center justify-content-between">
                                 <div>
-                                    <span class="font-weight-500 font-14 text-light d-block">{{ $selectSupport->title }}</span>
-                                    <span class="font-12 text-light d-block mt-5">{{ trans('public.created') }}: {{ dateTimeFormat($support->created_at,'j M Y | H:i') }}</span>
+                                    <span class="font-weight-500 font-14 text-secondary d-block">{{ $selectSupport->title }}</span>
+                                    <span class="font-12 text-dark d-block mt-5">{{ trans('public.created') }}: {{ dateTimeFormat($support->created_at,'j M Y | H:i') }}</span>
                            {{-- @dump($selectSupport->bundle) --}}
                                     @if(!empty($selectSupport->webinar))
                                         <span class="font-12 text-light d-block mt-5">{{ trans('webinars.webinar') }}: {{ $selectSupport->webinar->title }}</span>
@@ -230,7 +230,7 @@
                                                         <img src="{{ (!empty($conversations->supporter)) ? $conversations->supporter->getAvatar() : $conversations->sender->getAvatar() }}" class="img-cover" alt="">
                                                     </div>
                                                     <div class="ml-10">
-                                                        <span class="d-block text-light font-14 font-weight-500">{{ (!empty($conversations->supporter)) ? $conversations->supporter->full_name : $conversations->sender->full_name }}</span>
+                                                        <span class="d-block text-dark font-14 font-weight-500">{{ (!empty($conversations->supporter)) ? $conversations->supporter->full_name : $conversations->sender->full_name }}</span>
                                                         <span class="mt-1 font-12 text-gray d-block">{{ (!empty($conversations->supporter)) ? trans('panel.staff') : $conversations->sender->role_name }}</span>
                                                     </div>
                                                 </div>
@@ -244,7 +244,7 @@
                                                 </div>
 
                                             </div>
-                                            <p class="white-space-pre-wrap text-light mt-15 font-weight-500 font-14">{{ $conversations->message }}</p>
+                                            <p class="white-space-pre-wrap text-dark mt-15 font-weight-500 font-14">{{ $conversations->message }}</p>
                                         </div>
                                     @endforeach
 
@@ -252,7 +252,7 @@
                             </div>
 
                             <div class="conversation-box mt-30 py-10 px-15">
-                                <h3 class="font-14 text-light font-weight-bold">{{ trans('panel.reply_to_the_conversation') }}</h3>
+                                <h3 class="font-14 text-dark font-weight-bold">{{ trans('panel.reply_to_the_conversation') }}</h3>
                                 <form action="/panel/support/{{ $selectSupport->id }}/conversations" method="post" class="mt-5">
                                     {{ csrf_field() }}
 
