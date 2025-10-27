@@ -237,7 +237,7 @@ Route::prefix('{url_name}')->group(function () {
 
             // new file and SCORM
             Route::group(['prefix' => 'files'], function () {
-                Route::post('/', [FilesController::class, 'store']);
+                Route::post('/store', [FilesController::class, 'store']);
                 Route::post('/{id}', [FilesController::class, 'update']);
                 Route::delete('/{id}', [FilesController::class, 'destroy']);
             });
