@@ -9,7 +9,7 @@
             @if($session->date > time())
                 <a href="{{ $session->addToCalendarLink() }}" target="_blank" class="mr-15 d-flex" data-toggle="tooltip" data-placement="top" title="{{ trans('public.add_to_calendar') }}">
                     <span class="chapter-icon chapter-content-icon">
-                    <i data-feather="bell" width="20" height="20" class="text-gray"></i>
+                    <i data-feather="bell" width="20" height="20" class="text-secondary"></i>
                     </span>
                 </a>
             @else

@@ -9,7 +9,7 @@
         <div class="d-flex align-items-center" href="#collapseQuiz{{ !empty($tagId) }}{{ $quiz->id }}" aria-controls="collapseQuiz{{ !empty($tagId) }}{{ $quiz->id }}" data-parent="#{{ $accordionParent }}" role="button" data-toggle="collapse" aria-expanded="true">
             <span class="mr-15 d-flex">
                 <span class="chapter-icon chapter-content-icon">
-                <i data-feather="file-text" width="20" height="20" class="text-gray"></i>
+                <i data-feather="file-text" width="20" height="20" class="text-secondary"></i>
                 </span>
             </span>
 

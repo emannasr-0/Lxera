@@ -11,7 +11,7 @@
                 @if(!empty($user) and $hasBought)
                     <a href="{{ $course->getLearningPageUrl() }}?type=text_lesson&item={{ $textLesson->id }}" target="_blank" class="mr-15" data-toggle="tooltip" data-placement="top" title="{{ trans('public.read') }}">
                             <span class="chapter-icon chapter-content-icon">
-                            <i data-feather="file-text" width="20" height="20" class="text-gray"></i>
+                            <i data-feather="file-text" width="20" height="20" class="text-secondary"></i>
                             </span>
                     </a>
                 @else
@@ -23,13 +23,13 @@
                 @if(!empty($user) and $hasBought)
                     <a href="{{ $course->getLearningPageUrl() }}?type=text_lesson&item={{ $textLesson->id }}" target="_blank" class="mr-15" data-toggle="tooltip" data-placement="top" title="{{ trans('public.read') }}">
                         <span class="chapter-icon chapter-content-icon">
-                            <i data-feather="file-text" width="20" height="20" class="text-gray"></i>
+                            <i data-feather="file-text" width="20" height="20" class="text-secondary"></i>
                         </span>
                     </a>
                 @else
                     <a href="{{ $course->getUrl() }}/lessons/{{ $textLesson->id }}/read" target="_blank" class="mr-15" data-toggle="tooltip" data-placement="top" title="{{ trans('public.read') }}">
                         <span class="chapter-icon chapter-content-icon">
-                            <i data-feather="file-text" width="20" height="20" class="text-gray"></i>
+                            <i data-feather="file-text" width="20" height="20" class="text-secondary"></i>
                         </span>
                     </a>
                 @endif
