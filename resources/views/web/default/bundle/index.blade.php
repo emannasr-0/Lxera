@@ -43,17 +43,17 @@
                     <div class="mt-20 pt-20  mt-md-40 pt-md-40">
                         <ul class="nav nav-tabs bg-secondary rounded-sm p-15 d-flex align-items-center justify-content-between" id="tabs-tab" role="tablist">
                             <li class="nav-item">
-                                <a class="position-relative font-14 text-white {{ (empty(request()->get('tab','')) or request()->get('tab','') == 'information') ? 'active' : '' }}" id="information-tab"
+                                <a class="position-relative font-14 text-secondary {{ (empty(request()->get('tab','')) or request()->get('tab','') == 'information') ? 'active' : '' }}" id="information-tab"
                                    data-toggle="tab" href="#information" role="tab" aria-controls="information"
                                    aria-selected="true">{{ trans('product.information') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="position-relative font-14 text-white {{ (request()->get('tab','') == 'content') ? 'active' : '' }}" id="content-tab" data-toggle="tab"
+                                <a class="position-relative font-14 text-secondary {{ (request()->get('tab','') == 'content') ? 'active' : '' }}" id="content-tab" data-toggle="tab"
                                    href="#content" role="tab" aria-controls="content"
                                    aria-selected="false">{{ trans('product.content') }} ({{ $bundle->bundleWebinars->count() }})</a>
                             </li>
                             <li class="nav-item">
-                                <a class="position-relative font-14 text-white {{ (request()->get('tab','') == 'reviews') ? 'active' : '' }}" id="reviews-tab" data-toggle="tab"
+                                <a class="position-relative font-14 text-secondary {{ (request()->get('tab','') == 'reviews') ? 'active' : '' }}" id="reviews-tab" data-toggle="tab"
                                    href="#reviews" role="tab" aria-controls="reviews"
                                    aria-selected="false">{{ trans('product.reviews') }} ({{ $bundle->reviews->count() > 0 ? $bundle->reviews->pluck('creator_id')->count() : 0 }})</a>
                             </li>

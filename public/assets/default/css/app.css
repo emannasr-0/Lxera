@@ -10,7 +10,7 @@
 }
 .btn-acadima-pink {
     background-color: var(--acadima-pink) !important;
-    color: #fff  !important;
+    color: #fff !important;
 }
 .btn-acadima-blue:hover {
     background-color: var(--acadima-cyan) !important;
@@ -18,13 +18,13 @@
 }
 @media (max-width: 990px) {
     .height-94 {
-      height: auto !important;  /* Removes the height on small screens */
+        height: auto !important; /* Removes the height on small screens */
     }
-  }
-  .text-cyan {
+}
+.text-cyan {
     color: var(--acadima-cyan) !important;
-  }
-  .text-cyan:hover {
+}
+.text-cyan:hover {
     color: #ccf5ffa4;
 }
 .text-pink {
@@ -288,9 +288,9 @@
     --acadima-pink: #1024dd;
     --acadima-black: #0e0e0e;
     --acadima-gray: #888888;
-    --acadima-darkblue: #141F25;
-    --acadima-cyan: #CCF5FF;
-    --acadima-greenblue: #599FAF;
+    --acadima-darkblue: #141f25;
+    --acadima-cyan: #ccf5ff;
+    --acadima-greenblue: #599faf;
     --primary-hover: #1fb354;
     --primary-border: #43d477;
     --primary-border-hover: #2aba5e;
@@ -307,7 +307,6 @@
     --secondary-btn-color-hover: #fff;
     --font-family-base: "sans-serif" !important;
     --font-family-rtl: "rtl-font-family";
-
 }
 *,
 :after,
@@ -508,14 +507,14 @@ textarea {
     font-size: inherit;
     line-height: inherit;
 }
-@media(max-width:600px) {
+@media (max-width: 600px) {
     button,
-input,
-optgroup,
-select,
-textarea {
-    font-size: 12px !important;
-}
+    input,
+    optgroup,
+    select,
+    textarea {
+        font-size: 12px !important;
+    }
 }
 button,
 input {
@@ -571,8 +570,7 @@ input[type="radio"] {
 
 /* When the radio is checked */
 input[type="radio"]:checked,
-input[type="checkbox"]:checked
- {
+input[type="checkbox"]:checked {
     border-color: #ccc;
     background-color: #fff;
 }
@@ -2786,29 +2784,28 @@ a.badge-gray100:focus {
     margin-bottom: 20px;
     color: #171347;
 }
-@media(max-width:1500px) {
+@media (max-width: 1500px) {
     .panel-section-card .table {
         width: 100vw;
     }
     .panel-section-card.time-sheet .table {
-        width:75vw;
+        width: 75vw;
     }
 }
-@media(max-width:1200px) {
+@media (max-width: 1200px) {
     .panel-section-card .table {
         width: 120vw;
     }
-    
 }
-@media(max-width:992px) {
+@media (max-width: 992px) {
     .panel-section-card .table {
         width: 140vw;
     }
     .panel-section-card.time-sheet .table {
-        width:90vw;
+        width: 90vw;
     }
 }
-@media(max-width: 792px) {
+@media (max-width: 792px) {
     .table {
         width: 150vw;
     }
@@ -2816,12 +2813,12 @@ a.badge-gray100:focus {
         width: 180vw;
     }
 }
-@media(max-width:650px) {
+@media (max-width: 650px) {
     .panel-section-card .table {
         width: 250vw;
     }
     .panel-section-card.time-sheet .table {
-        width:100vw;
+        width: 100vw;
     }
 }
 @media (max-width: 450px) {
@@ -4469,7 +4466,7 @@ fieldset:disabled a.btn {
 }
 .btn-acadima-primary {
     color: #fff !important;
-    background-color:var(--acadima-pink) !important;
+    background-color: var(--acadima-pink) !important;
     border-color: var(--acadima-pink) !important;
 }
 /* .btn-acadima-primary:hover {
@@ -13815,7 +13812,6 @@ a.badge-circle-gray100:focus {
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
     border-bottom: 10px solid #fff;
-    
 }
 .custom-dropdown .custom-dropdown-toggle .custom-dropdown-toggle-flag {
     width: 15px;
@@ -13886,15 +13882,15 @@ html.html-modal-open {
     width: 100%;
     height: 100%;
     display: block; /* Ensure it behaves properly inside anchor tags */
-    
+
     /* Fix object-fit issues in Safari */
     object-fit: cover !important;
     object-position: center center !important;
-    
+
     /* Ensure Safari re-renders correctly */
     transform: translateZ(0);
     backface-visibility: hidden;
-    
+
     /* Prevent any potential container overflow issues */
     max-width: 100%;
     max-height: 100%;
@@ -13921,7 +13917,7 @@ html.html-modal-open {
         height: 60%;
     }
 } */
-@media(max-width:920px) {
+@media (max-width: 920px) {
     .img-cover2 {
         display: none;
     }
@@ -14123,13 +14119,12 @@ p {
     box-shadow: 0 12px 23px 0 rgba(62, 73, 84, 0.04);
     background-color: #fff;
     /* background-color: var(--acadima-darkblue); */
-
 }
 .section-title {
     font-size: 16px;
     font-weight: 700;
     line-height: 1.2;
-    color: #1024dd ;
+    color: #1024dd;
 }
 .section-title.after-line {
     display: flex;
@@ -14192,7 +14187,6 @@ p {
     box-shadow: 0 12px 23px 0 rgba(62, 73, 84, 0.04);
     background-color: #fff;
     /* background-color: var(--acadima-darkblue); */
-
 }
 @media (max-width: 767px) {
     .activities-container img {
@@ -16433,7 +16427,7 @@ img[alt="Admin"] {
     max-height: 100%;
     border-radius: 10px 0 0 10px;
 }
-@media (max-width:770px) {
+@media (max-width: 770px) {
     .webinar-card.webinar-list .image-box {
         display: none;
     }
@@ -16590,7 +16584,7 @@ img[alt="Admin"] {
     left: 0;
     right: 0;
     bottom: 0;
-    opacity: 0.6;
+    opacity: 0;
     background-color: #000;
 }
 .special-offer-card .offer-percent-box {
@@ -16765,7 +16759,7 @@ img[alt="Admin"] {
     content: "";
     width: 35px;
     height: 3px;
-    background-color: var(--primary);
+    background-color: var(--acadima-pink);
     position: absolute;
     bottom: -7px;
     left: 0;
@@ -16903,7 +16897,7 @@ img[alt="Admin"] {
     min-height: 40px;
     height: 40px;
     max-height: 40px;
-    background-color: #fff;
+    background-color: rgba(234, 237, 244) !important;
     border-radius: 50%;
 }
 .chapter-icon2 {
@@ -17101,7 +17095,6 @@ img[alt="Admin"] {
     border-radius: 10px;
     /* background-color: #fbfbfb; */
     background-color: transparent !important;
-
 }
 .installment-card__payments .installment-step {
     position: relative;
@@ -19218,7 +19211,8 @@ img[alt="Admin"] {
     border: none;
     border-radius: 0;
 }
-@media (max-width: 768px) { /* Target small (sm) screens */
+@media (max-width: 768px) {
+    /* Target small (sm) screens */
     .question-multi-answers {
         grid-template-columns: 1fr !important; /* Switch to 1 column */
     }
@@ -19249,7 +19243,6 @@ img[alt="Admin"] {
     background-color: #f7fafd;
     transition: all 0.3s ease;
     color: #000 !important;
-
 }
 .quiz-form .question-multi-answers .answer-item .image-container {
     position: relative;
@@ -19357,7 +19350,7 @@ img[alt="Admin"] {
     border-color: var(--primary);
 }
 .bg-secondary {
-    background-color: var(--secondary) !important;
+    background-color: rgba(234, 237, 244) !important;
 }
 .text-secondary {
     color: var(--secondary) !important;
@@ -19417,15 +19410,12 @@ img[alt="Admin"] {
     opacity: 0.6 !important;
 }
 
-
-.text-pink
- {
+.text-pink {
     color: #1024dd !important;
 }
 
-.input-group-text
- {
-    background-color:#1024dd;
+.input-group-text {
+    background-color: #1024dd;
     border-color: #1024dd;
 }
 
@@ -19438,21 +19428,17 @@ img[alt="Admin"] {
     color: #1024dd !important;
     background-color: #fff !important;
     border-color: #1024dd !important;
-
 }
 
-
-
-a, a:hover {
-    color:  #1024dd;
+a,
+a:hover {
+    color: #1024dd;
 }
 
-.btn-acadima-pink{
-
-  color: #fff !important;
+.btn-acadima-pink {
+    color: #fff !important;
     background-color: #1024dd !important;
     border-color: #1024dd !important;
-
 }
 
 .webinar-progress .progress-item .progress-icon.active {
@@ -19461,5 +19447,5 @@ a, a:hover {
 }
 
 .text-secondary {
-    color: #1024dd   !important;
+    color: #1024dd !important;
 }

@@ -9,7 +9,7 @@
 
             <span class="d-flex align-items-center justify-content-center mr-15">
                 <span class="chapter-icon chapter-content-icon">
-                <i data-feather="{{ $file->getIconByType() }}" width="20" height="20" class="text-gray"></i>
+                <i data-feather="{{ $file->getIconByType() }}" width="20" height="20" class="text-secondary"></i>
                 </span>
             </span>
 

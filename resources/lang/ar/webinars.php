@@ -53,7 +53,7 @@ return [
     'admin_webinars_edit' => 'تعديل جلسات الادمن',
     'admin_webinars_delete' => 'حذف جلسات الادمن',
 
-    'this_webinar_includes' => 'This :classes includes:',
+    'this_webinar_includes' => 'يتضمن :classes :',
     'downloadable_content' => 'محتوي قابل للتنزيل',
     'official_certificate' => 'شهادة رسمية',
     'online_quizzes_count' => ':quiz_count اختبارات اونلاين',
