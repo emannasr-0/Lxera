@@ -56,12 +56,13 @@
                         $isProgressing = true;
                     }
                 @endphp
-
+  @if($item->type != 'program' && $sale->webinar)     
                 @if(!empty($item))
                     <div class="row mt-30">
                         <div class="col-12">
                             <div class="webinar-card webinar-list d-flex">
                                 <div class="image-box">
+                                   
                                     <img src="{{ $item->getImage() }}" class="img-cover" alt="">
 
                                     @if(!empty($sale->webinar))
@@ -111,7 +112,8 @@
 
                                 <div class="webinar-card-body w-100 d-flex flex-column">
                                     <div class="d-flex align-items-center justify-content-between">
-                                <a href="{{ $item->getUrl() . '/' . $item->id }}">
+                                
+                                <a href="{{ $item->getLearningPageUrl()}}">
 
                                             <h3 class="webinar-title font-weight-bold font-16 text-dark-blue">
                                                 {{ $item->title }}
@@ -144,27 +146,36 @@
                                             </button>
 
                                             <div class="dropdown-menu">
+                                   
                                                 @if(!empty($sale->gift_id) and $sale->buyer_id == $authUser->id)
                                                     <a href="/panel/webinars/{{ $item->id }}/sale/{{ $sale->id }}/invoice" target="_blank" class="webinar-actions d-block mt-10">{{ trans('public.invoice') }}</a>
                                                 @else
-                                                    @if(!empty($item->access_days) and !$item->checkHasExpiredAccessDays($sale->created_at, $sale->gift_id))
-                                                        <a href="{{ $item->getUrl() }}" target="_blank" class="webinar-actions d-block mt-10">{{ trans('update.enroll_on_course') }}</a>
-                                                    @elseif(!empty($sale->webinar))
-                                                        <a href="{{ $item->getLearningPageUrl() }}" target="_blank" class="webinar-actions d-block">{{ trans('update.learning_page') }}</a>
-
+                                           
+                                              
+                                            
+                                                
+                                                        {{-- <a href="{{ $item->getLearningPageUrl() }}" target="_blank" class="webinar-actions d-block">{{ trans('update.learning_page') }}</a> --}}
+{{-- 
                                                         @if(!empty($item->start_date) and ($item->start_date > time() or ($item->isProgressing() and !empty($nextSession))))
                                                             <button type="button" data-webinar-id="{{ $item->id }}" class="join-purchase-webinar webinar-actions btn-transparent d-block mt-10">{{ trans('footer.join') }}</button>
-                                                        @endif
+                                                        @endif --}}
 
-                                                        @if(!empty($item->downloadable) or (!empty($item->files) and count($item->files)))
+                                                        {{-- @if(!empty($item->downloadable) or (!empty($item->files) and count($item->files)))
                                                             <a href="{{ $item->getUrl() }}?tab=content" target="_blank" class="webinar-actions d-block mt-10">{{ trans('home.download') }}</a>
-                                                        @endif
+                                                        @endif --}}
 
                                                         @if($item->price > 0)
                                                             <a href="/panel/webinars/{{ $item->id }}/sale/{{ $sale->id }}/invoice" target="_blank" class="webinar-actions d-block mt-10">{{ trans('public.invoice') }}</a>
                                                         @endif
-                                                    @endif
-
+                          
+           
+<a href="{{ route('course.review', ['slug' => $item->slug, 'id' => $item->id]) }}?tab=reviews"
+   target="_blank"
+   class="webinar-actions d-block mt-10">
+   استجابة
+</a>
+ 
+  @endif
                                                 @endif
                                             </div>
                                         </div>

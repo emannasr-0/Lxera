@@ -146,7 +146,9 @@ Route::group(['namespace' => 'Web', 'middleware' => ['check_mobile_app', 'impers
     Route::get('assignment/histories/{historyId}', 'AssignmentHistoryController@deleteGraduationProject');
 
     Route::group(['prefix' => 'course'], function () {
-        Route::get('/{slug}/{id}', 'WebinarController@course');
+        Route::get('/{slug}', 'WebinarController@course');
+   Route::get('/review/{slug}/{id}', 'WebinarController@courseReview')->name('course.review');
+
         Route::get('/{slug}/file/{file_id}/download', 'WebinarController@downloadFile');
         Route::get('/{slug}/file/{file_id}/showHtml', 'WebinarController@showHtmlFile');
         Route::get('/{slug}/lessons/{lesson_id}/read', 'WebinarController@getLesson');

@@ -238,10 +238,11 @@
                                 <li class="mt-5 {{ request()->is('panel/webinars/purchases') ? 'active' : '' }}">
                                     <a href="/panel/webinars/purchases">{{ trans('panel.courses_tt') }}</a>
                                 </li>
-                                <li class="mt-5 {{ request()->is('panel/webinars/purchases/webinar') ? 'active' : '' }}">
+                                
+                            @endif
+                            <li class="mt-5 {{ request()->is('panel/webinars/purchases/webinar') ? 'active' : '' }}">
                                     <a href="/panel/webinars/purchases/webinar">مشترياتي</a>
                                 </li>
-                            @endif
                         @endif
 
 
