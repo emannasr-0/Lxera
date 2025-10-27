@@ -611,7 +611,7 @@
         @endif
 
 
-        @can('show_support')
+       
             <li
                 class="sidenav-item {{ (request()->is('panel/support') or request()->is('panel/support/*')) ? 'sidenav-item-active' : '' }}">
                 <a class="d-flex align-items-center" data-toggle="collapse" href="#supportCollapse" role="button"
@@ -630,16 +630,14 @@
                             <a href="/panel/support/new">{{ trans('public.new') }}</a>
                         </li>
                     @endif
-                        {{-- <li class="mt-5 {{ request()->is('panel/support') ? 'active' : '' }}">
-                            <a href="/panel/support">{{ trans('panel.classes_support') }}</a>
-                        </li> --}}
+                      
                         <li class="mt-5 {{ request()->is('panel/support/tickets') ? 'active' : '' }}">
                             <a href="/panel/support/tickets">{{ trans('panel.support_tickets') }}</a>
                         </li>
                     </ul>
                 </div>
             </li>
-        @endcan
+   
 
         @if (
             !$authUser->isUser() or
