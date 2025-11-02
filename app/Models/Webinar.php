@@ -867,6 +867,7 @@ class Webinar extends Model implements TranslatableContract
 
     public function canAccess($user = null)
     {
+       
         $result = false;
 
         if (!$user) {
@@ -875,6 +876,7 @@ class Webinar extends Model implements TranslatableContract
 
         if (!empty($user)) {
             if ($this->creator_id == $user->id or $this->teacher_id == $user->id) {
+             
                 $result = true;
             }
 

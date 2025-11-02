@@ -9,10 +9,11 @@ use App\Http\Controllers\Api\Instructor\BundleController;
 use App\Http\Controllers\Api\Instructor\NotificationsController;
 use App\Http\Controllers\Api\Instructor\WebinarsController;
 use App\Http\Controllers\Api\Instructor\AssignmentController as InstructorAssignmentController;
+use App\Http\Controllers\Api\Instructor\WebinarChapterController;
 
 Route::prefix('{url_name}')->group(function () {
     Route::group([], function () {
- Route::group(['prefix' => 'notifications'], function () {
+        Route::group(['prefix' => 'notifications'], function () {
             Route::get('/', [NotificationsController::class, 'list']);
             Route::post('/{id}/seen', [NotificationsController::class, 'seen'])->name('notifications.seen');
         });
@@ -100,6 +101,7 @@ Route::prefix('{url_name}')->group(function () {
 
             //webinars
             Route::get('/webinars', [WebinarsController::class, 'getTeacherWebinars']);
+            Route::post('/webinars/chapter', [WebinarChapterController::class, 'store']);
             Route::get('/webinars_content', [WebinarsController::class, 'getWebinarContent']);
             Route::get('/webinars_count', [WebinarsController::class, 'getWebinarCount']);
             Route::get('/webinar_learning-page/{id}', [WebinarsController::class, 'getWebinarsLessons']);
@@ -124,8 +126,16 @@ Route::prefix('{url_name}')->group(function () {
             Route::get('/quizzes', [QuizzesController::class, 'index']);
             Route::get('/webinars_list', [QuizzesController::class, 'get_webinars_quizzes']);
             Route::post('/quizzes/store', [QuizzesController::class, 'store']);
+
+            Route::post('/quizzes/update/{id}', [QuizzesController::class, 'update']);
+            Route::delete('/quizzes/delete/{id}', [QuizzesController::class, 'delete']);
             Route::get('/quizzes/results', [QuizzesController::class, 'results']);
 
+            Route::get('/quizzes/questions/{quizid}', [QuizzesController::class, 'getQuestionsByQuiz']);
+            Route::delete('/quizzes/question/{id}', [QuizzesController::class, 'deletequestion']);
+            Route::post('/quizzes/question', [QuizzesController::class, 'storeQuestion']);
+            Route::post('/quizzes/question/order_items/{id}', [QuizzesController::class, 'orderItems']);
+            Route::post('/quizzes/question/{id}', [QuizzesController::class, 'updateQuestion']);
             //certificates
             Route::get('/certificates', [CertificatesController::class, 'index']);
             Route::post('/certificate_verfiy', [CertificatesController::class, 'checkValidate']);

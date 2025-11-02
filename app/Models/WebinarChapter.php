@@ -11,9 +11,8 @@ class WebinarChapter extends Model implements TranslatableContract
 {
     use Translatable;
     use SequenceContent;
-
+public $timestamps = false;
     protected $table = 'webinar_chapters';
-    public $timestamps = false;
     protected $dateFormat = 'U';
     protected $guarded = ['id'];
 
@@ -29,6 +28,7 @@ class WebinarChapter extends Model implements TranslatableContract
     static $chapterStatus = ['active', 'inactive'];
 
     public $translatedAttributes = ['title'];
+ 
 
     public function getTitleAttribute()
     {
