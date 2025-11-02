@@ -72,7 +72,7 @@ class QuizzesController extends Controller
 
         $quizzesData = [];
 
-         foreach ($quizzes as $quiz) {
+        foreach ($quizzes as $quiz) {
             $quizzesData[] = [
                 'quizId' => $quiz->id,
                 'quizTitle' => $quiz->title ? $quiz->title : null,
@@ -315,129 +315,129 @@ class QuizzesController extends Controller
         }
     }
 
-public function update($url_name, Request $request, $id)
-{
-    try {
-        $organization = Organization::where('url_name', $url_name)->first();
-        if (!$organization) {
-            return response()->json(['message' => 'Organization not found'], 404);
-        }
-
-        $quiz = Quiz::query()->findOrFail($id);
-        $user = $quiz->creator;
-        $quizQuestionsCount = $quiz->quizQuestions->count();
-
-        $data = $request->all();
-
-        if (!$data) {
-            return response()->json(['message' => 'Invalid or missing data.'], 400);
-        }
-
-        $locale = $data['locale'] ?? getDefaultLocale();
-
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'webinar_id' => 'sometimes|exists:webinars,id',
-            'pass_mark' => 'sometimes|numeric',
-            'display_number_of_questions' => 'sometimes|nullable|between:1,' . $quizQuestionsCount,
-        ]);
-
-        $webinar = null;
-        $chapter = null;
-
-        if (!empty($data['webinar_id'])) {
-            $webinar = Webinar::where('id', $data['webinar_id'])->first();
-
-            if (!empty($webinar) && !empty($data['chapter_id'])) {
-                $chapter = WebinarChapter::where('id', $data['chapter_id'])
-                    ->where('webinar_id', $webinar->id)
-                    ->first();
+    public function update($url_name, Request $request, $id)
+    {
+        try {
+            $organization = Organization::where('url_name', $url_name)->first();
+            if (!$organization) {
+                return response()->json(['message' => 'Organization not found'], 404);
             }
-        }
 
-        $quiz->update([
-            'webinar_id' => !empty($webinar) ? $webinar->id : null,
-            'chapter_id' => !empty($chapter) ? $chapter->id : null,
-            'attempt' => $data['attempt'] ?? $quiz->attempt,
-            'pass_mark' => $data['pass_mark'] ?? $quiz->pass_mark,
-            'time' => $data['time'] ?? $quiz->time,
-            'status' => (!empty($data['status']) && $data['status'] === 'active') ? Quiz::ACTIVE : Quiz::INACTIVE,
-            'certificate' => !empty($data['certificate']),
-            'display_limited_questions' => !empty($data['display_limited_questions']),
-            'display_number_of_questions' => (!empty($data['display_limited_questions']) && !empty($data['display_number_of_questions']))
-                ? $data['display_number_of_questions'] : null,
-            'display_questions_randomly' => !empty($data['display_questions_randomly']),
-            'expiry_days' => (!empty($data['expiry_days']) && $data['expiry_days'] > 0) ? $data['expiry_days'] : null,
-        ]);
+            $quiz = Quiz::query()->findOrFail($id);
+            $user = $quiz->creator;
+            $quizQuestionsCount = $quiz->quizQuestions->count();
 
-        if (isset($data['title']) && trim($data['title']) !== '') {
-            QuizTranslation::updateOrCreate(
-                [
-                    'quiz_id' => $quiz->id,
-                    'locale' => mb_strtolower($locale),
-                ],
-                [
-                    'title' => $data['title'],
-                ]
-            );
-        }
+            $data = $request->all();
 
-        // التعامل مع Chapter Items
-        $checkChapterItem = WebinarChapterItem::where('user_id', $user->id)
-            ->where('item_id', $quiz->id)
-            ->where('type', WebinarChapterItem::$chapterQuiz)
-            ->first();
+            if (!$data) {
+                return response()->json(['message' => 'Invalid or missing data.'], 400);
+            }
 
-        if (!empty($quiz->chapter_id)) {
-            if (empty($checkChapterItem)) {
-                WebinarChapterItem::makeItem($user->id, $quiz->chapter_id, $quiz->id, WebinarChapterItem::$chapterQuiz);
-            } elseif ($checkChapterItem->chapter_id != $quiz->chapter_id) {
+            $locale = $data['locale'] ?? getDefaultLocale();
+
+            $request->validate([
+                'title' => 'required|string|max:255',
+                'webinar_id' => 'sometimes|exists:webinars,id',
+                'pass_mark' => 'sometimes|numeric',
+                'display_number_of_questions' => 'sometimes|nullable|between:1,' . $quizQuestionsCount,
+            ]);
+
+            $webinar = null;
+            $chapter = null;
+
+            if (!empty($data['webinar_id'])) {
+                $webinar = Webinar::where('id', $data['webinar_id'])->first();
+
+                if (!empty($webinar) && !empty($data['chapter_id'])) {
+                    $chapter = WebinarChapter::where('id', $data['chapter_id'])
+                        ->where('webinar_id', $webinar->id)
+                        ->first();
+                }
+            }
+
+            $quiz->update([
+                'webinar_id' => !empty($webinar) ? $webinar->id : null,
+                'chapter_id' => !empty($chapter) ? $chapter->id : null,
+                'attempt' => $data['attempt'] ?? $quiz->attempt,
+                'pass_mark' => $data['pass_mark'] ?? $quiz->pass_mark,
+                'time' => $data['time'] ?? $quiz->time,
+                'status' => (!empty($data['status']) && $data['status'] === 'active') ? Quiz::ACTIVE : Quiz::INACTIVE,
+                'certificate' => !empty($data['certificate']),
+                'display_limited_questions' => !empty($data['display_limited_questions']),
+                'display_number_of_questions' => (!empty($data['display_limited_questions']) && !empty($data['display_number_of_questions']))
+                    ? $data['display_number_of_questions'] : null,
+                'display_questions_randomly' => !empty($data['display_questions_randomly']),
+                'expiry_days' => (!empty($data['expiry_days']) && $data['expiry_days'] > 0) ? $data['expiry_days'] : null,
+            ]);
+
+            if (isset($data['title']) && trim($data['title']) !== '') {
+                QuizTranslation::updateOrCreate(
+                    [
+                        'quiz_id' => $quiz->id,
+                        'locale' => mb_strtolower($locale),
+                    ],
+                    [
+                        'title' => $data['title'],
+                    ]
+                );
+            }
+
+            // التعامل مع Chapter Items
+            $checkChapterItem = WebinarChapterItem::where('user_id', $user->id)
+                ->where('item_id', $quiz->id)
+                ->where('type', WebinarChapterItem::$chapterQuiz)
+                ->first();
+
+            if (!empty($quiz->chapter_id)) {
+                if (empty($checkChapterItem)) {
+                    WebinarChapterItem::makeItem($user->id, $quiz->chapter_id, $quiz->id, WebinarChapterItem::$chapterQuiz);
+                } elseif ($checkChapterItem->chapter_id != $quiz->chapter_id) {
+                    $checkChapterItem->delete();
+                    WebinarChapterItem::makeItem($user->id, $quiz->chapter_id, $quiz->id, WebinarChapterItem::$chapterQuiz);
+                }
+            } else if (!empty($checkChapterItem)) {
                 $checkChapterItem->delete();
-                WebinarChapterItem::makeItem($user->id, $quiz->chapter_id, $quiz->id, WebinarChapterItem::$chapterQuiz);
             }
-        } else if (!empty($checkChapterItem)) {
-            $checkChapterItem->delete();
+
+            removeContentLocale();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Data Updated Successfully'
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            $formattedErrors = [];
+
+            $currentLocale = app()->getLocale();
+
+            foreach ($e->errors() as $field => $messages) {
+                $data = $e->validator->getData();
+                $rules = [$field => $e->validator->getRules()[$field]];
+
+                // Arabic message
+                app()->setLocale('ar');
+                $arValidator = Validator::make($data, $rules);
+                $arMessage = $arValidator->errors()->first($field);
+
+                // English message
+                app()->setLocale('en');
+                $enValidator = Validator::make($data, $rules);
+                $enMessage = $enValidator->errors()->first($field);
+
+                $formattedErrors[$field] = [
+                    'ar' => $arMessage,
+                    'en' => $enMessage
+                ];
+            }
+
+            app()->setLocale($currentLocale);
+
+            return response()->json([
+                'message' => 'Validation failed',
+                'errors' => $formattedErrors
+            ], 422);
         }
-
-        removeContentLocale();
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Data Updated Successfully'
-        ]);
-    } catch (\Illuminate\Validation\ValidationException $e) {
-        $formattedErrors = [];
-
-        $currentLocale = app()->getLocale();
-
-        foreach ($e->errors() as $field => $messages) {
-            $data = $e->validator->getData();
-            $rules = [$field => $e->validator->getRules()[$field]];
-
-            // Arabic message
-            app()->setLocale('ar');
-            $arValidator = Validator::make($data, $rules);
-            $arMessage = $arValidator->errors()->first($field);
-
-            // English message
-            app()->setLocale('en');
-            $enValidator = Validator::make($data, $rules);
-            $enMessage = $enValidator->errors()->first($field);
-
-            $formattedErrors[$field] = [
-                'ar' => $arMessage,
-                'en' => $enMessage
-            ];
-        }
-
-        app()->setLocale($currentLocale);
-
-        return response()->json([
-            'message' => 'Validation failed',
-            'errors' => $formattedErrors
-        ], 422);
     }
-}
 
 
     public function listChaptersByQuiz($url_name, $quiz_id)
