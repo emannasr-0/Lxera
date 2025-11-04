@@ -69,6 +69,7 @@ class ChaptersController extends Controller
     ])->findOrFail($webinarId);
 
     $data = [
+               'Webinar'=>$webinar->id,
         'chapters' => $webinar->chapters
             ->sortBy('order') // Sort chapters by 'order'
             ->values()
