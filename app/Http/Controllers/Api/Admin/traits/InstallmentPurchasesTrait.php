@@ -41,6 +41,7 @@ trait InstallmentPurchasesTrait
             $installmentsTotal = collect($installments)->sum('amount');
 
             return [
+                'order_id' => $order->id,
                 'user' => $order->user->full_name,
                 'userPhone' => $order->user->mobile,
                 'userEmail' => $order->user->email,
