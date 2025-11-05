@@ -15,7 +15,7 @@
             <div class="alert alert-success text-light" style="font-family: cairo, sans-serif; direction: rtl !important; text-align: left; color: #000;">
                 <p  role="alert">
                     {{-- {{ trans('auth.verification_link_has_been_sent_to_your_email') }} --}}
-                    New verification link has been sent to your email address.
+                    New verification link has been sent to your email address
                 </p>
                 <a href="{{ url('/reset-password/' . $token . '?email=' . $email) }}" style="color: #1024dd" >
                     {{-- {{ trans('auth.click_here') }} --}}

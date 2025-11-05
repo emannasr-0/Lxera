@@ -258,6 +258,7 @@
 
         #templateContainer {
             border: 1px solid #cccccc !important;
+            border-radius:0 0 8px 8px;
         }
         a {
             text-decoration: none;
