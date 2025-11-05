@@ -3,7 +3,7 @@
 @section('body')
     <td class="social-title pb-30"
         style="color:#000; font-family: 'IBM Plex Sans', sans-serif; font-size:14px; line-height:22px; text-align:left; padding-bottom:30px;">
-        <div mc:edit="text_33" style="color: #333; direction: rtl !important; padding-right:20px;">
+        <div mc:edit="text_33" style="color: #333; direction: rtl !important; padding:20px;">
 
             <br><br>
             <p style="font-family: cairo, sans-serif; text-align: left; color: #000;">

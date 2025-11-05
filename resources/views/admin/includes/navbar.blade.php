@@ -4,7 +4,7 @@
 
 <div class="navbar-bg"></div>
 
-<nav class="navbar navbar-expand-lg main-navbar">
+<nav class="navbar navbar-expand-lg main-navbar justify-content-between">
 
     <form class="form-inline  mb-0">
         <ul class="navbar-nav mr-3">
