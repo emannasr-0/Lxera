@@ -10,28 +10,151 @@ use Illuminate\Support\Facades\DB;
 
 trait InstallmentOrdersTrait
 {
+
+    //    public function details($url_name,$orderId)
+    //     {
+    //        $organization = Organization::where('url_name', $url_name)->first();
+    //         if (!$organization) {
+    //             return response()->json(['message' => 'Organization not found'], 404);
+    //         }
+    //         $this->authorize('admin_installments_orders');
+
+    //         $order = InstallmentOrder::query()->findOrFail($orderId);
+
+    //         $topStats = $this->getDetailsTopStats($order->user);
+
+    //         $data = [
+    //             'pageTitle' => trans('update.installment_verification') . ' - '.$order->user->full_name,
+    //             'order' => $order,
+    //             'payments' => $order->payments,
+    //             'installment' => $order->selectedInstallment,
+    //             'attachments' => $order->attachments,
+    //             'itemPrice' => $order->getItemPrice(),
+    //         ];
+
+    //         $data = array_merge($data, $topStats);
+
+    //        return response()->json($data);
+    //     }
+
     public function details($url_name, $orderId)
     {
         $organization = Organization::where('url_name', $url_name)->first();
         if (!$organization) {
             return response()->json(['message' => 'Organization not found'], 404);
         }
+
         $this->authorize('admin_installments_orders');
 
-        $order = InstallmentOrder::query()->findOrFail($orderId);
+        $order = InstallmentOrder::query()->with([
+            'user',
+            'payments',
+            'attachments',
+            'selectedInstallment.steps.installmentStep',
+        ])->findOrFail($orderId);
 
         $topStats = $this->getDetailsTopStats($order->user);
 
-        $data = [
-            'pageTitle' => trans('update.installment_verification') . ' - ' . $order->user->full_name,
-            'order' => $order,
-            'payments' => $order->payments,
-            'installment' => $order->selectedInstallment,
-            'attachments' => $order->attachments,
-            'itemPrice' => $order->getItemPrice(),
-        ];
+        $installment = $order->selectedInstallment;
+        $payments = $order->payments->where('status', '!=', 'paying'); // ⛔️ استبعاد دفعات paying
+        $itemPrice = $order->getItemPrice();
 
-        $data = array_merge($data, $topStats);
+        $stepsData = [];
+
+        // 🟢 أولاً: أضف المقدم (upfront) ضمن الأقساط لو موجود
+        if (!empty($installment->upfront)) {
+            $upfrontPayment = $payments->where('type', 'upfront')->first();
+
+            $stepsData[] = [
+                'title' => trans('update.upfront'),
+                'amount' => $installment->getUpfront($itemPrice),
+                'amount_type' => $installment->upfront_type,
+                'amount_value' => $installment->upfront,
+                'due_date' => null,
+                'payment_date' => $upfrontPayment ? dateTimeFormat($upfrontPayment->created_at, 'j M Y H:i') : null,
+                'status' => !empty($upfrontPayment) ? 'Paid' : 'Unpaid',
+
+                'is_overdue' => false,
+                'due_timestamp' => $upfrontPayment ? $upfrontPayment->created_at : 0, // لترتيب المقدم أولاً
+            ];
+        }
+
+        // 🟢 ثانياً: أضف باقي الأقساط
+        if (!empty($installment->steps)) {
+            foreach ($installment->steps as $step) {
+                $stepPayment = $payments
+                    ->where('selected_installment_step_id', $step->id)
+                    ->where('status', 'paid')
+                    ->first();
+
+                if ($installment->deadline_type == 'days') {
+                    $dueAt = $step->deadline * 86400 + ($order->bundle->start_date ?? time());
+                } else {
+                    $dueAt = $step->deadline;
+                }
+
+                $isOverdue = ($dueAt < time() && empty($stepPayment));
+
+                $stepsData[] = [
+                    'title' => $step->installmentStep->title ?? '',
+                    'amount' => $step->getPrice($itemPrice),
+                    'amount_type' => $step->amount_type,
+                    'amount_value' => $step->amount,
+                    'due_date' => dateTimeFormat($dueAt, 'j M Y'),
+                    'payment_date' => $stepPayment ? dateTimeFormat($stepPayment->created_at, 'j M Y H:i') : null,
+                    'status' => !empty($stepPayment) ? 'Paid' : ($isOverdue ? 'Overdue' : 'Unpaid'),
+
+                    'is_overdue' => $isOverdue,
+                    'due_timestamp' => $dueAt,
+                ];
+            }
+        }
+
+        // ✅ ترتيب كل الأقساط (المقدم + باقي الأقساط)
+        $stepsData = collect($stepsData)
+            ->sortBy('due_timestamp')
+            ->values()
+            ->map(function ($step) {
+                unset($step['due_timestamp']);
+                return $step;
+            })
+            ->toArray();
+
+        // تجهيز المرفقات
+        $attachmentsData = [];
+        if (!empty($order->attachments)) {
+            foreach ($order->attachments as $attachment) {
+                $attachmentsData[] = [
+                    'id' => $attachment->id,
+                    'title' => $attachment->title,
+                    'download_url' => getAdminPanelUrl("/financial/installments/orders/{$order->id}/attachments/{$attachment->id}/download"),
+                ];
+            }
+        }
+
+        $data = [
+            'pageTitle' => 'Installment Verification - ' . $order->user->full_name,
+            'order' => [
+                'id' => $order->id,
+                'status' => $order->status,
+                'user' => [
+                    'id' => $order->user->id,
+                    'name' => $order->user->full_name,
+                    'email' => $order->user->email,
+                ],
+            ],
+            'installment' => [
+                'id' => $installment->id,
+                'title' => $installment->title,
+                'upfront' => $installment->upfront,
+                'upfront_type' => $installment->upfront_type,
+                'steps' => $stepsData, // 🟢 كل الأقساط في Array واحدة
+            ],
+            'payments' => $payments->values(), // ❌ بدون paying
+            'attachments' => $attachmentsData,
+            'itemPrice' => $itemPrice,
+            'topStats' => $topStats,
+        ];
 
         return response()->json($data);
     }
@@ -170,9 +293,9 @@ trait InstallmentOrdersTrait
 
         if ($order->status == 'canceled') {
             return response()->json([
-            'status' => false,
-            'msg' => 'This Order has been cancelled'
-        ]);
+                'status' => false,
+                'msg' => 'This Order has been cancelled'
+            ]);
         }
         $order->update([
             'status' => 'canceled'

@@ -519,13 +519,14 @@ if (!$webinar) {
         }
     }
 
-    public function destroy($id)
+    public function destroy($url_name,$id)
     {
         $this->authorize('admin_webinars_edit');
 
         $assignment = WebinarAssignment::where('id', $id)->first();
 
         if (!empty($assignment)) {
+  
             WebinarChapterItem::where('user_id', $assignment->creator_id)
                 ->where('item_id', $assignment->id)
                 ->where('type', WebinarChapterItem::$chapterAssignment)
