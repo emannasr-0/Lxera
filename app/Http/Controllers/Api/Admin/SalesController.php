@@ -93,7 +93,7 @@ class SalesController extends Controller
             $sale->type_label = $this->getSaleTypeLabel($sale);
 
             $statusData = $this->getSaleStatusLabel($sale);
-            $sale->discout_percent = $sale->discount>0 ? '('.$sale->order->orderItems[0]->getDiscount->percent . '%)' ?? ''  : '';
+            $sale->discout_percent = $sale->discount > 0 ? '(' . $sale->order->orderItems[0]->getDiscount->percent . '%)' ?? ''  : '';
             $sale->status_label = $statusData['status'];
             $sale->status_color = $statusData['color'];
             $sale->refund_reason = $statusData['refund_reason'];
@@ -474,23 +474,47 @@ class SalesController extends Controller
         return trans('update.' . $sale->type);
     }
 
+    // private function getSaleStatusLabel($sale)
+    // {
+    //     if (!empty($sale->refund_at)) {
+    //         return [
+    //             'status' => trans('admin/main.refund'),
+    //             'color' => 'warning',
+    //             'refund_reason' => $sale->message ?? null
+    //         ];
+    //     } elseif (!$sale->access_to_purchased_item) {
+    //         return [
+    //             'status' => trans('update.access_blocked'),
+    //             'color' => 'danger',
+    //             'refund_reason' => null
+    //         ];
+    //     } else {
+    //         return [
+    //             'status' => trans('admin/main.success'),
+    //             'color' => 'success',
+    //             'refund_reason' => null
+    //         ];
+    //     }
+    // }
     private function getSaleStatusLabel($sale)
     {
+        $isApi = request()->expectsJson(); // true لو الطلب من API
+
         if (!empty($sale->refund_at)) {
             return [
-                'status' => trans('admin/main.refund'),
+                'status' => $isApi ? 'Refunded' : trans('admin/main.refund'),
                 'color' => 'warning',
                 'refund_reason' => $sale->message ?? null
             ];
         } elseif (!$sale->access_to_purchased_item) {
             return [
-                'status' => trans('update.access_blocked'),
+                'status' => $isApi ? 'Access Blocked' : trans('update.access_blocked'),
                 'color' => 'danger',
                 'refund_reason' => null
             ];
         } else {
             return [
-                'status' => trans('admin/main.success'),
+                'status' => $isApi ? 'Success' : trans('admin/main.success'),
                 'color' => 'success',
                 'refund_reason' => null
             ];
