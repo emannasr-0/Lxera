@@ -45,13 +45,13 @@ class DiscountController extends Controller
                 'code' => $discount->code,
 
                 'discount_type' => $discount->discount_type == \App\Models\Discount::$discountTypeFixedAmount
-                    ? trans('update.fixed_amount')
-                    : trans('admin/main.percentage'),
+    ? 'Fixed Amount'
+    : 'Percentage',
 
+'user_type' => $discount->user_type == 'all_users'
+    ? 'All Users'
+    : ($discount->discountUsers->user->full_name ?? '-'),
 
-                'user_type' => $discount->user_type == 'all_users'
-                    ? trans('admin/main.all_users')
-                    : ($discount->discountUsers->user->full_name ?? '-'),
 
 
                 'created_at' => dateTimeFormat($discount->created_at, 'Y M d'),
@@ -59,9 +59,8 @@ class DiscountController extends Controller
 
                 'expired_at' => dateTimeFormat($discount->expired_at, 'Y M d - H:i'),
 
-                'status' => $discount->expired_at < time()
-                    ? trans('panel.expired')
-                    : trans('admin/main.active'),
+             'status' => $discount->expired_at < time() ? 'Expired' : 'Active',
+
 
                 'count' => $discount->count,
                 'remain' => $discount->discountRemain(),
