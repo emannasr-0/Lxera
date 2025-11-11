@@ -403,6 +403,7 @@ class QuizzesController extends Controller
 
             return response()->json([
                 'status' => 'success',
+                      "data" => $quiz,
                 'message' => 'Data Updated Successfully'
             ]);
         } catch (\Illuminate\Validation\ValidationException $e) {

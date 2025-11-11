@@ -17,6 +17,23 @@ Route::prefix('{url_name}')->group(function () {
             Route::get('/', [NotificationsController::class, 'list']);
             Route::post('/{id}/seen', [NotificationsController::class, 'seen'])->name('notifications.seen');
         });
+
+
+
+        Route::group(['prefix' => 'setting'], function () {
+            Route::get('/step/{step?}', 'UsersController@setting');
+            Route::get('/', 'UsersController@setting');
+            Route::post('/', 'UsersController@update');
+            Route::post('/metas', 'UsersController@storeMetas');
+            Route::post('metas/{meta_id}/update', 'UsersController@updateMeta');
+            Route::get('metas/{meta_id}/delete', 'UsersController@deleteMeta');
+            Route::post('/references', 'UsersController@storeReference');
+            Route::post('references/{reference_id}/update', 'UsersController@updateReference');
+            Route::get('references/{reference_id}/delete', 'UsersController@deleteReference');
+            Route::get('/deleteAccount', 'UsersController@deleteAccount');
+        });
+
+
         Route::group(['prefix' => 'webinars', 'middleware' => 'can:student_showClasses'], function () {
             Route::group(['middleware' => 'user.not.access'], function () {
                 Route::get('/', [WebinarController::class, 'index']);

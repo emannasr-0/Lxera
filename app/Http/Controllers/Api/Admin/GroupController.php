@@ -24,9 +24,16 @@ class GroupController extends Controller
             $groups = $groups->where('name', 'like', '%' . $filters['group_name'] . '%');
         }
 
+        // لو مافيش 'page' في ال request => رجّع الكل
+        if (!$request->has('page')) {
+            $groups = $groups->get();
+        } else {
+            $groups = $groups->paginate(10);
+        }
+
         $data = [
             'pageTitle' => trans('admin/pages/groups.group_list_page_title'),
-            'groups' => $groups->paginate(10),
+            'groups' => $groups,
             'group_name' => $filters['group_name'] ?? '',
         ];
 
