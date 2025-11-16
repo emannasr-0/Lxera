@@ -196,6 +196,7 @@ class PrerequisiteController extends Controller
 
         return response()->json([
             'code' => 200,
+            'prerequisite' => $prerequisite,
         ], 200);
     }
     public function destroyPrerequisite($url_name, Request $request, $id)
