@@ -29,7 +29,7 @@
     <script src="https://sdk.mercadopago.com/js/v2"></script>
 </head>
 <body>
-<div class="cho-container"style="display: none;"></div>
+<div class=" js-font-resize cho-container"style="display: none;"></div>
 <br>
 <br>
 

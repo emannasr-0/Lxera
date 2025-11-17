@@ -82,13 +82,13 @@
     </style>
 
 
-    <div class="login-container p-3 p-lg-5 m-md-3 bg-secondary-acadima border-radius-lg shadow border">
-        <div class="col-7 col-md-7 p-0 mb-0 mb-lg-5 mt-3 mt-md-auto mx-auto d-flex flex-column align-items-center">
-            <img src="{{ asset('store/Acadima/logo2.webp') }}" alt="logo" width="80%" class="">
+    <div class=" js-font-resize login-container p-3 p-lg-5 m-md-3 bg-secondary-acadima border-radius-lg shadow border">
+        <div class=" js-font-resize col-7 col-md-7 p-0 mb-0 mb-lg-5 mt-3 mt-md-auto mx-auto d-flex flex-column align-items-center">
+            <img src="{{ asset('store/Acadima/logo2.webp') }}" alt="logo" width="80%" class=" js-font-resize ">
             
         </div>
 
-        <h1 class="font-20 font-weight-bold mt-3 ltr" style="display: flex; align-items: center; gap: 8px;">
+        <h1 class=" js-font-resize font-20 font-weight-bold mt-3 ltr" style="display: flex; align-items: center; gap: 8px;">
                     <svg width="34" height="29" viewBox="0 0 34 29"   fill="none"
                     xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -99,50 +99,50 @@
                   Forgot Password
             </h1>
 
-        <div class="col-12 p-0">
-            <div class="login-card">
-                <form method="post" action="/forget-password" class="mt-35">
+        <div class=" js-font-resize col-12 p-0">
+            <div class=" js-font-resize login-card">
+                <form method="post" action="/forget-password" class=" js-font-resize mt-35">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                     @if ($registerMethod == 'mobile')
-                        <div class="d-flex align-items-center wizard-custom-radio mb-20">
-                            <div class="wizard-custom-radio-item flex-grow-1">
-                                <input type="radio" name="type" value="email" id="emailType" class=""
+                        <div class=" js-font-resize d-flex align-items-center wizard-custom-radio mb-20">
+                            <div class=" js-font-resize wizard-custom-radio-item flex-grow-1">
+                                <input type="radio" name="type" value="email" id="emailType" class=" js-font-resize "
                                     {{ (empty(old('type')) or old('type') == 'email') ? 'checked' : '' }}>
-                                <label class="font-12 cursor-pointer px-15 py-10"
+                                <label class=" js-font-resize font-12 cursor-pointer px-15 py-10"
                                     for="emailType">
                                     {{ trans('public.email') }}
                                 </label>
                             </div>
 
-                            <div class="wizard-custom-radio-item flex-grow-1">
-                                <input type="radio" name="type" value="mobile" id="mobileType" class=""
+                            <div class=" js-font-resize wizard-custom-radio-item flex-grow-1">
+                                <input type="radio" name="type" value="mobile" id="mobileType" class=" js-font-resize "
                                     {{ old('type') == 'mobile' ? 'checked' : '' }}>
-                                <label class="font-12 cursor-pointer px-15 py-10"
+                                <label class=" js-font-resize font-12 cursor-pointer px-15 py-10"
                                     for="mobileType">{{ trans('public.mobile') }}</label>
                             </div>
                         </div>
                     @endif
 
-                    <div class="js-email-fields form-group {{ old('type') == 'mobile' ? 'd-none' : '' }} ltr" >
-                        <!-- <label class="input-label text-light" for="email">
+                    <div class=" js-font-resize js-email-fields form-group {{ old('type') == 'mobile' ? 'd-none' : '' }} ltr" >
+                        <!-- <label class=" js-font-resize input-label text-light" for="email">
                             {{ trans('public.email') }}:
                         </label> -->
-                        <div class="border-radius-lg input-size form-control input-flex">
-                            <img src="{{ asset('store/Images/Registration/Mail.svg') }}" alt="Mail" class="mb-1">
-                            <input name="email" type="email" class="form-control @error('email') is-invalid @enderror border-none"
+                        <div class=" js-font-resize border-radius-lg input-size form-control input-flex">
+                            <img src="{{ asset('store/Images/Registration/Mail.svg') }}" alt="Mail" class=" js-font-resize mb-1">
+                            <input name="email" type="email" class=" js-font-resize form-control @error('email') is-invalid @enderror border-none"
                                 id="email" value="{{ old('email') }}" aria-describedby="emailHelp" placeholder="Email">
                         </div>
 
                         @error('email')
-                            <div class="invalid-feedback">
+                            <div class=" js-font-resize invalid-feedback">
                                 {{ $message }}
                             </div>
                         @enderror
                     </div>
 
                     @if ($registerMethod == 'mobile')
-                        <div class="js-mobile-fields {{ old('type') == 'mobile' ? '' : 'd-none' }}">
+                        <div class=" js-font-resize js-mobile-fields {{ old('type') == 'mobile' ? '' : 'd-none' }}">
                             @include('web.default.auth.register_includes.mobile_field')
                         </div>
                     @endif
@@ -153,20 +153,20 @@
 
 
                     <button type="submit"
-                        class="btn bg-button-acadima btn-block mt-20 cs-btn btn-border-radius mr-auto">
+                        class=" js-font-resize btn bg-button-acadima btn-block mt-20 cs-btn btn-border-radius mr-auto">
                         <!-- {{ trans('auth.reset_password') }} -->
                           Reset Password
                     </button>
                 </form>
 
-                <div class="text-center mt-20">
+                <div class=" js-font-resize text-center mt-20">
                     <span
-                        class=" text-dark d-inline-flex align-items-center justify-content-center">or</span>
+                        class=" js-font-resize  text-dark d-inline-flex align-items-center justify-content-center">or</span>
                 </div>
 
-                <div class="text-center mt-1">
-                    <span class="text-secondary">
-                        <a href="/login" class="text-pink font-weight-bold">
+                <div class=" js-font-resize text-center mt-1">
+                    <span class=" js-font-resize text-secondary">
+                        <a href="/login" class=" js-font-resize text-pink font-weight-bold">
                             <!-- {{ trans('auth.login') }} -->
                               Login
                         </a>

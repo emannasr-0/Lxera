@@ -89,73 +89,73 @@
     margin-bottom: 30px;
 }
 </style>
-<div class="">
+<div class=" js-font-resize ">
 
-<div class="col-12 px-0">
-    <div class="mb-10 bg-secondary-acadima rounded-sm pb-10 shadow border">
-        <div class="card-header">                                
-            <div class="row align-items-center">
-                <div class="col-8">
-                    <h5 class="card-title mb-0 text-pink">{{trans('panel.important_files')}}</h5>
+<div class=" js-font-resize col-12 px-0">
+    <div class=" js-font-resize mb-10 bg-secondary-acadima rounded-sm pb-10 shadow border">
+        <div class=" js-font-resize card-header">                                
+            <div class=" js-font-resize row align-items-center">
+                <div class=" js-font-resize col-8">
+                    <h5 class=" js-font-resize card-title mb-0 text-pink">{{trans('panel.important_files')}}</h5>
                 </div>
-                <div class="col-4">
-                    <ul class="list-inline-group text-right mb-1 pl-0">
-                        <li class="list-inline-item mr-0 font-12"><i class="feather icon-more-vertical- font-20 text-primary"></i></li>
+                <div class=" js-font-resize col-4">
+                    <ul class=" js-font-resize list-inline-group text-right mb-1 pl-0">
+                        <li class=" js-font-resize list-inline-item mr-0 font-12"><i class=" js-font-resize feather icon-more-vertical- font-20 text-primary"></i></li>
                     </ul>                                        
                 </div>
             </div>
         </div>
-        <div class="card-body pt-10 px-10">
-            <div class="product-file-type">
-                <ul class="list-unstyled">
-                    <li class="media mb-3">
-                        <span class="mx-2 align-self-center img-icon danger-rgba text-danger">.pdf</span>
-                        <div class="media-body">
+        <div class=" js-font-resize card-body pt-10 px-10">
+            <div class=" js-font-resize product-file-type">
+                <ul class=" js-font-resize list-unstyled">
+                    <li class=" js-font-resize media mb-3">
+                        <span class=" js-font-resize mx-2 align-self-center img-icon danger-rgba text-danger">.pdf</span>
+                        <div class=" js-font-resize media-body">
                        <a href="https://lms.anasacademy.uk/store/1162/%D9%85%D9%84%D9%81%D8%A7%D8%AA%20%D8%B4%D8%B1%D8%AD%20%D8%A7%D9%84%D8%A8%D8%B1%D8%A7%D9%85%D8%AC/Microsoft%20Teams%20Arabic.pdf"
                            target="_blank">
-                           <h5 class="font-16 mb-1 text-dark">Microsoft Teams Arabic<i class="feather icon-download-cloud float-right"></i></h5>
+                           <h5 class=" js-font-resize font-16 mb-1 text-dark">Microsoft Teams Arabic<i class=" js-font-resize feather icon-download-cloud float-right"></i></h5>
                        </a>
                         </div>
                     </li>
-                    <li class="media mb-3">
-                        <span class="mx-2 align-self-center img-icon danger-rgba text-danger">.pdf</span>
-                        <div class="media-body">
+                    <li class=" js-font-resize media mb-3">
+                        <span class=" js-font-resize mx-2 align-self-center img-icon danger-rgba text-danger">.pdf</span>
+                        <div class=" js-font-resize media-body">
                             <a href="https://lms.anasacademy.uk/store/1162/%D9%85%D9%84%D9%81%D8%A7%D8%AA%20%D8%B4%D8%B1%D8%AD%20%D8%A7%D9%84%D8%A8%D8%B1%D8%A7%D9%85%D8%AC/Microsoft%20Teams%20English.pdf"
                            target="_blank">
-                        <h5 class="font-16 mb-1 text-dark">Microsoft Teams English<i class="feather icon-download-cloud float-right"></i></h5>
+                        <h5 class=" js-font-resize font-16 mb-1 text-dark">Microsoft Teams English<i class=" js-font-resize feather icon-download-cloud float-right"></i></h5>
                             </a>
                         </div>
                     </li>
-                    <li class="media mb-3">
-                        <span class="mx-2 align-self-center img-icon danger-rgba text-danger">.pdf</span>
-                        <div class="media-body">
+                    <li class=" js-font-resize media mb-3">
+                        <span class=" js-font-resize mx-2 align-self-center img-icon danger-rgba text-danger">.pdf</span>
+                        <div class=" js-font-resize media-body">
                              <a href="https://lms.anasacademy.uk/store/1162/%D9%85%D9%84%D9%81%D8%A7%D8%AA%20%D8%B4%D8%B1%D8%AD%20%D8%A7%D9%84%D8%A8%D8%B1%D8%A7%D9%85%D8%AC/Outlook%20Arabic.pdf"
                            target="_blank">
-                        <h5 class="font-16 mb-1 text-dark">Outlook Arabic<i class="feather icon-download-cloud float-right"></i></h5></a>
+                        <h5 class=" js-font-resize font-16 mb-1 text-dark">Outlook Arabic<i class=" js-font-resize feather icon-download-cloud float-right"></i></h5></a>
                         </div>
                     </li>
-                    <li class="media mb-3">
-                        <span class="mx-2 align-self-center img-icon danger-rgba text-danger">.pdf</span>
-                        <div class="media-body">
+                    <li class=" js-font-resize media mb-3">
+                        <span class=" js-font-resize mx-2 align-self-center img-icon danger-rgba text-danger">.pdf</span>
+                        <div class=" js-font-resize media-body">
                              <a href="https://lms.anasacademy.uk/store/1162/%D9%85%D9%84%D9%81%D8%A7%D8%AA%20%D8%B4%D8%B1%D8%AD%20%D8%A7%D9%84%D8%A8%D8%B1%D8%A7%D9%85%D8%AC/Outlook%20English.pdf"
                            target="_blank">
-                        <h5 class="font-16 mb-1 text-dark">Outlook English<i class="feather icon-download-cloud float-right"></i></h5></a>
+                        <h5 class=" js-font-resize font-16 mb-1 text-dark">Outlook English<i class=" js-font-resize feather icon-download-cloud float-right"></i></h5></a>
                         </div>
                     </li>
-                     <li class="media mb-3">
-                        <span class="mx-2 align-self-center img-icon danger-rgba text-danger">.pdf</span>
-                        <div class="media-body">
+                     <li class=" js-font-resize media mb-3">
+                        <span class=" js-font-resize mx-2 align-self-center img-icon danger-rgba text-danger">.pdf</span>
+                        <div class=" js-font-resize media-body">
                              <a href="https://lms.anasacademy.uk/store/1162/%D9%85%D9%84%D9%81%D8%A7%D8%AA%20%D8%B4%D8%B1%D8%AD%20%D8%A7%D9%84%D8%A8%D8%B1%D8%A7%D9%85%D8%AC/OneDrive%20English.pdf"
                            target="_blank">
-                        <h5 class="font-16 mb-1 text-dark">OneDrive English<i class="feather icon-download-cloud float-right"></i></h5></a>
+                        <h5 class=" js-font-resize font-16 mb-1 text-dark">OneDrive English<i class=" js-font-resize feather icon-download-cloud float-right"></i></h5></a>
                         </div>
                     </li>
-                     <li class="media">
-                        <span class="mx-2 align-self-center img-icon danger-rgba text-danger">.pdf</span>
-                        <div class="media-body">
+                     <li class=" js-font-resize media">
+                        <span class=" js-font-resize mx-2 align-self-center img-icon danger-rgba text-danger">.pdf</span>
+                        <div class=" js-font-resize media-body">
                              <a href="https://lms.anasacademy.uk/store/1162/%D9%85%D9%84%D9%81%D8%A7%D8%AA%20%D8%B4%D8%B1%D8%AD%20%D8%A7%D9%84%D8%A8%D8%B1%D8%A7%D9%85%D8%AC/OneDrive%20Arabic.pdf"
                            target="_blank">
-                        <h5 class="font-16 mb-1 text-dark">OneDrive Arabic<i class="feather icon-download-cloud float-right"></i></h5></a>
+                        <h5 class=" js-font-resize font-16 mb-1 text-dark">OneDrive Arabic<i class=" js-font-resize feather icon-download-cloud float-right"></i></h5></a>
                         </div>
                     </li>
                 </ul>

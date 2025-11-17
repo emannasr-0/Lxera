@@ -1,43 +1,43 @@
-<div class="tab-pane mt-3 fade" id="purchased_bundles" role="tabpanel" aria-labelledby="purchased_bundles-tab">
-    <div class="row">
+<div class=" js-font-resize tab-pane mt-3 fade" id="purchased_bundles" role="tabpanel" aria-labelledby="purchased_bundles-tab">
+    <div class=" js-font-resize row">
 
         @can('admin_enrollment_add_student_to_items')
-            <div class="col-12 col-md-6">
-                <h5 class="section-title after-line">{{ trans('update.add_student_to_bundle') }}</h5>
+            <div class=" js-font-resize col-12 col-md-6">
+                <h5 class=" js-font-resize section-title after-line">{{ trans('update.add_student_to_bundle') }}</h5>
 
                 <form action="{{ getAdminPanelUrl() }}/enrollments/store" method="Post">
 
                     <input type="hidden" name="user_id" value="{{ $user->id }}">
 
-                    <div class="form-group">
-                        <label class="input-label">{{trans('update.bundle')}}</label>
-                        <select name="bundle_id" class="form-control search-bundle-select2"
+                    <div class=" js-font-resize form-group">
+                        <label class=" js-font-resize input-label">{{trans('update.bundle')}}</label>
+                        <select name="bundle_id" class=" js-font-resize form-control search-bundle-select2"
                                 data-placeholder="{{ trans('update.search_bundle') }}">
 
                         </select>
-                        <div class="invalid-feedback"></div>
+                        <div class=" js-font-resize invalid-feedback"></div>
                     </div>
 
-                    <div class=" mt-4">
-                        <button type="button" class="js-save-manual-add btn btn-primary">{{ trans('admin/main.submit') }}</button>
+                    <div class=" js-font-resize  mt-4">
+                        <button type="button" class=" js-font-resize js-save-manual-add btn btn-primary">{{ trans('admin/main.submit') }}</button>
                     </div>
                 </form>
             </div>
         @endcan
 
-        <div class="col-12">
-            <div class="mt-5">
-                <h5 class="section-title after-line">{{ trans('update.manual_added_bundles') }}</h5>
+        <div class=" js-font-resize col-12">
+            <div class=" js-font-resize mt-5">
+                <h5 class=" js-font-resize section-title after-line">{{ trans('update.manual_added_bundles') }}</h5>
 
-                <div class="table-responsive mt-3">
-                    <table class="table table-striped table-md">
+                <div class=" js-font-resize table-responsive mt-3">
+                    <table class=" js-font-resize table table-striped table-md">
                         <tr>
                             <th>{{trans('update.bundle')}}</th>
                             <th>{{ trans('admin/main.type') }}</th>
                             <th>{{ trans('admin/main.price') }}</th>
                             <th>{{ trans('admin/main.instructor') }}</th>
-                            <th class="text-center">{{ trans('update.added_date') }}</th>
-                            <th class="text-right">{{ trans('admin/main.actions') }}</th>
+                            <th class=" js-font-resize text-center">{{ trans('update.added_date') }}</th>
+                            <th class=" js-font-resize text-right">{{ trans('admin/main.actions') }}</th>
                         </tr>
 
                         @if(!empty($manualAddedBundles))
@@ -45,7 +45,7 @@
 
                                 <tr>
                                     <td width="25%">
-                                        <a href="{{ !empty($manualAddedBundle->bundle) ? $manualAddedBundle->bundle->getUrl() : '#1' }}" target="_blank" class="">{{ !empty($manualAddedBundle->bundle) ? $manualAddedBundle->bundle->title : trans('update.deleted_item') }}</a>
+                                        <a href="{{ !empty($manualAddedBundle->bundle) ? $manualAddedBundle->bundle->getUrl() : '#1' }}" target="_blank" class=" js-font-resize ">{{ !empty($manualAddedBundle->bundle) ? $manualAddedBundle->bundle->title : trans('update.deleted_item') }}</a>
                                     </td>
 
                                     <td>
@@ -70,8 +70,8 @@
                                         @endif
                                     </td>
 
-                                    <td class="text-center">{{ dateTimeFormat($manualAddedBundle->created_at,'j M Y | H:i') }}</td>
-                                    <td class="text-right">
+                                    <td class=" js-font-resize text-center">{{ dateTimeFormat($manualAddedBundle->created_at,'j M Y | H:i') }}</td>
+                                    <td class=" js-font-resize text-right">
                                         @can('admin_enrollment_block_access')
                                             @include('admin.includes.delete_button',[
                                                     'url' => getAdminPanelUrl().'/enrollments/'. $manualAddedBundle->id .'/block-access',
@@ -84,24 +84,24 @@
                             @endforeach
                         @endif
                     </table>
-                    <p class="font-12 text-gray mt-1 mb-0">{{ trans('update.manual_add_hint') }}</p>
+                    <p class=" js-font-resize font-12 text-gray mt-1 mb-0">{{ trans('update.manual_add_hint') }}</p>
                 </div>
             </div>
         </div>
 
 
-        <div class="col-12">
-            <div class="mt-5">
-                <h5 class="section-title after-line">{{ trans('update.manual_disabled_bundles') }}</h5>
+        <div class=" js-font-resize col-12">
+            <div class=" js-font-resize mt-5">
+                <h5 class=" js-font-resize section-title after-line">{{ trans('update.manual_disabled_bundles') }}</h5>
 
-                <div class="table-responsive mt-3">
-                    <table class="table table-striped table-md">
+                <div class=" js-font-resize table-responsive mt-3">
+                    <table class=" js-font-resize table table-striped table-md">
                         <tr>
                             <th>{{trans('update.bundle')}}</th>
                             <th>{{ trans('admin/main.type') }}</th>
                             <th>{{ trans('admin/main.price') }}</th>
                             <th>{{ trans('admin/main.instructor') }}</th>
-                            <th class="text-right">{{ trans('admin/main.actions') }}</th>
+                            <th class=" js-font-resize text-right">{{ trans('admin/main.actions') }}</th>
                         </tr>
 
                         @if(!empty($manualDisabledBundles))
@@ -109,7 +109,7 @@
 
                                 <tr>
                                     <td width="25%">
-                                        <a href="{{ !empty($manualDisabledBundle->bundle) ? $manualDisabledBundle->bundle->getUrl() : '#1' }}" target="_blank" class="">{{ !empty($manualDisabledBundle->bundle) ? $manualDisabledBundle->bundle->title : trans('update.deleted_item') }}</a>
+                                        <a href="{{ !empty($manualDisabledBundle->bundle) ? $manualDisabledBundle->bundle->getUrl() : '#1' }}" target="_blank" class=" js-font-resize ">{{ !empty($manualDisabledBundle->bundle) ? $manualDisabledBundle->bundle->title : trans('update.deleted_item') }}</a>
                                     </td>
 
                                     <td>
@@ -134,7 +134,7 @@
                                         @endif
                                     </td>
 
-                                    <td class="text-right">
+                                    <td class=" js-font-resize text-right">
                                         @can('admin_enrollment_block_access')
                                             @include('admin.includes.delete_button',[
                                                     'url' => getAdminPanelUrl().'/enrollments/'. $manualDisabledBundle->id .'/enable-access',
@@ -146,24 +146,24 @@
                             @endforeach
                         @endif
                     </table>
-                    <p class="font-12 text-gray mt-1 mb-0">{{ trans('update.manual_remove_hint') }}</p>
+                    <p class=" js-font-resize font-12 text-gray mt-1 mb-0">{{ trans('update.manual_remove_hint') }}</p>
                 </div>
             </div>
         </div>
 
 
-        <div class="col-12">
-            <div class="mt-5">
-                <h5 class="section-title after-line">{{ trans('panel.purchased') }}</h5>
+        <div class=" js-font-resize col-12">
+            <div class=" js-font-resize mt-5">
+                <h5 class=" js-font-resize section-title after-line">{{ trans('panel.purchased') }}</h5>
 
-                <div class="table-responsive mt-3">
-                    <table class="table table-striped table-md">
+                <div class=" js-font-resize table-responsive mt-3">
+                    <table class=" js-font-resize table table-striped table-md">
                         <tr>
                             <th>{{trans('update.bundle')}}</th>
                             <th>{{ trans('admin/main.type') }}</th>
                             <th>{{ trans('admin/main.price') }}</th>
                             <th>{{ trans('admin/main.instructor') }}</th>
-                            <th class="text-center">{{ trans('panel.purchase_date') }}</th>
+                            <th class=" js-font-resize text-center">{{ trans('panel.purchase_date') }}</th>
                             <th>{{ trans('admin/main.actions') }}</th>
                         </tr>
 
@@ -172,7 +172,7 @@
 
                                 <tr>
                                     <td width="25%">
-                                        <a href="{{ !empty($purchasedBundle->bundle) ? $purchasedBundle->bundle->getUrl() : '#1' }}" target="_blank" class="">{{ !empty($purchasedBundle->bundle) ? $purchasedBundle->bundle->title : trans('update.deleted_item') }}</a>
+                                        <a href="{{ !empty($purchasedBundle->bundle) ? $purchasedBundle->bundle->getUrl() : '#1' }}" target="_blank" class=" js-font-resize ">{{ !empty($purchasedBundle->bundle) ? $purchasedBundle->bundle->title : trans('update.deleted_item') }}</a>
                                     </td>
 
                                     <td>
@@ -197,8 +197,8 @@
                                         @endif
                                     </td>
 
-                                    <td class="text-center">{{ dateTimeFormat($purchasedBundle->created_at,'j M Y | H:i') }}</td>
-                                    <td class="text-right">
+                                    <td class=" js-font-resize text-center">{{ dateTimeFormat($purchasedBundle->created_at,'j M Y | H:i') }}</td>
+                                    <td class=" js-font-resize text-right">
                                         @can('admin_enrollment_block_access')
                                             @include('admin.includes.delete_button',[
                                                     'url' => getAdminPanelUrl().'/enrollments/'. $purchasedBundle->id .'/block-access',
@@ -211,7 +211,7 @@
                             @endforeach
                         @endif
                     </table>
-                    <p class="font-12 text-gray mt-1 mb-0">{{ trans('update.purchased_hint') }}</p>
+                    <p class=" js-font-resize font-12 text-gray mt-1 mb-0">{{ trans('update.purchased_hint') }}</p>
                 </div>
             </div>
         </div>

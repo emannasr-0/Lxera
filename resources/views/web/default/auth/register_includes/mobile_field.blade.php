@@ -5,11 +5,11 @@
         border-radius: 20px !important;
     }
 </style>
-<div class="row">
-    <!--<div class="col-5">-->
-    <!--    <div class="form-group">-->
-    <!--        <label class="input-label" for="mobile">{{ trans('auth.country') }}:</label>-->
-    <!--        <select name="country_code" class="form-control select2">-->
+<div class=" js-font-resize row">
+    <!--<div class=" js-font-resize col-5">-->
+    <!--    <div class=" js-font-resize form-group">-->
+    <!--        <label class=" js-font-resize input-label" for="mobile">{{ trans('auth.country') }}:</label>-->
+    <!--        <select name="country_code" class=" js-font-resize form-control select2">-->
     <!--            @foreach (getCountriesMobileCode() as $country => $code)
 -->
     <!--                <option value="{{ $code }}" @if ($code == old('country_code')) selected @endif>{{ $country }}</option>-->
@@ -19,7 +19,7 @@
 
     <!--        @error('mobile')
 -->
-        <!--        <div class="invalid-feedback">-->
+        <!--        <div class=" js-font-resize invalid-feedback">-->
         <!--            {{ $message }}-->
         <!--        </div>-->
         <!--
@@ -27,24 +27,24 @@
     <!--    </div>-->
     <!--</div>-->
 
-    <div class="col-12">
-        <div class="form-group ltr">
-            <!--<input name="mobile" type="text" class="form-control @error('mobile') is-invalid @enderror"-->
+    <div class=" js-font-resize col-12">
+        <div class=" js-font-resize form-group ltr">
+            <!--<input name="mobile" type="text" class=" js-font-resize form-control @error('mobile') is-invalid @enderror"-->
             <!--       value="{{ old('mobile') }}" id="mobile" aria-describedby="mobileHelp">-->
 
 
 
-            <div class="mb-3 ">
-                <!-- <label class="input-label d-block" for="mobile">{{ trans('auth.mobile') }}
+            <div class=" js-font-resize mb-3 ">
+                <!-- <label class=" js-font-resize input-label d-block" for="mobile">{{ trans('auth.mobile') }}
                     {{ !empty($optional) ? '(' . trans('public.optional') . ')' : '' }}*</label> -->
                 <!-- Phone number input field -->
-                <input type="hidden" name="country_code" id="code" class="text-dark"> 
+                <input type="hidden" name="country_code" id="code" class=" js-font-resize text-dark"> 
 
-                <div class="border-radius-lg input-size form-control input-flex">
-                <img src="{{ asset('store/Images/Registration/Mobile.svg') }}" alt="Mail" class="mb-1">
+                <div class=" js-font-resize border-radius-lg input-size form-control input-flex">
+                <img src="{{ asset('store/Images/Registration/Mobile.svg') }}" alt="Mail" class=" js-font-resize mb-1">
 
                 <input type="tel" id="phone" name="mobile" value="{{ old('mobile') }}"
-                    aria-describedby="mobileHelp" class="form-control @error('mobile') is-invalid @enderror border-none"
+                    aria-describedby="mobileHelp" class=" js-font-resize form-control @error('mobile') is-invalid @enderror border-none"
                     placeholder="Mobile Phone">
                     </div>
 
@@ -52,7 +52,7 @@
 
 
             @error('mobile')
-                <div class="invalid-feedback d-block">
+                <div class=" js-font-resize invalid-feedback d-block">
                     {{ $message }}
                 </div>
             @enderror

@@ -5,24 +5,24 @@
 @endpush
 
 @section('content')
-    <section class="cart-banner position-relative text-center">
-        <h1 class="font-30 text-white font-weight-bold">{{ trans('cart.checkout') }}</h1>
-        <span class="payment-hint font-20 text-white d-block">{{ handlePrice($total) . ' ' .  trans('cart.for_items',['count' => $count]) }}</span>
+    <section class=" js-font-resize cart-banner position-relative text-center">
+        <h1 class=" js-font-resize font-30 text-white font-weight-bold">{{ trans('cart.checkout') }}</h1>
+        <span class=" js-font-resize payment-hint font-20 text-white d-block">{{ handlePrice($total) . ' ' .  trans('cart.for_items',['count' => $count]) }}</span>
     </section>
 
-    <section class="container mt-45">
+    <section class=" js-font-resize container mt-45">
 
 
         @if(!empty($totalCashbackAmount))
 
-            <div class="d-flex align-items-center mb-25 p-15 success-transparent-alert">
-                <div class="success-transparent-alert__icon d-flex align-items-center justify-content-center">
-                    <i data-feather="credit-card" width="18" height="18" class=""></i>
+            <div class=" js-font-resize d-flex align-items-center mb-25 p-15 success-transparent-alert">
+                <div class=" js-font-resize success-transparent-alert__icon d-flex align-items-center justify-content-center">
+                    <i data-feather="credit-card" width="18" height="18" class=" js-font-resize "></i>
                 </div>
 
-                <div class="ml-10">
-                    <div class="font-14 font-weight-bold ">{{ trans('update.get_cashback') }}</div>
-                    <div class="font-12 ">{{ trans('update.by_purchasing_this_cart_you_will_get_amount_as_cashback',['amount' => handlePrice($totalCashbackAmount)]) }}</div>
+                <div class=" js-font-resize ml-10">
+                    <div class=" js-font-resize font-14 font-weight-bold ">{{ trans('update.get_cashback') }}</div>
+                    <div class=" js-font-resize font-12 ">{{ trans('update.by_purchasing_this_cart_you_will_get_amount_as_cashback',['amount' => handlePrice($totalCashbackAmount)]) }}</div>
                 </div>
             </div>
         @endif
@@ -33,24 +33,24 @@
             $invalidChannels = [];
         @endphp
 
-        <h2 class="section-title">{{ trans('financial.select_a_payment_gateway') }}</h2>
+        <h2 class=" js-font-resize section-title">{{ trans('financial.select_a_payment_gateway') }}</h2>
 
-        <form action="/payments/payment-request" method="post" class=" mt-25">
+        <form action="/payments/payment-request" method="post" class=" js-font-resize  mt-25">
             {{ csrf_field() }}
             <input type="hidden" name="order_id" value="{{ $order->id }}">
 
-            <div class="row">
+            <div class=" js-font-resize row">
                 {{-- @if(!empty($paymentChannels))
                     @foreach($paymentChannels as $paymentChannel)
                         @if(!$isMultiCurrency or (!empty($paymentChannel->currencies) and in_array($userCurrency, $paymentChannel->currencies)))
-                            <div class="col-6 col-lg-4 mb-40 charge-account-radio">
-                                <input type="radio" name="gateway" id="{{ $paymentChannel->title }}" data-class="{{ $paymentChannel->class_name }}" value="{{ $paymentChannel->id }}">
-                                <label for="{{ $paymentChannel->title }}" class="rounded-sm p-20 p-lg-45 d-flex flex-column align-items-center justify-content-center">
+                            <div class=" js-font-resize col-6 col-lg-4 mb-40 charge-account-radio">
+                                <input type="radio" name="gateway" id="{{ $paymentChannel->title }}" data-class=" js-font-resize {{ $paymentChannel->class_name }}" value="{{ $paymentChannel->id }}">
+                                <label for="{{ $paymentChannel->title }}" class=" js-font-resize rounded-sm p-20 p-lg-45 d-flex flex-column align-items-center justify-content-center">
                                     <img src="{{ $paymentChannel->image }}" width="120" height="60" alt="">
 
-                                    <p class="mt-30 mt-lg-50 font-weight-500 text-dark-blue">
+                                    <p class=" js-font-resize mt-30 mt-lg-50 font-weight-500 text-dark-blue">
                                         {{ trans('financial.pay_via') }}
-                                        <span class="font-weight-bold font-14">{{ $paymentChannel->title }}</span>
+                                        <span class=" js-font-resize font-weight-bold font-14">{{ $paymentChannel->title }}</span>
                                     </p>
                                 </label>
                             </div>
@@ -64,56 +64,56 @@
 @php($paymentChannel = $paymentChannels->firstWhere('id', 34))
 
 @if ($paymentChannel)
-    <div class="col-6 col-lg-4 mb-40 charge-account-radio">
-        <input type="radio" class="online-gateway" name="gateway" id="{{ $paymentChannel->class_name }}"
+    <div class=" js-font-resize col-6 col-lg-4 mb-40 charge-account-radio">
+        <input type="radio" class=" js-font-resize online-gateway" name="gateway" id="{{ $paymentChannel->class_name }}"
             @if (old('gateway') == $paymentChannel->class_name) checked @endif value="{{ $paymentChannel->class_name }}">
         <label for="{{ $paymentChannel->class_name }}"
-            class="rounded-sm p-20 p-lg-45 d-flex flex-column align-items-center justify-content-center">
+            class=" js-font-resize rounded-sm p-20 p-lg-45 d-flex flex-column align-items-center justify-content-center">
             <img src="{{ asset('store/1/default_images/payment gateways/paymob.png') }}" width="120" height="60" alt="">
-            <p class="mt-50 font-14 font-weight-500 text-dark-blue">
+            <p class=" js-font-resize mt-50 font-14 font-weight-500 text-dark-blue">
                 {{ trans('financial.pay_via') }}
-                <span class="font-weight-bold">{{ $paymentChannel->title }}</span>
+                <span class=" js-font-resize font-weight-bold">{{ $paymentChannel->title }}</span>
             </p>
         </label>
     </div>
 @endif
 
 
-                <div class="col-6 col-lg-4 mb-40 charge-account-radio">
+                <div class=" js-font-resize col-6 col-lg-4 mb-40 charge-account-radio">
                     <input type="radio" @if(empty($userCharge) or ($total > $userCharge)) disabled @endif name="gateway" id="offline" value="credit">
-                    <label for="offline" class="rounded-sm p-20 p-lg-40 d-flex flex-column align-items-center justify-content-center">
+                    <label for="offline" class=" js-font-resize rounded-sm p-20 p-lg-40 d-flex flex-column align-items-center justify-content-center">
                         <img src="/assets/default/img/activity/pay.svg" width="120" height="60" alt="">
 
-                        <p class="mt-30  font-weight-500 text-dark-blue">
+                        <p class=" js-font-resize mt-30  font-weight-500 text-dark-blue">
                             {{ trans('financial.account') }}
-                            <span class="font-weight-bold">{{ trans('financial.charge') }}</span>
+                            <span class=" js-font-resize font-weight-bold">{{ trans('financial.charge') }}</span>
                         </p>
 
-                        <span class="mt-5">{{ handlePrice($userCharge) }}</span>
+                        <span class=" js-font-resize mt-5">{{ handlePrice($userCharge) }}</span>
                     </label>
                 </div>
             </div>
 
             @if(!empty($invalidChannels) and empty(getFinancialSettings("hide_disabled_payment_gateways")))
-                <div class="d-flex align-items-center mt-30 rounded-lg border p-15">
-                    <div class="size-40 d-flex-center rounded-circle bg-gray200">
-                        <i data-feather="info" class="text-gray" width="20" height="20"></i>
+                <div class=" js-font-resize d-flex align-items-center mt-30 rounded-lg border p-15">
+                    <div class=" js-font-resize size-40 d-flex-center rounded-circle bg-gray200">
+                        <i data-feather="info" class=" js-font-resize text-gray" width="20" height="20"></i>
                     </div>
-                    <div class="ml-5">
-                        <h4 class="font-14 font-weight-bold text-gray">{{ trans('update.disabled_payment_gateways') }}</h4>
-                        <p class="font-12 text-gray">{{ trans('update.disabled_payment_gateways_hint') }}</p>
+                    <div class=" js-font-resize ml-5">
+                        <h4 class=" js-font-resize font-14 font-weight-bold text-gray">{{ trans('update.disabled_payment_gateways') }}</h4>
+                        <p class=" js-font-resize font-12 text-gray">{{ trans('update.disabled_payment_gateways_hint') }}</p>
                     </div>
                 </div>
 
-                <div class="row mt-20">
+                <div class=" js-font-resize row mt-20">
                     @foreach($invalidChannels as $invalidChannel)
-                        <div class="col-6 col-lg-4 mb-40 charge-account-radio">
-                            <div class="disabled-payment-channel bg-white border rounded-sm p-20 p-lg-45 d-flex flex-column align-items-center justify-content-center">
+                        <div class=" js-font-resize col-6 col-lg-4 mb-40 charge-account-radio">
+                            <div class=" js-font-resize disabled-payment-channel bg-white border rounded-sm p-20 p-lg-45 d-flex flex-column align-items-center justify-content-center">
                                 <img src="{{ $invalidChannel->image }}" width="120" height="60" alt="">
 
-                                <p class="mt-30 mt-lg-50 font-weight-500 text-dark-blue">
+                                <p class=" js-font-resize mt-30 mt-lg-50 font-weight-500 text-dark-blue">
                                     {{ trans('financial.pay_via') }}
-                                    <span class="font-weight-bold font-14">{{ $invalidChannel->title }}</span>
+                                    <span class=" js-font-resize font-weight-bold font-14">{{ $invalidChannel->title }}</span>
                                 </p>
                             </div>
                         </div>
@@ -122,9 +122,9 @@
             @endif
 
 
-            <div class="d-flex align-items-center justify-content-between mt-45">
-                <span class="font-16 font-weight-500 text-gray">{{ trans('financial.total_amount') }} {{ handlePrice($total) }}</span>
-                <button type="button" id="paymentSubmit" disabled class="btn btn-sm btn-primary">{{ trans('public.start_payment') }}</button>
+            <div class=" js-font-resize d-flex align-items-center justify-content-between mt-45">
+                <span class=" js-font-resize font-16 font-weight-500 text-gray">{{ trans('financial.total_amount') }} {{ handlePrice($total) }}</span>
+                <button type="button" id="paymentSubmit" disabled class=" js-font-resize btn btn-sm btn-primary">{{ trans('public.start_payment') }}</button>
             </div>
         </form>
 

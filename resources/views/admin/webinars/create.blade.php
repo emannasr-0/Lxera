@@ -20,44 +20,44 @@
 @endpush
 
 @section('content')
-    <section class="section">
-        <div class="section-header">
+    <section class=" js-font-resize section">
+        <div class=" js-font-resize section-header">
             <h1>{{ !empty($webinar) ? trans('/admin/main.edit') : trans('admin/main.new') }} {{ trans('admin/main.class') }}
             </h1>
-            <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a
+            <div class=" js-font-resize section-header-breadcrumb">
+                <div class=" js-font-resize breadcrumb-item active"><a
                         href="{{ getAdminPanelUrl() }}">{{ trans('admin/main.dashboard') }}</a>
                 </div>
-                <div class="breadcrumb-item active">
+                <div class=" js-font-resize breadcrumb-item active">
                     <a href="{{ getAdminPanelUrl() }}/webinars">{{ trans('admin/main.classes') }}</a>
                 </div>
-                <div class="breadcrumb-item">{{ !empty($webinar) ? trans('/admin/main.edit') : trans('admin/main.new') }}
+                <div class=" js-font-resize breadcrumb-item">{{ !empty($webinar) ? trans('/admin/main.edit') : trans('admin/main.new') }}
                 </div>
             </div>
         </div>
 
-        <div class="section-body">
+        <div class=" js-font-resize section-body">
 
-            <div class="row">
-                <div class="col-12 ">
-                    <div class="card">
-                        <div class="card-body">
+            <div class=" js-font-resize row">
+                <div class=" js-font-resize col-12 ">
+                    <div class=" js-font-resize card">
+                        <div class=" js-font-resize card-body">
 
                             <form method="post"
                                 action="{{ getAdminPanelUrl() }}/webinars/{{ !empty($webinar) ? $webinar->id . '/update' : 'store' }}"
-                                id="webinarForm" class="webinar-form">
+                                id="webinarForm" class=" js-font-resize webinar-form">
                                 {{ csrf_field() }}
                                 <section>
-                                    <h2 class="section-title after-line">{{ trans('public.basic_information') }}</h2>
+                                    <h2 class=" js-font-resize section-title after-line">{{ trans('public.basic_information') }}</h2>
 
-                                    <div class="row">
-                                        <div class="col-12 col-md-5">
+                                    <div class=" js-font-resize row">
+                                        <div class=" js-font-resize col-12 col-md-5">
 
                                             @if (!empty(getGeneralSettings('content_translate')))
-                                                <div class="form-group">
-                                                    <label class="input-label">{{ trans('auth.language') }}</label>
+                                                <div class=" js-font-resize form-group">
+                                                    <label class=" js-font-resize input-label">{{ trans('auth.language') }}</label>
                                                     <select name="locale"
-                                                        class="form-control {{ !empty($webinar) ? 'js-edit-content-locale' : '' }}">
+                                                        class=" js-font-resize form-control {{ !empty($webinar) ? 'js-edit-content-locale' : '' }}">
                                                         @foreach ($userLanguages as $lang => $language)
                                                             <option value="{{ $lang }}"
                                                                 @if (mb_strtolower(request()->get('locale', app()->getLocale())) == mb_strtolower($lang)) selected @endif>
@@ -65,7 +65,7 @@
                                                         @endforeach
                                                     </select>
                                                     @error('locale')
-                                                        <div class="invalid-feedback">
+                                                        <div class=" js-font-resize invalid-feedback">
                                                             {{ $message }}
                                                         </div>
                                                     @enderror
@@ -74,11 +74,11 @@
                                                 <input type="hidden" name="locale" value="{{ getDefaultLocale() }}">
                                             @endif
 
-                                            <div class="form-group mt-15 ">
-                                                <label class="input-label d-block">{{ trans('panel.course_type') }}</label>
+                                            <div class=" js-font-resize form-group mt-15 ">
+                                                <label class=" js-font-resize input-label d-block">{{ trans('panel.course_type') }}</label>
 
                                                 <select name="type"
-                                                    class="custom-select @error('type')  is-invalid @enderror">
+                                                    class=" js-font-resize custom-select @error('type')  is-invalid @enderror">
                                                     <option value="webinar"
                                                         @if (!empty($webinar) and $webinar->isWebinar() or old('type') == \App\Models\Webinar::$webinar) selected @endif>
                                                         {{ trans('webinars.webinar') }}</option>
@@ -94,17 +94,17 @@
                                                 </select>
 
                                                 @error('type')
-                                                    <div class="invalid-feedback">
+                                                    <div class=" js-font-resize invalid-feedback">
                                                         {{ $message }}
                                                     </div>
                                                 @enderror
                                             </div>
 
-                                            <div class="form-group mt-15">
-                                                <label class="input-label d-block">نوع الدوره</label>
+                                            <div class=" js-font-resize form-group mt-15">
+                                                <label class=" js-font-resize input-label d-block">نوع الدوره</label>
 
                                                 <select name="unattached"
-                                                    class="custom-select @error('unattached') is-invalid @enderror">
+                                                    class=" js-font-resize custom-select @error('unattached') is-invalid @enderror">
                                                     <option value="" disabled selected>اختر نوع الدورة</option>
                                                     <option value="0"
                                                         @if (old('unattached', $webinar->unattached ?? null) == '0') selected @endif>
@@ -118,7 +118,7 @@
                                                 </select>
 
                                                 @error('unattached')
-                                                    <div class="invalid-feedback">
+                                                    <div class=" js-font-resize invalid-feedback">
                                                         {{ $message }}
                                                     </div>
                                                 @enderror
@@ -126,36 +126,36 @@
 
 
 
-                                            <div class="form-group mt-15">
-                                                <label class="input-label">اسم المقرر</label>
+                                            <div class=" js-font-resize form-group mt-15">
+                                                <label class=" js-font-resize input-label">اسم المقرر</label>
                                                 <input type="text" name="title"
                                                     value="{{ !empty($webinar) ? $webinar->title : old('title') }}"
-                                                    class="form-control @error('title')  is-invalid @enderror"
+                                                    class=" js-font-resize form-control @error('title')  is-invalid @enderror"
                                                     placeholder="" />
                                                 @error('title')
-                                                    <div class="invalid-feedback">
+                                                    <div class=" js-font-resize invalid-feedback">
                                                         {{ $message }}
                                                     </div>
                                                 @enderror
                                             </div>
 
 
-                                            <div class="form-group mt-15">
-                                                <label class="input-label">اسم المقرر فى الشهاده</label>
+                                            <div class=" js-font-resize form-group mt-15">
+                                                <label class=" js-font-resize input-label">اسم المقرر فى الشهاده</label>
                                                 <input type="text" name="course_name_certificate"
                                                     value="{{ !empty($webinar) ? $webinar->course_name_certificate : old('course_name_certificate') }}"
-                                                    class="form-control @error('course_name_certificate')  is-invalid @enderror"
+                                                    class=" js-font-resize form-control @error('course_name_certificate')  is-invalid @enderror"
                                                     placeholder="" />
                                                 @error('course_name_certificate')
-                                                    <div class="invalid-feedback">
+                                                    <div class=" js-font-resize invalid-feedback">
                                                         {{ $message }}
                                                     </div>
                                                 @enderror
                                             </div>
 
-                                              <div class="form-group mt-15" id="studentDropdown">
-                                                <label class="control-label">استثناء طالب من الشهاده</label>
-                                                <select name="student_id[]" id="student_id" class="form-control select2" multiple data-placeholder="قم بتحديد الطلاب">
+                                              <div class=" js-font-resize form-group mt-15" id="studentDropdown">
+                                                <label class=" js-font-resize control-label">استثناء طالب من الشهاده</label>
+                                                <select name="student_id[]" id="student_id" class=" js-font-resize form-control select2" multiple data-placeholder="قم بتحديد الطلاب">
                                                     <option value="">-- Select students --</option>
                                                     @foreach ($students as $student)
                                                         <option value="{{ $student->id }}"
@@ -168,34 +168,34 @@
                                                 </select>
                                             </div>
 
-                                            {{-- <div class="form-group mt-15">
-                                                <label class="input-label">{{ trans('update.points') }}</label>
-                                                <input type="number" name="points" value="{{ !empty($webinar) ? $webinar->points : old('points') }}" class="form-control @error('points')  is-invalid @enderror" placeholder="Empty means inactive this mode"/>
+                                            {{-- <div class=" js-font-resize form-group mt-15">
+                                                <label class=" js-font-resize input-label">{{ trans('update.points') }}</label>
+                                                <input type="number" name="points" value="{{ !empty($webinar) ? $webinar->points : old('points') }}" class=" js-font-resize form-control @error('points')  is-invalid @enderror" placeholder="Empty means inactive this mode"/>
                                                 @error('points')
-                                                <div class="invalid-feedback">
+                                                <div class=" js-font-resize invalid-feedback">
                                                     {{ $message }}
                                                 </div>
                                                 @enderror
                                             </div> --}}
 
-                                            {{-- <div class="form-group mt-15">
-                                                <label class="input-label">{{ trans('admin/main.class_url') }}</label>
-                                                <input type="text" name="slug" value="{{ !empty($webinar) ? $webinar->slug : old('slug') }}" class="form-control @error('slug')  is-invalid @enderror" placeholder=""/>
-                                                <div class="text-muted text-small mt-1">{{ trans('admin/main.class_url_hint') }}</div>
+                                            {{-- <div class=" js-font-resize form-group mt-15">
+                                                <label class=" js-font-resize input-label">{{ trans('admin/main.class_url') }}</label>
+                                                <input type="text" name="slug" value="{{ !empty($webinar) ? $webinar->slug : old('slug') }}" class=" js-font-resize form-control @error('slug')  is-invalid @enderror" placeholder=""/>
+                                                <div class=" js-font-resize text-muted text-small mt-1">{{ trans('admin/main.class_url_hint') }}</div>
                                                 @error('slug')
-                                                <div class="invalid-feedback">
+                                                <div class=" js-font-resize invalid-feedback">
                                                     {{ $message }}
                                                 </div>
                                                 @enderror
                                             </div> --}}
 
                                             @if (!empty($webinar) and $webinar->creator->isOrganization())
-                                                <div class="form-group mt-15 ">
+                                                <div class=" js-font-resize form-group mt-15 ">
                                                     <label
-                                                        class="input-label d-block">{{ trans('admin/main.organization') }}</label>
+                                                        class=" js-font-resize input-label d-block">{{ trans('admin/main.organization') }}</label>
 
                                                     <select name="organ_id" data-search-option="just_organization_role"
-                                                        class="form-control search-user-select2"
+                                                        class=" js-font-resize form-control search-user-select2"
                                                         data-placeholder="{{ trans('search_organization') }}">
                                                         <option value="{{ $webinar->creator->id }}" selected>
                                                             {{ $webinar->creator->full_name }}</option>
@@ -204,12 +204,12 @@
                                             @endif
 
 
-                                            <div class="form-group mt-15 ">
+                                            <div class=" js-font-resize form-group mt-15 ">
                                                 <label
-                                                    class="input-label d-block">{{ trans('admin/main.select_a_instructor') }}</label>
+                                                    class=" js-font-resize input-label d-block">{{ trans('admin/main.select_a_instructor') }}</label>
 
                                                 <select name="teacher_id" data-search-option="except_user"
-                                                    class="form-control search-user-select22"
+                                                    class=" js-font-resize form-control search-user-select22"
                                                     data-placeholder="{{ trans('public.select_a_teacher') }}">
                                                     @if (!empty($webinar))
                                                         <option value="{{ $webinar->teacher->id }}" selected>
@@ -221,30 +221,30 @@
                                                 </select>
 
                                                 @error('teacher_id')
-                                                    <div class="invalid-feedback">
+                                                    <div class=" js-font-resize invalid-feedback">
                                                         {{ $message }}
                                                     </div>
                                                 @enderror
                                             </div>
-                                            <div class="form-group mt-30 d-flex align-items-center justify-content-between">
-                                                <label class=""
+                                            <div class=" js-font-resize form-group mt-30 d-flex align-items-center justify-content-between">
+                                                <label class=" js-font-resize "
                                                     for="partnerInstructorSwitch">{{ trans('public.partner_instructor') }}</label>
-                                                <div class="custom-control custom-switch">
+                                                <div class=" js-font-resize custom-control custom-switch">
                                                     <input type="checkbox" name="partner_instructor"
-                                                        class="custom-control-input" id="partnerInstructorSwitch"
+                                                        class=" js-font-resize custom-control-input" id="partnerInstructorSwitch"
                                                         {{ !empty($webinar) && $webinar->partner_instructor ? 'checked' : '' }}>
-                                                    <label class="custom-control-label"
+                                                    <label class=" js-font-resize custom-control-label"
                                                         for="partnerInstructorSwitch"></label>
                                                 </div>
                                             </div>
 
                                             <div id="partnerInstructorInput"
-                                                class="form-group mt-15 {{ !empty($webinar) && $webinar->partner_instructor ? '' : 'd-none' }}">
+                                                class=" js-font-resize form-group mt-15 {{ !empty($webinar) && $webinar->partner_instructor ? '' : 'd-none' }}">
                                                 <label
-                                                    class="input-label d-block">{{ trans('public.select_a_partner_teacher') }}</label>
+                                                    class=" js-font-resize input-label d-block">{{ trans('public.select_a_partner_teacher') }}</label>
 
                                                 <select name="partners[]" multiple data-search-option="just_teacher_role"
-                                                    class="js-search-partner-user form-control {{ !empty($webinar) && $webinar->partner_instructor ? 'search-user-select22' : '' }}"
+                                                    class=" js-font-resize js-search-partner-user form-control {{ !empty($webinar) && $webinar->partner_instructor ? 'search-user-select22' : '' }}"
                                                     data-placeholder="{{ trans('public.search_instructor') }}">
                                                     @if (!empty($webinarPartnerTeacher))
                                                         @foreach ($webinarPartnerTeacher as $partner)
@@ -257,44 +257,44 @@
                                                     @endif
                                                 </select>
 
-                                                <div class="text-muted text-small mt-1">
+                                                <div class=" js-font-resize text-muted text-small mt-1">
                                                     {{ trans('admin/main.select_a_partner_hint') }}</div>
                                             </div>
 
 
-                                            <div class="form-group mt-15 d-none">
-                                                <label class="input-label">{{ trans('public.seo_description') }}</label>
+                                            <div class=" js-font-resize form-group mt-15 d-none">
+                                                <label class=" js-font-resize input-label">{{ trans('public.seo_description') }}</label>
                                                 <input type="text" name="seo_description"
                                                     value="{{ !empty($webinar) ? $webinar->seo_description : old('seo_description') }}"
-                                                    class="form-control @error('seo_description')  is-invalid @enderror" />
-                                                <div class="text-muted text-small mt-1">
+                                                    class=" js-font-resize form-control @error('seo_description')  is-invalid @enderror" />
+                                                <div class=" js-font-resize text-muted text-small mt-1">
                                                     {{ trans('admin/main.seo_description_hint') }}</div>
                                                 @error('seo_description')
-                                                    <div class="invalid-feedback">
+                                                    <div class=" js-font-resize invalid-feedback">
                                                         {{ $message }}
                                                     </div>
                                                 @enderror
                                             </div>
 
-                                            <div class="form-group mt-15" style="display: none">
-                                                <label class="input-label">{{ trans('public.thumbnail_image') }}</label>
-                                                <div class="input-group">
-                                                    <div class="input-group-prepend">
-                                                        <button type="button" class="input-group-text admin-file-manager"
+                                            <div class=" js-font-resize form-group mt-15" style="display: none">
+                                                <label class=" js-font-resize input-label">{{ trans('public.thumbnail_image') }}</label>
+                                                <div class=" js-font-resize input-group">
+                                                    <div class=" js-font-resize input-group-prepend">
+                                                        <button type="button" class=" js-font-resize input-group-text admin-file-manager"
                                                             data-input="thumbnail" data-preview="holder">
-                                                            <i class="fa fa-upload"></i>
+                                                            <i class=" js-font-resize fa fa-upload"></i>
                                                         </button>
                                                     </div>
                                                     <input type="text" name="thumbnail" id="thumbnail" value="test"
-                                                        class="form-control @error('thumbnail')  is-invalid @enderror" />
-                                                    <div class="input-group-append">
-                                                        <button type="button" class="input-group-text admin-file-view"
+                                                        class=" js-font-resize form-control @error('thumbnail')  is-invalid @enderror" />
+                                                    <div class=" js-font-resize input-group-append">
+                                                        <button type="button" class=" js-font-resize input-group-text admin-file-view"
                                                             data-input="thumbnail">
-                                                            <i class="fa fa-eye"></i>
+                                                            <i class=" js-font-resize fa fa-eye"></i>
                                                         </button>
                                                     </div>
                                                     @error('thumbnail')
-                                                        <div class="invalid-feedback">
+                                                        <div class=" js-font-resize invalid-feedback">
                                                             {{ $message }}
                                                         </div>
                                                     @enderror
@@ -302,42 +302,42 @@
                                             </div>
 
 
-                                            <div class="form-group mt-15" style="display: none">
-                                                <label class="input-label">{{ trans('public.cover_image') }}</label>
-                                                <div class="input-group">
-                                                    <div class="input-group-prepend">
-                                                        <button type="button" class="input-group-text admin-file-manager"
+                                            <div class=" js-font-resize form-group mt-15" style="display: none">
+                                                <label class=" js-font-resize input-label">{{ trans('public.cover_image') }}</label>
+                                                <div class=" js-font-resize input-group">
+                                                    <div class=" js-font-resize input-group-prepend">
+                                                        <button type="button" class=" js-font-resize input-group-text admin-file-manager"
                                                             data-input="cover_image" data-preview="holder">
-                                                            <i class="fa fa-upload"></i>
+                                                            <i class=" js-font-resize fa fa-upload"></i>
                                                         </button>
                                                     </div>
                                                     <input type="text" name="image_cover" id="cover_image"
                                                         value="test"
-                                                        class="form-control @error('image_cover')  is-invalid @enderror" />
-                                                    <div class="input-group-append">
-                                                        <button type="button" class="input-group-text admin-file-view"
+                                                        class=" js-font-resize form-control @error('image_cover')  is-invalid @enderror" />
+                                                    <div class=" js-font-resize input-group-append">
+                                                        <button type="button" class=" js-font-resize input-group-text admin-file-view"
                                                             data-input="cover_image">
-                                                            <i class="fa fa-eye"></i>
+                                                            <i class=" js-font-resize fa fa-eye"></i>
                                                         </button>
                                                     </div>
                                                     @error('image_cover')
-                                                        <div class="invalid-feedback">
+                                                        <div class=" js-font-resize invalid-feedback">
                                                             {{ $message }}
                                                         </div>
                                                     @enderror
                                                 </div>
                                             </div>
 
-                                            <div class="form-group mt-25" style="display: none">
-                                                <label class="input-label">{{ trans('public.demo_video') }}
+                                            <div class=" js-font-resize form-group mt-25" style="display: none">
+                                                <label class=" js-font-resize input-label">{{ trans('public.demo_video') }}
                                                     ({{ trans('public.optional') }})</label>
 
 
-                                                <div class="">
+                                                <div class=" js-font-resize ">
                                                     <label
-                                                        class="input-label font-12">{{ trans('public.source') }}</label>
+                                                        class=" js-font-resize input-label font-12">{{ trans('public.source') }}</label>
                                                     <select name="video_demo_source"
-                                                        class="js-video-demo-source form-control">
+                                                        class=" js-font-resize js-video-demo-source form-control">
                                                         @foreach (\App\Models\Webinar::$videoDemoSource as $source)
                                                             <option value="{{ $source }}"
                                                                 @if (!empty($webinar) and $webinar->video_demo_source == $source) selected @endif>
@@ -347,26 +347,26 @@
                                                 </div>
                                             </div>
 
-                                            <div class="form-group mt-0 d-none">
-                                                <label class="input-label font-12">{{ trans('update.path') }}</label>
-                                                <div class="input-group js-video-demo-path-input">
-                                                    <div class="input-group-prepend">
+                                            <div class=" js-font-resize form-group mt-0 d-none">
+                                                <label class=" js-font-resize input-label font-12">{{ trans('update.path') }}</label>
+                                                <div class=" js-font-resize input-group js-video-demo-path-input">
+                                                    <div class=" js-font-resize input-group-prepend">
                                                         <button type="button"
-                                                            class="js-video-demo-path-upload input-group-text admin-file-manager {{ (empty($webinar) or empty($webinar->video_demo_source) or $webinar->video_demo_source == 'upload') ? '' : 'd-none' }}"
+                                                            class=" js-font-resize js-video-demo-path-upload input-group-text admin-file-manager {{ (empty($webinar) or empty($webinar->video_demo_source) or $webinar->video_demo_source == 'upload') ? '' : 'd-none' }}"
                                                             data-input="demo_video" data-preview="holder">
-                                                            <i class="fa fa-upload"></i>
+                                                            <i class=" js-font-resize fa fa-upload"></i>
                                                         </button>
 
                                                         <button type="button"
-                                                            class="js-video-demo-path-links rounded-left input-group-text input-group-text-rounded-left  {{ (empty($webinar) or empty($webinar->video_demo_source) or $webinar->video_demo_source == 'upload') ? 'd-none' : '' }}">
-                                                            <i class="fa fa-link"></i>
+                                                            class=" js-font-resize js-video-demo-path-links rounded-left input-group-text input-group-text-rounded-left  {{ (empty($webinar) or empty($webinar->video_demo_source) or $webinar->video_demo_source == 'upload') ? 'd-none' : '' }}">
+                                                            <i class=" js-font-resize fa fa-link"></i>
                                                         </button>
                                                     </div>
                                                     <input type="text" name="video_demo" id="demo_video"
                                                         value="{{ !empty($webinar) ? $webinar->video_demo : old('video_demo') }}"
-                                                        class="form-control @error('video_demo')  is-invalid @enderror" />
+                                                        class=" js-font-resize form-control @error('video_demo')  is-invalid @enderror" />
                                                     @error('video_demo')
-                                                        <div class="invalid-feedback">
+                                                        <div class=" js-font-resize invalid-feedback">
                                                             {{ $message }}
                                                         </div>
                                                     @enderror
@@ -375,29 +375,29 @@
                                         </div>
                                     </div>
 
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="form-group mt-15">
-                                                <label class="input-label">{{ trans('public.description') }}</label>
-                                                <textarea id="summernote" name="description" class="form-control @error('description')  is-invalid @enderror"
+                                    <div class=" js-font-resize row">
+                                        <div class=" js-font-resize col-12">
+                                            <div class=" js-font-resize form-group mt-15">
+                                                <label class=" js-font-resize input-label">{{ trans('public.description') }}</label>
+                                                <textarea id="summernote" name="description" class=" js-font-resize form-control @error('description')  is-invalid @enderror"
                                                     placeholder="{{ trans('forms.webinar_description_placeholder') }}">{!! !empty($webinar) ? $webinar->description : old('description') !!}</textarea>
                                                 @error('description')
-                                                    <div class="invalid-feedback">
+                                                    <div class=" js-font-resize invalid-feedback">
                                                         {{ $message }}
                                                     </div>
                                                 @enderror
                                             </div>
                                         </div>
 
-                                        <div class="col-12">
-                                            <div class="form-group mt-15">
-                                                <label class="input-label">متطلبات الدورة</label>
-                                                <textarea id="summernote" name="requirements" class="form-control @error('requirements')  is-invalid @enderror"
+                                        <div class=" js-font-resize col-12">
+                                            <div class=" js-font-resize form-group mt-15">
+                                                <label class=" js-font-resize input-label">متطلبات الدورة</label>
+                                                <textarea id="summernote" name="requirements" class=" js-font-resize form-control @error('requirements')  is-invalid @enderror"
                                                     placeholder=" قم بكتابة متطلبات الدورة هنا"
                                                     rows="10"
                                                     >{!! !empty($webinar) ? $webinar->requirements : old('requirements') !!}</textarea>
                                                 @error('requirements')
-                                                    <div class="invalid-feedback">
+                                                    <div class=" js-font-resize invalid-feedback">
                                                         {{ $message }}
                                                     </div>
                                                 @enderror
@@ -406,41 +406,41 @@
                                     </div>
                                 </section>
 
-                                <section class="mt-3">
-                                    <h2 class="section-title after-line">{{ trans('public.additional_information') }}</h2>
-                                    <div class="row">
-                                        <div class="col-12 col-md-6">
+                                <section class=" js-font-resize mt-3">
+                                    <h2 class=" js-font-resize section-title after-line">{{ trans('public.additional_information') }}</h2>
+                                    <div class=" js-font-resize row">
+                                        <div class=" js-font-resize col-12 col-md-6">
 
 
-                                            <div class="form-group mt-15" style="display: none">
-                                                <label class="input-label">{{ trans('public.capacity') }}</label>
+                                            <div class=" js-font-resize form-group mt-15" style="display: none">
+                                                <label class=" js-font-resize input-label">{{ trans('public.capacity') }}</label>
                                                 <input type="number" name="capacity" value="500"
-                                                    class="form-control @error('capacity')  is-invalid @enderror" />
+                                                    class=" js-font-resize form-control @error('capacity')  is-invalid @enderror" />
                                                 @error('capacity')
-                                                    <div class="invalid-feedback">
+                                                    <div class=" js-font-resize invalid-feedback">
                                                         {{ $message }}
                                                     </div>
                                                 @enderror
                                             </div>
 
-                                            <div class="row mt-15">
+                                            <div class=" js-font-resize row mt-15">
 
-                                                <div class="col-12 col-md-6 js-start_date">
-                                                    <div class="form-group">
+                                                <div class=" js-font-resize col-12 col-md-6 js-start_date">
+                                                    <div class=" js-font-resize form-group">
                                                         <label
-                                                            class="input-label">{{ trans('public.start_date') }}</label>
-                                                        <div class="input-group">
-                                                            <div class="input-group-prepend">
-                                                                <span class="input-group-text" id="dateInputGroupPrepend">
-                                                                    <i class="fa fa-calendar-alt "></i>
+                                                            class=" js-font-resize input-label">{{ trans('public.start_date') }}</label>
+                                                        <div class=" js-font-resize input-group">
+                                                            <div class=" js-font-resize input-group-prepend">
+                                                                <span class=" js-font-resize input-group-text" id="dateInputGroupPrepend">
+                                                                    <i class=" js-font-resize fa fa-calendar-alt "></i>
                                                                 </span>
                                                             </div>
                                                             <input type="text" name="start_date"
                                                                 value="{{ (!empty($webinar) and $webinar->start_date) ? dateTimeFormat($webinar->start_date, 'Y-m-d H:i', false, false, $webinar->timezone) : old('start_date') }}"
-                                                                class="form-control @error('start_date')  is-invalid @enderror datetimepicker"
+                                                                class=" js-font-resize form-control @error('start_date')  is-invalid @enderror datetimepicker"
                                                                 aria-describedby="dateInputGroupPrepend" />
                                                             @error('start_date')
-                                                                <div class="invalid-feedback">
+                                                                <div class=" js-font-resize invalid-feedback">
                                                                     {{ $message }}
                                                                 </div>
                                                             @enderror
@@ -449,23 +449,23 @@
                                                 </div>
 
 
-                                                <div class="col-12 col-md-6">
-                                                    <div class="form-group">
-                                                        <label class="input-label">{{ trans('public.duration') }}
+                                                <div class=" js-font-resize col-12 col-md-6">
+                                                    <div class=" js-font-resize form-group">
+                                                        <label class=" js-font-resize input-label">{{ trans('public.duration') }}
                                                             (الساعات)</label>
-                                                        <div class="input-group">
-                                                            <div class="input-group-prepend">
-                                                                <span class="input-group-text" id="timeInputGroupPrepend">
-                                                                    <i class="fa fa-clock"></i>
+                                                        <div class=" js-font-resize input-group">
+                                                            <div class=" js-font-resize input-group-prepend">
+                                                                <span class=" js-font-resize input-group-text" id="timeInputGroupPrepend">
+                                                                    <i class=" js-font-resize fa fa-clock"></i>
                                                                 </span>
                                                             </div>
 
 
                                                             <input type="number" name="duration"
                                                                 value="{{ !empty($webinar) ? $webinar->duration : old('duration') }}"
-                                                                class="form-control @error('duration')  is-invalid @enderror" />
+                                                                class=" js-font-resize form-control @error('duration')  is-invalid @enderror" />
                                                             @error('duration')
-                                                                <div class="invalid-feedback">
+                                                                <div class=" js-font-resize invalid-feedback">
                                                                     {{ $message }}
                                                                 </div>
                                                             @enderror
@@ -483,9 +483,9 @@
                                                     }
                                                 @endphp
 
-                                                <div class="form-group">
-                                                    <label class="input-label">{{ trans('update.timezone') }}</label>
-                                                    <select name="timezone" class="form-control select2"
+                                                <div class=" js-font-resize form-group">
+                                                    <label class=" js-font-resize input-label">{{ trans('update.timezone') }}</label>
+                                                    <select name="timezone" class=" js-font-resize form-control select2"
                                                         data-allow-clear="false">
                                                         @foreach (getListOfTimezones() as $timezone)
                                                             <option value="{{ $timezone }}"
@@ -494,7 +494,7 @@
                                                         @endforeach
                                                     </select>
                                                     @error('timezone')
-                                                        <div class="invalid-feedback">
+                                                        <div class=" js-font-resize invalid-feedback">
                                                             {{ $message }}
                                                         </div>
                                                     @enderror
@@ -502,137 +502,137 @@
                                             @endif
 
                                             @if (!empty($webinar) and $webinar->creator->isOrganization())
-                                                <div class="form-group mt-30 d-flex align-items-center justify-content-between"
+                                                <div class=" js-font-resize form-group mt-30 d-flex align-items-center justify-content-between"
                                                     style="display: none">
-                                                    <label class=""
+                                                    <label class=" js-font-resize "
                                                         for="privateSwitch">{{ trans('webinars.private') }}</label>
-                                                    <div class="custom-control custom-switch">
+                                                    <div class=" js-font-resize custom-control custom-switch">
                                                         <input type="checkbox" name="private"
-                                                            class="custom-control-input" id="privateSwitch"
+                                                            class=" js-font-resize custom-control-input" id="privateSwitch"
                                                             {{ (!empty($webinar) and $webinar->private) ? 'checked' : '' }}>
-                                                        <label class="custom-control-label" for="privateSwitch"></label>
+                                                        <label class=" js-font-resize custom-control-label" for="privateSwitch"></label>
                                                     </div>
                                                 </div>
                                             @endif
 
-                                            {{-- <div class="form-group mt-30 d-flex align-items-center justify-content-between" >
-                                                <label class="" for="supportSwitch">{{ trans('panel.support') }}</label>
-                                                <div class="custom-control custom-switch">
-                                                    <input type="checkbox" name="support" class="custom-control-input" id="supportSwitch" {{ !empty($webinar) && $webinar->support ? 'checked' : '' }}>
-                                                    <label class="custom-control-label" for="supportSwitch"></label>
+                                            {{-- <div class=" js-font-resize form-group mt-30 d-flex align-items-center justify-content-between" >
+                                                <label class=" js-font-resize " for="supportSwitch">{{ trans('panel.support') }}</label>
+                                                <div class=" js-font-resize custom-control custom-switch">
+                                                    <input type="checkbox" name="support" class=" js-font-resize custom-control-input" id="supportSwitch" {{ !empty($webinar) && $webinar->support ? 'checked' : '' }}>
+                                                    <label class=" js-font-resize custom-control-label" for="supportSwitch"></label>
                                                 </div>
                                             </div>
 
-                                            <div class="form-group mt-30 d-flex align-items-center justify-content-between" >
-                                                <label class="" for="includeCertificateSwitch">{{ trans('update.include_certificate') }}</label>
-                                                <div class="custom-control custom-switch">
-                                                    <input type="checkbox" name="certificate" class="custom-control-input" id="includeCertificateSwitch" {{ !empty($webinar) && $webinar->certificate ? 'checked' : '' }}>
-                                                    <label class="custom-control-label" for="includeCertificateSwitch"></label>
+                                            <div class=" js-font-resize form-group mt-30 d-flex align-items-center justify-content-between" >
+                                                <label class=" js-font-resize " for="includeCertificateSwitch">{{ trans('update.include_certificate') }}</label>
+                                                <div class=" js-font-resize custom-control custom-switch">
+                                                    <input type="checkbox" name="certificate" class=" js-font-resize custom-control-input" id="includeCertificateSwitch" {{ !empty($webinar) && $webinar->certificate ? 'checked' : '' }}>
+                                                    <label class=" js-font-resize custom-control-label" for="includeCertificateSwitch"></label>
                                                 </div>
                                             </div>
 
-                                            <div class="form-group mt-30 d-flex align-items-center justify-content-between">
-                                                <label class="cursor-pointer" for="downloadableSwitch">{{ trans('home.downloadable') }}</label>
-                                                <div class="custom-control custom-switch">
-                                                    <input type="checkbox" name="downloadable" class="custom-control-input" id="downloadableSwitch" {{ !empty($webinar) && $webinar->downloadable ? 'checked' : '' }}>
-                                                    <label class="custom-control-label" for="downloadableSwitch"></label>
+                                            <div class=" js-font-resize form-group mt-30 d-flex align-items-center justify-content-between">
+                                                <label class=" js-font-resize cursor-pointer" for="downloadableSwitch">{{ trans('home.downloadable') }}</label>
+                                                <div class=" js-font-resize custom-control custom-switch">
+                                                    <input type="checkbox" name="downloadable" class=" js-font-resize custom-control-input" id="downloadableSwitch" {{ !empty($webinar) && $webinar->downloadable ? 'checked' : '' }}>
+                                                    <label class=" js-font-resize custom-control-label" for="downloadableSwitch"></label>
                                                 </div>
                                             </div> --}}
 
 
 
-                                        <div class="form-group mt-30 d-flex align-items-center justify-content-between">
-                                                <label class="" for="forumSwitch">{{ trans('update.course_forum') }}</label>
-                                                <div class="custom-control custom-switch">
-                                                    <input type="checkbox" name="forum" class="custom-control-input" id="forumSwitch" {{ !empty($webinar) && $webinar->forum ? 'checked' : ''  }}>
-                                                    <label class="custom-control-label" for="forumSwitch"></label>
+                                        <div class=" js-font-resize form-group mt-30 d-flex align-items-center justify-content-between">
+                                                <label class=" js-font-resize " for="forumSwitch">{{ trans('update.course_forum') }}</label>
+                                                <div class=" js-font-resize custom-control custom-switch">
+                                                    <input type="checkbox" name="forum" class=" js-font-resize custom-control-input" id="forumSwitch" {{ !empty($webinar) && $webinar->forum ? 'checked' : ''  }}>
+                                                    <label class=" js-font-resize custom-control-label" for="forumSwitch"></label>
                                                 </div>
                                             </div>
 
-                                            <div class="form-group mt-30 d-flex align-items-center justify-content-between">
-                                                <label class="" for="subscribeSwitch">{{ trans('public.subscribe') }}</label>
-                                                <div class="custom-control custom-switch">
-                                                    <input type="checkbox" name="subscribe" class="custom-control-input" id="subscribeSwitch" {{ !empty($webinar) && $webinar->subscribe ? 'checked' : ''  }}>
-                                                    <label class="custom-control-label" for="subscribeSwitch"></label>
+                                            <div class=" js-font-resize form-group mt-30 d-flex align-items-center justify-content-between">
+                                                <label class=" js-font-resize " for="subscribeSwitch">{{ trans('public.subscribe') }}</label>
+                                                <div class=" js-font-resize custom-control custom-switch">
+                                                    <input type="checkbox" name="subscribe" class=" js-font-resize custom-control-input" id="subscribeSwitch" {{ !empty($webinar) && $webinar->subscribe ? 'checked' : ''  }}>
+                                                    <label class=" js-font-resize custom-control-label" for="subscribeSwitch"></label>
                                                 </div>
                                             </div>
 
-                                            <div class="form-group mt-30 d-flex align-items-center justify-content-between">
-                                                <label class="" for="privateSwitch">{{ trans('webinars.private') }}</label>
-                                                <div class="custom-control custom-switch">
-                                                    <input type="checkbox" name="private" class="custom-control-input" id="privateSwitch" {{ (!empty($webinar) and $webinar->private) ? 'checked' : ''  }}>
-                                                    <label class="custom-control-label" for="privateSwitch"></label>
+                                            <div class=" js-font-resize form-group mt-30 d-flex align-items-center justify-content-between">
+                                                <label class=" js-font-resize " for="privateSwitch">{{ trans('webinars.private') }}</label>
+                                                <div class=" js-font-resize custom-control custom-switch">
+                                                    <input type="checkbox" name="private" class=" js-font-resize custom-control-input" id="privateSwitch" {{ (!empty($webinar) and $webinar->private) ? 'checked' : ''  }}>
+                                                    <label class=" js-font-resize custom-control-label" for="privateSwitch"></label>
                                                 </div>
                                             </div>
 
-                                            <div class="form-group mt-30 d-flex align-items-center justify-content-between">
-                                                <label class="" for="privateSwitch">{{ trans('update.enable_waitlist') }}</label>
-                                                <div class="custom-control custom-switch">
-                                                    <input type="checkbox" name="enable_waitlist" class="custom-control-input" id="enable_waitlistSwitch" {{ (!empty($webinar) and $webinar->enable_waitlist) ? 'checked' : ''  }}>
-                                                    <label class="custom-control-label" for="enable_waitlistSwitch"></label>
+                                            <div class=" js-font-resize form-group mt-30 d-flex align-items-center justify-content-between">
+                                                <label class=" js-font-resize " for="privateSwitch">{{ trans('update.enable_waitlist') }}</label>
+                                                <div class=" js-font-resize custom-control custom-switch">
+                                                    <input type="checkbox" name="enable_waitlist" class=" js-font-resize custom-control-input" id="enable_waitlistSwitch" {{ (!empty($webinar) and $webinar->enable_waitlist) ? 'checked' : ''  }}>
+                                                    <label class=" js-font-resize custom-control-label" for="enable_waitlistSwitch"></label>
                                                 </div>
                                             </div> 
 
-                                            <div class="form-group mt-15" style="display: none">
-                                                <label class="input-label">{{ trans('update.access_days') }}</label>
+                                            <div class=" js-font-resize form-group mt-15" style="display: none">
+                                                <label class=" js-font-resize input-label">{{ trans('update.access_days') }}</label>
                                                 <input type="text" name="access_days" value=""
-                                                    class="form-control @error('access_days')  is-invalid @enderror" />
+                                                    class=" js-font-resize form-control @error('access_days')  is-invalid @enderror" />
                                                 @error('access_days')
-                                                    <div class="invalid-feedback">
+                                                    <div class=" js-font-resize invalid-feedback">
                                                         {{ $message }}
                                                     </div>
                                                 @enderror
-                                                <p class="mt-1">- {{ trans('update.access_days_input_hint') }}</p>
+                                                <p class=" js-font-resize mt-1">- {{ trans('update.access_days_input_hint') }}</p>
                                             </div>
 
-                                            <div class="form-group mt-15">
-                                                <label class="input-label">{{ trans('public.price') }}
+                                            <div class=" js-font-resize form-group mt-15">
+                                                <label class=" js-font-resize input-label">{{ trans('public.price') }}
                                                     ({{ $currency }})</label>
                                                 <input type="text" name="price"
                                                     value="{{ !empty($webinar) ? $webinar->price : old('price') }}"
-                                                    class="form-control @error('price')  is-invalid @enderror"
+                                                    class=" js-font-resize form-control @error('price')  is-invalid @enderror"
                                                     placeholder="{{ trans('public.0_for_free') }}" />
                                                 @error('price')
-                                                    <div class="invalid-feedback">
+                                                    <div class=" js-font-resize invalid-feedback">
                                                         {{ $message }}
                                                     </div>
                                                 @enderror
                                             </div>
 
                                             @if (!empty($webinar) and $webinar->creator->isOrganization())
-                                                <div class="form-group mt-15">
-                                                    <label class="input-label">{{ trans('update.organization_price') }}
+                                                <div class=" js-font-resize form-group mt-15">
+                                                    <label class=" js-font-resize input-label">{{ trans('update.organization_price') }}
                                                         ({{ $currency }})</label>
                                                     <input type="number" name="organization_price"
                                                         value="{{ (!empty($webinar) and $webinar->organization_price) ? convertPriceToUserCurrency($webinar->organization_price) : old('organization_price') }}"
-                                                        class="form-control @error('organization_price')  is-invalid @enderror"
+                                                        class=" js-font-resize form-control @error('organization_price')  is-invalid @enderror"
                                                         placeholder="" />
                                                     @error('organization_price')
-                                                        <div class="invalid-feedback">
+                                                        <div class=" js-font-resize invalid-feedback">
                                                             {{ $message }}
                                                         </div>
                                                     @enderror
-                                                    <p class="font-12 text-gray mt-1">-
+                                                    <p class=" js-font-resize font-12 text-gray mt-1">-
                                                         {{ trans('update.organization_price_hint') }}</p>
                                                 </div>
                                             @endif
 
 
 
-                                            <div class="form-group mt-15" style="display: none">
-                                                <label class="input-label d-block">{{ trans('public.tags') }}</label>
+                                            <div class=" js-font-resize form-group mt-15" style="display: none">
+                                                <label class=" js-font-resize input-label d-block">{{ trans('public.tags') }}</label>
                                                 <input type="text" name="tags" data-max-tag="5"
                                                     value="{{ !empty($webinar) ? implode(',', $webinarTags) : '' }}"
-                                                    class="form-control inputtags"
+                                                    class=" js-font-resize form-control inputtags"
                                                     placeholder="{{ trans('public.type_tag_name_and_press_enter') }} ({{ trans('admin/main.max') }} : 5)" />
                                             </div>
 
 
-                                            <div class="form-group mt-15">
-                                                <label class="input-label">{{ trans('public.category') }}</label>
+                                            <div class=" js-font-resize form-group mt-15">
+                                                <label class=" js-font-resize input-label">{{ trans('public.category') }}</label>
 
                                                 <select id="categories"
-                                                    class="custom-select @error('category_id')  is-invalid @enderror"
+                                                    class=" js-font-resize custom-select @error('category_id')  is-invalid @enderror"
                                                     name="category_id" required>
                                                     <option {{ !empty($webinar) ? '' : 'selected' }} disabled>
                                                         {{ trans('public.choose_category') }}</option>
@@ -654,7 +654,7 @@
                                                 </select>
 
                                                 @error('category_id')
-                                                    <div class="invalid-feedback">
+                                                    <div class=" js-font-resize invalid-feedback">
                                                         {{ $message }}
                                                     </div>
                                                 @enderror
@@ -663,31 +663,31 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group mt-15 {{ (!empty($webinarCategoryFilters) and count($webinarCategoryFilters)) ? '' : 'd-none' }}"
+                                    <div class=" js-font-resize form-group mt-15 {{ (!empty($webinarCategoryFilters) and count($webinarCategoryFilters)) ? '' : 'd-none' }}"
                                         id="categoriesFiltersContainer">
-                                        <span class="input-label d-block">{{ trans('public.category_filters') }}</span>
-                                        <div id="categoriesFiltersCard" class="row mt-3">
+                                        <span class=" js-font-resize input-label d-block">{{ trans('public.category_filters') }}</span>
+                                        <div id="categoriesFiltersCard" class=" js-font-resize row mt-3">
 
                                             @if (!empty($webinarCategoryFilters) and count($webinarCategoryFilters))
                                                 @foreach ($webinarCategoryFilters as $filter)
-                                                    <div class="col-12 col-md-3">
-                                                        <div class="webinar-category-filters">
+                                                    <div class=" js-font-resize col-12 col-md-3">
+                                                        <div class=" js-font-resize webinar-category-filters">
                                                             <strong
-                                                                class="category-filter-title d-block">{{ $filter->title }}</strong>
-                                                            <div class="py-10"></div>
+                                                                class=" js-font-resize category-filter-title d-block">{{ $filter->title }}</strong>
+                                                            <div class=" js-font-resize py-10"></div>
 
                                                             @foreach ($filter->options as $option)
                                                                 <div
-                                                                    class="form-group mt-3 d-flex align-items-center justify-content-between">
-                                                                    <label class="text-gray font-14"
+                                                                    class=" js-font-resize form-group mt-3 d-flex align-items-center justify-content-between">
+                                                                    <label class=" js-font-resize text-gray font-14"
                                                                         for="filterOptions{{ $option->id }}">{{ $option->title }}</label>
-                                                                    <div class="custom-control custom-checkbox">
+                                                                    <div class=" js-font-resize custom-control custom-checkbox">
                                                                         <input type="checkbox" name="filters[]"
                                                                             value="{{ $option->id }}"
                                                                             {{ !empty($webinarFilterOptions) && in_array($option->id, $webinarFilterOptions) ? 'checked' : '' }}
-                                                                            class="custom-control-input"
+                                                                            class=" js-font-resize custom-control-input"
                                                                             id="filterOptions{{ $option->id }}">
-                                                                        <label class="custom-control-label"
+                                                                        <label class=" js-font-resize custom-control-label"
                                                                             for="filterOptions{{ $option->id }}"></label>
                                                                     </div>
                                                                 </div>
@@ -702,18 +702,18 @@
                                 </section>
 
                                 @if (!empty($webinar))
-                                    <section class="mt-30">
-                                        {{-- <div class="d-flex justify-content-between align-items-center">
-                                            <h2 class="section-title after-line">{{ trans('admin/main.price_plans') }}</h2>
-                                            <button id="webinarAddTicket" type="button" class="btn btn-primary btn-sm mt-3">{{ trans('admin/main.add_price_plan') }}</button>
+                                    <section class=" js-font-resize mt-30">
+                                        {{-- <div class=" js-font-resize d-flex justify-content-between align-items-center">
+                                            <h2 class=" js-font-resize section-title after-line">{{ trans('admin/main.price_plans') }}</h2>
+                                            <button id="webinarAddTicket" type="button" class=" js-font-resize btn btn-primary btn-sm mt-3">{{ trans('admin/main.add_price_plan') }}</button>
                                         </div> --}}
 
-                                        {{-- <div class="row mt-10">
-                                            <div class="col-12">
+                                        {{-- <div class=" js-font-resize row mt-10">
+                                            <div class=" js-font-resize col-12">
 
                                                 @if (!empty($tickets) and !$tickets->isEmpty())
-                                                    <div class="table-responsive">
-                                                        <table class="table table-striped text-center font-14">
+                                                    <div class=" js-font-resize table-responsive">
+                                                        <table class=" js-font-resize table table-striped text-center font-14">
 
                                                             <tr>
                                                                 <th>{{ trans('public.title') }}</th>
@@ -730,8 +730,8 @@
                                                                     <td>{{ $ticket->capacity }}</td>
                                                                     <td>{{ dateTimeFormat($ticket->start_date,'j F Y') }} - {{ (new DateTime())->setTimestamp($ticket->end_date)->format('j F Y') }}</td>
                                                                     <td>
-                                                                        <button type="button" data-ticket-id="{{ $ticket->id }}" data-webinar-id="{{ !empty($webinar) ? $webinar->id : '' }}" class="edit-ticket btn-transparent text-primary mt-1" data-toggle="tooltip" data-placement="top" title="{{ trans('admin/main.edit') }}">
-                                                                            <i class="fa fa-edit"></i>
+                                                                        <button type="button" data-ticket-id="{{ $ticket->id }}" data-webinar-id="{{ !empty($webinar) ? $webinar->id : '' }}" class=" js-font-resize edit-ticket btn-transparent text-primary mt-1" data-toggle="tooltip" data-placement="top" title="{{ trans('admin/main.edit') }}">
+                                                                            <i class=" js-font-resize fa fa-edit"></i>
                                                                         </button>
 
                                                                         @include('admin.includes.delete_button',['url' => getAdminPanelUrl().'/tickets/'. $ticket->id .'/delete', 'btnClass' => ' mt-1'])
@@ -756,22 +756,22 @@
                                     @include('admin.webinars.create_includes.contents')
 
 
-                                    <section class="mt-30">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <h2 class="section-title after-line">{{ trans('public.prerequisites') }}</h2>
+                                    <section class=" js-font-resize mt-30">
+                                        <div class=" js-font-resize d-flex justify-content-between align-items-center">
+                                            <h2 class=" js-font-resize section-title after-line">{{ trans('public.prerequisites') }}</h2>
                                             <button id="webinarAddPrerequisites" type="button"
-                                                class="btn btn-primary btn-sm mt-3">{{ trans('public.add_prerequisites') }}</button>
+                                                class=" js-font-resize btn btn-primary btn-sm mt-3">{{ trans('public.add_prerequisites') }}</button>
                                         </div>
 
-                                        <div class="row mt-10">
-                                            <div class="col-12">
+                                        <div class=" js-font-resize row mt-10">
+                                            <div class=" js-font-resize col-12">
                                                 @if (!empty($prerequisites) and !$prerequisites->isEmpty())
-                                                    <div class="table-responsive">
-                                                        <table class="table table-striped text-center font-14">
+                                                    <div class=" js-font-resize table-responsive">
+                                                        <table class=" js-font-resize table table-striped text-center font-14">
 
                                                             <tr>
                                                                 <th>{{ trans('public.title') }}</th>
-                                                                <th class="text-left">{{ trans('public.instructor') }}
+                                                                <th class=" js-font-resize text-left">{{ trans('public.instructor') }}
                                                                 </th>
                                                                 <th>{{ trans('public.price') }}</th>
                                                                 <th>{{ trans('public.publish_date') }}</th>
@@ -784,7 +784,7 @@
                                                                     <tr>
                                                                         <th>{{ $prerequisite->prerequisiteWebinar->title }}
                                                                         </th>
-                                                                        <td class="text-left">
+                                                                        <td class=" js-font-resize text-left">
                                                                             {{ $prerequisite->prerequisiteWebinar->teacher->full_name }}
                                                                         </td>
                                                                         <td>{{ handlePrice($prerequisite->prerequisiteWebinar->price) }}
@@ -798,10 +798,10 @@
                                                                             <button type="button"
                                                                                 data-prerequisite-id="{{ $prerequisite->id }}"
                                                                                 data-webinar-id="{{ !empty($webinar) ? $webinar->id : '' }}"
-                                                                                class="edit-prerequisite btn-transparent text-primary mt-1"
+                                                                                class=" js-font-resize edit-prerequisite btn-transparent text-primary mt-1"
                                                                                 data-toggle="tooltip" data-placement="top"
                                                                                 title="{{ trans('admin/main.edit') }}">
-                                                                                <i class="fa fa-edit"></i>
+                                                                                <i class=" js-font-resize fa fa-edit"></i>
                                                                             </button>
 
                                                                             @include(
@@ -833,18 +833,18 @@
                                         </div>
                                     </section>
 
-                                    <section class="mt-30">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <h2 class="section-title after-line">{{ trans('public.faq') }}</h2>
+                                    <section class=" js-font-resize mt-30">
+                                        <div class=" js-font-resize d-flex justify-content-between align-items-center">
+                                            <h2 class=" js-font-resize section-title after-line">{{ trans('public.faq') }}</h2>
                                             <button id="webinarAddFAQ" type="button"
-                                                class="btn btn-primary btn-sm mt-3">{{ trans('public.add_faq') }}</button>
+                                                class=" js-font-resize btn btn-primary btn-sm mt-3">{{ trans('public.add_faq') }}</button>
                                         </div>
 
-                                        <div class="row mt-10">
-                                            <div class="col-12">
+                                        <div class=" js-font-resize row mt-10">
+                                            <div class=" js-font-resize col-12">
                                                 @if (!empty($faqs) and !$faqs->isEmpty())
-                                                    <div class="table-responsive">
-                                                        <table class="table table-striped text-center font-14">
+                                                    <div class=" js-font-resize table-responsive">
+                                                        <table class=" js-font-resize table table-striped text-center font-14">
 
                                                             <tr>
                                                                 <th>{{ trans('public.title') }}</th>
@@ -857,19 +857,19 @@
                                                                     <th>{{ $faq->title }}</th>
                                                                     <td>
                                                                         <button type="button"
-                                                                            class="js-get-faq-description btn btn-sm btn-gray200">{{ trans('public.view') }}</button>
+                                                                            class=" js-font-resize js-get-faq-description btn btn-sm btn-gray200">{{ trans('public.view') }}</button>
                                                                         <input type="hidden"
                                                                             value="{{ $faq->answer }}" />
                                                                     </td>
 
-                                                                    <td class="text-right">
+                                                                    <td class=" js-font-resize text-right">
                                                                         <button type="button"
                                                                             data-faq-id="{{ $faq->id }}"
                                                                             data-webinar-id="{{ !empty($webinar) ? $webinar->id : '' }}"
-                                                                            class="edit-faq btn-transparent text-primary mt-1"
+                                                                            class=" js-font-resize edit-faq btn-transparent text-primary mt-1"
                                                                             data-toggle="tooltip" data-placement="top"
                                                                             title="{{ trans('admin/main.edit') }}">
-                                                                            <i class="fa fa-edit"></i>
+                                                                            <i class=" js-font-resize fa fa-edit"></i>
                                                                         </button>
 
                                                                         @include(
@@ -901,12 +901,12 @@
                                     </section>
 
                                     @foreach (\App\Models\WebinarExtraDescription::$types as $webinarExtraDescriptionType)
-                                        <section class="mt-30">
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <h2 class="section-title after-line">
+                                        <section class=" js-font-resize mt-30">
+                                            <div class=" js-font-resize d-flex justify-content-between align-items-center">
+                                                <h2 class=" js-font-resize section-title after-line">
                                                     {{ trans('update.' . $webinarExtraDescriptionType) }}</h2>
                                                 <button id="add_new_{{ $webinarExtraDescriptionType }}" type="button"
-                                                    class="btn btn-primary btn-sm mt-3">{{ trans('update.add_' . $webinarExtraDescriptionType) }}</button>
+                                                    class=" js-font-resize btn btn-primary btn-sm mt-3">{{ trans('update.add_' . $webinarExtraDescriptionType) }}</button>
                                             </div>
 
                                             @php
@@ -916,11 +916,11 @@
                                                 );
                                             @endphp
 
-                                            <div class="row mt-10">
-                                                <div class="col-12">
+                                            <div class=" js-font-resize row mt-10">
+                                                <div class=" js-font-resize col-12">
                                                     @if (!empty($webinarExtraDescriptionValues) and count($webinarExtraDescriptionValues))
-                                                        <div class="table-responsive">
-                                                            <table class="table table-striped text-center font-14">
+                                                        <div class=" js-font-resize table-responsive">
+                                                            <table class=" js-font-resize table table-striped text-center font-14">
 
                                                                 <tr>
                                                                     @if ($webinarExtraDescriptionType == \App\Models\WebinarExtraDescription::$COMPANY_LOGOS)
@@ -936,21 +936,21 @@
                                                                         @if ($webinarExtraDescriptionType == \App\Models\WebinarExtraDescription::$COMPANY_LOGOS)
                                                                             <td>
                                                                                 <img src="{{ $extraDescription->value }}"
-                                                                                    class="webinar-extra-description-company-logos"
+                                                                                    class=" js-font-resize webinar-extra-description-company-logos"
                                                                                     alt="">
                                                                             </td>
                                                                         @else
                                                                             <td>{{ $extraDescription->value }}</td>
                                                                         @endif
 
-                                                                        <td class="text-right">
+                                                                        <td class=" js-font-resize text-right">
                                                                             <button type="button"
                                                                                 data-item-id="{{ $extraDescription->id }}"
                                                                                 data-webinar-id="{{ !empty($webinar) ? $webinar->id : '' }}"
-                                                                                class="edit-extraDescription btn-transparent text-primary mt-1"
+                                                                                class=" js-font-resize edit-extraDescription btn-transparent text-primary mt-1"
                                                                                 data-toggle="tooltip" data-placement="top"
                                                                                 title="{{ trans('admin/main.edit') }}">
-                                                                                <i class="fa fa-edit"></i>
+                                                                                <i class=" js-font-resize fa fa-edit"></i>
                                                                             </button>
 
                                                                             @include(
@@ -984,18 +984,18 @@
                                         </section>
                                     @endforeach
 
-                                    <section class="mt-30">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <h2 class="section-title after-line">{{ trans('public.quiz_certificate') }}
+                                    <section class=" js-font-resize mt-30">
+                                        <div class=" js-font-resize d-flex justify-content-between align-items-center">
+                                            <h2 class=" js-font-resize section-title after-line">{{ trans('public.quiz_certificate') }}
                                             </h2>
                                             <button id="webinarAddQuiz" type="button"
-                                                class="btn btn-primary btn-sm mt-3">{{ trans('public.add_quiz') }}</button>
+                                                class=" js-font-resize btn btn-primary btn-sm mt-3">{{ trans('public.add_quiz') }}</button>
                                         </div>
-                                        <div class="row mt-10">
-                                            <div class="col-12">
+                                        <div class=" js-font-resize row mt-10">
+                                            <div class=" js-font-resize col-12">
                                                 @if (!empty($webinarQuizzes) and !$webinarQuizzes->isEmpty())
-                                                    <div class="table-responsive">
-                                                        <table class="table table-striped text-center font-14">
+                                                    <div class=" js-font-resize table-responsive">
+                                                        <table class=" js-font-resize table table-striped text-center font-14">
 
                                                             <tr>
                                                                 <th>{{ trans('public.title') }}</th>
@@ -1019,10 +1019,10 @@
                                                                         <button type="button"
                                                                             data-webinar-quiz-id="{{ $webinarQuiz->id }}"
                                                                             data-webinar-id="{{ !empty($webinar) ? $webinar->id : '' }}"
-                                                                            class="edit-webinar-quiz btn-transparent text-primary mt-1"
+                                                                            class=" js-font-resize edit-webinar-quiz btn-transparent text-primary mt-1"
                                                                             data-toggle="tooltip" data-placement="top"
                                                                             title="{{ trans('admin/main.edit') }}">
-                                                                            <i class="fa fa-edit"></i>
+                                                                            <i class=" js-font-resize fa fa-edit"></i>
                                                                         </button>
 
                                                                         @include(
@@ -1054,12 +1054,12 @@
                                     </section>
                                 @endif
 
-                                <section class="mt-3">
-                                    <h2 class="section-title after-line">{{ trans('public.message_to_reviewer') }}</h2>
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="form-group mt-15">
-                                                <textarea name="message_for_reviewer" rows="10" class="form-control">{{ !empty($webinar) && $webinar->message_for_reviewer ? $webinar->message_for_reviewer : old('message_for_reviewer') }}</textarea>
+                                <section class=" js-font-resize mt-3">
+                                    <h2 class=" js-font-resize section-title after-line">{{ trans('public.message_to_reviewer') }}</h2>
+                                    <div class=" js-font-resize row">
+                                        <div class=" js-font-resize col-12">
+                                            <div class=" js-font-resize form-group mt-15">
+                                                <textarea name="message_for_reviewer" rows="10" class=" js-font-resize form-control">{{ !empty($webinar) && $webinar->message_for_reviewer ? $webinar->message_for_reviewer : old('message_for_reviewer') }}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -1067,14 +1067,14 @@
 
                                 <input type="hidden" name="draft" value="no" id="forDraft" />
 
-                                <div class="row">
-                                    <div class="col-12">
+                                <div class=" js-font-resize row">
+                                    <div class=" js-font-resize col-12">
                                         <button type="button" id="saveAndPublish"
-                                            class="btn btn-success">{{ !empty($webinar) ? trans('admin/main.save_and_publish') : trans('admin/main.save_and_continue') }}</button>
+                                            class=" js-font-resize btn btn-success">{{ !empty($webinar) ? trans('admin/main.save_and_publish') : trans('admin/main.save_and_continue') }}</button>
 
                                         @if (!empty($webinar))
                                             <button type="button" id="saveReject"
-                                                class="btn btn-warning">{{ $webinar->status == 'active' ? trans('admin/main.unpublish') : trans('public.reject') }}</button>
+                                                class=" js-font-resize btn btn-warning">{{ $webinar->status == 'active' ? trans('admin/main.unpublish') : trans('public.reject') }}</button>
                                             @can('admin_webinars_delete')
                                                 @include('admin.includes.delete_button', [
                                                     'url' =>

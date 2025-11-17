@@ -7,53 +7,53 @@
  
 @section('content')
  
-    <div class="learning-page">
+    <div class=" js-font-resize learning-page">
  
         @include('web.default.course.learningPage.components.navbar')
  
-        <div class="d-flex flex-column flex-lg-row position-relative">
-            <div class="learning-page-content flex-grow-1 bg-primary-acadima p-15">
+        <div class=" js-font-resize d-flex flex-column flex-lg-row position-relative">
+            <div class=" js-font-resize learning-page-content flex-grow-1 bg-primary-acadima p-15">
                 @include('web.default.course.learningPage.components.content')
             </div>
  
-            <div class="learning-page-tabs show">
-                <ul class="nav nav-tabs py-15 d-flex align-items-center justify-content-around shadow border" id="tabs-tab" role="tablist">
-                    <li class="nav-item">
-                        <a class="position-relative font-14 d-flex align-items-center active" id="content-tab"
+            <div class=" js-font-resize learning-page-tabs show">
+                <ul class=" js-font-resize nav nav-tabs py-15 d-flex align-items-center justify-content-around shadow border" id="tabs-tab" role="tablist">
+                    <li class=" js-font-resize nav-item">
+                        <a class=" js-font-resize position-relative font-14 d-flex align-items-center active" id="content-tab"
                            data-toggle="tab" href="#content" role="tab" aria-controls="content"
                            aria-selected="true">
-                            <i class="learning-page-tabs-icons mr-5">
+                            <i class=" js-font-resize learning-page-tabs-icons mr-5">
                                 @include('web.default.panel.includes.sidebar_icons.webinars')
                             </i>
-                            <span class="learning-page-tabs-link-text">{{ trans('product.content') }}</span>
+                            <span class=" js-font-resize learning-page-tabs-link-text">{{ trans('product.content') }}</span>
                         </a>
                     </li>
  
-                    <li class="nav-item">
-                        <a class="position-relative font-14 d-flex align-items-center" id="quizzes-tab" data-toggle="tab"
+                    <li class=" js-font-resize nav-item">
+                        <a class=" js-font-resize position-relative font-14 d-flex align-items-center" id="quizzes-tab" data-toggle="tab"
                            href="#quizzes" role="tab" aria-controls="quizzes"
                            aria-selected="false">
-                            <i class="learning-page-tabs-icons mr-5">
+                            <i class=" js-font-resize learning-page-tabs-icons mr-5">
                                 @include('web.default.panel.includes.sidebar_icons.quizzes')
                             </i>
-                            <span class="learning-page-tabs-link-text">{{ trans('quiz.quizzes') }}</span>
+                            <span class=" js-font-resize learning-page-tabs-link-text">{{ trans('quiz.quizzes') }}</span>
                         </a>
                     </li>
  
-                    <li class="nav-item">
+                    <li class=" js-font-resize nav-item">
                      
  
                      
             @if ($bundle)
             <!-- Button for when $bundleId is present -->
             @if ($bundle && !empty($bundle->end_date) && $bundle->end_date < time())
-            <a class="position-relative font-14 d-flex align-items-center"
+            <a class=" js-font-resize position-relative font-14 d-flex align-items-center"
             href="{{ url('/panel/certificates/achievements') }}"  
               >
-                <i class="learning-page-tabs-icons mr-5">
+                <i class=" js-font-resize learning-page-tabs-icons mr-5">
                     @include('web.default.panel.includes.sidebar_icons.certificate')
                 </i>
-                <span class="learning-page-tabs-link-text">الشهاده</span>
+                <span class=" js-font-resize learning-page-tabs-link-text">الشهاده</span>
             </a>
             @endif
         @else
@@ -61,13 +61,13 @@
          
         {{-- @dump($group->end_date) --}}
         @if ($group && !empty($group->end_date) && $group->end_date < now())
-        <a class="position-relative font-14 d-flex align-items-center"
+        <a class=" js-font-resize position-relative font-14 d-flex align-items-center"
         href="{{ url('/panel/certificates/achievements') }}"
           >
-            <i class="learning-page-tabs-icons mr-5">
+            <i class=" js-font-resize learning-page-tabs-icons mr-5">
                 @include('web.default.panel.includes.sidebar_icons.certificate')
             </i>
-            <span class="learning-page-tabs-link-text">الشهاده</span>
+            <span class=" js-font-resize learning-page-tabs-link-text">الشهاده</span>
         </a>
            
         @endif
@@ -75,18 +75,18 @@
                     </li>
                 </ul>
  
-                <div class="tab-content h-100" id="nav-tabContent">
-                    <div class="pb-20 tab-pane fade show active h-100" id="content" role="tabpanel"
+                <div class=" js-font-resize tab-content h-100" id="nav-tabContent">
+                    <div class=" js-font-resize pb-20 tab-pane fade show active h-100" id="content" role="tabpanel"
                          aria-labelledby="content-tab">
                         @include('web.default.course.learningPage.components.content_tab.index')
                     </div>
  
-                    <div class="pb-20 tab-pane fade  h-100" id="quizzes" role="tabpanel"
+                    <div class=" js-font-resize pb-20 tab-pane fade  h-100" id="quizzes" role="tabpanel"
                          aria-labelledby="quizzes-tab">
                         @include('web.default.course.learningPage.components.quiz_tab.index')
                     </div>
  
-                    <div class="pb-20 tab-pane fade  h-100" id="certificates" role="tabpanel"
+                    <div class=" js-font-resize pb-20 tab-pane fade  h-100" id="certificates" role="tabpanel"
                          aria-labelledby="certificates-tab">
                         @include('web.default.course.learningPage.components.certificate_tab.index')
                     </div>
@@ -97,7 +97,7 @@
             @if ($bundle)
             <!-- Button for when $bundleId is present -->
             @if ($bundle->end_date <= strtotime(now()))
-            <a href="{{ url('/panel/bundle/' . $bundle->id . '/showCertificate') }}" class="btn btn-sm btn-primary">
+            <a href="{{ url('/panel/bundle/' . $bundle->id . '/showCertificate') }}" class=" js-font-resize btn btn-sm btn-primary">
                 تحميل الشهاده
             </a>
             @endif
@@ -110,7 +110,7 @@
         @endphp --}}
         {{-- @dump($startDate->month) --}}
         {{-- @if ($startDate->month < $now->month)
-            <a href="{{ url('/panel/course/' . $course->id . '/showCertificate') }}" class="btn btn-sm btn-primary">
+            <a href="{{ url('/panel/course/' . $course->id . '/showCertificate') }}" class=" js-font-resize btn btn-sm btn-primary">
                 {{ trans('quiz.download_certificate') }}
             </a>
         @endif

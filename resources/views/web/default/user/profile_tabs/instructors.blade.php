@@ -1,8 +1,8 @@
 @if(!empty($instructors) and !$instructors->isEmpty())
-    <div class="mt-20 row">
+    <div class=" js-font-resize mt-20 row">
 
         @foreach($instructors as $instructor)
-            <div class="col-lg-4 mt-20">
+            <div class=" js-font-resize col-lg-4 mt-20">
                 @include('web.default.pages.instructor_card',['instructor' => $instructor])
             </div>
         @endforeach

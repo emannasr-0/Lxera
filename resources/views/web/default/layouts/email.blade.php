@@ -267,9 +267,9 @@
     </style>
 </head>
 
-<body class="body"
+<body class=" js-font-resize body"
     style="-webkit-text-size-adjust: none; padding: 0; margin: 0; display: block; min-width: 100%; width: 100%;">
-    <!--*|IF:MC_PREVIEW_TEXT|*--> <!--[if !gte mso 9]><!--> <span class="mcnPreviewText"
+    <!--*|IF:MC_PREVIEW_TEXT|*--> <!--[if !gte mso 9]><!--> <span class=" js-font-resize mcnPreviewText"
         style="font-size: 0px; line-height: 0px;  opacity: 0; overflow: hidden; visibility: hidden; mso-hide: all; display: none;"></span>
     <!--<![endif]--> <!--*|END:IF|*-->
     <table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#fff">
@@ -281,11 +281,11 @@
                             <!-- BEGIN PREHEADER // -->
                             <table border="0" cellpadding="0" cellspacing="0" width="100%" id="templatePreheader">
                                 <tr>
-                                    <td class="headerContent py-4 mt-35" width="100%"
+                                    <td class=" js-font-resize headerContent py-4 mt-35" width="100%"
                                         style="background: #fff; border-top: 5px solid #1EDFBA; text-align: center; padding-top:20px; padding-bottom:20px;">
                                         <a href="">
-                                            <img class="img" width="30%"
-                                                src="{{ asset('store/Acadima/logo2.webp') }}" class="img-cover"
+                                            <img class=" js-font-resize img" width="30%"
+                                                src="{{ asset('store/Acadima/logo2.webp') }}" class=" js-font-resize img-cover"
                                                 alt="clerax">
                                         </a>
                                         <h1 style="text-align: center; margin-top: 20px; color:#576266 !important;">
@@ -313,22 +313,22 @@
                             <!-- BEGIN FOOTER // -->
                             <table border="0" cellpadding="0" cellspacing="0" width="100%" id="templateFooter">
                                 <tr>
-                                    {{-- <td valign="top" class="footerContent"
+                                    {{-- <td valign="top" class=" js-font-resize footerContent"
                                             style="padding-top:0; padding-bottom:40px; background-color: #fff;"
                                             mc:edit="footer_content02">
                                             @yield('cancel')
                                         </td> --}}
-                                    <td class=""
+                                    <td class=" js-font-resize "
                                         style="padding-left:20px; padding-right: 20px; padding-top:15px; padding-bottom: 15px; text-align: center;">
-                                        <h4 class="font-14 text-white " style="margin: 0; direction: rtl;">
+                                        <h4 class=" js-font-resize font-14 text-white " style="margin: 0; direction: rtl;">
 
                                             {{-- {{ trans('panel.powered_by_lxera') }} --}}
                                             Powered by 
-                                            <a class="text-white" style="color: #1024dd;"
+                                            <a class=" js-font-resize text-white" style="color: #1024dd;"
                                                 href="https://lxera.com/">Lxera</a>
                                         </h4>
 
-                                        {{-- <h4 class="font-14 text-white " style="margin: 0; direction: rtl;">
+                                        {{-- <h4 class=" js-font-resize font-14 text-white " style="margin: 0; direction: rtl;">
 
                                             {{ trans('panel.copyrights') }}
 
@@ -337,14 +337,14 @@
                                 </tr>
                                 <!--    <tr
                                         style="display: flex; padding:10px; justify-content: space-between; align-items:center">
-                                        {{-- <td class="img" width="50%"><a href="https://clerax.com/" target="_blank"
+                                        {{-- <td class=" js-font-resize img" width="50%"><a href="https://clerax.com/" target="_blank"
                                                 style="color: #fff; text-decoration: none; height:auto;">
-                                                <img class="img-cover" src="{{ asset('store/new/cleraxLogo.png') }}"
+                                                <img class=" js-font-resize img-cover" src="{{ asset('store/new/cleraxLogo.png') }}"
                                                     alt="logoo"
                                                     style="float: left !important;-ms-interpolation-mode: bicubic;height:auto;padding:10px; width: 135px !important;" /></a>
                                         </td> --}}
 
-                                            <td class="img d" style="text-align: right;padding-top: 10px; float: right;"
+                                            <td class=" js-font-resize img d" style="text-align: right;padding-top: 10px; float: right;"
                                             width="50%">
                                             <a {{-- href="https://x.com/acadimacollege" --}} target="_blank"
                                                 style=" text-decoration: none;"><img

@@ -10,62 +10,62 @@
     }
 </style>
 
-<div class="learning-page-navbar d-flex align-items-lg-center justify-content-between flex-column flex-lg-row px-15 px-lg-35 border-bottom">
-    <div class="d-flex align-items-lg-center flex-column flex-lg-row col-8 col-lg-6">
+<div class=" js-font-resize learning-page-navbar d-flex align-items-lg-center justify-content-between flex-column flex-lg-row px-15 px-lg-35 border-bottom">
+    <div class=" js-font-resize d-flex align-items-lg-center flex-column flex-lg-row col-8 col-lg-6">
 
-        <div class="">
-            <a class="navbar-brand d-flex align-items-center justify-content-center mr-0" href="/">
+        <div class=" js-font-resize ">
+            <a class=" js-font-resize navbar-brand d-flex align-items-center justify-content-center mr-0" href="/">
                 @if(!empty($generalSettings['logo']))
-                    <img src="{{ asset('store/Acadima/logo2.webp') }}" class="img-cover" alt="site logo">
+                    <img src="{{ asset('store/Acadima/logo2.webp') }}" class=" js-font-resize img-cover" alt="site logo">
                 @endif
             </a>
 
-            <div class="d-flex align-items-center d-lg-none ml-20">
-                {{-- <a href="{{ $course->getUrl() }}" class="btn learning-page-navbar-btn btn-sm border-gray200 d-none d-md-block">{{ trans('update.course_page') }}</a> --}}
+            <div class=" js-font-resize d-flex align-items-center d-lg-none ml-20">
+                {{-- <a href="{{ $course->getUrl() }}" class=" js-font-resize btn learning-page-navbar-btn btn-sm border-gray200 d-none d-md-block">{{ trans('update.course_page') }}</a> --}}
 
-                <a href="/panel/webinars/purchases" class="btn btn-sm ml-10  btn-acadima-primary">{{trans('panel.course_schedule')}}</a>
+                <a href="/panel/webinars/purchases" class=" js-font-resize btn btn-sm ml-10  btn-acadima-primary">{{trans('panel.course_schedule')}}</a>
                 </div>
         </div>
 
-        <div class="learning-page-progress-card d-flex flex-column">
-            <a href="" class="learning-page-navbar-title">
-                <span class="font-weight-bold text-pink">{{ $course->title }}</span>
+        <div class=" js-font-resize learning-page-progress-card d-flex flex-column">
+            <a href="" class=" js-font-resize learning-page-navbar-title">
+                <span class=" js-font-resize font-weight-bold text-pink">{{ $course->title }}</span>
             </a>
 
             @if ($user->isUser())
-                <div class="d-flex align-items-center">
-                    <div class="progress course-progress d-flex align-items-center flex-grow-1 bg-light rounded-sm shadow-none">
-                        <span class="progress-bar rounded-sm bg-gray" style="width: {{ $percent }}%"></span>
+                <div class=" js-font-resize d-flex align-items-center">
+                    <div class=" js-font-resize progress course-progress d-flex align-items-center flex-grow-1 bg-light rounded-sm shadow-none">
+                        <span class=" js-font-resize progress-bar rounded-sm bg-gray" style="width: {{ $percent }}%"></span>
                     </div>
 
-                    <span class="ml-10 font-weight-500 font-14 text-gray">{{ $percent }}% {{ trans('update.learnt') }}</span>
+                    <span class=" js-font-resize ml-10 font-weight-500 font-14 text-gray">{{ $percent }}% {{ trans('update.learnt') }}</span>
                 </div>
             @endif
         </div>
     </div>
 
-    <div class="d-flex align-items-center mt-5 mt-md-0">
+    <div class=" js-font-resize d-flex align-items-center mt-5 mt-md-0">
 
         @if(!empty($course->noticeboards_count) and $course->noticeboards_count > 0)
-            <a href="{{ $course->getNoticeboardsPageUrl() }}" target="_blank" class="btn  btn-acadima-primary noticeboard-btn btn-sm border-gray200 mr-10">
-                <i data-feather="bell" class="" width="16" height="16"></i>
+            <a href="{{ $course->getNoticeboardsPageUrl() }}" target="_blank" class=" js-font-resize btn  btn-acadima-primary noticeboard-btn btn-sm border-gray200 mr-10">
+                <i data-feather="bell" class=" js-font-resize " width="16" height="16"></i>
 
-                <span class="noticeboard-btn-badge d-flex align-items-center justify-content-center text-white bg-danger rounded-circle font-12">{{ $course->noticeboards_count }}</span>
+                <span class=" js-font-resize noticeboard-btn-badge d-flex align-items-center justify-content-center text-white bg-danger rounded-circle font-12">{{ $course->noticeboards_count }}</span>
             </a>
         @endif
 
         {{-- @if($course->forum)
-            <a href="{{ $course->getForumPageUrl() }}" class="btn  btn-acadima-primary btn-sm mr-10">{{ trans('update.course_forum') }}</a>
+            <a href="{{ $course->getForumPageUrl() }}" class=" js-font-resize btn  btn-acadima-primary btn-sm mr-10">{{ trans('update.course_forum') }}</a>
         @endif --}}
 
-        <div class="d-none align-items-center d-lg-flex">
-            {{-- <a href="{{ $course->getUrl() }}" class="btn  btn-acadima-primary btn-sm ">{{ trans('update.course_page') }}</a> --}}
+        <div class=" js-font-resize d-none align-items-center d-lg-flex">
+            {{-- <a href="{{ $course->getUrl() }}" class=" js-font-resize btn  btn-acadima-primary btn-sm ">{{ trans('update.course_page') }}</a> --}}
 
-            <a href="/panel/webinars/purchases" class="btn btn-sm ml-10  btn-acadima-primary">{{trans('panel.course_schedule')}}</a>
+            <a href="/panel/webinars/purchases" class=" js-font-resize btn btn-sm ml-10  btn-acadima-primary">{{trans('panel.course_schedule')}}</a>
         </div>
 
-        <button id="collapseBtn" type="button" class="btn-transparent ml-auto ml-lg-20">
-            <i data-feather="menu" width="20" height="20" class="text-black"></i>
+        <button id="collapseBtn" type="button" class=" js-font-resize btn-transparent ml-auto ml-lg-20">
+            <i data-feather="menu" width="20" height="20" class=" js-font-resize text-black"></i>
         </button>
     </div>
 </div>

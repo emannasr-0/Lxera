@@ -6,7 +6,7 @@
 
 @section('content')
     @if (\Session::has('msg'))
-        <div class="alert alert-warning">
+        <div class=" js-font-resize alert alert-warning">
             <ul>
                 <li>{!! \Session::get('msg') !!}</li>
             </ul>
@@ -31,53 +31,53 @@
 
 
     @if ($offlinePayments->count() > 0)
-        <section class="mt-40">
-            <h2 class="section-title">{{ trans('financial.offline_transactions_history') }}</h2>
+        <section class=" js-font-resize mt-40">
+            <h2 class=" js-font-resize section-title">{{ trans('financial.offline_transactions_history') }}</h2>
 
-            <div class="panel-section-card py-20 px-25 mt-20">
-                <div class="row">
-                    <div class="col-12 ">
-                        <div class="table-responsive">
-                            <table class="table text-center custom-table">
+            <div class=" js-font-resize panel-section-card py-20 px-25 mt-20">
+                <div class=" js-font-resize row">
+                    <div class=" js-font-resize col-12 ">
+                        <div class=" js-font-resize table-responsive">
+                            <table class=" js-font-resize table text-center custom-table">
                                 <thead>
                                     <tr>
                                         <th>{{ trans('financial.bank') }}</th>
                                         <th>{{ 'اي بان (IBAN)' }}</th>
-                                        <th class="text-center">{{ trans('panel.amount') }} ({{ $currency }})</th>
-                                        <th class="text-center">غرض الدفع</th>
-                                        <th class="text-center">{{ trans('update.attachment') }}</th>
-                                        <th class="text-center">{{ trans('public.status') }}</th>
-                                        <th class="text-center">{{ trans('public.controls') }}</th>
+                                        <th class=" js-font-resize text-center">{{ trans('panel.amount') }} ({{ $currency }})</th>
+                                        <th class=" js-font-resize text-center">غرض الدفع</th>
+                                        <th class=" js-font-resize text-center">{{ trans('update.attachment') }}</th>
+                                        <th class=" js-font-resize text-center">{{ trans('public.status') }}</th>
+                                        <th class=" js-font-resize text-center">{{ trans('public.controls') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($offlinePayments as $offlinePayment)
-                                        <tr @if ($offlinePayment->status == 'canceled') class="bg-light" style="opacity: 0.5" @endif>
-                                            <td class="text-left">
-                                                <div class="d-flex flex-column">
+                                        <tr @if ($offlinePayment->status == 'canceled') class=" js-font-resize bg-light" style="opacity: 0.5" @endif>
+                                            <td class=" js-font-resize text-left">
+                                                <div class=" js-font-resize d-flex flex-column">
 
                                                     @if (!empty($offlinePayment->offlineBank))
                                                         <span
-                                                            class="font-weight-500 text-light">{{ $offlinePayment->offlineBank->title }}</span>
+                                                            class=" js-font-resize font-weight-500 text-light">{{ $offlinePayment->offlineBank->title }}</span>
                                                     @else
-                                                        <span class="font-weight-500 text-light">-</span>
+                                                        <span class=" js-font-resize font-weight-500 text-light">-</span>
                                                     @endif
 
                                                 </div>
                                             </td>
 
-                                            <td class="text-left align-middle">
+                                            <td class=" js-font-resize text-left align-middle">
                                                 <span>{{ $offlinePayment->iban }}</span>
                                             </td>
 
 
-                                            <td class="text-center align-middle">
+                                            <td class=" js-font-resize text-center align-middle">
                                                 <span
-                                                    class="font-16 font-weight-bold text-primary">{{ handlePrice($offlinePayment->amount, false) }}</span>
+                                                    class=" js-font-resize font-16 font-weight-bold text-primary">{{ handlePrice($offlinePayment->amount, false) }}</span>
                                             </td>
 
-                                            <td class="text-center align-middle">
-                                                <span class="font-16 font-weight-bold text-secondary">
+                                            <td class=" js-font-resize text-center align-middle">
+                                                <span class=" js-font-resize font-16 font-weight-bold text-secondary">
                                                     @if ($offlinePayment->pay_for == 'form_fee')
                                                         رسوم حجز مقعد دراسي ل
                                                         {{ $offlinePayment->order->orderItems->first()->bundle->title }}
@@ -100,7 +100,7 @@
                                                             'url' => '#',
                                                             'btnClass' => 'd-flex align-items-center justify-content-center mt-1 text-primary',
                                                             'btnText' =>
-                                                                '<span class="ml-2">' .' رسوم طلب خدمة '. $offlinePayment->order->orderItems->first()->service->title .' </span>',
+                                                                '<span class=" js-font-resize ml-2">' .' رسوم طلب خدمة '. $offlinePayment->order->orderItems->first()->service->title .' </span>',
                                                             'hideDefaultClass' => true,
                                                             'deleteConfirmMsg' => 'test',
                                                             'message' => $user->pivot->content,
@@ -112,16 +112,16 @@
                                                 </span>
                                             </td>
 
-                                            <td class="text-center align-middle">
+                                            <td class=" js-font-resize text-center align-middle">
                                                 @if (!empty($offlinePayment->attachment))
                                                     <a href="{{ $offlinePayment->getAttachmentPath() }}" target="_blank"
-                                                        class="">
+                                                        class=" js-font-resize ">
                                                         @if (pathinfo($offlinePayment->attachment, PATHINFO_EXTENSION) != 'pdf')
                                                             <img src="{{ $offlinePayment->getAttachmentPath() }}"
                                                                 alt="offlinePayment_attachment" width="100px"
                                                                 style="max-height:100px">
                                                         @else
-                                                            pdf ملف <i class="fas fa-file font-20"></i>
+                                                            pdf ملف <i class=" js-font-resize fas fa-file font-20"></i>
                                                         @endif
                                                     </a>
                                                 @else
@@ -129,27 +129,27 @@
                                                 @endif
                                             </td>
 
-                                            <td class="text-center align-middle">
+                                            <td class=" js-font-resize text-center align-middle">
                                                 @switch($offlinePayment->status)
                                                     @case(\App\Models\OfflinePayment::$waiting)
-                                                        <span class="text-warning">{{ trans('public.waiting') }}</span>
+                                                        <span class=" js-font-resize text-warning">{{ trans('public.waiting') }}</span>
                                                     @break
 
                                                     @case(\App\Models\OfflinePayment::$approved)
-                                                        <span class="text-secondary">{{ trans('financial.approved') }}</span>
+                                                        <span class=" js-font-resize text-secondary">{{ trans('financial.approved') }}</span>
                                                     @break
 
                                                     @case('canceled')
-                                                        <span class="text-primary">ملغي</span>
+                                                        <span class=" js-font-resize text-primary">ملغي</span>
                                                     @break
 
                                                     @case(\App\Models\OfflinePayment::$reject)
-                                                        <span class="text-danger">{{ trans('public.rejected') }}</span>
+                                                        <span class=" js-font-resize text-danger">{{ trans('public.rejected') }}</span>
                                                         @include('admin.includes.message_button', [
                                                             'url' => '#',
                                                             'btnClass' => 'd-flex align-items-center mt-1',
                                                             'btnText' =>
-                                                                '<span class="ml-2">' . ' سبب الرفض</span>',
+                                                                '<span class=" js-font-resize ml-2">' . ' سبب الرفض</span>',
                                                             'hideDefaultClass' => true,
                                                             'deleteConfirmMsg' => 'هذا سبب الرفض',
                                                             'message' => $offlinePayment->message,
@@ -158,9 +158,9 @@
                                                     @break
                                                 @endswitch
                                             </td>
-                                            <td class="text-center align-middle">
+                                            <td class=" js-font-resize text-center align-middle">
                                                 @if ($offlinePayment->status != 'approved' && $offlinePayment->status != 'canceled')
-                                                    <div class="d-flex justify-content-between">
+                                                    <div class=" js-font-resize d-flex justify-content-between">
                                                         @if ($offlinePayment->status == 'reject')
                                                             @include(
                                                                 'web.default.panel.financial.offline_payments.edit',
@@ -172,7 +172,7 @@
                                                                     'btnClass' =>
                                                                         'btn btn-primary d-flex align-items-center btn-sm mt-1 px-0',
                                                                     'btnText' =>
-                                                                        '<span class="ml-2"> اعادة ارسال</span>',
+                                                                        '<span class=" js-font-resize ml-2"> اعادة ارسال</span>',
                                                                     'hideDefaultClass' => true,
                                                                     'id' => $offlinePayment->id,
                                                                     'payment' => $offlinePayment,
@@ -186,7 +186,7 @@
 
                                                         <a href="/panel/financial/offline-payments/{{ $offlinePayment->id }}/cancel"
                                                             data-item-id="1" data-confirm="نعم إلغاء الطلب"
-                                                            class="delete-action btn btn-danger d-flex align-items-center btn-sm mt-1 mr-2"
+                                                            class=" js-font-resize delete-action btn btn-danger d-flex align-items-center btn-sm mt-1 mr-2"
                                                             style="width:100px">إلغاء الطلب</a>
                                                     </div>
                                                 @endif
@@ -199,7 +199,7 @@
                     </div>
                 </div>
 
-                <div class="d-flex justify-content-center text-center">
+                <div class=" js-font-resize d-flex justify-content-center text-center">
                     {{ $offlinePayments->appends(request()->input())->links() }}
                 </div>
             </div>
@@ -226,7 +226,7 @@
             @if (session()->has('sweetalert'))
                 Swal.fire({
                     icon: "{{ session()->get('sweetalert')['status'] ?? 'success' }}",
-                    html: '<h3 class="font-20 text-center text-light py-25">{{ session()->get('sweetalert')['msg'] ?? '' }}</h3>',
+                    html: '<h3 class=" js-font-resize font-20 text-center text-light py-25">{{ session()->get('sweetalert')['msg'] ?? '' }}</h3>',
                     showConfirmButton: false,
                     width: '25rem',
                 });

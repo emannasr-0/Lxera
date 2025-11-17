@@ -19,39 +19,39 @@
 
     @include('web.default.panel.requirements.requirements_includes.progress')
 
-    <section class="row mt-80 mx-0 justify-content-center">
+    <section class=" js-font-resize row mt-80 mx-0 justify-content-center">
       
         @foreach ($webinarsOrders as $webinarsOrder)
             <section
-                class="bg-secondary-acadima position-relative col-xl-9 col-12 justify-content-center align-items-center rounded-sm mb-80 py-35 px-0">
-                <h2 class="mb-25 col-12 text-dark">
+                class=" js-font-resize bg-secondary-acadima position-relative col-xl-9 col-12 justify-content-center align-items-center rounded-sm mb-80 py-35 px-0">
+                <h2 class=" js-font-resize mb-25 col-12 text-dark">
                     {{ clean($webinarsOrder->webinar->title, 't') }}</h2>
 
                 @if ($webinarsOrder->status == 'waiting')
-                    <div class="w-100 text-center">
-                        <p class="alert alert-info text-center mx-30">
+                    <div class=" js-font-resize w-100 text-center">
+                        <p class=" js-font-resize alert alert-info text-center mx-30">
                             طلبك تحت المراجعه من قبل الإدارة المالية يرجي الانتظار حتي يتم مراجعته
                         </p>
                     </div>
                 @elseif ($webinarsOrder->status == 'rejected')
-                    <div class="w-100 text-center">
-                        <p class="alert alert-danger text-center text-white mx-30">
+                    <div class=" js-font-resize w-100 text-center">
+                        <p class=" js-font-resize alert alert-danger text-center text-white mx-30">
                             طلبك تم رفضه من قبل الإدارة المالية لمعرفة السبب اضغط هنا
                         </p>
-                        <a href="/panel/financial/offline-payments" class="btn btn-success p-5 mt-20 bg-secondary">للذهاب
+                        <a href="/panel/financial/offline-payments" class=" js-font-resize btn btn-success p-5 mt-20 bg-secondary">للذهاب
                             لمتابعة طلبك اضغط
                             هنا</a>
                     </div>
                 @elseif($webinarsOrder->status == 'approved')
-                    <div class="w-100 text-center">
-                        {{-- <p class="alert alert-success text-center mx-30">
+                    <div class=" js-font-resize w-100 text-center">
+                        {{-- <p class=" js-font-resize alert alert-success text-center mx-30">
                             طلبك تم رفضه من قبل الإدارة المالية لمعرفة السبب اضغط هنا
                         </p> --}}
-                        <div class="col-12 p-0">
-                            <div class="installment-card p-15 w-100 h-100">
-                                <div class="mt-20 d-flex flex-column">
+                        <div class=" js-font-resize col-12 p-0">
+                            <div class=" js-font-resize installment-card p-15 w-100 h-100">
+                                <div class=" js-font-resize mt-20 d-flex flex-column">
 
-                                    <button type="button" class="btn btn-primary"
+                                    <button type="button" class=" js-font-resize btn btn-primary"
                                         disabled>{{ trans('panel.purchased') }}</button>
                                 </div>
                             </div>

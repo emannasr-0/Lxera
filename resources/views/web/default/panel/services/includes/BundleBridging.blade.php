@@ -4,25 +4,25 @@
 
 @section('content')
     <!-- Modal -->
-    <div class="" id='confirmModal' tabindex="-1">
-        <div class="">
-            <div class="">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="confirmModalLabel"> طلب {{ trans('update.bridging') }} </h5>
+    <div class=" js-font-resize " id='confirmModal' tabindex="-1">
+        <div class=" js-font-resize ">
+            <div class=" js-font-resize ">
+                <div class=" js-font-resize modal-header">
+                    <h5 class=" js-font-resize modal-title" id="confirmModalLabel"> طلب {{ trans('update.bridging') }} </h5>
                 </div>
-                <form class="modal-body" method="post" action="/panel/services/{{ $service->id }}/bundleBridging">
+                <form class=" js-font-resize modal-body" method="post" action="/panel/services/{{ $service->id }}/bundleBridging">
                     @csrf
                     @php
                         $user = auth()->user();
                         $purchasedBundles = $user->purchasedBundles;
                     @endphp
 
-                    <div class="form-group">
+                    <div class=" js-font-resize form-group">
                         {{-- <input type="hidden" name="bridging_id" id="bridging_id"> --}}
-                        <label class="input-label">{{ trans('update.bridging') }} من برنامج :</label>
-                        <select class="form-control" name="from_bundle_id" id="from_bundle_id"
+                        <label class=" js-font-resize input-label">{{ trans('update.bridging') }} من برنامج :</label>
+                        <select class=" js-font-resize form-control" name="from_bundle_id" id="from_bundle_id"
                             onchange="toggleHiddenInput();displayPriceDiff() ">
-                            <option value="" price="0" class="placeholder" disabled selected>اختر التخصص الذي تود
+                            <option value="" price="0" class=" js-font-resize placeholder" disabled selected>اختر التخصص الذي تود
                                 ال{{ trans('update.bridging') }} منه
                             </option>
                             @foreach ($purchasedBundles as $bundleSale)
@@ -38,15 +38,15 @@
                             @endforeach
                         </select>
                         @error('from_bundle_id')
-                            <div class="invalid-feedback d-block">
+                            <div class=" js-font-resize invalid-feedback d-block">
                                 {{ $message }}
                             </div>
                         @enderror
                     </div>
 
-                    <div class="form-group">
-                        <label class="input-label">{{ trans('update.bridging') }} الي برنامج :</label><br>
-                        <select id="bridging_id" class="form-control @error('bridging_id')  is-invalid @enderror"
+                    <div class=" js-font-resize form-group">
+                        <label class=" js-font-resize input-label">{{ trans('update.bridging') }} الي برنامج :</label><br>
+                        <select id="bridging_id" class=" js-font-resize form-control @error('bridging_id')  is-invalid @enderror"
                             name="bridging_id" required onchange="">
                             <option selected disabled bridging="0">اختر البرنامج المراد ال{{ trans('update.bridging') }}
                                 إليه
@@ -54,19 +54,19 @@
                         </select>
 
                         @error('bridging_id')
-                            <div class="invalid-feedback d-block">
+                            <div class=" js-font-resize invalid-feedback d-block">
                                 {{ $message }}
                             </div>
                         @enderror
                     </div>
 
-                    <div class="form-group text-secondary d-none" id="price-diff">
+                    <div class=" js-font-resize form-group text-secondary d-none" id="price-diff">
 
                     </div>
 
-                    <div class="modal-footer">
+                    <div class=" js-font-resize modal-footer">
 
-                        <button type="submit" class="btn btn-danger" id="confirmAction" disabled>ارسال</button>
+                        <button type="submit" class=" js-font-resize btn btn-danger" id="confirmAction" disabled>ارسال</button>
                     </div>
                 </form>
             </div>
@@ -121,7 +121,7 @@
                     }
 
                     bridging_idInput.outerHTML =
-                        ` <select id="bridging_id" class="form-control @error('bridging_id')  is-invalid @enderror"
+                        ` <select id="bridging_id" class=" js-font-resize form-control @error('bridging_id')  is-invalid @enderror"
                             name="bridging_id" required onchange="displayPriceDiff()">
                             <option selected disabled bridging="0">اختر البرنامج المراد ال{{ trans('update.bridging') }}إليه
                             </option>
@@ -140,7 +140,7 @@
                 }
             } else {
                 bridging_idInput.outerHTML =
-                    ` <select id="bridging_id" class="form-control @error('bridging_id')  is-invalid @enderror"
+                    ` <select id="bridging_id" class=" js-font-resize form-control @error('bridging_id')  is-invalid @enderror"
                             name="bridging_id" required onchange="displayPriceDiff()">
                             <option selected disabled price="0">اختر البرنامج المراد ال{{ trans('update.bridging') }} إليه
                             </option>
@@ -172,7 +172,7 @@
 
                 priceDiff.classList.remove('d-none');
                 priceDiff.innerHTML = `<p>*سوف تقوم بدفع
-                            <span  class="font-weight-bold text-primary"> ${selectedBridge.getAttribute('price')} رس</span>
+                            <span  class=" js-font-resize font-weight-bold text-primary"> ${selectedBridge.getAttribute('price')} رس</span>
                             ثمن برنامج ال{{ trans('update.bridging') }} " ${selectedBridge.getAttribute('title')}"
                         </p>`;
             } else {

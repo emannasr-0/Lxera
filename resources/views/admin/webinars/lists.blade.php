@@ -5,47 +5,47 @@
 @endpush
 
 @section('content')
-    <section class="section">
-        <div class="section-header">
+    <section class=" js-font-resize section">
+        <div class=" js-font-resize section-header">
             <h1>{{ trans('admin/main.type_'.$classesType.'s') }} {{trans('admin/main.list')}}</h1>
-            <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ getAdminPanelUrl() }}">{{trans('admin/main.dashboard')}}</a>
+            <div class=" js-font-resize section-header-breadcrumb">
+                <div class=" js-font-resize breadcrumb-item active"><a href="{{ getAdminPanelUrl() }}">{{trans('admin/main.dashboard')}}</a>
                 </div>
-                <div class="breadcrumb-item">{{trans('admin/main.classes')}}</div>
+                <div class=" js-font-resize breadcrumb-item">{{trans('admin/main.classes')}}</div>
 
-                <div class="breadcrumb-item">{{ trans('admin/main.type_'.$classesType.'s') }}</div>
+                <div class=" js-font-resize breadcrumb-item">{{ trans('admin/main.type_'.$classesType.'s') }}</div>
             </div>
         </div>
 
-        <div class="section-body">
+        <div class=" js-font-resize section-body">
 
-            <div class="row">
-                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                    <div class="card card-statistic-1">
-                        <div class="card-icon bg-primary">
-                            <i class="fas fa-file-video"></i>
+            <div class=" js-font-resize row">
+                <div class=" js-font-resize col-lg-3 col-md-6 col-sm-6 col-12">
+                    <div class=" js-font-resize card card-statistic-1">
+                        <div class=" js-font-resize card-icon bg-primary">
+                            <i class=" js-font-resize fas fa-file-video"></i>
                         </div>
-                        <div class="card-wrap">
-                            <div class="card-header">
+                        <div class=" js-font-resize card-wrap">
+                            <div class=" js-font-resize card-header">
                                 <h4>{{trans('admin/main.total')}} {{ trans('admin/main.type_'.$classesType.'s') }}</h4>
                             </div>
-                            <div class="card-body">
+                            <div class=" js-font-resize card-body">
                                 {{ $totalWebinars }}
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                    <div class="card card-statistic-1">
-                        <div class="card-icon bg-warning">
-                            <i class="fas fa-eye"></i>
+                <div class=" js-font-resize col-lg-3 col-md-6 col-sm-6 col-12">
+                    <div class=" js-font-resize card card-statistic-1">
+                        <div class=" js-font-resize card-icon bg-warning">
+                            <i class=" js-font-resize fas fa-eye"></i>
                         </div>
 
-                        <div class="card-wrap">
-                            <div class="card-header">
+                        <div class=" js-font-resize card-wrap">
+                            <div class=" js-font-resize card-header">
                                 <h4>{{trans('admin/main.pending_review')}} {{ trans('admin/main.type_'.$classesType.'s') }}</h4>
                             </div>
-                            <div class="card-body">
+                            <div class=" js-font-resize card-body">
                                 {{ $totalPendingWebinars }}
                             </div>
                         </div>
@@ -53,34 +53,34 @@
                 </div>
 
                 @if($classesType == 'webinar')
-                    <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                        <div class="card card-statistic-1">
-                            <div class="card-icon bg-info">
-                                <i class="fas fa-history"></i>
+                    <div class=" js-font-resize col-lg-3 col-md-6 col-sm-6 col-12">
+                        <div class=" js-font-resize card card-statistic-1">
+                            <div class=" js-font-resize card-icon bg-info">
+                                <i class=" js-font-resize fas fa-history"></i>
                             </div>
 
-                            <div class="card-wrap">
-                                <div class="card-header">
+                            <div class=" js-font-resize card-wrap">
+                                <div class=" js-font-resize card-header">
                                     <h4>{{trans('admin/main.inprogress_live_classes')}}</h4>
                                 </div>
-                                <div class="card-body">
+                                <div class=" js-font-resize card-body">
                                     {{ $inProgressWebinars }}
                                 </div>
                             </div>
                         </div>
                     </div>
                 {{-- @else
-                    <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                        <div class="card card-statistic-1">
-                            <div class="card-icon bg-info">
-                                <i class="fas fa-history"></i>
+                    <div class=" js-font-resize col-lg-3 col-md-6 col-sm-6 col-12">
+                        <div class=" js-font-resize card card-statistic-1">
+                            <div class=" js-font-resize card-icon bg-info">
+                                <i class=" js-font-resize fas fa-history"></i>
                             </div>
 
-                            <div class="card-wrap">
-                                <div class="card-header">
+                            <div class=" js-font-resize card-wrap">
+                                <div class=" js-font-resize card-header">
                                     <h4>{{trans('admin/main.total_durations')}}</h4>
                                 </div>
-                                <div class="card-body">
+                                <div class=" js-font-resize card-body">
                                     {{ convertMinutesToHourAndMinute($totalDurations) }} {{ trans('home.hours') }}
                                 </div>
                             </div>
@@ -88,15 +88,15 @@
                     </div> --}}
                 @endif
 
-                {{-- <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                    <div class="card card-statistic-1">
-                        <div class="card-icon bg-success">
-                            <i class="fas fa-dollar-sign"></i></div>
-                        <div class="card-wrap">
-                            <div class="card-header">
+                {{-- <div class=" js-font-resize col-lg-3 col-md-6 col-sm-6 col-12">
+                    <div class=" js-font-resize card card-statistic-1">
+                        <div class=" js-font-resize card-icon bg-success">
+                            <i class=" js-font-resize fas fa-dollar-sign"></i></div>
+                        <div class=" js-font-resize card-wrap">
+                            <div class=" js-font-resize card-header">
                                 <h4>{{trans('admin/main.total_sales')}}</h4>
                             </div>
-                            <div class="card-body">
+                            <div class=" js-font-resize card-body">
                                 {{ $totalSales }}
                             </div>
                         </div>
@@ -104,40 +104,40 @@
                 </div> --}}
             </div>
 
-            <section class="card">
-                <div class="card-body">
-                    <form method="get" class="mb-0">
+            <section class=" js-font-resize card">
+                <div class=" js-font-resize card-body">
+                    <form method="get" class=" js-font-resize mb-0">
                         <input type="hidden" name="type" value="{{ request()->get('type') }}">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label class="input-label">{{trans('admin/main.search')}}</label>
-                                    <input name="title" type="text" class="form-control" value="{{ request()->get('title') }}">
+                        <div class=" js-font-resize row">
+                            <div class=" js-font-resize col-md-3">
+                                <div class=" js-font-resize form-group">
+                                    <label class=" js-font-resize input-label">{{trans('admin/main.search')}}</label>
+                                    <input name="title" type="text" class=" js-font-resize form-control" value="{{ request()->get('title') }}">
                                 </div>
                             </div>
 
-                            {{-- <div class="col-md-3">
-                                <div class="form-group">
-                                    <label class="input-label">{{trans('admin/main.start_date')}}</label>
-                                    <div class="input-group">
-                                        <input type="date" id="from" class="text-center form-control" name="from" value="{{ request()->get('from') }}" placeholder="Start Date">
+                            {{-- <div class=" js-font-resize col-md-3">
+                                <div class=" js-font-resize form-group">
+                                    <label class=" js-font-resize input-label">{{trans('admin/main.start_date')}}</label>
+                                    <div class=" js-font-resize input-group">
+                                        <input type="date" id="from" class=" js-font-resize text-center form-control" name="from" value="{{ request()->get('from') }}" placeholder="Start Date">
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label class="input-label">{{trans('admin/main.end_date')}}</label>
-                                    <div class="input-group">
-                                        <input type="date" id="to" class="text-center form-control" name="to" value="{{ request()->get('to') }}" placeholder="End Date">
+                            <div class=" js-font-resize col-md-3">
+                                <div class=" js-font-resize form-group">
+                                    <label class=" js-font-resize input-label">{{trans('admin/main.end_date')}}</label>
+                                    <div class=" js-font-resize input-group">
+                                        <input type="date" id="to" class=" js-font-resize text-center form-control" name="to" value="{{ request()->get('to') }}" placeholder="End Date">
                                     </div>
                                 </div>
                             </div>
 
 
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label class="input-label">{{trans('admin/main.filters')}}</label>
-                                    <select name="sort" data-plugin-selectTwo class="form-control populate">
+                            <div class=" js-font-resize col-md-3">
+                                <div class=" js-font-resize form-group">
+                                    <label class=" js-font-resize input-label">{{trans('admin/main.filters')}}</label>
+                                    <select name="sort" data-plugin-selectTwo class=" js-font-resize form-control populate">
                                         <option value="">{{trans('admin/main.filter_type')}}</option>
                                         <option value="has_discount" @if(request()->get('sort') == 'has_discount') selected @endif>{{trans('admin/main.discounted_classes')}}</option>
                                         <option value="sales_asc" @if(request()->get('sort') == 'sales_asc') selected @endif>{{trans('admin/main.sales_ascending')}}</option>
@@ -157,10 +157,10 @@
                             </div> --}}
 
 
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label class="input-label">{{trans('admin/main.instructor')}}</label>
-                                    <select name="teacher_ids[]" multiple="multiple" data-search-option="just_teacher_role" class="form-control search-user-select2"
+                            <div class=" js-font-resize col-md-3">
+                                <div class=" js-font-resize form-group">
+                                    <label class=" js-font-resize input-label">{{trans('admin/main.instructor')}}</label>
+                                    <select name="teacher_ids[]" multiple="multiple" data-search-option="just_teacher_role" class=" js-font-resize form-control search-user-select2"
                                             data-placeholder="Search teachers">
 
                                         @if(!empty($teachers) and $teachers->count() > 0)
@@ -173,10 +173,10 @@
                             </div>
 
 
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label class="input-label">{{trans('admin/main.category')}}</label>
-                                    <select name="category_id" data-plugin-selectTwo class="form-control populate">
+                            <div class=" js-font-resize col-md-3">
+                                <div class=" js-font-resize form-group">
+                                    <label class=" js-font-resize input-label">{{trans('admin/main.category')}}</label>
+                                    <select name="category_id" data-plugin-selectTwo class=" js-font-resize form-control populate">
                                         <option value="">{{trans('admin/main.all_categories')}}</option>
 
                                         @foreach($categories as $category)
@@ -195,10 +195,10 @@
                             </div>
 
 
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label class="input-label">{{trans('admin/main.status')}}</label>
-                                    <select name="status" data-plugin-selectTwo class="form-control populate">
+                            <div class=" js-font-resize col-md-3">
+                                <div class=" js-font-resize form-group">
+                                    <label class=" js-font-resize input-label">{{trans('admin/main.status')}}</label>
+                                    <select name="status" data-plugin-selectTwo class=" js-font-resize form-control populate">
                                         <option value="">{{trans('admin/main.all_status')}}</option>
                                         <option value="pending" @if(request()->get('status') == 'pending') selected @endif>{{trans('admin/main.pending_review')}}</option>
                                         @if($classesType == 'webinar')
@@ -215,10 +215,10 @@
                             </div>
 
 
-                            <div class="col-md-3">
-                                <div class="form-group mt-1">
-                                    <label class="input-label mb-4"> </label>
-                                    <input type="submit" class="text-center btn btn-primary w-100" value="{{trans('admin/main.show_results')}}">
+                            <div class=" js-font-resize col-md-3">
+                                <div class=" js-font-resize form-group mt-1">
+                                    <label class=" js-font-resize input-label mb-4"> </label>
+                                    <input type="submit" class=" js-font-resize text-center btn btn-primary w-100" value="{{trans('admin/main.show_results')}}">
                                 </div>
                             </div>
                         </div>
@@ -226,24 +226,24 @@
                 </div>
             </section>
 
-            <div class="row">
-                <div class="col-12 col-md-12">
-                    <div class="card">
-                        <div class="card-header">
+            <div class=" js-font-resize row">
+                <div class=" js-font-resize col-12 col-md-12">
+                    <div class=" js-font-resize card">
+                        <div class=" js-font-resize card-header">
                             @can('admin_webinars_export_excel')
-                                <div class="text-right">
-                                    <a href="{{ getAdminPanelUrl() }}/webinars/excel?{{ http_build_query(request()->all()) }}" class="btn btn-primary">{{ trans('admin/main.export_xls') }}</a>
+                                <div class=" js-font-resize text-right">
+                                    <a href="{{ getAdminPanelUrl() }}/webinars/excel?{{ http_build_query(request()->all()) }}" class=" js-font-resize btn btn-primary">{{ trans('admin/main.export_xls') }}</a>
                                 </div>
                             @endcan
                         </div>
 
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-striped font-14 ">
+                        <div class=" js-font-resize card-body">
+                            <div class=" js-font-resize table-responsive">
+                                <table class=" js-font-resize table table-striped font-14 ">
                                     <tr>
                                         <th>{{trans('admin/main.id')}}</th>
-                                        <th class="text-left">{{trans('admin/main.title')}}</th>
-                                        <th class="text-left">{{trans('admin/main.instructor')}}</th>
+                                        <th class=" js-font-resize text-left">{{trans('admin/main.title')}}</th>
+                                        <th class=" js-font-resize text-left">{{trans('admin/main.instructor')}}</th>
                                         <th>{{trans('admin/main.price')}}</th>
                                         <th>{{trans('admin/main.sales')}}</th>
                                         <th>{{trans('admin/main.income')}}</th>
@@ -259,143 +259,143 @@
                                     </tr>
 
                                     @foreach($webinars as $webinar)
-                                        <tr class="text-center">
+                                        <tr class=" js-font-resize text-center">
                                             <td>{{ $webinar->id }}</td>
-                                            <td width="18%" class="text-left">
-                                                <a class="text-primary mt-0 mb-1 font-weight-bold" href="{{ $webinar->getUrl() }}">{{ $webinar->title }}</a>
+                                            <td width="18%" class=" js-font-resize text-left">
+                                                <a class=" js-font-resize text-primary mt-0 mb-1 font-weight-bold" href="{{ $webinar->getUrl() }}">{{ $webinar->title }}</a>
                                                 @if(!empty($webinar->category->title))
-                                                    <div class="text-small">{{ $webinar->category->title }}</div>
+                                                    <div class=" js-font-resize text-small">{{ $webinar->category->title }}</div>
                                                 @else
-                                                    <div class="text-small text-warning">{{trans('admin/main.no_category')}}</div>
+                                                    <div class=" js-font-resize text-small text-warning">{{trans('admin/main.no_category')}}</div>
                                                 @endif
                                             </td>
 
-                                            <td class="text-left">{{ $webinar->teacher->full_name }}</td>
+                                            <td class=" js-font-resize text-left">{{ $webinar->teacher->full_name }}</td>
 
                                             <td>
                                                 @if(!empty($webinar->price) and $webinar->price > 0)
-                                                    <span class="mt-0 mb-1">
+                                                    <span class=" js-font-resize mt-0 mb-1">
                                                         {{ handlePrice($webinar->price, true, true) }}
                                                     </span>
 
                                                     @if($webinar->getDiscountPercent() > 0)
-                                                        <div class="text-danger text-small font-600-bold">{{ $webinar->getDiscountPercent() }}% {{trans('admin/main.off')}}</div>
+                                                        <div class=" js-font-resize text-danger text-small font-600-bold">{{ $webinar->getDiscountPercent() }}% {{trans('admin/main.off')}}</div>
                                                     @endif
                                                 @else
                                                     {{ trans('public.free') }}
                                                 @endif
                                             </td>
                                             <td>
-                                                <span class="text-primary mt-0 mb-1 font-weight-bold">
+                                                <span class=" js-font-resize text-primary mt-0 mb-1 font-weight-bold">
                                                     {{ $webinar->sales->count() }}
                                                 </span>
 
                                                 @if(!empty($webinar->capacity))
-                                                    <div class="text-small font-600-bold">{{trans('admin/main.capacity')}} : {{ $webinar->getWebinarCapacity() }}</div>
+                                                    <div class=" js-font-resize text-small font-600-bold">{{trans('admin/main.capacity')}} : {{ $webinar->getWebinarCapacity() }}</div>
                                                 @endif
                                             </td>
 
                                             <td>{{ handlePrice($webinar->sales->sum('total_amount')) }}</td>
 
-                                            <td class="font-12">
-                                                <a href="{{ getAdminPanelUrl() }}/webinars/{{ $webinar->id }}/students" target="_blank" class="">{{ $webinar->sales->count() }}</a>
+                                            <td class=" js-font-resize font-12">
+                                                <a href="{{ getAdminPanelUrl() }}/webinars/{{ $webinar->id }}/students" target="_blank" class=" js-font-resize ">{{ $webinar->sales->count() }}</a>
                                             </td>
 
-                                            <td class="font-12">{{ dateTimeFormat($webinar->created_at, 'Y M j | H:i') }}</td>
+                                            <td class=" js-font-resize font-12">{{ dateTimeFormat($webinar->created_at, 'Y M j | H:i') }}</td>
 
                                             @if($classesType == 'webinar')
-                                                <td class="font-12">{{ dateTimeFormat($webinar->start_date, 'Y M j | H:i') }}</td>
+                                                <td class=" js-font-resize font-12">{{ dateTimeFormat($webinar->start_date, 'Y M j | H:i') }}</td>
                                             @else
-                                                <td class="font-12">{{ dateTimeFormat($webinar->updated_at, 'Y M j | H:i') }}</td>
+                                                <td class=" js-font-resize font-12">{{ dateTimeFormat($webinar->updated_at, 'Y M j | H:i') }}</td>
                                             @endif
 
                                             <td>
                                                 @switch($webinar->status)
                                                     @case(\App\Models\Webinar::$active)
-                                                        <div class="text-success font-600-bold">{{ trans('admin/main.published') }}</div>
+                                                        <div class=" js-font-resize text-success font-600-bold">{{ trans('admin/main.published') }}</div>
                                                         @if($webinar->isWebinar())
                                                         @if($webinar->start_date > time())
-                                                            <div class="text-danger text-small">({{  trans('admin/main.not_conducted') }})</div>
+                                                            <div class=" js-font-resize text-danger text-small">({{  trans('admin/main.not_conducted') }})</div>
                                                             @elseif($webinar->isProgressing())
-                                                                <div class="text-warning text-small">({{  trans('webinars.in_progress') }})</div>
+                                                                <div class=" js-font-resize text-warning text-small">({{  trans('webinars.in_progress') }})</div>
                                                             @else
-                                                                <div class="text-success text-small">({{ trans('public.finished') }})</div>
+                                                                <div class=" js-font-resize text-success text-small">({{ trans('public.finished') }})</div>
                                                             @endif
                                                         @endif
                                                         @break
                                                     @case(\App\Models\Webinar::$isDraft)
-                                                        <span class="text-dark">{{ trans('admin/main.is_draft') }}</span>
+                                                        <span class=" js-font-resize text-dark">{{ trans('admin/main.is_draft') }}</span>
                                                         @break
                                                     @case(\App\Models\Webinar::$pending)
-                                                        <span class="text-warning">{{ trans('admin/main.waiting') }}</span>
+                                                        <span class=" js-font-resize text-warning">{{ trans('admin/main.waiting') }}</span>
                                                         @break
                                                     @case(\App\Models\Webinar::$inactive)
-                                                        <span class="text-danger">{{ trans('public.rejected') }}</span>
+                                                        <span class=" js-font-resize text-danger">{{ trans('public.rejected') }}</span>
                                                         @break
                                                 @endswitch
                                             </td>
-                                            <td width="200" class="">
-                                                <div class="btn-group dropdown table-actions">
-                                                    <button type="button" class="btn-transparent dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fa fa-ellipsis-v"></i>
+                                            <td width="200" class=" js-font-resize ">
+                                                <div class=" js-font-resize btn-group dropdown table-actions">
+                                                    <button type="button" class=" js-font-resize btn-transparent dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <i class=" js-font-resize fa fa-ellipsis-v"></i>
                                                     </button>
-                                                    <div class="dropdown-menu text-left webinars-lists-dropdown">
+                                                    <div class=" js-font-resize dropdown-menu text-left webinars-lists-dropdown">
 
                                                         @can('admin_webinars_edit')
                                                             @if($webinar->status == \App\Models\Webinar::$pending)
                                                                 @include('admin.includes.delete_button',[
                                                                     'url' => getAdminPanelUrl().'/webinars/'.$webinar->id.'/approve',
                                                                     'btnClass' => 'd-flex align-items-center text-success text-decoration-none btn-transparent btn-sm mt-1',
-                                                                    'btnText' => '<i class="fa fa-check"></i><span class="ml-2">'. trans("admin/main.approve") .'</span>'
+                                                                    'btnText' => '<i class=" js-font-resize fa fa-check"></i><span class=" js-font-resize ml-2">'. trans("admin/main.approve") .'</span>'
                                                                     ])
 
                                                                 @include('admin.includes.delete_button',[
                                                                     'url' => getAdminPanelUrl().'/webinars/'.$webinar->id.'/reject',
                                                                     'btnClass' => 'd-flex align-items-center text-danger text-decoration-none btn-transparent btn-sm mt-1',
-                                                                    'btnText' => '<i class="fa fa-times"></i><span class="ml-2">'. trans("admin/main.reject") .'</span>'
+                                                                    'btnText' => '<i class=" js-font-resize fa fa-times"></i><span class=" js-font-resize ml-2">'. trans("admin/main.reject") .'</span>'
                                                                     ])
                                                             @elseif($webinar->status == \App\Models\Webinar::$active)
                                                                 @include('admin.includes.delete_button',[
                                                                     'url' => getAdminPanelUrl().'/webinars/'.$webinar->id.'/unpublish',
                                                                     'btnClass' => 'd-flex align-items-center text-danger text-decoration-none btn-transparent btn-sm mt-1',
-                                                                    'btnText' => '<i class="fa fa-times"></i><span class="ml-2">'. trans("admin/main.unpublish") .'</span>'
+                                                                    'btnText' => '<i class=" js-font-resize fa fa-times"></i><span class=" js-font-resize ml-2">'. trans("admin/main.unpublish") .'</span>'
                                                                     ])
                                                             @endif
                                                         @endcan
 
 
                                                         @can('admin_webinar_notification_to_students')
-                                                            <a href="{{ getAdminPanelUrl() }}/webinars/{{ $webinar->id }}/sendNotification" target="_blank" class="d-flex align-items-center text-dark text-decoration-none btn-transparent btn-sm text-primary mt-1 ">
-                                                                <i class="fa fa-bell"></i>
-                                                                <span class="ml-2">{{ trans('notification.send_notification') }}</span>
+                                                            <a href="{{ getAdminPanelUrl() }}/webinars/{{ $webinar->id }}/sendNotification" target="_blank" class=" js-font-resize d-flex align-items-center text-dark text-decoration-none btn-transparent btn-sm text-primary mt-1 ">
+                                                                <i class=" js-font-resize fa fa-bell"></i>
+                                                                <span class=" js-font-resize ml-2">{{ trans('notification.send_notification') }}</span>
                                                             </a>
                                                         @endcan
 
                                                         @can('admin_webinar_students_lists')
-                                                            <a href="{{ getAdminPanelUrl() }}/webinars/{{ $webinar->id }}/students" target="_blank" class="d-flex align-items-center text-dark text-decoration-none btn-transparent btn-sm text-primary mt-1 " title="{{ trans('admin/main.students') }}">
-                                                                <i class="fa fa-users"></i>
-                                                                <span class="ml-2">{{ trans('admin/main.students') }}</span>
+                                                            <a href="{{ getAdminPanelUrl() }}/webinars/{{ $webinar->id }}/students" target="_blank" class=" js-font-resize d-flex align-items-center text-dark text-decoration-none btn-transparent btn-sm text-primary mt-1 " title="{{ trans('admin/main.students') }}">
+                                                                <i class=" js-font-resize fa fa-users"></i>
+                                                                <span class=" js-font-resize ml-2">{{ trans('admin/main.students') }}</span>
                                                             </a>
                                                         @endcan
 
                                                         @can('admin_webinar_statistics')
-                                                            <a href="{{ getAdminPanelUrl() }}/webinars/{{ $webinar->id }}/statistics" target="_blank" class="d-flex align-items-center text-dark text-decoration-none btn-transparent btn-sm text-primary mt-1 " title="{{ trans('admin/main.students') }}">
-                                                                <i class="fa fa-chart-pie"></i>
-                                                                <span class="ml-2">{{ trans('update.statistics') }}</span>
+                                                            <a href="{{ getAdminPanelUrl() }}/webinars/{{ $webinar->id }}/statistics" target="_blank" class=" js-font-resize d-flex align-items-center text-dark text-decoration-none btn-transparent btn-sm text-primary mt-1 " title="{{ trans('admin/main.students') }}">
+                                                                <i class=" js-font-resize fa fa-chart-pie"></i>
+                                                                <span class=" js-font-resize ml-2">{{ trans('update.statistics') }}</span>
                                                             </a>
                                                         @endcan
 
                                                         @can('admin_support_send')
-                                                            <a href="{{ getAdminPanelUrl() }}/supports/create?user_id={{ $webinar->teacher->id }}" target="_blank" class="d-flex align-items-center text-dark text-decoration-none btn-transparent btn-sm text-primary mt-1" title="{{ trans('admin/main.send_message_to_teacher') }}">
-                                                                <i class="fa fa-comment"></i>
-                                                                <span class="ml-2">{{ trans('site.send_message') }}</span>
+                                                            <a href="{{ getAdminPanelUrl() }}/supports/create?user_id={{ $webinar->teacher->id }}" target="_blank" class=" js-font-resize d-flex align-items-center text-dark text-decoration-none btn-transparent btn-sm text-primary mt-1" title="{{ trans('admin/main.send_message_to_teacher') }}">
+                                                                <i class=" js-font-resize fa fa-comment"></i>
+                                                                <span class=" js-font-resize ml-2">{{ trans('site.send_message') }}</span>
                                                             </a>
                                                         @endcan
 
                                                         @can('admin_webinars_edit')
-                                                            <a href="{{ getAdminPanelUrl() }}/webinars/{{ $webinar->id }}/edit" target="_blank" class="d-flex align-items-center text-dark text-decoration-none btn-transparent btn-sm text-primary mt-1 " title="{{ trans('admin/main.edit') }}">
-                                                                <i class="fa fa-edit"></i>
-                                                                <span class="ml-2">{{ trans('admin/main.edit') }}</span>
+                                                            <a href="{{ getAdminPanelUrl() }}/webinars/{{ $webinar->id }}/edit" target="_blank" class=" js-font-resize d-flex align-items-center text-dark text-decoration-none btn-transparent btn-sm text-primary mt-1 " title="{{ trans('admin/main.edit') }}">
+                                                                <i class=" js-font-resize fa fa-edit"></i>
+                                                                <span class=" js-font-resize ml-2">{{ trans('admin/main.edit') }}</span>
                                                             </a>
                                                         @endcan
 
@@ -403,7 +403,7 @@
                                                             @include('admin.includes.delete_button',[
                                                                     'url' => getAdminPanelUrl().'/webinars/'.$webinar->id.'/delete',
                                                                     'btnClass' => 'd-flex align-items-center text-dark text-decoration-none btn-transparent btn-sm mt-1',
-                                                                    'btnText' => '<i class="fa fa-times"></i><span class="ml-2">'. trans("admin/main.delete") .'</span>'
+                                                                    'btnText' => '<i class=" js-font-resize fa fa-times"></i><span class=" js-font-resize ml-2">'. trans("admin/main.delete") .'</span>'
                                                                     ])
                                                         @endcan
                                                     </div>
@@ -415,7 +415,7 @@
                             </div>
                         </div>
 
-                        <div class="card-footer text-center">
+                        <div class=" js-font-resize card-footer text-center">
                             {{ $webinars->appends(request()->input())->links() }}
                         </div>
 

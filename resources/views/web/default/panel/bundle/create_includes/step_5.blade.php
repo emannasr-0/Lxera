@@ -3,19 +3,19 @@
 @endpush
 
 
-<section class="mt-50">
-    <div class="">
-        <h2 class="section-title after-line">{{ trans('public.faq') }} ({{ trans('public.optional') }})</h2>
+<section class=" js-font-resize mt-50">
+    <div class=" js-font-resize ">
+        <h2 class=" js-font-resize section-title after-line">{{ trans('public.faq') }} ({{ trans('public.optional') }})</h2>
     </div>
 
-    <button id="webinarAddFAQ" data-bundle-id="{{ $bundle->id }}" type="button" class="btn btn-primary btn-sm mt-15">{{ trans('public.add_faq') }}</button>
+    <button id="webinarAddFAQ" data-bundle-id="{{ $bundle->id }}" type="button" class=" js-font-resize btn btn-primary btn-sm mt-15">{{ trans('public.add_faq') }}</button>
 
-    <div class="row mt-10">
-        <div class="col-12">
+    <div class=" js-font-resize row mt-10">
+        <div class=" js-font-resize col-12">
 
-            <div class="accordion-content-wrapper mt-15" id="faqsAccordion" role="tablist" aria-multiselectable="true">
+            <div class=" js-font-resize accordion-content-wrapper mt-15" id="faqsAccordion" role="tablist" aria-multiselectable="true">
                 @if(!empty($bundle->faqs) and count($bundle->faqs))
-                    <ul class="draggable-lists" data-order-table="faqs">
+                    <ul class=" js-font-resize draggable-lists" data-order-table="faqs">
                         @foreach($bundle->faqs as $faqInfo)
                             @include('web.default.panel.bundle.create_includes.accordions.faq',['bundle' => $bundle,'faq' => $faqInfo])
                         @endforeach
@@ -32,7 +32,7 @@
     </div>
 </section>
 
-<div id="newFaqForm" class="d-none">
+<div id="newFaqForm" class=" js-font-resize d-none">
     @include('web.default.panel.bundle.create_includes.accordions.faq',['bundle' => $bundle])
 </div>
 

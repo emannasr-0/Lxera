@@ -4,29 +4,29 @@
 @endpush
 
 @section('content')
-    <section class="section">
-        <div class="section-header">
+    <section class=" js-font-resize section">
+        <div class=" js-font-resize section-header">
             <h1>{{ trans('admin/main.list') }} {{ 'المجموعات' }} </h1>
-            <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a>مجموعة {{ $group->name }}</a></div>
-                <div class="breadcrumb-item"><a href="#"> {{ $item->title }}</a></div>
-                <div class="breadcrumb-item"><a href="#">{{ 'المجموعات' }}</a></div>
+            <div class=" js-font-resize section-header-breadcrumb">
+                <div class=" js-font-resize breadcrumb-item active"><a>مجموعة {{ $group->name }}</a></div>
+                <div class=" js-font-resize breadcrumb-item"><a href="#"> {{ $item->title }}</a></div>
+                <div class=" js-font-resize breadcrumb-item"><a href="#">{{ 'المجموعات' }}</a></div>
             </div>
         </div>
     </section>
 
-    <div class="section-body">
-        <div class="row">
-            <div class="col-12">
-                <div class="card card-statistic-1">
-                    <div class="card-icon bg-primary">
-                        <i class="fas fa-users"></i>
+    <div class=" js-font-resize section-body">
+        <div class=" js-font-resize row">
+            <div class=" js-font-resize col-12">
+                <div class=" js-font-resize card card-statistic-1">
+                    <div class=" js-font-resize card-icon bg-primary">
+                        <i class=" js-font-resize fas fa-users"></i>
                     </div>
-                    <div class="card-wrap">
-                        <div class="card-header">
+                    <div class=" js-font-resize card-wrap">
+                        <div class=" js-font-resize card-header">
                             <h4>{{ 'كل الطلاب' }}</h4>
                         </div>
-                        <div class="card-body">
+                        <div class=" js-font-resize card-body">
                             {{ $enrollments->count() }}
                         </div>
                     </div>
@@ -35,18 +35,18 @@
         </div>
     </div>
 
-    <div class="card">
-        <div class="card-header">
+    <div class=" js-font-resize card">
+        <div class=" js-font-resize card-header">
             @can('admin_users_export_excel')
                 <a href="{{ getAdminPanelUrl() }}/courses/groups/{{ $group->id }}/exportExcel?{{ http_build_query(request()->all()) }}"
-                    class="btn btn-primary">{{ trans('admin/main.export_xls') }}</a>
+                    class=" js-font-resize btn btn-primary">{{ trans('admin/main.export_xls') }}</a>
             @endcan
-            <div class="h-10"></div>
+            <div class=" js-font-resize h-10"></div>
         </div>
 
-        <div class="card-body">
-            <div class="table-responsive text-center">
-                <table class="table table-striped font-14">
+        <div class=" js-font-resize card-body">
+            <div class=" js-font-resize table-responsive text-center">
+                <table class=" js-font-resize table table-striped font-14">
                     <tr>
                         <th>{{ '#' }}</th>
                         <th>كود الطالب</th>
@@ -61,24 +61,24 @@
                             <td>{{ ++$index }}</td>
                             <td>{{ $enrollment->user->user_code }}</td>
 
-                            <td class="text-left">
-                                <div class="d-flex align-items-center">
-                                    <figure class="avatar mr-2">
+                            <td class=" js-font-resize text-left">
+                                <div class=" js-font-resize d-flex align-items-center">
+                                    <figure class=" js-font-resize avatar mr-2">
                                         <img src="{{ $enrollment->user->getAvatar() }}"
                                             alt="{{ $enrollment->user->student ? $enrollment->user->student->ar_name : null }}">
                                     </figure>
-                                    <div class="media-body ml-1">
-                                        <div class="mt-0 mb-1 font-weight-bold">
+                                    <div class=" js-font-resize media-body ml-1">
+                                        <div class=" js-font-resize mt-0 mb-1 font-weight-bold">
                                             {{ $enrollment->user->student ? $enrollment->user->student->ar_name : null }}
                                         </div>
 
                                         @if ($enrollment->user->mobile)
-                                            <div class="text-primary text-left font-600-bold" style="font-size:12px;">
+                                            <div class=" js-font-resize text-primary text-left font-600-bold" style="font-size:12px;">
                                                 {{ $enrollment->user->mobile }}</div>
                                         @endif
 
                                         @if ($enrollment->user->email)
-                                            <div class="text-primary text-small font-600-bold">
+                                            <div class=" js-font-resize text-primary text-small font-600-bold">
                                                 {{ $enrollment->user->email }}</div>
                                         @endif
                                     </div>
@@ -91,24 +91,24 @@
 
                             <td>
                                 @if ($enrollment->user->ban and !empty($enrollment->user->ban_end_at) and $enrollment->user->ban_end_at > time())
-                                    <div class="mt-0 mb-1 font-weight-bold text-danger">{{ trans('admin/main.ban') }}
+                                    <div class=" js-font-resize mt-0 mb-1 font-weight-bold text-danger">{{ trans('admin/main.ban') }}
                                     </div>
-                                    <div class="text-small font-600-bold">Until
+                                    <div class=" js-font-resize text-small font-600-bold">Until
                                         {{ dateTimeFormat($enrollment->user->ban_end_at, 'Y/m/j') }}</div>
                                 @else
                                     <div
-                                        class="mt-0 mb-1 font-weight-bold {{ $enrollment->user->status == 'active' ? 'text-success' : 'text-warning' }}">
+                                        class=" js-font-resize mt-0 mb-1 font-weight-bold {{ $enrollment->user->status == 'active' ? 'text-success' : 'text-warning' }}">
                                         {{ trans('admin/main.' . $enrollment->user->status) }}</div>
                                 @endif
                             </td>
 
-                            <td class="text-center mb-2" width="120">
+                            <td class=" js-font-resize text-center mb-2" width="120">
                                 @can('admin_users_transform')
                                     @if (!empty($enrollment->user->student))
                                         @include('admin.includes.transform_button', [
                                             'url' => getAdminPanelUrl() . '/courses/groups/' .$group->id . '/change',
                                             'btnClass' => 'btn-transparent  text-primary',
-                                            'btnText' => '<i class="fa fa-retweet"></i>',
+                                            'btnText' => '<i class=" js-font-resize fa fa-retweet"></i>',
                                             'hideDefaultClass' => true,
                                             'id' =>$enrollment->user->id,
                                             'from' =>$group,
@@ -121,17 +121,17 @@
 
                                 @can('admin_users_impersonate')
                                     <a href="{{ getAdminPanelUrl() }}/users/{{ $enrollment->user->id }}/impersonate"
-                                        target="_blank" class="btn-transparent  text-primary" data-toggle="tooltip"
+                                        target="_blank" class=" js-font-resize btn-transparent  text-primary" data-toggle="tooltip"
                                         data-placement="top" title="{{ trans('admin/main.login') }}">
-                                        <i class="fa fa-user-shield"></i>
+                                        <i class=" js-font-resize fa fa-user-shield"></i>
                                     </a>
                                 @endcan
 
                                 @can('admin_users_edit')
                                     <a href="{{ getAdminPanelUrl() }}/users/{{ $enrollment->user->id }}/edit"
-                                        class="btn-transparent  text-primary" data-toggle="tooltip" data-placement="top"
+                                        class=" js-font-resize btn-transparent  text-primary" data-toggle="tooltip" data-placement="top"
                                         title="{{ trans('admin/main.edit') }}">
-                                        <i class="fa fa-edit"></i>
+                                        <i class=" js-font-resize fa fa-edit"></i>
                                     </a>
                                 @endcan
 
@@ -152,7 +152,7 @@
             </div>
         </div>
 
-        {{-- <div class="card-footer text-center">
+        {{-- <div class=" js-font-resize card-footer text-center">
             {{ $groups->appends(request()->input())->links() }}
         </div> --}}
     </div>

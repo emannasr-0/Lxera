@@ -1,12 +1,12 @@
-<section class="mt-45">
-    <h3 class="section-title">{{ trans('update.shipping_and_delivery') }}</h3>
-    <div class="rounded-sm shadow mt-20 py-25 px-20">
-        <div class="row">
-            <div class="col-12 col-lg-6">
-                <div class="form-group">
-                    <label class="input-label font-weight-500">{{ trans('update.country') }}</label>
+<section class=" js-font-resize mt-45">
+    <h3 class=" js-font-resize section-title">{{ trans('update.shipping_and_delivery') }}</h3>
+    <div class=" js-font-resize rounded-sm shadow mt-20 py-25 px-20">
+        <div class=" js-font-resize row">
+            <div class=" js-font-resize col-12 col-lg-6">
+                <div class=" js-font-resize form-group">
+                    <label class=" js-font-resize input-label font-weight-500">{{ trans('update.country') }}</label>
 
-                    <select name="country_id" class="form-control @error('country_id')  is-invalid @enderror">
+                    <select name="country_id" class=" js-font-resize form-control @error('country_id')  is-invalid @enderror">
                         <option value="">{{ trans('update.select_country') }}</option>
 
                         @if(!empty($countries))
@@ -17,16 +17,16 @@
                     </select>
 
                     @error('country_id')
-                    <div class="invalid-feedback">
+                    <div class=" js-font-resize invalid-feedback">
                         {{ $message }}
                     </div>
                     @enderror
                 </div>
 
-                <div class="form-group">
-                    <label class="input-label font-weight-500">{{ trans('update.province') }}</label>
+                <div class=" js-font-resize form-group">
+                    <label class=" js-font-resize input-label font-weight-500">{{ trans('update.province') }}</label>
 
-                    <select name="province_id" class="form-control @error('province_id')  is-invalid @enderror" {{ (!empty($user) and $user->province_id) ? '' : 'disabled' }}>
+                    <select name="province_id" class=" js-font-resize form-control @error('province_id')  is-invalid @enderror" {{ (!empty($user) and $user->province_id) ? '' : 'disabled' }}>
                         <option value="">{{ trans('update.select_province') }}</option>
 
                         @if(!empty($provinces))
@@ -37,16 +37,16 @@
                     </select>
 
                     @error('province_id')
-                    <div class="invalid-feedback">
+                    <div class=" js-font-resize invalid-feedback">
                         {{ $message }}
                     </div>
                     @enderror
                 </div>
 
-                <div class="form-group">
-                    <label class="input-label font-weight-500">{{ trans('update.city') }}</label>
+                <div class=" js-font-resize form-group">
+                    <label class=" js-font-resize input-label font-weight-500">{{ trans('update.city') }}</label>
 
-                    <select name="city_id" class="form-control @error('city_id')  is-invalid @enderror" {{ (!empty($user) and $user->city_id) ? '' : 'disabled' }}>
+                    <select name="city_id" class=" js-font-resize form-control @error('city_id')  is-invalid @enderror" {{ (!empty($user) and $user->city_id) ? '' : 'disabled' }}>
                         <option value="">{{ trans('update.select_city') }}</option>
 
                         @if(!empty($cities))
@@ -57,16 +57,16 @@
                     </select>
 
                     @error('city_id')
-                    <div class="invalid-feedback">
+                    <div class=" js-font-resize invalid-feedback">
                         {{ $message }}
                     </div>
                     @enderror
                 </div>
 
-                <div class="form-group">
-                    <label class="input-label font-weight-500">{{ trans('update.district') }}</label>
+                <div class=" js-font-resize form-group">
+                    <label class=" js-font-resize input-label font-weight-500">{{ trans('update.district') }}</label>
 
-                    <select name="district_id" class="form-control @error('district_id')  is-invalid @enderror" {{ (!empty($user) and $user->district_id) ? '' : 'disabled' }}>
+                    <select name="district_id" class=" js-font-resize form-control @error('district_id')  is-invalid @enderror" {{ (!empty($user) and $user->district_id) ? '' : 'disabled' }}>
                         <option value="">{{ trans('update.select_district') }}</option>
 
                         @if(!empty($districts))
@@ -77,33 +77,33 @@
                     </select>
 
                     @error('district_id')
-                    <div class="invalid-feedback">
+                    <div class=" js-font-resize invalid-feedback">
                         {{ $message }}
                     </div>
                     @enderror
                 </div>
             </div>
 
-            <div class="col-12 col-lg-6">
-                <div class="form-group">
-                    <label class="input-label font-weight-500">{{ trans('update.address') }}</label>
+            <div class=" js-font-resize col-12 col-lg-6">
+                <div class=" js-font-resize form-group">
+                    <label class=" js-font-resize input-label font-weight-500">{{ trans('update.address') }}</label>
 
-                    <textarea name="address" rows="6" class="form-control @error('address')  is-invalid @enderror">{{ !empty($user) ? $user->address : '' }}</textarea>
+                    <textarea name="address" rows="6" class=" js-font-resize form-control @error('address')  is-invalid @enderror">{{ !empty($user) ? $user->address : '' }}</textarea>
 
                     @error('address')
-                    <div class="invalid-feedback">
+                    <div class=" js-font-resize invalid-feedback">
                         {{ $message }}
                     </div>
                     @enderror
                 </div>
 
-                <div class="form-group">
-                    <label class="input-label font-weight-500">{{ trans('update.message_to_seller') }}</label>
+                <div class=" js-font-resize form-group">
+                    <label class=" js-font-resize input-label font-weight-500">{{ trans('update.message_to_seller') }}</label>
 
-                    <textarea name="message_to_seller" rows="8" class="form-control @error('message_to_seller')  is-invalid @enderror"></textarea>
+                    <textarea name="message_to_seller" rows="8" class=" js-font-resize form-control @error('message_to_seller')  is-invalid @enderror"></textarea>
 
                     @error('message_to_seller')
-                    <div class="invalid-feedback">
+                    <div class=" js-font-resize invalid-feedback">
                         {{ $message }}
                     </div>
                     @enderror
@@ -114,13 +114,13 @@
 </section>
 
 @if(!empty($deliveryEstimateTime))
-    <div class="d-flex align-items-center mt-30 rounded-lg border px-10 py-5">
-        <div class="appointment-timezone-icon">
+    <div class=" js-font-resize d-flex align-items-center mt-30 rounded-lg border px-10 py-5">
+        <div class=" js-font-resize appointment-timezone-icon">
             <img src="/assets/default/img/icons/timezone.svg" alt="appointment timezone">
         </div>
-        <div class="ml-15">
-            <div class="font-16 font-weight-bold text-dark-blue">{{ trans('update.cart_order_estimated_delivery_time') }}</div>
-            <p class="font-14 font-weight-500 text-gray">{{ trans('update.cart_order_estimated_delivery_time_hint',['days' => $deliveryEstimateTime]) }}</p>
+        <div class=" js-font-resize ml-15">
+            <div class=" js-font-resize font-16 font-weight-bold text-dark-blue">{{ trans('update.cart_order_estimated_delivery_time') }}</div>
+            <p class=" js-font-resize font-14 font-weight-500 text-gray">{{ trans('update.cart_order_estimated_delivery_time_hint',['days' => $deliveryEstimateTime]) }}</p>
         </div>
     </div>
 @endif

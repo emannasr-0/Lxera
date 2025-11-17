@@ -7,69 +7,69 @@
 @section('content')
 
     <section>
-        <h2 class="section-title">{{ trans('panel.filter_comments') }}</h2>
+        <h2 class=" js-font-resize section-title">{{ trans('panel.filter_comments') }}</h2>
 
-        <div class="panel-section-card py-20 px-25 mt-20">
-            <form action="" method="get" class="row">
-                <div class="col-12 col-lg-5">
-                    <div class="row">
-                        <div class="col-12 col-md-6">
-                            <div class="form-group">
-                                <label class="input-label">{{ trans('public.from') }}</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="dateInputGroupPrepend">
-                                            <i data-feather="calendar" width="18" height="18" class="text-white"></i>
+        <div class=" js-font-resize panel-section-card py-20 px-25 mt-20">
+            <form action="" method="get" class=" js-font-resize row">
+                <div class=" js-font-resize col-12 col-lg-5">
+                    <div class=" js-font-resize row">
+                        <div class=" js-font-resize col-12 col-md-6">
+                            <div class=" js-font-resize form-group">
+                                <label class=" js-font-resize input-label">{{ trans('public.from') }}</label>
+                                <div class=" js-font-resize input-group">
+                                    <div class=" js-font-resize input-group-prepend">
+                                        <span class=" js-font-resize input-group-text" id="dateInputGroupPrepend">
+                                            <i data-feather="calendar" width="18" height="18" class=" js-font-resize text-white"></i>
                                         </span>
                                     </div>
-                                    <input type="text" name="from" autocomplete="off" value="{{ request()->get('from') }}" class="form-control {{ !empty(request()->get('from')) ? 'datepicker' : 'datefilter' }}" aria-describedby="dateInputGroupPrepend"/>
+                                    <input type="text" name="from" autocomplete="off" value="{{ request()->get('from') }}" class=" js-font-resize form-control {{ !empty(request()->get('from')) ? 'datepicker' : 'datefilter' }}" aria-describedby="dateInputGroupPrepend"/>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-md-6">
-                            <div class="form-group">
-                                <label class="input-label">{{ trans('public.to') }}</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="dateInputGroupPrepend">
-                                            <i data-feather="calendar" width="18" height="18" class="text-white"></i>
+                        <div class=" js-font-resize col-12 col-md-6">
+                            <div class=" js-font-resize form-group">
+                                <label class=" js-font-resize input-label">{{ trans('public.to') }}</label>
+                                <div class=" js-font-resize input-group">
+                                    <div class=" js-font-resize input-group-prepend">
+                                        <span class=" js-font-resize input-group-text" id="dateInputGroupPrepend">
+                                            <i data-feather="calendar" width="18" height="18" class=" js-font-resize text-white"></i>
                                         </span>
                                     </div>
-                                    <input type="text" name="to" autocomplete="off" value="{{ request()->get('to') }}" class="form-control {{ !empty(request()->get('to')) ? 'datepicker' : 'datefilter' }}" aria-describedby="dateInputGroupPrepend"/>
+                                    <input type="text" name="to" autocomplete="off" value="{{ request()->get('to') }}" class=" js-font-resize form-control {{ !empty(request()->get('to')) ? 'datepicker' : 'datefilter' }}" aria-describedby="dateInputGroupPrepend"/>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-lg-5">
-                    <div class="form-group">
-                        <label class="input-label">{{ trans('update.product') }}</label>
-                        <input type="text" name="product" value="{{ request()->get('product') }}" class="form-control"/>
+                <div class=" js-font-resize col-12 col-lg-5">
+                    <div class=" js-font-resize form-group">
+                        <label class=" js-font-resize input-label">{{ trans('update.product') }}</label>
+                        <input type="text" name="product" value="{{ request()->get('product') }}" class=" js-font-resize form-control"/>
                     </div>
                 </div>
-                <div class="col-12 col-lg-2 d-flex align-items-center justify-content-end">
-                    <button type="submit" class="btn btn-sm btn-acadima-primary w-100 mt-2">{{ trans('public.show_results') }}</button>
+                <div class=" js-font-resize col-12 col-lg-2 d-flex align-items-center justify-content-end">
+                    <button type="submit" class=" js-font-resize btn btn-sm btn-acadima-primary w-100 mt-2">{{ trans('public.show_results') }}</button>
                 </div>
             </form>
         </div>
     </section>
 
-    <section class="mt-35">
-        <h2 class="section-title">{{ trans('panel.my_comments') }}</h2>
+    <section class=" js-font-resize mt-35">
+        <h2 class=" js-font-resize section-title">{{ trans('panel.my_comments') }}</h2>
 
         @if(!empty($comments) and !$comments->isEmpty())
 
-            <div class="panel-section-card py-20 px-25 mt-20">
-                <div class="row">
-                    <div class="col-12 ">
-                        <div class="table-responsive">
-                            <table class="table custom-table text-center ">
+            <div class=" js-font-resize panel-section-card py-20 px-25 mt-20">
+                <div class=" js-font-resize row">
+                    <div class=" js-font-resize col-12 ">
+                        <div class=" js-font-resize table-responsive">
+                            <table class=" js-font-resize table custom-table text-center ">
                                 <thead>
                                 <tr>
-                                    <th class="text-left text-gray">{{ trans('update.product') }}</th>
-                                    <th class="text-gray text-center">{{ trans('panel.comment') }}</th>
-                                    <th class="text-gray text-center">{{ trans('public.status') }}</th>
-                                    <th class="text-gray text-center">{{ trans('public.date') }}</th>
+                                    <th class=" js-font-resize text-left text-gray">{{ trans('update.product') }}</th>
+                                    <th class=" js-font-resize text-gray text-center">{{ trans('panel.comment') }}</th>
+                                    <th class=" js-font-resize text-gray text-center">{{ trans('public.status') }}</th>
+                                    <th class=" js-font-resize text-gray text-center">{{ trans('public.date') }}</th>
                                     <th></th>
                                 </tr>
                                 </thead>
@@ -77,31 +77,31 @@
 
                                 @foreach($comments as $comment)
                                     <tr>
-                                        <td class="text-left align-middle" width="35%">
-                                            <a class="text-dark-blue font-weight-500" href="{{ $comment->product->getUrl() }}" target="_blank">{{ $comment->product->title }}</a>
+                                        <td class=" js-font-resize text-left align-middle" width="35%">
+                                            <a class=" js-font-resize text-dark-blue font-weight-500" href="{{ $comment->product->getUrl() }}" target="_blank">{{ $comment->product->title }}</a>
                                         </td>
-                                        <td class="align-middle">
-                                            <button type="button" data-comment-id="{{ $comment->id }}" class="js-view-comment btn btn-sm btn-gray200">{{ trans('public.view') }}</button>
+                                        <td class=" js-font-resize align-middle">
+                                            <button type="button" data-comment-id="{{ $comment->id }}" class=" js-font-resize js-view-comment btn btn-sm btn-gray200">{{ trans('public.view') }}</button>
                                         </td>
 
-                                        <td class="align-middle">
+                                        <td class=" js-font-resize align-middle">
                                             @if($comment->status == 'active')
-                                                <span class="text-primary text-dark-blue font-weight-500">{{ trans('public.published') }}</span>
+                                                <span class=" js-font-resize text-primary text-dark-blue font-weight-500">{{ trans('public.published') }}</span>
                                             @else
-                                                <span class="text-warning text-dark-blue font-weight-500">{{ trans('public.pending') }}</span>
+                                                <span class=" js-font-resize text-warning text-dark-blue font-weight-500">{{ trans('public.pending') }}</span>
                                             @endif
                                         </td>
 
-                                        <td class="text-dark-blue font-weight-500 align-middle">{{ dateTimeFormat($comment->created_at,'j M Y | H:i') }}</td>
-                                        <td class="align-middle text-right">
+                                        <td class=" js-font-resize text-dark-blue font-weight-500 align-middle">{{ dateTimeFormat($comment->created_at,'j M Y | H:i') }}</td>
+                                        <td class=" js-font-resize align-middle text-right">
                                             <input type="hidden" id="commentDescription{{ $comment->id }}" value="{{ nl2br($comment->comment) }}">
-                                            <div class="btn-group dropdown table-actions">
-                                                <button type="button" class="btn-transparent dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <div class=" js-font-resize btn-group dropdown table-actions">
+                                                <button type="button" class=" js-font-resize btn-transparent dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     <i data-feather="more-vertical" height="20"></i>
                                                 </button>
-                                                <div class="dropdown-menu">
-                                                    <button type="button" data-comment-id="{{ $comment->id }}" class="js-edit-comment btn-transparent">{{ trans('public.edit') }}</button>
-                                                    <a href="/panel/webinars/comments/{{ $comment->id }}/delete" class="delete-action btn-transparent d-block mt-10">{{ trans('public.delete') }}</a>
+                                                <div class=" js-font-resize dropdown-menu">
+                                                    <button type="button" data-comment-id="{{ $comment->id }}" class=" js-font-resize js-edit-comment btn-transparent">{{ trans('public.edit') }}</button>
+                                                    <a href="/panel/webinars/comments/{{ $comment->id }}/delete" class=" js-font-resize delete-action btn-transparent d-block mt-10">{{ trans('public.delete') }}</a>
                                                 </div>
                                             </div>
                                         </td>
@@ -125,7 +125,7 @@
         @endif
     </section>
 
-    <div class="my-30">
+    <div class=" js-font-resize my-30">
         {{ $comments->appends(request()->input())->links('vendor.pagination.panel') }}
     </div>
 @endsection

@@ -9,11 +9,11 @@
 @endpush
 
 @section('content')
-    <div class="instructor-finder">
+    <div class=" js-font-resize instructor-finder">
 
         @if((!empty($mapCenter) and is_array($mapCenter)))
             <section id="instructorFinderMap"
-                     class="instructor-finder-map"
+                     class=" js-font-resize instructor-finder-map"
                      data-latitude="{{ $mapCenter[0] }}"
                      data-longitude="{{ $mapCenter[1] }}"
                      data-zoom="{{ $mapZoom }}"
@@ -22,14 +22,14 @@
             </section>
         @endif
 
-        <div class="container">
+        <div class=" js-font-resize container">
 
             <form id="filtersForm" action="/instructor-finder?{{ http_build_query(request()->all()) }}" method="get">
 
                 @include('web.default.instructorFinder.components.top_filters')
 
-                <div class="row flex-lg-row-reverse">
-                    <div class="col-12 col-lg-8">
+                <div class=" js-font-resize row flex-lg-row-reverse">
+                    <div class=" js-font-resize col-12 col-lg-8">
 
                         <div id="instructorsList">
                             @if($instructors->isNotEmpty())
@@ -45,12 +45,12 @@
                             @endif
                         </div>
 
-                        <div class="text-center">
-                            <button type="button" id="loadMoreInstructors" data-url="/instructor-finder" class="btn btn-border-white mt-50 {{ ($instructors->lastPage() <= $instructors->currentPage()) ? ' d-none' : '' }}">{{ trans('site.load_more_instructors') }}</button>
+                        <div class=" js-font-resize text-center">
+                            <button type="button" id="loadMoreInstructors" data-url="/instructor-finder" class=" js-font-resize btn btn-border-white mt-50 {{ ($instructors->lastPage() <= $instructors->currentPage()) ? ' d-none' : '' }}">{{ trans('site.load_more_instructors') }}</button>
                         </div>
                     </div>
 
-                    <div class="col-12 col-lg-4">
+                    <div class=" js-font-resize col-12 col-lg-4">
 
                         @include('web.default.instructorFinder.components.filters')
 

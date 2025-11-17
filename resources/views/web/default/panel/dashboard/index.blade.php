@@ -53,49 +53,49 @@
 
 </style>
 @section('content')
-    <section class="dashboard ">
+    <section class=" js-font-resize dashboard ">
 
-        <div class="mt-10 d-flex align-items-start align-items-md-center justify-content-between flex-column flex-md-row">
-            <h1 class="section-title text-color px-20">{{ trans('panel.dashboard') }}</h1>
+        <div class=" js-font-resize mt-10 d-flex align-items-start align-items-md-center justify-content-between flex-column flex-md-row">
+            <h1 class=" js-font-resize section-title text-color px-20">{{ trans('panel.dashboard') }}</h1>
 
             @if (!$authUser->isUser())
                 <div
-                    class="d-flex align-items-center flex-row-reverse flex-md-row justify-content-start justify-content-md-center mt-20 mt-md-0">
-                    <label class="mb-0 mr-10 cursor-pointer text-gray font-14 font-weight-500"
+                    class=" js-font-resize d-flex align-items-center flex-row-reverse flex-md-row justify-content-start justify-content-md-center mt-20 mt-md-0">
+                    <label class=" js-font-resize mb-0 mr-10 cursor-pointer text-gray font-14 font-weight-500"
                         for="iNotAvailable">{{ trans('panel.i_not_available') }}</label>
-                    <div class="custom-control custom-switch">
+                    <div class=" js-font-resize custom-control custom-switch">
                         <input type="checkbox" name="disabled" @if ($authUser->offline) checked @endif
-                            class="custom-control-input" id="iNotAvailable">
-                        <label class="custom-control-label" for="iNotAvailable"></label>
+                            class=" js-font-resize custom-control-input" id="iNotAvailable">
+                        <label class=" js-font-resize custom-control-label" for="iNotAvailable"></label>
                     </div>
                 </div>
             @endif
         </div>
 
-        <div class="row p-20 pt-0 pt-lg-20  justify-content-center justify-content-lg-start">
-            <div class="col-12  mt-0 @if ($authUser->isUser()) col-lg-5 col-custom3 @endif mt-lg-35 px-lg-15  p-0">
+        <div class=" js-font-resize row p-20 pt-0 pt-lg-20  justify-content-center justify-content-lg-start">
+            <div class=" js-font-resize col-12  mt-0 @if ($authUser->isUser()) col-lg-5 col-custom3 @endif mt-lg-35 px-lg-15  p-0">
                 {{-- @if (!$authUser->financial_approval and !$authUser->isUser())
                     <div
-                        class="p-15 mt-20 p-lg-20 not-verified-alert font-weight-500 text-light rounded-sm panel-shadow">
+                        class=" js-font-resize p-15 mt-20 p-lg-20 not-verified-alert font-weight-500 text-light rounded-sm panel-shadow">
                         {{ trans('panel.not_verified_alert') }}
                         <a href="/panel/setting/step/7"
-                            class="text-decoration-underline">{{ trans('panel.this_link') }}</a>.
+                            class=" js-font-resize text-decoration-underline">{{ trans('panel.this_link') }}</a>.
                     </div>
                 @endif --}}
 
-                <div class="bg-secondary-acadima dashboard-banner-container position-relative p-40 rounded-sm shadow border ">
-                    <h2 class="font-30 text-primary line-height-1">
-                        <span class="d-block">{{ trans('panel.hi') }} {{ $authUser->full_name }}</span>
+                <div class=" js-font-resize bg-secondary-acadima dashboard-banner-container position-relative p-40 rounded-sm shadow border ">
+                    <h2 class=" js-font-resize font-30 text-primary line-height-1">
+                        <span class=" js-font-resize d-block">{{ trans('panel.hi') }} {{ $authUser->full_name }}</span>
                     </h2>
                     @if (!$authUser->isUser())
                         <span
-                            class="font-16 text-color font-weight-bold">{{ trans('panel.have_event', ['count' => !empty($unReadNotifications) ? count($unReadNotifications) : 0]) }}
+                            class=" js-font-resize font-16 text-color font-weight-bold">{{ trans('panel.have_event', ['count' => !empty($unReadNotifications) ? count($unReadNotifications) : 0]) }}
                         </span>
 
-                        <ul class="mt-15 unread-notification-lists text-black">
+                        <ul class=" js-font-resize mt-15 unread-notification-lists text-black">
                             @if (!empty($unReadNotifications) and !$unReadNotifications->isEmpty())
                                 @foreach ($unReadNotifications->take(5) as $unReadNotification)
-                                    <li class="font-14 mt-1 text-dark">- {{ $unReadNotification->title }}</li>
+                                    <li class=" js-font-resize font-14 mt-1 text-dark">- {{ $unReadNotification->title }}</li>
                                 @endforeach
 
                                 @if (count($unReadNotifications) > 5)
@@ -105,27 +105,27 @@
                         </ul>
 
                         <a href="/panel/notifications"
-                            class="mt-15 font-weight-500 text-color d-inline-block">{{ trans('panel.view_all_events') }}
+                            class=" js-font-resize mt-15 font-weight-500 text-color d-inline-block">{{ trans('panel.view_all_events') }}
                         </a>
 
-                        <div class="dashboard-banner">
-                            <img src="{{ getPageBackgroundSettings('dashboard') }}" alt="" class="img-cover2">
+                        <div class=" js-font-resize dashboard-banner">
+                            <img src="{{ getPageBackgroundSettings('dashboard') }}" alt="" class=" js-font-resize img-cover2">
                         </div>
                     @endif
 
                     @if ($authUser->isUser())
-                        <ul class="mt-15 unread-notification-lists">
-                            <h4 class="text-dark">{{ trans('panel.academic_info') }}</h4>
-                            <li class="mt-1 text-gray font-16 font-weight-bold text-left">
+                        <ul class=" js-font-resize mt-15 unread-notification-lists">
+                            <h4 class=" js-font-resize text-dark">{{ trans('panel.academic_info') }}</h4>
+                            <li class=" js-font-resize mt-1 text-gray font-16 font-weight-bold text-left">
                                 {{ trans('panel.personal_card_stucode') }} :
                                 {{ $authUser->user_code }}</li>
-                            <li class="mt-1 text-gray font-16 font-weight-bold text-left">
+                            <li class=" js-font-resize mt-1 text-gray font-16 font-weight-bold text-left">
                                 {{ trans('panel.personal_card_email') }} :
                                 {{ $authUser->user_code }}@lxera.com</li>
-                            <li class="mt-1 text-gray font-16 font-weight-bold text-left">
+                            <li class=" js-font-resize mt-1 text-gray font-16 font-weight-bold text-left">
                                 {{ trans('panel.personal_card_password') }}:
                                 SD$$2025</li>
-                            <li class="mt-1 text-gray font-16 font-weight-bold text-left">
+                            <li class=" js-font-resize mt-1 text-gray font-16 font-weight-bold text-left">
                                 {{ trans('panel.study_program') }} :
 
                                 @if ($bundleSales->isNotEmpty())
@@ -146,16 +146,16 @@
             </div>
 
             @if ($authUser->isUser())
-                <div class="col-12 col-lg-7 row col-custom3 g-3 px-10 justify-content-center">
+                <div class=" js-font-resize col-12 col-lg-7 row col-custom3 g-3 px-10 justify-content-center">
 
 
                     {{-- Microsoft Team --}}
-                    <div class="col-12 col-lg-6 mt-35 px-0 px-lg-15">
+                    <div class=" js-font-resize col-12 col-lg-6 mt-35 px-0 px-lg-15">
                         <div
-                            class="module-box rounded-sm panel-shadow p-40 p-md-15 d-flex align-items-center mt-0 bg-secondary-acadima height-94 shadow border">
+                            class=" js-font-resize module-box rounded-sm panel-shadow p-40 p-md-15 d-flex align-items-center mt-0 bg-secondary-acadima height-94 shadow border">
 
-                            <div class="d-flex flex-column pt-35" style="align-items: center;">
-                                <span class="micon">
+                            <div class=" js-font-resize d-flex flex-column pt-35" style="align-items: center;">
+                                <span class=" js-font-resize micon">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48px"
                                         height="48px" baseProfile="basic">
                                         <radialGradient id="yRNsYj0k48m_5059Aqtv_a" cx="-1207.054" cy="544.406" r=".939"
@@ -186,15 +186,15 @@
                                             d="M40.14,10.415l-12-7.259c-2.467-1.492-5.538-1.538-8.043-0.139L19.86,3.162	C17.464,4.611,16,7.208,16,10.007v9.484l3.86-2.335c2.546-1.54,5.735-1.54,8.281,0l12,7.259c2.321,1.404,3.767,3.884,3.855,6.583	C43.999,30.911,44,30.824,44,30.736V17.26C44,14.461,42.536,11.864,40.14,10.415z" />
                                     </svg>
                                 </span>
-                                <span class="font-16 text-dark font-weight-500 text-center pb-10">
+                                <span class=" js-font-resize font-16 text-dark font-weight-500 text-center pb-10">
                                     {{ trans('panel.microsoft') }}
                                 </span>
-                                <a target="_blank" rel="noopener noreferrer" class="btn btn-acadima-primary mt-10" style=""
+                                <a target="_blank" rel="noopener noreferrer" class=" js-font-resize btn btn-acadima-primary mt-10" style=""
                                     href="https://go.microsoft.com/fwlink/?linkid=2187217&amp;clcid=0x409&amp;culture=en-us&amp;country=us/">
                                     {{ trans('panel.download_here') }}
                                 </a>
 
-                                <a target="_blank" rel="noopener noreferrer" class="btn btn-acadima-primary mt-10" style=""
+                                <a target="_blank" rel="noopener noreferrer" class=" js-font-resize btn btn-acadima-primary mt-10" style=""
                                     href="https://portal.office.com/">
                                     {{ trans('panel.login_here') }}
 
@@ -206,42 +206,42 @@
 
                     @if ($authUser->isUser())
                         {{-- content table files --}}
-                        <div class="col-12 col-lg-6 mt-35">
-                        <div class="row">
-                            <div class="col-md-12 bg-secondary-acadima rounded-sm p-20 shadow border">
-                                <div class="m-b-30">
-                                    <div class="card-header">
-                                        <div class="row align-items-center">
-                                            <div class="col-8">
-                                                <h5 class="card-title mb-0 text-color">{{trans('panel.lecture_schedule')}}</h5>
+                        <div class=" js-font-resize col-12 col-lg-6 mt-35">
+                        <div class=" js-font-resize row">
+                            <div class=" js-font-resize col-md-12 bg-secondary-acadima rounded-sm p-20 shadow border">
+                                <div class=" js-font-resize m-b-30">
+                                    <div class=" js-font-resize card-header">
+                                        <div class=" js-font-resize row align-items-center">
+                                            <div class=" js-font-resize col-8">
+                                                <h5 class=" js-font-resize card-title mb-0 text-color">{{trans('panel.lecture_schedule')}}</h5>
                                             </div>
-                                            <div class="col-4">
-                                                <ul class="list-inline-group text-right mb-1 pl-0">
-                                                    <li class="list-inline-item mr-0 font-12"><i
-                                                            class="feather icon-more-vertical- font-20 text-dark"></i>
+                                            <div class=" js-font-resize col-4">
+                                                <ul class=" js-font-resize list-inline-group text-right mb-1 pl-0">
+                                                    <li class=" js-font-resize list-inline-item mr-0 font-12"><i
+                                                            class=" js-font-resize feather icon-more-vertical- font-20 text-dark"></i>
                                                     </li>
                                                 </ul>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="card-body">
-                                        <div class="product-file-type">
-                                            <ul class="list-unstyled">
+                                    <div class=" js-font-resize card-body">
+                                        <div class=" js-font-resize product-file-type">
+                                            <ul class=" js-font-resize list-unstyled">
 
 
 
                                                 @foreach ($bundleSales as $bundleSale)
                                                     @if (!empty($bundleSale->bundle) && !empty($bundleSale->bundle->content_table))
-                                                        <li class="media mb-3">
+                                                        <li class=" js-font-resize media mb-3">
                                                             <span
-                                                                class="ml-3 align-self-center img-icon danger-rgba text-danger">.pdf</span>
-                                                            <div class="media-body">
+                                                                class=" js-font-resize ml-3 align-self-center img-icon danger-rgba text-danger">.pdf</span>
+                                                            <div class=" js-font-resize media-body">
                                                                 <a href="{{ $bundleSale->bundle->content_table }}"
                                                                     target="_blank">
-                                                                    <h5 class="font-16 mb-1 text-dark">
+                                                                    <h5 class=" js-font-resize font-16 mb-1 text-dark">
                                                                         {{ $bundleSale->bundle->title }}
                                                                         <i
-                                                                            class="feather icon-download-cloud float-right"></i>
+                                                                            class=" js-font-resize feather icon-download-cloud float-right"></i>
                                                                     </h5>
                                                                 </a>
                                                             </div>
@@ -261,9 +261,9 @@
 
 
                     {{-- account charge --}}
-                    {{-- <div class="col-12 col-lg-4 mt-35">
-                        <div class="bg-white account-balance rounded-sm p-25">
-                            <div class="text-center">
+                    {{-- <div class=" js-font-resize col-12 col-lg-4 mt-35">
+                        <div class=" js-font-resize bg-white account-balance rounded-sm p-25">
+                            <div class=" js-font-resize text-center">
                                 <svg width="63" viewBox="0 0 63 50" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path
                                         d="M62.4835 35.1357C62.4188 34.5078 62.2896 33.8734 62.0208 33.2815C61.6058 32.3658 61.2043 31.4436 60.7893 30.5247C60.2416 29.3049 59.7143 28.0786 59.1258 26.8785C58.5985 25.8026 58.1562 24.6973 57.6323 23.6181C56.9724 22.261 56.4961 20.8188 55.8225 19.4682C55.2544 18.3237 54.8121 17.1333 54.2236 15.9953C53.6215 14.8377 53.1452 13.6081 52.5975 12.4145C52.1757 11.4923 51.8015 10.5472 51.3286 9.65116C50.8965 8.83689 50.4543 8.01607 50.1039 7.17564C49.7229 6.26326 49.182 5.45879 48.5662 4.73609C47.4708 3.45745 46.2019 2.36848 44.5962 1.6098C43.2933 0.991732 41.9325 0.59604 40.5513 0.344236C39.0953 0.0793519 37.5849 0.0760817 36.0982 0.027029C34.5606 -0.0220237 33.0195 0.0106781 31.4818 0.0106781C28.6446 0.0106781 25.804 -0.0252938 22.9702 0.154566C21.9837 0.216699 20.9971 0.170917 20.0072 0.170917C19.2622 0.170917 18.5103 0.180727 17.7619 0.180727C16.8842 0.180727 16.0031 0.197078 15.1254 0.206889C14.1627 0.21997 13.2 0.112054 12.2372 0.295184C11.1826 0.501205 10.4648 1.22718 10.4206 2.25402C10.39 2.95711 10.5397 3.62095 10.8118 4.25537L10.8492 4.23902L16.8366 17.7187V17.7285C16.9148 17.8757 16.9931 18.0195 17.0713 18.1667C17.5136 18.9777 17.8402 19.8443 18.2484 20.6717C18.4015 20.9791 18.6872 21.3453 18.626 21.6135L21.5653 27.8693L21.5108 27.8922C21.5857 28.0426 21.6605 28.1963 21.7388 28.3468C22.5212 29.8641 23.1744 31.4273 24.2834 32.7844C25.5829 34.3704 27.1002 35.6491 29.0154 36.4764C29.9918 36.9016 31.0124 37.3038 32.0738 37.3725C33.9142 37.4902 35.7648 37.4477 37.6121 37.4608C38.8232 37.4706 40.0376 37.4542 41.2487 37.4575C42.4224 37.4575 43.5926 37.4804 44.7697 37.4771C45.6338 37.4771 46.4945 37.451 47.362 37.4477C47.4878 37.4477 47.6001 37.464 47.6885 37.5H50.5427C50.5904 37.4837 50.655 37.4738 50.7332 37.4738C52.3492 37.4738 53.9617 37.4509 55.5742 37.4444C57.1799 37.4346 58.7856 37.4575 60.3913 37.415C61.6194 37.3823 62.6093 36.3064 62.4903 35.1357H62.4835Z"
@@ -283,9 +283,9 @@
                                     </defs>
                                 </svg>
 
-                                <h3 class="font-16 font-weight-500 text-gray mt-25">{{ trans('panel.account_balance') }}</h3>
+                                <h3 class=" js-font-resize font-16 font-weight-500 text-gray mt-25">{{ trans('panel.account_balance') }}</h3>
                                 <span
-                                    class="mt-5 d-block font-30 text-color">{{ handlePrice($authUser->getAccountingBalance()) }}</span>
+                                    class=" js-font-resize mt-5 d-block font-30 text-color">{{ handlePrice($authUser->getAccountingBalance()) }}</span>
                             </div>
 
                             @php
@@ -299,41 +299,41 @@
                             @endphp
 
                             <div
-                                class="mt-20 pt-10 border-top border-gray300 d-flex align-items-center @if ($can_drawable) justify-content-between @else justify-content-center @endif">
+                                class=" js-font-resize mt-20 pt-10 border-top border-gray300 d-flex align-items-center @if ($can_drawable) justify-content-between @else justify-content-center @endif">
                                 @if ($can_drawable)
-                                    <span class="font-16 font-weight-500 text-gray">{{ trans('panel.with_drawable') }}:</span>
-                                    <span class="font-16 font-weight-bold text-color">{{ handlePrice($drawable) }}</span>
+                                    <span class=" js-font-resize font-16 font-weight-500 text-gray">{{ trans('panel.with_drawable') }}:</span>
+                                    <span class=" js-font-resize font-16 font-weight-bold text-color">{{ handlePrice($drawable) }}</span>
                                 @else
                                     <a href="/panel/financial/account"
-                                        class="font-16 font-weight-bold text-light">{{ trans('financial.charge_account') }}</a>
+                                        class=" js-font-resize font-16 font-weight-bold text-light">{{ trans('financial.charge_account') }}</a>
                                 @endif
                             </div>
                         </div>
                     </div> --}}
                     {{-- SCT Team --}}
-                    <!-- <div class="col-6 col-lg-6 mt-35 ">
+                    <!-- <div class=" js-font-resize col-6 col-lg-6 mt-35 ">
                         <div
-                            class="module-box rounded-sm panel-shadow py-30 d-flex align-items-center mt-0 bg-secondary-acadima height-94">
+                            class=" js-font-resize module-box rounded-sm panel-shadow py-30 d-flex align-items-center mt-0 bg-secondary-acadima height-94">
 
-                            <div class="d-flex flex-column" style="align-items: center;">
+                            <div class=" js-font-resize d-flex flex-column" style="align-items: center;">
                                 <svg width="40" height="40" viewBox="0 0 24 24" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path
                                         d="M0.053834 14.9777C0.053834 13.9942 0.0514971 13.0106 0.053834 12.0271C0.0569499 10.9609 0.758801 10.1405 1.80574 9.99455C2.00437 9.96723 2.03397 9.87122 2.04098 9.70496C2.12979 7.42181 2.86825 5.37595 4.33583 3.6228C6.07526 1.5465 8.29533 0.328038 10.996 0.0571822C14.0776 -0.251141 16.7565 0.689439 18.9851 2.82897C20.6147 4.39322 21.5869 6.32355 21.9047 8.57314C21.9592 8.95874 22.0106 9.34434 22.0114 9.73384C22.0114 9.89932 22.0722 9.96879 22.2459 9.99377C23.2819 10.1405 23.9947 10.9578 23.997 11.9983C24.0009 13.9848 24.0009 15.9705 23.997 17.9571C23.9947 19.1045 23.1183 19.9928 21.9709 20.0115C21.4077 20.0209 20.8437 20.0201 20.2805 20.01C20.078 20.0061 19.9425 20.0677 19.8108 20.2301C18.122 22.3072 15.9526 23.5428 13.3041 23.9159C12.2805 24.0603 11.2476 23.9706 10.2186 23.9901C10.055 23.9932 9.98958 23.9104 9.9888 23.759C9.98803 23.2329 9.99036 22.7076 9.98725 22.1815C9.98569 21.952 10.1212 21.9138 10.3113 21.9145C10.9719 21.9177 11.6332 21.9294 12.2938 21.9091C14.4827 21.842 16.3086 20.963 17.8229 19.3972C17.946 19.27 17.9592 19.1287 17.9592 18.9703C17.9577 17.3834 17.9592 15.7957 17.9577 14.2088C17.9569 13.3978 18.1727 12.6547 18.6268 11.9811C18.975 11.4651 19.2967 10.9297 19.6691 10.4317C19.9105 10.1093 19.969 9.77365 19.9362 9.39429C19.6208 5.70144 16.9364 2.82506 13.491 2.19983C9.16855 1.41536 5.16932 4.12939 4.25637 8.43654C4.19016 8.74955 4.15744 9.07036 4.11927 9.38805C4.07254 9.77677 4.14887 10.121 4.39737 10.4512C4.77127 10.9476 5.09376 11.4831 5.43963 12.0006C5.87896 12.6586 6.09396 13.3845 6.09474 14.1745C6.09552 15.7223 6.0963 17.271 6.09474 18.8188C6.09474 19.5963 5.68266 20.0107 4.90837 20.0123C3.99464 20.0147 3.08169 20.0162 2.16796 20.0123C0.9255 20.0084 0.0569499 19.1373 0.054613 17.8985C0.0530551 16.9252 0.054613 15.951 0.054613 14.9777H0.053834ZM2.12278 14.9621C2.12278 15.8379 2.13057 16.7129 2.1181 17.5879C2.11421 17.8462 2.18042 17.9579 2.46007 17.943C2.86669 17.9212 3.27565 17.922 3.68227 17.943C3.95569 17.9571 4.02969 17.8572 4.02658 17.5926C4.01411 16.435 4.02034 15.2774 4.0219 14.1198C4.0219 13.7694 3.92453 13.4493 3.73057 13.159C3.56932 12.9162 3.38237 12.6859 3.25228 12.4276C3.07857 12.0833 2.83008 11.9834 2.45617 12.0022C2.1773 12.0162 2.11499 12.1099 2.1181 12.3651C2.12979 13.2308 2.12278 14.0964 2.12278 14.9621ZM21.9273 14.9995C21.9273 14.1144 21.9281 13.2292 21.9257 12.344C21.9257 12.241 21.9584 12.1216 21.858 12.0443C21.7029 11.9249 21.0673 12.0404 20.9544 12.2067C20.7261 12.5454 20.4979 12.8834 20.2766 13.2269C20.1216 13.4681 20.0321 13.7374 20.0313 14.0246C20.0266 15.2407 20.0313 16.4561 20.025 17.6722C20.0243 17.8782 20.1029 17.9446 20.3008 17.9407C20.737 17.9313 21.1748 17.9274 21.611 17.9423C21.8502 17.9501 21.9343 17.8689 21.9312 17.6261C21.9203 16.7511 21.9265 15.8753 21.9273 15.0003V14.9995Z"
-                                        fill="black" class=" fill-black "></path>
+                                        fill="black" class=" js-font-resize  fill-black "></path>
                                     <path
                                         d="M12.0289 3.49627C13.6959 3.48456 15.1394 4.06452 16.3849 5.16121C16.663 5.40553 16.6584 5.41177 16.3951 5.67638C16.1894 5.88323 15.969 6.07681 15.7805 6.29849C15.6106 6.49832 15.4891 6.47334 15.3076 6.30942C14.559 5.63189 13.6811 5.22834 12.677 5.10111C11.2523 4.9208 9.98726 5.29 8.87333 6.1939C8.44178 6.54437 8.56876 6.58028 8.15123 6.1697C7.96428 5.98549 7.78823 5.78879 7.59193 5.6155C7.42289 5.46563 7.4447 5.36026 7.60206 5.21663C8.57732 4.32913 9.7115 3.77649 11.0108 3.56027C11.3481 3.50407 11.687 3.50173 12.0274 3.49627H12.0289Z"
-                                        fill="black" class=" fill-black "></path>
+                                        fill="black" class=" js-font-resize  fill-black "></path>
                                 </svg>
 
-                                <span class="font-16 text-light font-weight-500 text-center pb-10">
+                                <span class=" js-font-resize font-16 text-light font-weight-500 text-center pb-10">
                                     {{trans('panel.support_communication_team')}}
                                 </span>
-                                <a target="_blank" rel="noopener noreferrer" class="btn btn-primary mt-10"
+                                <a target="_blank" rel="noopener noreferrer" class=" js-font-resize btn btn-primary mt-10"
                                     style="" href="https://support.anasacademy.uk/">
                                     {{trans('panel.apply_here')}}
                                 </a>
-                                <a target="_blank" rel="noopener noreferrer" class="btn btn-primary mt-10"
+                                <a target="_blank" rel="noopener noreferrer" class=" js-font-resize btn btn-primary mt-10"
                                     style="" href="https://support.anasacademy.uk/search">
                                     {{trans('panel.follow_up_previous_request_here')}}
                                 </a>
@@ -348,56 +348,56 @@
         </div>
     </section>
 
-    <section class="dashboard">
-        <div class="row p-10 g-30">
+    <section class=" js-font-resize dashboard">
+        <div class=" js-font-resize row p-10 g-30">
             @if ($authUser->isUser())
                 {{-- Calender --}}
-                <div class="col-12 col-lg-5 col-custom mt-5 rounded-sm">
+                <div class=" js-font-resize col-12 col-lg-5 col-custom mt-5 rounded-sm">
                     @include('web.default.panel.includes.calender')
                 </div>
-                <div class="col-12 col-lg-7 col-custom2 row g-3 px-10">
+                <div class=" js-font-resize col-12 col-lg-7 col-custom2 row g-3 px-10">
                     {{-- download files --}}
-                    <div class="col-12 col-lg-6 col-custom3 mt-35 mt-lg-0 rounded-sm px-20">
+                    <div class=" js-font-resize col-12 col-lg-6 col-custom3 mt-35 mt-lg-0 rounded-sm px-20">
                         @include('web.default.panel.includes.downloadfiles')
                     </div>
 
                      {{-- content table files --}}
-                    <!-- <div class="col-12 col-lg-6 mt-5  p-3">
-                        <div class="row">
-                            <div class="col-md-12 bg-secondary-acadima rounded-sm p-0">
-                                <div class="m-b-30">
-                                    <div class="card-header">
-                                        <div class="row align-items-center">
-                                            <div class="col-8">
-                                                <h5 class="card-title mb-0 text-light">{{trans('panel.lecture_schedule')}}</h5>
+                    <!-- <div class=" js-font-resize col-12 col-lg-6 mt-5  p-3">
+                        <div class=" js-font-resize row">
+                            <div class=" js-font-resize col-md-12 bg-secondary-acadima rounded-sm p-0">
+                                <div class=" js-font-resize m-b-30">
+                                    <div class=" js-font-resize card-header">
+                                        <div class=" js-font-resize row align-items-center">
+                                            <div class=" js-font-resize col-8">
+                                                <h5 class=" js-font-resize card-title mb-0 text-light">{{trans('panel.lecture_schedule')}}</h5>
                                             </div>
-                                            <div class="col-4">
-                                                <ul class="list-inline-group text-right mb-1 pl-0">
-                                                    <li class="list-inline-item mr-0 font-12"><i
-                                                            class="feather icon-more-vertical- font-20 text-light"></i>
+                                            <div class=" js-font-resize col-4">
+                                                <ul class=" js-font-resize list-inline-group text-right mb-1 pl-0">
+                                                    <li class=" js-font-resize list-inline-item mr-0 font-12"><i
+                                                            class=" js-font-resize feather icon-more-vertical- font-20 text-light"></i>
                                                     </li>
                                                 </ul>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="card-body">
-                                        <div class="product-file-type">
-                                            <ul class="list-unstyled">
+                                    <div class=" js-font-resize card-body">
+                                        <div class=" js-font-resize product-file-type">
+                                            <ul class=" js-font-resize list-unstyled">
 
 
 
                                                 @foreach ($bundleSales as $bundleSale)
                                                     @if (!empty($bundleSale->bundle) && !empty($bundleSale->bundle->content_table))
-                                                        <li class="media mb-3">
+                                                        <li class=" js-font-resize media mb-3">
                                                             <span
-                                                                class="ml-3 align-self-center img-icon danger-rgba text-danger">.pdf</span>
-                                                            <div class="media-body">
+                                                                class=" js-font-resize ml-3 align-self-center img-icon danger-rgba text-danger">.pdf</span>
+                                                            <div class=" js-font-resize media-body">
                                                                 <a href="{{ $bundleSale->bundle->content_table }}"
                                                                     target="_blank">
-                                                                    <h5 class="font-16 mb-1 text-light">
+                                                                    <h5 class=" js-font-resize font-16 mb-1 text-light">
                                                                         {{ $bundleSale->bundle->title }}
                                                                         <i
-                                                                            class="feather icon-download-cloud float-right"></i>
+                                                                            class=" js-font-resize feather icon-download-cloud float-right"></i>
                                                                     </h5>
                                                                 </a>
                                                             </div>
@@ -419,15 +419,15 @@
     </section>
 
     @if (!$authUser->isUser())
-        <section class="dashboard">
-            {{-- <div class="row">
-            <div class="col-12 col-lg-3 mt-35">
-                <div class="bg-white account-balance rounded-sm panel-shadow py-15 py-md-30 px-10 px-md-20">
-                    <div class="text-center">
-                        <img src="/assets/default/img/activity/36.svg" class="account-balance-icon" alt="">
+        <section class=" js-font-resize dashboard">
+            {{-- <div class=" js-font-resize row">
+            <div class=" js-font-resize col-12 col-lg-3 mt-35">
+                <div class=" js-font-resize bg-white account-balance rounded-sm panel-shadow py-15 py-md-30 px-10 px-md-20">
+                    <div class=" js-font-resize text-center">
+                        <img src="/assets/default/img/activity/36.svg" class=" js-font-resize account-balance-icon" alt="">
 
-                        <h3 class="font-16 font-weight-500 text-gray mt-25">{{ trans('panel.account_balance') }}</h3>
-                        <span class="mt-5 d-block font-30 text-color">{{ handlePrice($authUser->getAccountingBalance()) }}</span>
+                        <h3 class=" js-font-resize font-16 font-weight-500 text-gray mt-25">{{ trans('panel.account_balance') }}</h3>
+                        <span class=" js-font-resize mt-5 d-block font-30 text-color">{{ handlePrice($authUser->getAccountingBalance()) }}</span>
                     </div>
 
                     @php
@@ -436,97 +436,97 @@
                         $can_drawable = ($drawable > ((!empty($getFinancialSettings) and !empty($getFinancialSettings['minimum_payout'])) ? (int)$getFinancialSettings['minimum_payout'] : 0))
                     @endphp
 
-                    <div class="mt-20 pt-30 border-top border-gray300 d-flex align-items-center @if ($can_drawable) justify-content-between @else justify-content-center @endif">
+                    <div class=" js-font-resize mt-20 pt-30 border-top border-gray300 d-flex align-items-center @if ($can_drawable) justify-content-between @else justify-content-center @endif">
                         @if ($can_drawable)
-                            <span class="font-16 font-weight-500 text-gray">{{ trans('panel.with_drawable') }}:</span>
-                            <span class="font-16 font-weight-bold text-color">{{ handlePrice($drawable) }}</span>
+                            <span class=" js-font-resize font-16 font-weight-500 text-gray">{{ trans('panel.with_drawable') }}:</span>
+                            <span class=" js-font-resize font-16 font-weight-bold text-color">{{ handlePrice($drawable) }}</span>
                         @else
-                            <a href="/panel/financial/account" class="font-16 font-weight-bold text-light">{{ trans('financial.charge_account') }}</a>
+                            <a href="/panel/financial/account" class=" js-font-resize font-16 font-weight-bold text-light">{{ trans('financial.charge_account') }}</a>
                         @endif
                     </div>
                 </div>
             </div>
 
-            <div class="col-12 col-lg-3 mt-35">
-                <a href="@if ($authUser->isUser()) /panel/webinars/purchases @else /panel/meetings/requests @endif" class="dashboard-stats rounded-sm panel-shadow p-10 p-md-20 d-flex align-items-center">
-                    <div class="stat-icon requests">
+            <div class=" js-font-resize col-12 col-lg-3 mt-35">
+                <a href="@if ($authUser->isUser()) /panel/webinars/purchases @else /panel/meetings/requests @endif" class=" js-font-resize dashboard-stats rounded-sm panel-shadow p-10 p-md-20 d-flex align-items-center">
+                    <div class=" js-font-resize stat-icon requests">
                         <img src="/assets/default/img/icons/request.svg" alt="">
                     </div>
-                    <div class="d-flex flex-column ml-15">
-                        <span class="font-30 text-color">{{ !empty($pendingAppointments) ? $pendingAppointments : (!empty($webinarsCount) ? $webinarsCount : 0) }}</span>
-                        <span class="font-16 text-gray font-weight-500">{{ $authUser->isUser() ? trans('panel.purchased_courses') : trans('panel.pending_appointments') }}</span>
+                    <div class=" js-font-resize d-flex flex-column ml-15">
+                        <span class=" js-font-resize font-30 text-color">{{ !empty($pendingAppointments) ? $pendingAppointments : (!empty($webinarsCount) ? $webinarsCount : 0) }}</span>
+                        <span class=" js-font-resize font-16 text-gray font-weight-500">{{ $authUser->isUser() ? trans('panel.purchased_courses') : trans('panel.pending_appointments') }}</span>
                     </div>
                 </a>
 
-                <a href="@if ($authUser->isUser()) /panel/meetings/reservation @else /panel/financial/sales @endif" class="dashboard-stats rounded-sm panel-shadow p-10 p-md-20 d-flex align-items-center mt-15 mt-md-30">
-                    <div class="stat-icon monthly-sales">
+                <a href="@if ($authUser->isUser()) /panel/meetings/reservation @else /panel/financial/sales @endif" class=" js-font-resize dashboard-stats rounded-sm panel-shadow p-10 p-md-20 d-flex align-items-center mt-15 mt-md-30">
+                    <div class=" js-font-resize stat-icon monthly-sales">
                         <img src="@if ($authUser->isUser()) /assets/default/img/icons/meeting.svg @else /assets/default/img/icons/monay.svg @endif" alt="">
                     </div>
-                    <div class="d-flex flex-column ml-15">
-                        <span class="font-30 text-color">{{ !empty($monthlySalesCount) ? handlePrice($monthlySalesCount) : (!empty($reserveMeetingsCount) ? $reserveMeetingsCount : 0) }}</span>
-                        <span class="font-16 text-gray font-weight-500">{{ $authUser->isUser() ? trans('panel.meetings') : trans('panel.monthly_sales') }}</span>
+                    <div class=" js-font-resize d-flex flex-column ml-15">
+                        <span class=" js-font-resize font-30 text-color">{{ !empty($monthlySalesCount) ? handlePrice($monthlySalesCount) : (!empty($reserveMeetingsCount) ? $reserveMeetingsCount : 0) }}</span>
+                        <span class=" js-font-resize font-16 text-gray font-weight-500">{{ $authUser->isUser() ? trans('panel.meetings') : trans('panel.monthly_sales') }}</span>
                     </div>
                 </a>
             </div>
 
-            <div class="col-12 col-lg-3 mt-35">
-                <a href="/panel/support" class="dashboard-stats rounded-sm panel-shadow p-10 p-md-20 d-flex align-items-center">
-                    <div class="stat-icon support-messages">
+            <div class=" js-font-resize col-12 col-lg-3 mt-35">
+                <a href="/panel/support" class=" js-font-resize dashboard-stats rounded-sm panel-shadow p-10 p-md-20 d-flex align-items-center">
+                    <div class=" js-font-resize stat-icon support-messages">
                         <img src="/assets/default/img/icons/support.svg" alt="">
                     </div>
-                    <div class="d-flex flex-column ml-15">
-                        <span class="font-30 text-color">{{ !empty($supportsCount) ? $supportsCount : 0 }}</span>
-                        <span class="font-16 text-gray font-weight-500">{{ trans('panel.support_messages') }}</span>
+                    <div class=" js-font-resize d-flex flex-column ml-15">
+                        <span class=" js-font-resize font-30 text-color">{{ !empty($supportsCount) ? $supportsCount : 0 }}</span>
+                        <span class=" js-font-resize font-16 text-gray font-weight-500">{{ trans('panel.support_messages') }}</span>
                     </div>
                 </a>
 
-                <a href="@if ($authUser->isUser()) /panel/webinars/my-comments @else /panel/webinars/comments @endif" class="dashboard-stats rounded-sm panel-shadow p-10 p-md-20 d-flex align-items-center mt-15 mt-md-30">
-                    <div class="stat-icon comments">
+                <a href="@if ($authUser->isUser()) /panel/webinars/my-comments @else /panel/webinars/comments @endif" class=" js-font-resize dashboard-stats rounded-sm panel-shadow p-10 p-md-20 d-flex align-items-center mt-15 mt-md-30">
+                    <div class=" js-font-resize stat-icon comments">
                         <img src="/assets/default/img/icons/comment.svg" alt="">
                     </div>
-                    <div class="d-flex flex-column ml-15">
-                        <span class="font-30 text-color">{{ !empty($commentsCount) ? $commentsCount : 0 }}</span>
-                        <span class="font-16 text-gray font-weight-500">{{ trans('panel.comments') }}</span>
+                    <div class=" js-font-resize d-flex flex-column ml-15">
+                        <span class=" js-font-resize font-30 text-color">{{ !empty($commentsCount) ? $commentsCount : 0 }}</span>
+                        <span class=" js-font-resize font-16 text-gray font-weight-500">{{ trans('panel.comments') }}</span>
                     </div>
                 </a>
             </div>
 
-            <div class="col-12 col-lg-3 mt-35">
-                <div class="bg-white account-balance rounded-sm panel-shadow py-15 py-md-15 px-10 px-md-20">
-                    <div data-percent="{{ !empty($nextBadge) ? $nextBadge['percent'] : 0 }}" data-label="{{ (!empty($nextBadge) and !empty($nextBadge['earned'])) ? $nextBadge['earned']->title : '' }}" id="nextBadgeChart" class="text-center">
+            <div class=" js-font-resize col-12 col-lg-3 mt-35">
+                <div class=" js-font-resize bg-white account-balance rounded-sm panel-shadow py-15 py-md-15 px-10 px-md-20">
+                    <div data-percent="{{ !empty($nextBadge) ? $nextBadge['percent'] : 0 }}" data-label="{{ (!empty($nextBadge) and !empty($nextBadge['earned'])) ? $nextBadge['earned']->title : '' }}" id="nextBadgeChart" class=" js-font-resize text-center">
                     </div>
-                    <div class="mt-10 pt-10 border-top border-gray300 d-flex align-items-center justify-content-between">
-                        <span class="font-16 font-weight-500 text-gray">{{ trans('panel.next_badge') }}:</span>
-                        <span class="font-16 font-weight-bold text-color">{{ (!empty($nextBadge) and !empty($nextBadge['badge'])) ? $nextBadge['badge']->title : trans('public.not_defined') }}</span>
+                    <div class=" js-font-resize mt-10 pt-10 border-top border-gray300 d-flex align-items-center justify-content-between">
+                        <span class=" js-font-resize font-16 font-weight-500 text-gray">{{ trans('panel.next_badge') }}:</span>
+                        <span class=" js-font-resize font-16 font-weight-bold text-color">{{ (!empty($nextBadge) and !empty($nextBadge['badge'])) ? $nextBadge['badge']->title : trans('public.not_defined') }}</span>
                     </div>
                 </div>
             </div>
         </div> --}}
 
-            <div class="row p-20 mt-md-20">
-                <div class="col-12 col-lg-6 px-lg-15  p-0">
-                    <div class="bg-secondary-acadima noticeboard rounded-sm border shadow py-10 py-md-20 px-15 px-md-30">
-                        <h3 class="font-16 text-color font-weight-bold">{{ trans('panel.noticeboard') }}</h3>
+            <div class=" js-font-resize row p-20 mt-md-20">
+                <div class=" js-font-resize col-12 col-lg-6 px-lg-15  p-0">
+                    <div class=" js-font-resize bg-secondary-acadima noticeboard rounded-sm border shadow py-10 py-md-20 px-15 px-md-30">
+                        <h3 class=" js-font-resize font-16 text-color font-weight-bold">{{ trans('panel.noticeboard') }}</h3>
 
                         @foreach ($authUser->getUnreadNoticeboards() as $getUnreadNoticeboard)
-                            <div class="noticeboard-item py-15 text-light">
-                                <div class="d-flex align-items-center justify-content-between">
+                            <div class=" js-font-resize noticeboard-item py-15 text-light">
+                                <div class=" js-font-resize d-flex align-items-center justify-content-between">
                                     <div>
-                                        <h4 class="js-noticeboard-title font-weight-500 text-color">
+                                        <h4 class=" js-font-resize js-noticeboard-title font-weight-500 text-color">
                                             {!! truncate($getUnreadNoticeboard->title, 150) !!}</h4>
-                                        <div class="font-12 text-gray mt-5">
-                                            <span class="mr-5">{{ trans('public.created_by') }}
+                                        <div class=" js-font-resize font-12 text-gray mt-5">
+                                            <span class=" js-font-resize mr-5">{{ trans('public.created_by') }}
                                                 {{ $getUnreadNoticeboard->sender }}</span>
                                             |
                                             <span
-                                                class="js-noticeboard-time ml-5">{{ dateTimeFormat($getUnreadNoticeboard->created_at, 'j M Y | H:i') }}</span>
+                                                class=" js-font-resize js-noticeboard-time ml-5">{{ dateTimeFormat($getUnreadNoticeboard->created_at, 'j M Y | H:i') }}</span>
                                         </div>
                                     </div>
 
                                     <div>
                                         <button type="button" data-id="{{ $getUnreadNoticeboard->id }}"
-                                            class="js-noticeboard-info btn btn-sm btn-acadima-primary">{{ trans('panel.more_info') }}</button>
-                                        <input type="hidden" class="js-noticeboard-message"
+                                            class=" js-font-resize js-noticeboard-info btn btn-sm btn-acadima-primary">{{ trans('panel.more_info') }}</button>
+                                        <input type="hidden" class=" js-font-resize js-noticeboard-message"
                                             value="{{ $getUnreadNoticeboard->message }}">
                                     </div>
                                 </div>
@@ -536,15 +536,15 @@
                     </div>
                 </div>
 
-                {{--    <div class="col-12 col-lg-6 mt-35">
-                <div class="bg-white monthly-sales-card rounded-sm panel-shadow py-10 py-md-20 px-15 px-md-30">
-                    <div class="d-flex align-items-center justify-content-between">
-                        <h3 class="font-16 text-light font-weight-bold">{{ ($authUser->isUser()) ? trans('panel.learning_statistics') : trans('panel.monthly_sales') }}</h3>
+                {{--    <div class=" js-font-resize col-12 col-lg-6 mt-35">
+                <div class=" js-font-resize bg-white monthly-sales-card rounded-sm panel-shadow py-10 py-md-20 px-15 px-md-30">
+                    <div class=" js-font-resize d-flex align-items-center justify-content-between">
+                        <h3 class=" js-font-resize font-16 text-light font-weight-bold">{{ ($authUser->isUser()) ? trans('panel.learning_statistics') : trans('panel.monthly_sales') }}</h3>
 
-                        <span class="font-16 font-weight-500 text-gray">{{ dateTimeFormat(time(),'M Y') }}</span>
+                        <span class=" js-font-resize font-16 font-weight-500 text-gray">{{ dateTimeFormat(time(),'M Y') }}</span>
                     </div>
 
-                    <div class="monthly-sales-chart">
+                    <div class=" js-font-resize monthly-sales-chart">
                         <canvas id="myChart"></canvas>
                     </div>
                 </div>
@@ -553,30 +553,30 @@
         --}}
         </section>
     @endif
-    <div class="d-none" id="iNotAvailableModal">
-        <div class="offline-modal">
-            <h3 class="section-title after-line">{{ trans('panel.offline_title') }}</h3>
-            <p class="mt-20 font-16 text-gray">{{ trans('panel.offline_hint') }}</p>
+    <div class=" js-font-resize d-none" id="iNotAvailableModal">
+        <div class=" js-font-resize offline-modal">
+            <h3 class=" js-font-resize section-title after-line">{{ trans('panel.offline_title') }}</h3>
+            <p class=" js-font-resize mt-20 font-16 text-gray">{{ trans('panel.offline_hint') }}</p>
 
-            <div class="form-group mt-15">
+            <div class=" js-font-resize form-group mt-15">
                 <label>{{ trans('panel.offline_message') }}</label>
-                <textarea name="message" rows="4" class="form-control ">{{ $authUser->offline_message }}</textarea>
-                <div class="invalid-feedback"></div>
+                <textarea name="message" rows="4" class=" js-font-resize form-control ">{{ $authUser->offline_message }}</textarea>
+                <div class=" js-font-resize invalid-feedback"></div>
             </div>
 
-            <div class="mt-30 d-flex align-items-center justify-content-end">
+            <div class=" js-font-resize mt-30 d-flex align-items-center justify-content-end">
                 <button type="button"
-                    class="js-save-offline-toggle btn btn-primary btn-sm">{{ trans('public.save') }}</button>
-                <button type="button" class="btn btn-danger ml-10 close-swl btn-sm">{{ trans('public.close') }}</button>
+                    class=" js-font-resize js-save-offline-toggle btn btn-primary btn-sm">{{ trans('public.save') }}</button>
+                <button type="button" class=" js-font-resize btn btn-danger ml-10 close-swl btn-sm">{{ trans('public.close') }}</button>
             </div>
         </div>
     </div>
 
-    <div class="d-none" id="noticeboardMessageModal">
-        <div class="text-center">
-            <h3 class="modal-title font-20 font-weight-500 text-light"></h3>
-            <span class="modal-time d-block font-12 text-gray mt-25"></span>
-            <p class="modal-message font-weight-500 text-gray mt-4"></p>
+    <div class=" js-font-resize d-none" id="noticeboardMessageModal">
+        <div class=" js-font-resize text-center">
+            <h3 class=" js-font-resize modal-title font-20 font-weight-500 text-light"></h3>
+            <span class=" js-font-resize modal-time d-block font-12 text-gray mt-25"></span>
+            <p class=" js-font-resize modal-message font-weight-500 text-gray mt-4"></p>
         </div>
     </div>
 

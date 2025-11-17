@@ -1,9 +1,9 @@
 <div>
     {{-- course --}}
-    <div class="form-group">
-        <label for="application2" class="form-label" id="all_course">الدورات التدربيه<span
-                class="text-danger">*</span></label>
-        <select id="mySelect2" name="webinar_id" class="form-control @error('webinar_id') is-invalid @enderror">
+    <div class=" js-font-resize form-group">
+        <label for="application2" class=" js-font-resize form-label" id="all_course">الدورات التدربيه<span
+                class=" js-font-resize text-danger">*</span></label>
+        <select id="mySelect2" name="webinar_id" class=" js-font-resize form-control @error('webinar_id') is-invalid @enderror">
             <option selected hidden value="">اختر الدورة التدربيه التي تريد دراستها
                 في
                 اكاديمية انس للفنون </option>
@@ -16,17 +16,17 @@
         </select>
 
         @error('webinar_id')
-            <div class="invalid-feedback d-block">
+            <div class=" js-font-resize invalid-feedback d-block">
                 {{ $message }}
             </div>
         @enderror
     </div>
     {{-- programs --}}
-    <section class="" id="diplomas_section">
-        <div class="form-group mt-15">
-            <label class="input-label">البرنامج</label>
+    <section class=" js-font-resize " id="diplomas_section">
+        <div class=" js-font-resize form-group mt-15">
+            <label class=" js-font-resize input-label">البرنامج</label>
 
-            <select id="bundle_id" class="custom-select @error('bundle_id')  is-invalid @enderror" name="bundle_id"
+            <select id="bundle_id" class=" js-font-resize custom-select @error('bundle_id')  is-invalid @enderror" name="bundle_id"
                 wire:model.live="bundle_id2">
                 <option selected hidden value="">اختر البرنامج التدربي الذي تريد دراسته
                     في
@@ -59,7 +59,7 @@
                 @endforeach
             </select>
             @error('bundle_id')
-                <div class="invalid-feedback">
+                <div class=" js-font-resize invalid-feedback">
                     {{ $message }}
                 </div>
             @enderror

@@ -21,14 +21,14 @@
 @endphp
 
 
-<div class="webinar-progress d-block d-lg-flex align-items-center p-15 shadow bg-secondary-acadima rounded-sm mt-10">
+<div class=" js-font-resize webinar-progress d-block d-lg-flex align-items-center p-15 shadow bg-secondary-acadima rounded-sm mt-10">
 
     @foreach ($progressSteps as $key => $step)
-        <div class="progress-item d-flex align-items-center">
+        <div class=" js-font-resize progress-item d-flex align-items-center">
             <a href="/panel/requirements/step/{{ $key }}" style="width:55px"
-                class="p-10 d-flex align-items-center justify-content-center {{ $key == $currentStep ? 'active' : '' }}"
+                class=" js-font-resize p-10 d-flex align-items-center justify-content-center {{ $key == $currentStep ? 'active' : '' }}"
                 data-toggle="tooltip" data-placement="top" title="{{ trans($step['lang']) }}">
-                {{-- <img src="/assets/default/img/icons/{{ $step['icon'] }}.svg" class="img-cover" alt=""> --}}
+                {{-- <img src="/assets/default/img/icons/{{ $step['icon'] }}.svg" class=" js-font-resize img-cover" alt=""> --}}
                 <svg width="57" height="54" viewBox="0 0 57 54" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g clip-path="url(#clip0_78_2419)">
                         <path
@@ -51,8 +51,8 @@
 
             </a>
 
-            <div class="ml-10 {{ $key == $currentStep ? '' : 'd-lg-none' }}">
-                <h4 class="font-16 text-pink font-weight-bold">{{ trans($step['lang']) }}</h4>
+            <div class=" js-font-resize ml-10 {{ $key == $currentStep ? '' : 'd-lg-none' }}">
+                <h4 class=" js-font-resize font-16 text-pink font-weight-bold">{{ trans($step['lang']) }}</h4>
             </div>
         </div>
     @endforeach

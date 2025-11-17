@@ -51,66 +51,66 @@
 @endphp
 
 <section>
-    <h2 class="section-title after-line">{{ trans('public.personal_information') }}</h2>
+    <h2 class=" js-font-resize section-title after-line">{{ trans('public.personal_information') }}</h2>
 
     {{-- personal details --}}
-    <section class="row mt-20 container">
-        <section class="main-container bg-secondary-acadima border-2 border-secondary-subtle rounded-sm p-3 mt-2 mb-25 row mx-0">
+    <section class=" js-font-resize row mt-20 container">
+        <section class=" js-font-resize main-container bg-secondary-acadima border-2 border-secondary-subtle rounded-sm p-3 mt-2 mb-25 row mx-0">
             {{-- arabic name --}}
-            <div class="form-group col-12 col-sm-6">
-                <label for="name">{{ trans('application_form.name') }}<span class="text-danger">*</span></label>
+            <div class=" js-font-resize form-group col-12 col-sm-6">
+                <label for="name">{{ trans('application_form.name') }}<span class=" js-font-resize text-danger">*</span></label>
                 <input @if (!session()->has('impersonated')) disabled @endif type="text" id="name" name="ar_name"
                     {{-- value="{{ $student ? $student->ar_name : '' }}" --}}
                     value="{{ old('ar_name', $student ? $student->ar_name : $user->full_name ?? '') }}"
                     placeholder="{{ trans('public.ar_name_placeholder') }}" required
-                    class="form-control @error('ar_name') is-invalid @enderror">
+                    class=" js-font-resize form-control @error('ar_name') is-invalid @enderror">
 
                 @error('ar_name')
-                    <div class="invalid-feedback d-block">
+                    <div class=" js-font-resize invalid-feedback d-block">
                         {{ $message }}
                     </div>
                 @enderror
             </div>
 
             {{-- english name --}}
-            <div class="form-group col-12 col-sm-6">
-                <label for="name_en">{{ trans('application_form.name_en') }}<span class="text-danger">*</span></label>
+            <div class=" js-font-resize form-group col-12 col-sm-6">
+                <label for="name_en">{{ trans('application_form.name_en') }}<span class=" js-font-resize text-danger">*</span></label>
                 <input @if (!session()->has('impersonated')) disabled @endif type="text" id="name_en" name="en_name"
                     {{-- value="{{ $student ? $student->en_name : '' }}" --}} value="{{ old('en_name', $student ? $student->en_name : '') }}"
                     placeholder="{{ trans('public.en_name_placeholder') }}" required
-                    class="form-control @error('en_name') is-invalid @enderror">
+                    class=" js-font-resize form-control @error('en_name') is-invalid @enderror">
 
                 @error('en_name')
-                    <div class="invalid-feedback d-block">
+                    <div class=" js-font-resize invalid-feedback d-block">
                         {{ $message }}
                     </div>
                 @enderror
             </div>
 
             {{-- identifier number --}}
-            <div class="form-group col-12 col-sm-6">
-                <label for="identifier_num">{{ trans('public.id_num') }} <span class="text-danger">*</span></label>
+            <div class=" js-font-resize form-group col-12 col-sm-6">
+                <label for="identifier_num">{{ trans('public.id_num') }} <span class=" js-font-resize text-danger">*</span></label>
                 <input type="text" id="identifier_num" name="identifier_num" {{-- value="{{ $student ? $student->identifier_num : '' }}" --}}
                     value="{{ old('identifier_num', $student ? $student->identifier_num : '') }}"
                     placeholder="{{ trans('public.id_num_placeholder') }}" required
-                    class="form-control  @error('identifier_num') is-invalid @enderror">
+                    class=" js-font-resize form-control  @error('identifier_num') is-invalid @enderror">
 
                 @error('identifier_num')
-                    <div class="invalid-feedback d-block">
+                    <div class=" js-font-resize invalid-feedback d-block">
                         {{ $message }}
                     </div>
                 @enderror
             </div>
 
             {{-- birthday --}}
-            <div class="form-group col-12 col-sm-6">
+            <div class=" js-font-resize form-group col-12 col-sm-6">
                 <label for="birthday">{{ trans('application_form.birthday') }}<span
-                        class="text-danger">*</span></label>
+                        class=" js-font-resize text-danger">*</span></label>
                 <input type="date" id="birthday" name="birthdate" {{-- value="{{ $student ? $student->birthdate : '' }}" --}}
                     value="{{ old('birthdate', $student ? $student->birthdate : '') }}" required
-                    class="form-control @error('birthdate') is-invalid @enderror">
+                    class=" js-font-resize form-control @error('birthdate') is-invalid @enderror">
                 @error('birthdate')
-                    <div class="invalid-feedback d-block">
+                    <div class=" js-font-resize invalid-feedback d-block">
                         {{ $message }}
                     </div>
                 @enderror
@@ -119,13 +119,13 @@
 
 
             {{-- nationality --}}
-            <div class="form-group col-12 col-sm-6">
+            <div class=" js-font-resize form-group col-12 col-sm-6">
                 <label for="nationality">{{ trans('application_form.nationality') }}<span
-                        class="text-danger">*</span></label>
+                        class=" js-font-resize text-danger">*</span></label>
 
                 <select id="nationality" name="nationality" required
-                    class="form-control  @error('nationality') is-invalid @enderror" onchange="toggleNationality()">
-                    <option value="" class="placeholder" disabled>
+                    class=" js-font-resize form-control  @error('nationality') is-invalid @enderror" onchange="toggleNationality()">
+                    <option value="" class=" js-font-resize placeholder" disabled>
                         {{ trans('public.nationality_choose') }}
                     </option>
                     @foreach ($nationalities as $nationality)
@@ -138,55 +138,55 @@
                         {{ trans('public.other') }}</option>
                 </select>
                 @error('nationality')
-                    <div class="invalid-feedback d-block">
+                    <div class=" js-font-resize invalid-feedback d-block">
                         {{ $message }}
                     </div>
                 @enderror
             </div>
 
             {{-- other nationality --}}
-            <div class="form-group col-12 col-sm-6" id="other_nationality_section" style="display: none">
+            <div class=" js-font-resize form-group col-12 col-sm-6" id="other_nationality_section" style="display: none">
                 <label for="nationality">{{ trans('public.enter_nationality') }} <span
-                        class="text-danger">*</span></label>
-                <input type="text" class="form-control @error('nationality') is-invalid @enderror"
+                        class=" js-font-resize text-danger">*</span></label>
+                <input type="text" class=" js-font-resize form-control @error('nationality') is-invalid @enderror"
                     id="other_nationality" name="" placeholder="{{ trans('public.enter_nationality') }}"
                     {{-- value="{{ $student ? $student->other_nationality : '' }}" --}}
                     value="{{ old('nationality', $student ? $student->other_nationality : '') }}"
                     onkeyup="setNationality()">
 
                 @error('nationality')
-                    <div class="invalid-feedback d-block">
+                    <div class=" js-font-resize invalid-feedback d-block">
                         {{ $message }}
                     </div>
                 @enderror
             </div>
 
             {{-- gender --}}
-            <div class="form-group col-12 col-sm-6">
-                <label for="gender">{{ trans('application_form.gender') }}<span class="text-danger">*</span></label>
+            <div class=" js-font-resize form-group col-12 col-sm-6">
+                <label for="gender">{{ trans('application_form.gender') }}<span class=" js-font-resize text-danger">*</span></label>
 
                 @error('gender')
-                    <div class="invalid-feedback d-inline">
+                    <div class=" js-font-resize invalid-feedback d-inline">
                         {{ $message }}
                     </div>
                 @enderror
 
-                <div class="row mr-5 mt-5">
+                <div class=" js-font-resize row mr-5 mt-5">
                     {{-- female --}}
-                    <div class="col-sm-4 col">
+                    <div class=" js-font-resize col-sm-4 col">
                         <label for="female">
                             <input type="radio" id="female" name="gender" value="female"
-                                class=" @error('gender') is-invalid @enderror" required
+                                class=" js-font-resize  @error('gender') is-invalid @enderror" required
                                 {{ old('gender', $student->gender ?? null) == 'female' ? 'checked' : '' }}>
                             {{ trans('public.female') }}
                         </label>
                     </div>
 
                     {{-- male --}}
-                    <div class="col">
+                    <div class=" js-font-resize col">
                         <label for="male">
                             <input type="radio" id="male" name="gender" value="male"
-                                class=" @error('gender') is-invalid @enderror" required
+                                class=" js-font-resize  @error('gender') is-invalid @enderror" required
                                 {{ old('gender', $student->gender ?? null) == 'male' ? 'checked' : '' }}>
                             {{ trans('public.male') }}
                         </label>
@@ -195,12 +195,12 @@
             </div>
 
             {{-- country --}}
-            <div class="form-group col-12 col-sm-6">
-                <label for="country">{{ trans('application_form.country') }}<span class="text-danger">*</span></label>
+            <div class=" js-font-resize form-group col-12 col-sm-6">
+                <label for="country">{{ trans('application_form.country') }}<span class=" js-font-resize text-danger">*</span></label>
 
                 <select id="mySelect" name="country" required
-                    class="form-control @error('country') is-invalid @enderror" onchange="toggleHiddenInputs()">
-                    <option value="" class="placeholder" disabled="">{{ trans('public.enter_your_country') }}
+                    class=" js-font-resize form-control @error('country') is-invalid @enderror" onchange="toggleHiddenInputs()">
+                    <option value="" class=" js-font-resize placeholder" disabled="">{{ trans('public.enter_your_country') }}
                     </option>
                     @foreach ($countries as $country)
                         <option value="{{ $country }}"
@@ -214,71 +214,71 @@
                 </select>
 
                 @error('country')
-                    <div class="invalid-feedback d-block">
+                    <div class=" js-font-resize invalid-feedback d-block">
                         {{ $message }}
                     </div>
                 @enderror
             </div>
 
             {{-- other country --}}
-            <div class="form-group col-12 col-sm-6" id="anotherCountrySection" style="display: none">
-                <label for="city" class="form-label">{{ trans('public.enter_country') }}<span
-                        class="text-danger">*</span></label>
+            <div class=" js-font-resize form-group col-12 col-sm-6" id="anotherCountrySection" style="display: none">
+                <label for="city" class=" js-font-resize form-label">{{ trans('public.enter_country') }}<span
+                        class=" js-font-resize text-danger">*</span></label>
                 <input type="text" id="city" name="city"
-                    class="form-control  @error('city') is-invalid @enderror"
+                    class=" js-font-resize form-control  @error('city') is-invalid @enderror"
                     placeholder="{{ trans('public.enter_your_country') }}"
                     value="{{ old('city', $student ? $student->city : '') }}" onkeyup="setCountry()">
 
                 @error('city')
-                    <div class="invalid-feedback d-block">
+                    <div class=" js-font-resize invalid-feedback d-block">
                         {{ $message }}
                     </div>
                 @enderror
             </div>
 
             {{-- region --}}
-            <div class="form-group col-12 col-sm-6" id="region" style="display: none">
-                <label for="area" class="form-label">{{ trans('public.region') }}<span
-                        class="text-danger">*</span></label>
+            <div class=" js-font-resize form-group col-12 col-sm-6" id="region" style="display: none">
+                <label for="area" class=" js-font-resize form-label">{{ trans('public.region') }}<span
+                        class=" js-font-resize text-danger">*</span></label>
                 <input type="text" id="area" name="area"
-                    class="form-control  @error('area') is-invalid @enderror"
+                    class=" js-font-resize form-control  @error('area') is-invalid @enderror"
                     placeholder="{{ trans('public.region') }}"
                     value="{{ old('area', $student ? $student->area : '') }}">
 
                 @error('area')
-                    <div class="invalid-feedback d-block">
+                    <div class=" js-font-resize invalid-feedback d-block">
                         {{ $message }}
                     </div>
                 @enderror
             </div>
 
             {{-- city --}}
-            <div class="form-group col-12 col-sm-6">
+            <div class=" js-font-resize form-group col-12 col-sm-6">
                 <div id="cityContainer">
                     <label for="town" id="cityLabel">{{ trans('application_form.city') }}<span
-                            class="text-danger">*</span></label>
+                            class=" js-font-resize text-danger">*</span></label>
                     <input type="text" id="town" name="town"
                         placeholder="{{ trans('application_form.city') }}"
                         value="{{ old('town', $student ? $student->town : '') }}" required
-                        class="form-control @error('town') is-invalid @enderror">
+                        class=" js-font-resize form-control @error('town') is-invalid @enderror">
                 </div>
                 @error('town')
-                    <div class="invalid-feedback d-block">
+                    <div class=" js-font-resize invalid-feedback d-block">
                         {{ $message }}
                     </div>
                 @enderror
             </div>
 
             {{-- identity_img input --}}
-            <div class="form-group col-12 col-sm-6">
+            <div class=" js-font-resize form-group col-12 col-sm-6">
                 <div>
                     <label for="identity_img">{{ trans('public.id_pic') }}</label>
                     <input type="file" id="identity_img" name="identity_img" accept=".jpeg,.jpg,.png"
                         value="{{ old('identity_img', $student ? $student->identity_img : '') }}"
-                        class="form-control @error('identity_img') is-invalid @enderror">
+                        class=" js-font-resize form-control @error('identity_img') is-invalid @enderror">
                 </div>
                 @error('identity_img')
-                    <div class="invalid-feedback d-block">
+                    <div class=" js-font-resize invalid-feedback d-block">
                         {{ $message }}
                     </div>
                 @enderror
@@ -396,7 +396,7 @@
             ];
 
             // Build select HTML with correct selected value
-            var selectHTML = '<select id="town" name="town" class="form-control" required>';
+            var selectHTML = '<select id="town" name="town" class=" js-font-resize form-control" required>';
             cities.forEach(function(city) {
                 var selected = (city.value === previousValue) ? 'selected' : '';
                 selectHTML += `<option value="${city.value}" ${selected}>${city.label}</option>`;
@@ -411,7 +411,7 @@
             town.outerHTML = `
                 <input type="text" id="town" name="town"
                     placeholder="{{ trans('panel.current_city_placeholder') }}"
-                    class="form-control"
+                    class=" js-font-resize form-control"
                     value="${previousValue}">
             `;
         }

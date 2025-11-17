@@ -4,19 +4,19 @@
 @endpush
 
 
-<section class="mt-50">
-    <div class="">
-        <h2 class="section-title after-line">{{ trans('public.prerequisites') }} ({{ trans('public.optional') }})</h2>
+<section class=" js-font-resize mt-50">
+    <div class=" js-font-resize ">
+        <h2 class=" js-font-resize section-title after-line">{{ trans('public.prerequisites') }} ({{ trans('public.optional') }})</h2>
     </div>
 
-    <button id="webinarAddPrerequisites" data-webinar-id="{{ $webinar->id }}" type="button" class="btn btn-primary btn-sm mt-15">{{ trans('public.add_prerequisites') }}</button>
+    <button id="webinarAddPrerequisites" data-webinar-id="{{ $webinar->id }}" type="button" class=" js-font-resize btn btn-primary btn-sm mt-15">{{ trans('public.add_prerequisites') }}</button>
 
-    <div class="row mt-10">
-        <div class="col-12">
+    <div class=" js-font-resize row mt-10">
+        <div class=" js-font-resize col-12">
 
-            <div class="accordion-content-wrapper mt-15" id="prerequisitesAccordion" role="tablist" aria-multiselectable="true">
+            <div class=" js-font-resize accordion-content-wrapper mt-15" id="prerequisitesAccordion" role="tablist" aria-multiselectable="true">
                 @if(!empty($webinar->prerequisites) and count($webinar->prerequisites))
-                    <ul class="draggable-lists" data-order-table="prerequisites">
+                    <ul class=" js-font-resize draggable-lists" data-order-table="prerequisites">
                         @foreach($webinar->prerequisites as $prerequisiteInfo)
                             @include('web.default.panel.webinar.create_includes.accordions.prerequisites',['webinar' => $webinar,'prerequisite' => $prerequisiteInfo])
                         @endforeach
@@ -33,7 +33,7 @@
     </div>
 </section>
 
-<div id="newPrerequisiteForm" class="d-none">
+<div id="newPrerequisiteForm" class=" js-font-resize d-none">
     @include('web.default.panel.webinar.create_includes.accordions.prerequisites',['webinar' => $webinar])
 </div>
 

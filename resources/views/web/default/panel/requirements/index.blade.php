@@ -19,7 +19,7 @@
 
     @include('web.default.panel.requirements.requirements_includes.progress')
 
-    <section class="row mt-80 mx-0 justify-content-center">
+    <section class=" js-font-resize row mt-80 mx-0 justify-content-center">
         @if (count($studentBundles) > 0)
             @php
                 $count = 0;
@@ -29,63 +29,63 @@
                     $count++;
                 @endphp
                 <section
-                    class="bg-secondary-acadima position-relative col-xl-9 col-12 justify-content-center align-items-center rounded-sm mb-80 py-35 px-0">
-                    <h2 class="mb-25 col-12 text-dark">
+                    class=" js-font-resize bg-secondary-acadima position-relative col-xl-9 col-12 justify-content-center align-items-center rounded-sm mb-80 py-35 px-0">
+                    <h2 class=" js-font-resize mb-25 col-12 text-dark">
                         {{ clean($studentBundle->bundle->title, 't') }}</h2>
                     @if (empty($studentBundle->studentRequirement))
                      @if ($studentBundle->status == 'pending')
-                        <div class="w-100 text-center">
-                            <p class="alert alert-info text-center mx-30">
+                        <div class=" js-font-resize w-100 text-center">
+                            <p class=" js-font-resize alert alert-info text-center mx-30">
                                 طلبك لحجز مقعد دراسي تحت المراجعه من قبل الإدارة المالية يرجي الانتظار حتي يتم مراجعته
                             </p>
                         </div>
                      @elseif ($studentBundle->status == 'fee_rejected')
-                        <div class="w-100 text-center">
-                            <p class="alert alert-danger text-center text-dark mx-30">
+                        <div class=" js-font-resize w-100 text-center">
+                            <p class=" js-font-resize alert alert-danger text-center text-dark mx-30">
                                 طلبك لحجز مقعد دراسي تم رفضه من قبل الإدارة المالية لمعرفة السبب اضغط هنا
                             </p>
                             <a href="/panel/financial/offline-payments"
-                                class="btn btn-success p-5 mt-20 bg-button-acadima text-">للذهاب لمتابعة طلبك اضغط
+                                class=" js-font-resize btn btn-success p-5 mt-20 bg-button-acadima text-">للذهاب لمتابعة طلبك اضغط
                                 هنا</a>
                         </div>
                         {{-- @elseif ($studentBundle->bundle->early_enroll)
-                            <div class="w-100 text-center">
-                                <p class="alert alert-info text-center mx-30">
+                            <div class=" js-font-resize w-100 text-center">
+                                <p class=" js-font-resize alert alert-info text-center mx-30">
                                     يرجى ملاحظة أن التسجيل الرسمي سيبدأ يوم 30 يوليو.
                                     <br> بمجرد فتح التسجيل، ستتمكن من استكمال رفع المتطلبات اللازمة وإتمام إجراءات التسجيل.
                                 </p>
                             </div> --}}
                         @else
-                            <div class="w-100 text-center">
-                                <p class="alert alert-info text-center mx-30 text-dark" >
+                            <div class=" js-font-resize w-100 text-center">
+                                <p class=" js-font-resize alert alert-info text-center mx-30 text-dark" >
                                     لم يتم رفع متطلبات القبول بعد ، يرجي الضعط علي الزر للذهاب لصفحة متطلبات القبول
                                 </p> 
                                 <a href="/panel/bundles/{{ $studentBundle->id }}/requirements"
-                                    class="btn btn-acadima-primary p-5 mt-20 bg-button-acadima ">للذهاب لرفع ملفات متطلبات القبول اضغط
+                                    class=" js-font-resize btn btn-acadima-primary p-5 mt-20 bg-button-acadima ">للذهاب لرفع ملفات متطلبات القبول اضغط
                                     هنا</a>
                             </div>
                         @endif
                     @else
                         @if ($studentBundle->studentRequirement->status == 'pending')
-                            <div class="w-100 text-center">
-                                <p class="alert alert-info text-center mx-30">
+                            <div class=" js-font-resize w-100 text-center">
+                                <p class=" js-font-resize alert alert-info text-center mx-30">
                                     لقد تم بالفعل رفع متطلبات القبول يرجي الانتظار حتي يتم مراجعتها
                                 </p>
                             </div>
                         @elseif ($studentBundle->studentRequirement->status == 'approved')
-                        <div class="w-100 text-center">
-                            <p class="alert alert-success text-center mx-30">
+                        <div class=" js-font-resize w-100 text-center">
+                            <p class=" js-font-resize alert alert-success text-center mx-30">
                                 لقد تم بالفعل رفع متطلبات القبول وتم الموافقة عليها
                             </p>
                         </div>
                         @elseif ($studentBundle->studentRequirement->status == 'rejected')
-                            <div class="w-100 text-center">
-                                <p class="alert alert-danger text-center text-white mx-30">
+                            <div class=" js-font-resize w-100 text-center">
+                                <p class=" js-font-resize alert alert-danger text-center text-white mx-30">
                                     لقد تم رفض الملفات التي قمت برفعها يرجي مراجعة الميل لمشاهدة السبب ثم ارفع الملفات مرة
                                     اخري
                                 </p>
                                 <a href="/panel/bundles/{{ $studentBundle->id }}/requirements"
-                                    class="btn btn-primary p-5 mt-20">للذهاب
+                                    class=" js-font-resize btn btn-primary p-5 mt-20">للذهاب
                                     لرفع الملفات مرة اخري اضغط هنا</a>
                             </div>
                         @endif
@@ -93,12 +93,12 @@
                 </section>
             @endforeach
         @else
-            <section class="w-100 text-center">
-                <p class="alert alert-info text-center mx-30">
+            <section class=" js-font-resize w-100 text-center">
+                <p class=" js-font-resize alert alert-info text-center mx-30">
                     لم يتم التسجيل في اي دبلومه بعد
                 </p>
                 <a href="{{ auth()->user()->student ? '/panel/newEnrollment' : '/apply' }}"
-                    class="btn bg-secondary text-white p-5 mt-20">للتسجيل اضغط علي هذا اللينك</a>
+                    class=" js-font-resize btn bg-secondary text-white p-5 mt-20">للتسجيل اضغط علي هذا اللينك</a>
             </section>
         @endif
 

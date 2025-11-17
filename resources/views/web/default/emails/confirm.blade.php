@@ -258,9 +258,9 @@
     </style>
 </head>
 
-<body class="body"
+<body class=" js-font-resize body"
     style="-webkit-text-size-adjust: none; padding: 0; margin: 0; display: block; min-width: 100%; width: 100%;">
-    <!--*|IF:MC_PREVIEW_TEXT|*--> <!--[if !gte mso 9]><!--> <span class="mcnPreviewText"
+    <!--*|IF:MC_PREVIEW_TEXT|*--> <!--[if !gte mso 9]><!--> <span class=" js-font-resize mcnPreviewText"
         style="font-size: 0px; line-height: 0px; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden; visibility: hidden; mso-hide: all; display: none;"></span>
     <!--<![endif]--> <!--*|END:IF|*-->
     <table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#fff">
@@ -269,9 +269,9 @@
                 <table width="100%" border="0" cellspacing="0" cellpadding="0">
                     <tr>
                         <td align="center">
-                            <table width="650" border="0" cellspacing="0" cellpadding="0" class="mobile-shell">
+                            <table width="650" border="0" cellspacing="0" cellpadding="0" class=" js-font-resize mobile-shell">
                                 <tr>
-                                    <td class="td"
+                                    <td class=" js-font-resize td"
                                         style="width:650px; min-width:650px; font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal;">
                                         <!-- Header -->
                                         <table align="center" width="100%" border="0" cellspacing="0"
@@ -285,14 +285,14 @@
                                                 </td>
                                             </tr>
                                         </table> <!-- END Header --> <!--content-->
-                                        <table class="message" width="100%" border="0" cellspacing="0"
+                                        <table class=" js-font-resize message" width="100%" border="0" cellspacing="0"
                                             cellpadding="0" style="direction: rtl !important; text-align: right;">
                                             <tr>
                                                 <td style="padding:0px 10px;">
                                                     <table width="100%" border="0" cellspacing="0" cellpadding="0"
                                                         style="direction: rtl !important;min-width: 100% !important;">
                                                         <tr>
-                                                            <td class="social-title pb30"
+                                                            <td class=" js-font-resize social-title pb30"
                                                                 style="color:#ffffff; font-family: 'IBM Plex Sans', sans-serif; font-size:14px; line-height:22px; text-align:right; padding-bottom:30px;">
                                                                 <div mc:edit="text_33"
                                                                     style="color: #333; direction: rtl !important; padding:20px;">
@@ -325,21 +325,21 @@
                                         <table width="100%" border="0" cellspacing="0" cellpadding="0"
                                             bgcolor="#4e54cb" style="border-radius:0 0 12px 12px">
                                             <tr>
-                                                <td class="footer"
+                                                <td class=" js-font-resize footer"
                                                     style="padding:0px 20px; background-image:url('https://anasacademy.uk/wp-content/uploads/2022/02/slider-03new.jpg'); background-repeat: no-repeat; border-collapse:collapse; font-size:0px;line-height:0px; background-size:100% 100%;border-radius: 0 0 12px 12px;">
 
                                                     <table width="100%" border="0" cellspacing="0"
                                                         cellpadding="0">
                                                         <tr style="display: flex; padding:10px;">
-                                                            <td class="img" width="50%"><a
+                                                            <td class=" js-font-resize img" width="50%"><a
                                                                     href="https://anasacademy.uk/" target="_blank"
                                                                     style="color: #4e54cb; text-decoration: none; height:auto;">
-                                                                    <img class="img logo"
+                                                                    <img class=" js-font-resize img logo"
                                                                         src="https://support.anasacademy.uk//storage/public/Logo-04.png"
                                                                         style="float: left !important;-ms-interpolation-mode: bicubic;height:auto;padding:10px; width: 135px !important;" /></a>
                                                             </td>
 
-                                                            <td class="img d"
+                                                            <td class=" js-font-resize img d"
                                                                 style="text-align: right;padding-top: 10px; float: right;"
                                                                 width="50%"><a
                                                                     href="https://x.com/acadimacollege"

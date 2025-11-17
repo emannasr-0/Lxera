@@ -1,14 +1,14 @@
-<div class="wizard-step-1">
-    <h3 class="font-20 text-dark font-weight-bold">{{ trans('update.skill_topic') }}</h3>
+<div class=" js-font-resize wizard-step-1">
+    <h3 class=" js-font-resize font-20 text-dark font-weight-bold">{{ trans('update.skill_topic') }}</h3>
 
-    <span class="d-block mt-30 text-gray wizard-step-num">
+    <span class=" js-font-resize d-block mt-30 text-gray wizard-step-num">
         {{ trans('update.step') }} 1/4
     </span>
 
-    <div class="form-group mt-30">
-        <label class="input-label font-weight-500">{{ trans('update.which_category_are_you_interested') }}</label>
+    <div class=" js-font-resize form-group mt-30">
+        <label class=" js-font-resize input-label font-weight-500">{{ trans('update.which_category_are_you_interested') }}</label>
 
-        <select name="category_id" class="form-control mt-20 @error('category_id') is-invalid @enderror">
+        <select name="category_id" class=" js-font-resize form-control mt-20 @error('category_id') is-invalid @enderror">
             <option value="">{{ trans('webinars.select_category') }}</option>
 
             @if(!empty($categories))
@@ -27,7 +27,7 @@
         </select>
 
         @error('category_id')
-        <div class="invalid-feedback">
+        <div class=" js-font-resize invalid-feedback">
             {{ $message }}
         </div>
         @enderror

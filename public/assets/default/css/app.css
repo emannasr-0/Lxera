@@ -19453,3 +19453,12 @@ a:hover {
 .bg-acadima-light {
     background-color: var(--acadima-light) !important;
 }
+
+.high-contrast-overlay {
+    position: fixed;
+    inset: 0;                  /* top:0; right:0; bottom:0; left:0 */
+    background: #ffffff;       /* white overlay */
+    mix-blend-mode: difference;/* this is what inverts the colors */
+    pointer-events: none;      /* don't block clicks / hovers */
+    z-index: 9999;
+}

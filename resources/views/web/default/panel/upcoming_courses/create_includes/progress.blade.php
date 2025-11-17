@@ -25,17 +25,17 @@
 @endphp
 
 
-<div class="webinar-progress d-block d-lg-flex align-items-center p-15 panel-shadow bg-secondary-acadima rounded-sm">
+<div class=" js-font-resize webinar-progress d-block d-lg-flex align-items-center p-15 panel-shadow bg-secondary-acadima rounded-sm">
 
     @foreach($progressSteps as $key => $step)
-        <div class="progress-item d-flex align-items-center">
-            <button type="button" data-step="{{ $key }}" class="js-get-next-step p-0 border-0 progress-icon p-10 d-flex align-items-center justify-content-center rounded-circle {{ $key == $currentStep ? 'active' : '' }}" data-toggle="tooltip" data-placement="top" title="{{ trans('public.' . $step['name']) }}">
-                <img src="/assets/default/img/icons/{{ $step['icon'] }}.svg" class="img-cover" alt="">
+        <div class=" js-font-resize progress-item d-flex align-items-center">
+            <button type="button" data-step="{{ $key }}" class=" js-font-resize js-get-next-step p-0 border-0 progress-icon p-10 d-flex align-items-center justify-content-center rounded-circle {{ $key == $currentStep ? 'active' : '' }}" data-toggle="tooltip" data-placement="top" title="{{ trans('public.' . $step['name']) }}">
+                <img src="/assets/default/img/icons/{{ $step['icon'] }}.svg" class=" js-font-resize img-cover" alt="">
             </button>
 
-            <div class="ml-10 {{ $key == $currentStep ? '' : 'd-lg-none' }}">
-                <span class="font-14 text-gray">{{ trans('webinars.progress_step', ['step' => $key,'count' => 8]) }}</span>
-                <h4 class="font-16 text-secondary font-weight-bold">{{ trans('public.' . $step['name']) }}</h4>
+            <div class=" js-font-resize ml-10 {{ $key == $currentStep ? '' : 'd-lg-none' }}">
+                <span class=" js-font-resize font-14 text-gray">{{ trans('webinars.progress_step', ['step' => $key,'count' => 8]) }}</span>
+                <h4 class=" js-font-resize font-16 text-secondary font-weight-bold">{{ trans('public.' . $step['name']) }}</h4>
             </div>
         </div>
     @endforeach

@@ -8,34 +8,34 @@
 @section('content')
 
     <section>
-        <h2 class="section-title">{{ trans('panel.create_a_new_discount') }}</h2>
+        <h2 class=" js-font-resize section-title">{{ trans('panel.create_a_new_discount') }}</h2>
         @if (\Session::has('msg'))
-            <div class="alert alert-warning">
+            <div class=" js-font-resize alert alert-warning">
                 <ul>
                     <li>{!! \Session::get('msg') !!}</li>
                 </ul>
             </div>
         @endif
-        <div class="panel-section-card py-20 px-25 mt-20">
-            <form action="/panel/marketing/special_offers/store" method="post" class="row">
+        <div class=" js-font-resize panel-section-card py-20 px-25 mt-20">
+            <form action="/panel/marketing/special_offers/store" method="post" class=" js-font-resize row">
                 {{ csrf_field() }}
 
-                <div class="col-12 col-lg-6">
-                    <div class="row">
-                        <div class="col-12 col-lg-5">
-                            <div class="form-group">
-                                <label class="input-label">{{ trans('public.title') }}</label>
+                <div class=" js-font-resize col-12 col-lg-6">
+                    <div class=" js-font-resize row">
+                        <div class=" js-font-resize col-12 col-lg-5">
+                            <div class=" js-font-resize form-group">
+                                <label class=" js-font-resize input-label">{{ trans('public.title') }}</label>
                                 <input type="text" name="name"
-                                       class="form-control @error('name')  is-invalid @enderror"/>
+                                       class=" js-font-resize form-control @error('name')  is-invalid @enderror"/>
 
-                                <div class="invalid-feedback"></div>
+                                <div class=" js-font-resize invalid-feedback"></div>
                             </div>
                         </div>
-                        <div class="col-12 col-lg-4">
-                            <div class="form-group">
-                                <label class="input-label d-block">{{ trans('panel.webinar') }}</label>
+                        <div class=" js-font-resize col-12 col-lg-4">
+                            <div class=" js-font-resize form-group">
+                                <label class=" js-font-resize input-label d-block">{{ trans('panel.webinar') }}</label>
                                 <select name="webinar_id"
-                                        class="form-control custom-select @error('webinar_id')  is-invalid @enderror">
+                                        class=" js-font-resize form-control custom-select @error('webinar_id')  is-invalid @enderror">
                                     <option selected disabled>{{ trans('panel.select_course') }}</option>
 
                                     @foreach($webinars as $webinar)
@@ -43,62 +43,62 @@
                                     @endforeach
                                 </select>
 
-                                <div class="invalid-feedback"></div>
+                                <div class=" js-font-resize invalid-feedback"></div>
                             </div>
                         </div>
-                        <div class="col-12 col-lg-3">
-                            <div class="form-group">
-                                <label class="input-label">{{ trans('panel.amount') }}(%)</label>
+                        <div class=" js-font-resize col-12 col-lg-3">
+                            <div class=" js-font-resize form-group">
+                                <label class=" js-font-resize input-label">{{ trans('panel.amount') }}(%)</label>
                                 <input type="text" name="percent"
-                                       class="form-control @error('percent')  is-invalid @enderror"/>
+                                       class=" js-font-resize form-control @error('percent')  is-invalid @enderror"/>
 
-                                <div class="invalid-feedback"></div>
+                                <div class=" js-font-resize invalid-feedback"></div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-12 col-lg-5">
-                    <div class="row">
-                        <div class="col-12 col-md-5">
-                            <div class="form-group">
-                                <label class="input-label">{{ trans('public.from') }}</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="dateInputGroupPrepend">
-                                            <i data-feather="calendar" width="18" height="18" class="text-white"></i>
+                <div class=" js-font-resize col-12 col-lg-5">
+                    <div class=" js-font-resize row">
+                        <div class=" js-font-resize col-12 col-md-5">
+                            <div class=" js-font-resize form-group">
+                                <label class=" js-font-resize input-label">{{ trans('public.from') }}</label>
+                                <div class=" js-font-resize input-group">
+                                    <div class=" js-font-resize input-group-prepend">
+                                        <span class=" js-font-resize input-group-text" id="dateInputGroupPrepend">
+                                            <i data-feather="calendar" width="18" height="18" class=" js-font-resize text-white"></i>
                                         </span>
                                     </div>
                                     <input type="text" name="from_date" autocomplete="off"
-                                           class="form-control datetimepicker @error('from_date')  is-invalid @enderror"
+                                           class=" js-font-resize form-control datetimepicker @error('from_date')  is-invalid @enderror"
                                            aria-describedby="dateInputGroupPrepend"/>
 
-                                    <div class="invalid-feedback"></div>
+                                    <div class=" js-font-resize invalid-feedback"></div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-md-5">
-                            <div class="form-group">
-                                <label class="input-label">{{ trans('public.to') }}</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="dateInputGroupPrepend">
-                                            <i data-feather="calendar" width="18" height="18" class="text-white"></i>
+                        <div class=" js-font-resize col-12 col-md-5">
+                            <div class=" js-font-resize form-group">
+                                <label class=" js-font-resize input-label">{{ trans('public.to') }}</label>
+                                <div class=" js-font-resize input-group">
+                                    <div class=" js-font-resize input-group-prepend">
+                                        <span class=" js-font-resize input-group-text" id="dateInputGroupPrepend">
+                                            <i data-feather="calendar" width="18" height="18" class=" js-font-resize text-white"></i>
                                         </span>
                                     </div>
                                     <input type="text" name="to_date" autocomplete="off"
-                                           class="form-control datetimepicker @error('to_date')  is-invalid @enderror"
+                                           class=" js-font-resize form-control datetimepicker @error('to_date')  is-invalid @enderror"
                                            aria-describedby="dateInputGroupPrepend"/>
 
-                                    <div class="invalid-feedback"></div>
+                                    <div class=" js-font-resize invalid-feedback"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-12 col-lg-1 d-flex align-items-center justify-content-end">
-                    <button type="button" id="formSubmit" class="btn btn-sm btn-primary">{{ trans('public.create') }}</button>
+                <div class=" js-font-resize col-12 col-lg-1 d-flex align-items-center justify-content-end">
+                    <button type="button" id="formSubmit" class=" js-font-resize btn btn-sm btn-primary">{{ trans('public.create') }}</button>
                 </div>
             </form>
         </div>
@@ -106,69 +106,69 @@
 
     @if(!empty($specialOffers) and $specialOffers->count() > 0)
 
-        <section class="mt-35">
-            <div class="d-flex align-items-start align-items-md-center justify-content-between flex-column flex-md-row">
-                <h2 class="section-title">{{ trans('panel.discounts') }}</h2>
+        <section class=" js-font-resize mt-35">
+            <div class=" js-font-resize d-flex align-items-start align-items-md-center justify-content-between flex-column flex-md-row">
+                <h2 class=" js-font-resize section-title">{{ trans('panel.discounts') }}</h2>
 
-                <form action="" method="get" class="d-flex align-items-center flex-row-reverse flex-md-row justify-content-start justify-content-md-center mt-20 mt-md-0">
-                    <label class="cursor-pointer mb-0 mr-10 text-gray font-14 font-weight-500" for="activeDiscountsSwitch">{{ trans('panel.show_only_active_discounts') }}</label>
-                    <div class="custom-control custom-switch">
-                        <input type="checkbox" name="active_discounts" class="js-panel-list-switch-filter custom-control-input" {{ request()->get('active_discounts', '') == 'on' ? 'checked' : '' }}
+                <form action="" method="get" class=" js-font-resize d-flex align-items-center flex-row-reverse flex-md-row justify-content-start justify-content-md-center mt-20 mt-md-0">
+                    <label class=" js-font-resize cursor-pointer mb-0 mr-10 text-gray font-14 font-weight-500" for="activeDiscountsSwitch">{{ trans('panel.show_only_active_discounts') }}</label>
+                    <div class=" js-font-resize custom-control custom-switch">
+                        <input type="checkbox" name="active_discounts" class=" js-font-resize js-panel-list-switch-filter custom-control-input" {{ request()->get('active_discounts', '') == 'on' ? 'checked' : '' }}
                         id="activeDiscountsSwitch">
-                        <label class="custom-control-label" for="activeDiscountsSwitch"></label>
+                        <label class=" js-font-resize custom-control-label" for="activeDiscountsSwitch"></label>
                     </div>
                 </form>
             </div>
 
-            <div class="panel-section-card py-20 px-25 mt-20">
-                <div class="row">
-                    <div class="col-12 ">
-                        <div class="table-responsive">
-                            <table class="table custom-table text-center">
+            <div class=" js-font-resize panel-section-card py-20 px-25 mt-20">
+                <div class=" js-font-resize row">
+                    <div class=" js-font-resize col-12 ">
+                        <div class=" js-font-resize table-responsive">
+                            <table class=" js-font-resize table custom-table text-center">
                                 <thead>
                                 <tr>
-                                    <th class="text-left text-gray">{{ trans('panel.name') }}</th>
-                                    <th class="text-left text-gray">{{ trans('panel.webinar') }}</th>
-                                    <th class="text-center text-gray">{{ trans('panel.amount') }}</th>
-                                    <th class="text-center text-gray">{{ trans('public.status') }}</th>
-                                    <th class="text-center text-gray">{{ trans('public.from') }}</th>
-                                    <th class="text-center text-gray">{{ trans('public.to') }}</th>
+                                    <th class=" js-font-resize text-left text-gray">{{ trans('panel.name') }}</th>
+                                    <th class=" js-font-resize text-left text-gray">{{ trans('panel.webinar') }}</th>
+                                    <th class=" js-font-resize text-center text-gray">{{ trans('panel.amount') }}</th>
+                                    <th class=" js-font-resize text-center text-gray">{{ trans('public.status') }}</th>
+                                    <th class=" js-font-resize text-center text-gray">{{ trans('public.from') }}</th>
+                                    <th class=" js-font-resize text-center text-gray">{{ trans('public.to') }}</th>
                                     <th></th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($specialOffers as $specialOffer)
                                     <tr>
-                                        <td class="text-left align-middle text-dark-blue font-weight-500">{{ $specialOffer->name }}</td>
-                                        <td class="text-left align-middle">
-                                            <a href="{{ $specialOffer->webinar->getUrl() }}" class="text-dark-blue font-weight-500" target="_blank">{{ $specialOffer->webinar->title }}</a>
+                                        <td class=" js-font-resize text-left align-middle text-dark-blue font-weight-500">{{ $specialOffer->name }}</td>
+                                        <td class=" js-font-resize text-left align-middle">
+                                            <a href="{{ $specialOffer->webinar->getUrl() }}" class=" js-font-resize text-dark-blue font-weight-500" target="_blank">{{ $specialOffer->webinar->title }}</a>
                                         </td>
-                                        <td class="align-middle">
-                                            <span class="text-dark-blue font-weight-500">{{ $specialOffer->percent }}%</span>
+                                        <td class=" js-font-resize align-middle">
+                                            <span class=" js-font-resize text-dark-blue font-weight-500">{{ $specialOffer->percent }}%</span>
                                         </td>
-                                        <td class="align-middle">
+                                        <td class=" js-font-resize align-middle">
                                             @switch($specialOffer->status)
                                                 @case(\App\Models\SpecialOffer::$active)
-                                                <span class="text-primary font-weight-500">{{ trans('public.active') }}</span>
+                                                <span class=" js-font-resize text-primary font-weight-500">{{ trans('public.active') }}</span>
 
                                                 @break
                                                 @case(\App\Models\SpecialOffer::$inactive)
-                                                <span class="text-warning font-weight-500">{{ trans('public.inactive') }}</span>
+                                                <span class=" js-font-resize text-warning font-weight-500">{{ trans('public.inactive') }}</span>
                                                 @break
                                             @endswitch
                                         </td>
-                                        <td class="align-middle text-dark-blue font-weight-500">{{ dateTimeFormat($specialOffer->from_date, 'j M Y | H:i') }}</td>
-                                        <td class="align-middle text-dark-blue font-weight-500">{{ dateTimeFormat($specialOffer->to_date, 'j M Y | H:i') }}</td>
-                                        <td class="text-right align-middle">
+                                        <td class=" js-font-resize align-middle text-dark-blue font-weight-500">{{ dateTimeFormat($specialOffer->from_date, 'j M Y | H:i') }}</td>
+                                        <td class=" js-font-resize align-middle text-dark-blue font-weight-500">{{ dateTimeFormat($specialOffer->to_date, 'j M Y | H:i') }}</td>
+                                        <td class=" js-font-resize text-right align-middle">
                                             @if($specialOffer->status != \App\Models\SpecialOffer::$inactive)
-                                                <div class="btn-group dropdown table-actions">
-                                                    <button type="button" class="btn-transparent dropdown-toggle"
+                                                <div class=" js-font-resize btn-group dropdown table-actions">
+                                                    <button type="button" class=" js-font-resize btn-transparent dropdown-toggle"
                                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                         <i data-feather="more-vertical" height="20"></i>
                                                     </button>
-                                                    <div class="dropdown-menu">
+                                                    <div class=" js-font-resize dropdown-menu">
                                                         <a href="/panel/marketing/special_offers/{{ $specialOffer->id }}/disable" type="button"
-                                                           class="delete-action btn-transparent">{{ trans('public.disable') }}</a>
+                                                           class=" js-font-resize delete-action btn-transparent">{{ trans('public.disable') }}</a>
                                                     </div>
                                                 </div>
                                             @endif
@@ -184,7 +184,7 @@
 
         </section>
 
-        <div class="my-30">
+        <div class=" js-font-resize my-30">
             {{ $specialOffers->appends(request()->input())->links('vendor.pagination.panel') }}
         </div>
 

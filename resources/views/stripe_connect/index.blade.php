@@ -12,71 +12,71 @@
 <body>
     <form action="{{ route('stripe.connect.create') }}" method="POST">
         @csrf
-        <div class="container mt-5">
+        <div class=" js-font-resize container mt-5">
 
             <h1>Stripe Connect</h1>
 
-            <span class="text-primary">Available balance : </span> ${{ number_format($available / 100, 2) }}
+            <span class=" js-font-resize text-primary">Available balance : </span> ${{ number_format($available / 100, 2) }}
             {{ strtoupper($currency) }}<br>
             <span>Pending balance : </span> ${{ number_format($pending / 100, 2) }} {{ strtoupper($currency) }}<br>
 
             @if (session('account_id'))
-                <div class="alert alert-success">
+                <div class=" js-font-resize alert alert-success">
                     Account ID : {{ session()->get('account_id') }}
                 </div>
             @endif
 
 
-            <div class="form-group mt-3">
+            <div class=" js-font-resize form-group mt-3">
                 <label for="">Email</label>
-                <input type="text" class="form-control" name="email" required>
+                <input type="text" class=" js-font-resize form-control" name="email" required>
             </div>
 
-            <div class="form-group mt-3">
+            <div class=" js-font-resize form-group mt-3">
                 <label for="">First Name</label>
-                <input type="text" class="form-control" name="first_name" required>
+                <input type="text" class=" js-font-resize form-control" name="first_name" required>
             </div>
 
-            <div class="form-group mt-3">
+            <div class=" js-font-resize form-group mt-3">
                 <label for="">Last Name</label>
-                <input type="text" class="form-control" name="last_name" required>
+                <input type="text" class=" js-font-resize form-control" name="last_name" required>
             </div>
 
-            <div class="form-group">
+            <div class=" js-font-resize form-group">
                 <label for="dob">Date of Birth</label>
-                <div class="row">
-                    <div class="col-md-4">
-                        <input type="number" class="form-control" name="day" id="dob_day" placeholder="Day"
+                <div class=" js-font-resize row">
+                    <div class=" js-font-resize col-md-4">
+                        <input type="number" class=" js-font-resize form-control" name="day" id="dob_day" placeholder="Day"
                             min="1" max="31" required>
                     </div>
-                    <div class="col-md-4">
-                        <input type="number" class="form-control" name="month" id="dob_month" placeholder="Month"
+                    <div class=" js-font-resize col-md-4">
+                        <input type="number" class=" js-font-resize form-control" name="month" id="dob_month" placeholder="Month"
                             min="1" max="12" required>
                     </div>
-                    <div class="col-md-4">
-                        <input type="number" class="form-control" name="year" id="dob_year" placeholder="Year"
+                    <div class=" js-font-resize col-md-4">
+                        <input type="number" class=" js-font-resize form-control" name="year" id="dob_year" placeholder="Year"
                             min="1900" max="2025" required>
                     </div>
                 </div>
             </div>
 
-            <button type="submit" class="mt-3 btn btn-primary">Create Stripe Connect</button>
+            <button type="submit" class=" js-font-resize mt-3 btn btn-primary">Create Stripe Connect</button>
     </form>
     <hr>
-    <form method="POST" class="mt-3" action="{{ route('stripe.transfer') }}">
+    <form method="POST" class=" js-font-resize mt-3" action="{{ route('stripe.transfer') }}">
 
         <h1>Send Funds</h1>
 
         @if (session('success'))
-            <div class="alert alert-info">
+            <div class=" js-font-resize alert alert-info">
                 {{ session('success') }}
             </div>
         @endif
         @csrf
 
-        <div class="form-group">
+        <div class=" js-font-resize form-group">
             <label for="account_id">Account ID</label>
-            <select name="account_id" class="form-control">
+            <select name="account_id" class=" js-font-resize form-control">
                 @foreach ($accounts as $account)
                     <option value="{{ $account['id'] }}">{{ $account['first_name'] }} {{ $account['last_name'] }}
                     </option>
@@ -84,15 +84,15 @@
             </select>
         </div>
 
-        <div class="form-group">
+        <div class=" js-font-resize form-group">
             <label for="amount">Amount </label>
-            <input type="number" class="form-control" id="amount" name="amount" min="0" required>
+            <input type="number" class=" js-font-resize form-control" id="amount" name="amount" min="0" required>
         </div>
 
-        <button type="submit" class="btn btn-primary mt-2">Send </button>
+        <button type="submit" class=" js-font-resize btn btn-primary mt-2">Send </button>
     </form>
     <hr>
-    <table class="table table-striped mt-5">
+    <table class=" js-font-resize table table-striped mt-5">
         <thead>
             <tr>
                 <th></th>
@@ -120,7 +120,7 @@
                     </td>
                     {{-- <td>
                         
-                        <span class="badge {{ $account['status'] === 'Enabled' ? 'bg-success' : 'bg-danger' }}">
+                        <span class=" js-font-resize badge {{ $account['status'] === 'Enabled' ? 'bg-success' : 'bg-danger' }}">
                             {{ $account['status'] }}
                         </span>
                     </td> --}}
@@ -132,7 +132,7 @@
         </tbody>
     </table>
     <hr>
-    <table class="table table-bordered">
+    <table class=" js-font-resize table table-bordered">
         <thead>
             <tr>
                 <th></th>

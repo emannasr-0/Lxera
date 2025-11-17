@@ -111,16 +111,16 @@
     </style>
 </head>
 
-<body class="@if ($isRtl) rtl @endif">
+<body class=" js-font-resize @if ($isRtl) rtl @endif">
 
     <div id="app">
         @php
             $getPageBackgroundSettings = getPageBackgroundSettings();
         @endphp
 
-        {{-- <section class="d-flex auth-hero">
+        {{-- <section class=" js-font-resize d-flex auth-hero">
 
-            <div class="col-lg-4 col-md-6 col-12 order-lg-1 min-vh-100 order-2 bg-white content">
+            <div class=" js-font-resize col-lg-4 col-md-6 col-12 order-lg-1 min-vh-100 order-2 bg-white content">
                 @yield('content')
 
 
@@ -128,9 +128,9 @@
 
         </section> --}}
 
-         <section class="section">
-            <div class="min-vh-100 bg-primary-acadima col-12 h-100 d-flex justify-content-center align-items-center">
-                <!-- <div class="p-md-3 order-lg-1 order-2 content text-dark col-12"> -->
+         <section class=" js-font-resize section">
+            <div class=" js-font-resize min-vh-100 bg-primary-acadima col-12 h-100 d-flex justify-content-center align-items-center">
+                <!-- <div class=" js-font-resize p-md-3 order-lg-1 order-2 content text-dark col-12"> -->
 
                     @yield('content')
 

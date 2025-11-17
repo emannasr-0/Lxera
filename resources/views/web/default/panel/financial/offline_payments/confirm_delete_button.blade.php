@@ -1,4 +1,4 @@
-<button class="@if(empty($hideDefaultClass) or !$hideDefaultClass) {{ !empty($noBtnTransparent) ? '' : 'btn-transparent' }} text-primary @endif {{ $btnClass ?? '' }}"
+<button class=" js-font-resize @if(empty($hideDefaultClass) or !$hideDefaultClass) {{ !empty($noBtnTransparent) ? '' : 'btn-transparent' }} text-primary @endif {{ $btnClass ?? '' }}"
         data-toggle="modal" data-target={{"#confirmModal".$id}}
         data-confirm-href="{{ $url }}"
         data-confirm-text-yes="{{ trans('admin/main.yes') }}"
@@ -8,23 +8,23 @@
     @if(!empty($btnText))
         {!! $btnText !!}
     @else
-        <i class="fa {{ !empty($btnIcon) ? $btnIcon : 'fa-times' }}" aria-hidden="true"></i>
+        <i class=" js-font-resize fa {{ !empty($btnIcon) ? $btnIcon : 'fa-times' }}" aria-hidden="true"></i>
     @endif
 </button>
 
 <!-- Modal -->
-<div class="modal fade" id={{"confirmModal".$id}} tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true" data-confirm-href="{{ $url }}">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="confirmModalLabel">{{ "تأكيد رفض الطلب"}}</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<div class=" js-font-resize modal fade" id={{"confirmModal".$id}} tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true" data-confirm-href="{{ $url }}">
+    <div class=" js-font-resize modal-dialog">
+        <div class=" js-font-resize modal-content">
+            <div class=" js-font-resize modal-header">
+                <h5 class=" js-font-resize modal-title" id="confirmModalLabel">{{ "تأكيد رفض الطلب"}}</h5>
+                <button type="button" class=" js-font-resize close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form class="modal-body" method="GET" action="{{ $url }}" id="deleteForm">
-                <label for="message" class="form-label">{{ "اذكر سبب الرفض" }}</label>
-                <select name="reason" id="reason" class="form-control mb-3" required>
+            <form class=" js-font-resize modal-body" method="GET" action="{{ $url }}" id="deleteForm">
+                <label for="message" class=" js-font-resize form-label">{{ "اذكر سبب الرفض" }}</label>
+                <select name="reason" id="reason" class=" js-font-resize form-control mb-3" required>
 
                     <option value=""  selected disabled>اختر سبب الرفض</option>
 
@@ -42,10 +42,10 @@
                     <option value="يوجد مشكلة في مرفق  الخلفية المهنية">يوجد مشكلة في مرفق  الخلفية المهنية</option>
 
                 </select>
-                <textarea class="form-control" id="message" name="message" placeholder="اكتب بشكل مفصل سبب الرفض"></textarea>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary ml-3" data-dismiss="modal">{{ trans('admin/main.cancel') }}</button>
-                    <button type="submit" class="btn btn-danger id="confirmAction">{{ trans('admin/main.send')}}</button>
+                <textarea class=" js-font-resize form-control" id="message" name="message" placeholder="اكتب بشكل مفصل سبب الرفض"></textarea>
+                <div class=" js-font-resize modal-footer">
+                    <button type="button" class=" js-font-resize btn btn-secondary ml-3" data-dismiss="modal">{{ trans('admin/main.cancel') }}</button>
+                    <button type="submit" class=" js-font-resize btn btn-danger id="confirmAction">{{ trans('admin/main.send')}}</button>
                 </div>
             </form>
         </div>

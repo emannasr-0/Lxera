@@ -23,42 +23,42 @@
 </script>
 @if(!empty($authUser))
 
-    <div class="custom-dropdown navbar-auth-user-dropdown position-relative ">
-        <div class="custom-dropdown-toggle d-flex align-items-center navbar-user cursor-pointer">
+    <div class=" js-font-resize custom-dropdown navbar-auth-user-dropdown position-relative ">
+        <div class=" js-font-resize custom-dropdown-toggle d-flex align-items-center navbar-user cursor-pointer">
             <img src="{{ asset('store/Acadima/reviwebg.png') }}"
             alt="{{ $authUser->full_name }}" style="max-width: 40px;">
-        <span class="font-16 user-name ml-10 text-color font-14">{{ $authUser->full_name }}</span>
+        <span class=" js-font-resize font-16 user-name ml-10 text-color font-14">{{ $authUser->full_name }}</span>
         </div>
 
-        <div class="custom-dropdown-body pb-10 ">
+        <div class=" js-font-resize custom-dropdown-body pb-10 ">
 
-            <div class="dropdown-user-avatar d-flex align-items-center p-15 m-15 mb-10 rounded-sm border">
-                <div class="size-40  position-relative">
-                 {{--    <img src="{{ $authUser->getAvatar() }}" class="img-cover rounded-circle" alt="{{ $authUser->full_name }}"> --}}
+            <div class=" js-font-resize dropdown-user-avatar d-flex align-items-center p-15 m-15 mb-10 rounded-sm border">
+                <div class=" js-font-resize size-40  position-relative">
+                 {{--    <img src="{{ $authUser->getAvatar() }}" class=" js-font-resize img-cover rounded-circle" alt="{{ $authUser->full_name }}"> --}}
                  <img src="{{ asset('store/Acadima/reviwebg.png') }}"
-                 class="img-cover rounded-circle" alt="{{ $authUser->full_name }}">
+                 class=" js-font-resize img-cover rounded-circle" alt="{{ $authUser->full_name }}">
 
                 </div>
 
-                <div class="ml-5">
-                    <div class="font-14 font-weight-bold text-dark">{{ $authUser->full_name }}</div>
-                    <span class="mt-5 text-gray font-12">{{ $authUser->role->caption }}</span>
+                <div class=" js-font-resize ml-5">
+                    <div class=" js-font-resize font-14 font-weight-bold text-dark">{{ $authUser->full_name }}</div>
+                    <span class=" js-font-resize mt-5 text-gray font-12">{{ $authUser->role->caption }}</span>
                 </div>
             </div>
 
-            <ul class="my-8">
+            <ul class=" js-font-resize my-8">
                 @if($authUser->isAdmin())
-                    <li class="navbar-auth-user-dropdown-item">
-                        <a href="{{ getAdminPanelUrl() }}" class="d-flex align-items-center w-100 px-15 py-10 text-gray font-14 bg-transparent">
+                    <li class=" js-font-resize navbar-auth-user-dropdown-item">
+                        <a href="{{ getAdminPanelUrl() }}" class=" js-font-resize d-flex align-items-center w-100 px-15 py-10 text-gray font-14 bg-transparent">
 
                             @include('web.default.panel.includes.sidebar_icons.dashboard', ['class'=> "fill-white"])
-                            <span class="ml-5">{{ trans('panel.dashboard') }}</span>
+                            <span class=" js-font-resize ml-5">{{ trans('panel.dashboard') }}</span>
                         </a>
                     </li>
 
 
-                    <li class="navbar-auth-user-dropdown-item">
-                        <a href="{{ getAdminPanelUrl("/settings") }}" class="d-flex align-items-center w-100 px-15 py-10 text-gray font-14 bg-transparent">
+                    <li class=" js-font-resize navbar-auth-user-dropdown-item">
+                        <a href="{{ getAdminPanelUrl("/settings") }}" class=" js-font-resize d-flex align-items-center w-100 px-15 py-10 text-gray font-14 bg-transparent">
                             {{--@include('web.default.panel.includes.sidebar_icons.settings', ['class'=> "fill-black"])--}}
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class= "fill-black">
                                 <g id="Mask_Group_24" clip-path="url(#clip-path)" data-name="Mask Group 24" transform="translate(-25 -410)">
@@ -68,72 +68,72 @@
                                     </g>
                                 </g>
                             </svg>
-                            <span class="ml-5">{{ trans('panel.settings') }}</span>
+                            <span class=" js-font-resize ml-5">{{ trans('panel.settings') }}</span>
                         </a>
                     </li>
                 @else
                     @can('show_panel')
-                    <li class="navbar-auth-user-dropdown-item">
-                        <a href="/panel" class="d-flex align-items-center w-100 px-15 py-10 text-gray font-14 bg-transparent">
+                    <li class=" js-font-resize navbar-auth-user-dropdown-item">
+                        <a href="/panel" class=" js-font-resize d-flex align-items-center w-100 px-15 py-10 text-gray font-14 bg-transparent">
                             @include('web.default.panel.includes.sidebar_icons.dashboard', ['class'=> "fill-black"])
-                            <span class="ml-5 text-black">{{ trans('panel.dashboard') }}</span>
+                            <span class=" js-font-resize ml-5 text-black">{{ trans('panel.dashboard') }}</span>
                         </a>
                     </li>
                     @endcan
 
                     @can('student_showClasses')
-                    <li class="navbar-auth-user-dropdown-item">
-                        <a href="{{ ($authUser->isUser()) ? '/panel/webinars/purchases' : '/panel/webinars' }}" class="d-flex align-items-center w-100 px-15 py-10 text-gray font-14 bg-transparent">
+                    <li class=" js-font-resize navbar-auth-user-dropdown-item">
+                        <a href="{{ ($authUser->isUser()) ? '/panel/webinars/purchases' : '/panel/webinars' }}" class=" js-font-resize d-flex align-items-center w-100 px-15 py-10 text-gray font-14 bg-transparent">
                             @include('web.default.panel.includes.sidebar_icons.studytable', ['class'=> "fill-black"])
 
-                            <span class="ml-5 text-black" >{{ trans('panel.usermenu_webinars_tt') }}</span>
+                            <span class=" js-font-resize ml-5 text-black" >{{ trans('panel.usermenu_webinars_tt') }}</span>
                         </a>
                     </li>
                     @endcan
                     @if(!$authUser->isUser())
                    {{-- @can('student_showFinance')
-                        <li class="navbar-auth-user-dropdown-item">
-                            <a href="/panel/financial/sales" class="d-flex align-items-center w-100 px-15 py-10 text-gray font-14 bg-transparent">
+                        <li class=" js-font-resize navbar-auth-user-dropdown-item">
+                            <a href="/panel/financial/sales" class=" js-font-resize d-flex align-items-center w-100 px-15 py-10 text-gray font-14 bg-transparent">
                             @include('web.default.panel.includes.sidebar_icons.requirements', ['class'=> "fill-black"])
-                                <span class="ml-5 text-black">متطلبات القبول</span>
+                                <span class=" js-font-resize ml-5 text-black">متطلبات القبول</span>
                             </a>
                         </li>
                     @endcan --}}
                     @endif
                    {{--  @if((\App\Student::where('user_id',$authUser->id)))
-                       <li class="navbar-auth-user-dropdown-item">
-                            <a href="/panel/financial/sales" class="d-flex align-items-center w-100 px-15 py-10 text-gray font-14 bg-transparent">
+                       <li class=" js-font-resize navbar-auth-user-dropdown-item">
+                            <a href="/panel/financial/sales" class=" js-font-resize d-flex align-items-center w-100 px-15 py-10 text-gray font-14 bg-transparent">
                             @include('web.default.panel.includes.sidebar_icons.requirements', ['class'=> "fill-black"])
-                                <span class="ml-5 text-black">متطلبات القبول</span>
+                                <span class=" js-font-resize ml-5 text-black">متطلبات القبول</span>
                             </a>
                         </li>
                     @endif --}}
                     @can('show_support')
-                    <li class="navbar-auth-user-dropdown-item">
-                        <a href="https://support.anasacademy.uk/" class="d-flex align-items-center w-100 px-15 py-10 text-gray font-14 bg-transparent">
+                    <li class=" js-font-resize navbar-auth-user-dropdown-item">
+                        <a href="https://support.anasacademy.uk/" class=" js-font-resize d-flex align-items-center w-100 px-15 py-10 text-gray font-14 bg-transparent">
 
                             @include('web.default.panel.includes.sidebar_icons.support', ['class'=> "fill-black"])
-                            <span class="ml-5 text-black">{{ trans('panel.support_team') }} </span>
+                            <span class=" js-font-resize ml-5 text-black">{{ trans('panel.support_team') }} </span>
                         </a>
                     </li>
                     @endcan
 
 
-                    <li class="navbar-auth-user-dropdown-item">
-                        <a href="/panel/setting" class="d-flex align-items-center w-100 px-15 py-10 text-gray font-14 bg-transparent">
+                    <li class=" js-font-resize navbar-auth-user-dropdown-item">
+                        <a href="/panel/setting" class=" js-font-resize d-flex align-items-center w-100 px-15 py-10 text-gray font-14 bg-transparent">
                              @include('web.default.panel.includes.sidebar_icons.setting', ['class'=> "fill-black"])
-                            <span class="ml-5 text-black">{{ trans('panel.settings') }}</span>
+                            <span class=" js-font-resize ml-5 text-black">{{ trans('panel.settings') }}</span>
                         </a>
                     </li>
 
                 @endif
 
-                <li class="navbar-auth-user-dropdown-item">
-                    <a href="/logout" class="d-flex align-items-center w-100 px-15 py-10 text-gray font-14 bg-transparent">
+                <li class=" js-font-resize navbar-auth-user-dropdown-item">
+                    <a href="/logout" class=" js-font-resize d-flex align-items-center w-100 px-15 py-10 text-gray font-14 bg-transparent">
 
                         @include("web.default.panel.includes.sidebar_icons.logout")
                        {{-- <img src="{{asset("assets/default/img/icons/user_menu/logout.svg")}}" alt=""> --}}
-                      <span class="ml-5 text-danger">{{ trans('panel.sign_out') }}</span>
+                      <span class=" js-font-resize ml-5 text-danger">{{ trans('panel.sign_out') }}</span>
                     </a>
                 </li>
 
@@ -142,10 +142,10 @@
         </div>
     </div>
 @else
-    <div class="d-flex align-items-center mr-md-50">
-        <div class="custom-dropdown navbar-auth-user-dropdown position-relative mr-10">
-              <a href="/login" class=" text-light font-14">
-                <div class="custom-dropdown-toggle d-flex align-items-center navbar-user cursor-pointer">
+    <div class=" js-font-resize d-flex align-items-center mr-md-50">
+        <div class=" js-font-resize custom-dropdown navbar-auth-user-dropdown position-relative mr-10">
+              <a href="/login" class=" js-font-resize  text-light font-14">
+                <div class=" js-font-resize custom-dropdown-toggle d-flex align-items-center navbar-user cursor-pointer">
                     <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g clip-path="url(#clip0_37_269)">
 <path d="M20.1952 0H23.7188C23.7487 0.0872879 23.8255 0.0769512 23.8942 0.0838423C27.2356 0.372122 30.3696 1.33573 33.2272 3.09183C39.1065 6.70509 42.6313 11.9217 43.7581 18.7439C43.843 19.2562 43.8154 19.7856 43.9989 20.2818V23.8055C43.8693 23.856 43.9163 23.9732 43.906 24.0639C43.82 24.8024 43.7192 25.5386 43.577 26.2702C41.641 36.2199 32.9533 43.6497 22.8385 43.9874C18.3737 44.1367 14.2013 43.0846 10.4254 40.6945C4.71695 37.0801 1.32969 31.8968 0.238426 25.2182C0.157041 24.7186 0.192575 24.2006 0 23.7193V20.2818C0.0836785 20.2485 0.0779471 20.1738 0.0836785 20.1038C0.174235 19.0334 0.356493 17.9779 0.593774 16.9293C2.54245 8.30958 9.99442 1.45978 18.7428 0.240042C19.2277 0.172279 19.7321 0.205586 20.1952 0ZM33.7832 37.195C34.7484 36.4841 35.6207 35.6732 36.3864 34.7498C36.485 34.6476 36.5927 34.5511 36.6821 34.4408C40.7033 29.501 42.1453 23.8974 40.7331 17.6827C38.0118 5.70243 24.8892 -0.733908 13.6419 4.67335C5.1021 8.77933 0.887222 18.3695 3.54315 27.4601C4.33982 30.1844 5.67982 32.6204 7.58723 34.7348C8.37129 35.6525 9.24017 36.4806 10.2157 37.195C10.2799 37.2513 10.3383 37.3144 10.4071 37.3638C15.4255 41.0012 20.9437 42.1118 26.9605 40.5854C29.4709 39.9492 31.7531 38.8179 33.7821 37.195H33.7832Z" fill="#F7FAF6"/>
@@ -158,7 +158,7 @@
 </defs>
 </svg>
 
-                    <span class="font-16 user-name ml-10 text-dark-blue font-14 "> {{ trans('auth.login') }}</span>
+                    <span class=" js-font-resize font-16 user-name ml-10 text-dark-blue font-14 "> {{ trans('auth.login') }}</span>
                 </div>
              </a>
         </div>

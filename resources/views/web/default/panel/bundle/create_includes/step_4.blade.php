@@ -4,19 +4,19 @@
 @endpush
 
 
-<section class="mt-50">
-    <div class="">
-        <h2 class="section-title after-line">{{ trans('product.courses') }}</h2>
+<section class=" js-font-resize mt-50">
+    <div class=" js-font-resize ">
+        <h2 class=" js-font-resize section-title after-line">{{ trans('product.courses') }}</h2>
     </div>
 
-    <button id="addBundleWebinar" data-bundle-id="{{ $bundle->id }}" type="button" class="btn btn-primary btn-sm mt-15">{{ trans('update.add_course') }}</button>
+    <button id="addBundleWebinar" data-bundle-id="{{ $bundle->id }}" type="button" class=" js-font-resize btn btn-primary btn-sm mt-15">{{ trans('update.add_course') }}</button>
 
-    <div class="row mt-10">
-        <div class="col-12">
+    <div class=" js-font-resize row mt-10">
+        <div class=" js-font-resize col-12">
 
-            <div class="accordion-content-wrapper mt-15" id="bundleWebinarsAccordion" role="tablist" aria-multiselectable="true">
+            <div class=" js-font-resize accordion-content-wrapper mt-15" id="bundleWebinarsAccordion" role="tablist" aria-multiselectable="true">
                 @if(!empty($bundle->bundleWebinars) and count($bundle->bundleWebinars))
-                    <ul class="draggable-lists" data-order-table="bundle_webinars">
+                    <ul class=" js-font-resize draggable-lists" data-order-table="bundle_webinars">
                         @foreach($bundle->bundleWebinars as $bundleWebinarRow)
                             @include('web.default.panel.bundle.create_includes.accordions.bundle-webinars',['bundle' => $bundle, 'bundleWebinar' => $bundleWebinarRow])
                         @endforeach
@@ -33,7 +33,7 @@
     </div>
 </section>
 
-<div id="newBundleWebinarForm" class="d-none">
+<div id="newBundleWebinarForm" class=" js-font-resize d-none">
     @include('web.default.panel.bundle.create_includes.accordions.bundle-webinars',['bundle' => $bundle])
 </div>
 

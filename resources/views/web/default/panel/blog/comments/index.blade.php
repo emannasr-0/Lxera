@@ -6,45 +6,45 @@
 @endpush
 
 @section('content')
-    <section class="mt-25">
-        <h2 class="section-title">{{ trans('panel.filter_comments') }}</h2>
+    <section class=" js-font-resize mt-25">
+        <h2 class=" js-font-resize section-title">{{ trans('panel.filter_comments') }}</h2>
 
-        <div class="panel-section-card py-20 px-25 mt-20">
-            <form action="/panel/blog/comments" method="get" class="row">
-                <div class="col-12 col-lg-6">
-                    <div class="row">
-                        <div class="col-12 col-md-6">
-                            <div class="form-group">
-                                <label class="input-label">{{ trans('public.from') }}</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="dateInputGroupPrepend">
-                                            <i data-feather="calendar" width="18" height="18" class="text-light"></i>
+        <div class=" js-font-resize panel-section-card py-20 px-25 mt-20">
+            <form action="/panel/blog/comments" method="get" class=" js-font-resize row">
+                <div class=" js-font-resize col-12 col-lg-6">
+                    <div class=" js-font-resize row">
+                        <div class=" js-font-resize col-12 col-md-6">
+                            <div class=" js-font-resize form-group">
+                                <label class=" js-font-resize input-label">{{ trans('public.from') }}</label>
+                                <div class=" js-font-resize input-group">
+                                    <div class=" js-font-resize input-group-prepend">
+                                        <span class=" js-font-resize input-group-text" id="dateInputGroupPrepend">
+                                            <i data-feather="calendar" width="18" height="18" class=" js-font-resize text-light"></i>
                                         </span>
                                     </div>
-                                    <input type="text" name="from" autocomplete="off" value="{{ request()->get('from') }}" class="form-control {{ !empty(request()->get('from')) ? 'datepicker' : 'datefilter' }}" aria-describedby="dateInputGroupPrepend"/>
+                                    <input type="text" name="from" autocomplete="off" value="{{ request()->get('from') }}" class=" js-font-resize form-control {{ !empty(request()->get('from')) ? 'datepicker' : 'datefilter' }}" aria-describedby="dateInputGroupPrepend"/>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-md-6">
-                            <div class="form-group">
-                                <label class="input-label">{{ trans('public.to') }}</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="dateInputGroupPrepend">
-                                            <i data-feather="calendar" width="18" height="18" class="text-black"></i>
+                        <div class=" js-font-resize col-12 col-md-6">
+                            <div class=" js-font-resize form-group">
+                                <label class=" js-font-resize input-label">{{ trans('public.to') }}</label>
+                                <div class=" js-font-resize input-group">
+                                    <div class=" js-font-resize input-group-prepend">
+                                        <span class=" js-font-resize input-group-text" id="dateInputGroupPrepend">
+                                            <i data-feather="calendar" width="18" height="18" class=" js-font-resize text-black"></i>
                                         </span>
                                     </div>
-                                    <input type="text" name="to" autocomplete="off" value="{{ request()->get('to') }}" class="form-control {{ !empty(request()->get('to')) ? 'datepicker' : 'datefilter' }}" aria-describedby="dateInputGroupPrepend"/>
+                                    <input type="text" name="to" autocomplete="off" value="{{ request()->get('to') }}" class=" js-font-resize form-control {{ !empty(request()->get('to')) ? 'datepicker' : 'datefilter' }}" aria-describedby="dateInputGroupPrepend"/>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-lg-4">
-                    <div class="form-group">
-                        <label class="input-label">{{ trans('admin/main.post') }}</label>
-                        <select name="blog_id" class="form-control select2" data-placeholder="{{ trans('update.select_post') }}">
+                <div class=" js-font-resize col-12 col-lg-4">
+                    <div class=" js-font-resize form-group">
+                        <label class=" js-font-resize input-label">{{ trans('admin/main.post') }}</label>
+                        <select name="blog_id" class=" js-font-resize form-control select2" data-placeholder="{{ trans('update.select_post') }}">
                             <option {{ empty($selectedPost) ? 'selected' : '' }} value="">{{ trans('public.all') }}</option>
 
                             @foreach($posts as $post)
@@ -53,61 +53,61 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-12 col-lg-2 d-flex align-items-center justify-content-end">
-                    <button type="submit" class="btn btn-sm btn-acadima-primary w-100 mt-2">{{ trans('public.show_results') }}</button>
+                <div class=" js-font-resize col-12 col-lg-2 d-flex align-items-center justify-content-end">
+                    <button type="submit" class=" js-font-resize btn btn-sm btn-acadima-primary w-100 mt-2">{{ trans('public.show_results') }}</button>
                 </div>
             </form>
         </div>
     </section>
 
-    <section class="mt-35">
-        <div class="d-flex align-items-start align-items-md-center justify-content-between flex-column flex-md-row">
-            <h2 class="section-title">{{ trans('update.blog_comments_list') }}</h2>
+    <section class=" js-font-resize mt-35">
+        <div class=" js-font-resize d-flex align-items-start align-items-md-center justify-content-between flex-column flex-md-row">
+            <h2 class=" js-font-resize section-title">{{ trans('update.blog_comments_list') }}</h2>
         </div>
 
         @if(!empty($comments) and !$comments->isEmpty())
 
-            <div class="panel-section-card py-20 px-25 mt-20">
-                <div class="row">
-                    <div class="col-12 ">
-                        <div class="table-responsive">
-                            <table class="table custom-table text-center ">
+            <div class=" js-font-resize panel-section-card py-20 px-25 mt-20">
+                <div class=" js-font-resize row">
+                    <div class=" js-font-resize col-12 ">
+                        <div class=" js-font-resize table-responsive">
+                            <table class=" js-font-resize table custom-table text-center ">
                                 <thead>
                                 <tr>
-                                    <th class="text-left">{{ trans('panel.user') }}</th>
-                                    <th class="text-left">{{ trans('admin/main.post') }}</th>
-                                    <th class="text-center">{{ trans('panel.comment') }}</th>
-                                    <th class="text-center">{{ trans('public.status') }}</th>
-                                    <th class="text-center">{{ trans('public.date') }}</th>
+                                    <th class=" js-font-resize text-left">{{ trans('panel.user') }}</th>
+                                    <th class=" js-font-resize text-left">{{ trans('admin/main.post') }}</th>
+                                    <th class=" js-font-resize text-center">{{ trans('panel.comment') }}</th>
+                                    <th class=" js-font-resize text-center">{{ trans('public.status') }}</th>
+                                    <th class=" js-font-resize text-center">{{ trans('public.date') }}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
 
                                 @foreach($comments as $comment)
                                     <tr>
-                                        <th class="text-left">
-                                            <div class="user-inline-avatar d-flex align-items-center">
-                                                <div class="avatar bg-gray200">
-                                                    <img src="{{ $comment->user->getAvatar() }}" class="img-cover" alt="">
+                                        <th class=" js-font-resize text-left">
+                                            <div class=" js-font-resize user-inline-avatar d-flex align-items-center">
+                                                <div class=" js-font-resize avatar bg-gray200">
+                                                    <img src="{{ $comment->user->getAvatar() }}" class=" js-font-resize img-cover" alt="">
                                                 </div>
-                                                <span class="user-name ml-5 text-light font-weight-500">{{ $comment->user->full_name }}</span>
+                                                <span class=" js-font-resize user-name ml-5 text-light font-weight-500">{{ $comment->user->full_name }}</span>
                                             </div>
                                         </th>
-                                        <td class=" text-left align-middle" width="35%">
-                                            <a href="{{ $comment->blog->getUrl() }}" target="_blank" class="text-light font-weight-500">{{ $comment->blog->title }}</a>
+                                        <td class=" js-font-resize  text-left align-middle" width="35%">
+                                            <a href="{{ $comment->blog->getUrl() }}" target="_blank" class=" js-font-resize text-light font-weight-500">{{ $comment->blog->title }}</a>
                                         </td>
-                                        <td class="align-middle">
+                                        <td class=" js-font-resize align-middle">
                                             <input type="hidden" id="commentDescription{{ $comment->id }}" value="{{ nl2br($comment->comment) }}">
-                                            <button type="button" data-comment-id="{{ $comment->id }}" class="js-view-comment btn btn-sm btn-gray200">{{ trans('public.view') }}</button>
+                                            <button type="button" data-comment-id="{{ $comment->id }}" class=" js-font-resize js-view-comment btn btn-sm btn-gray200">{{ trans('public.view') }}</button>
                                         </td>
-                                        <td class="align-middle">
+                                        <td class=" js-font-resize align-middle">
                                             @if($comment->status == 'active')
-                                                <span class="text-primary font-weight-500">{{ trans('public.active') }}</span>
+                                                <span class=" js-font-resize text-primary font-weight-500">{{ trans('public.active') }}</span>
                                             @else
-                                                <span class="text-light font-weight-500">{{ trans('public.pending') }}</span>
+                                                <span class=" js-font-resize text-light font-weight-500">{{ trans('public.pending') }}</span>
                                             @endif
                                         </td>
-                                        <td class="align-middle">{{ dateTimeFormat($comment->created_at,'j M Y | H:i') }}</td>
+                                        <td class=" js-font-resize align-middle">{{ dateTimeFormat($comment->created_at,'j M Y | H:i') }}</td>
                                     </tr>
                                 @endforeach
                                 </tbody>
@@ -126,7 +126,7 @@
         @endif
     </section>
 
-    <div class="my-30">
+    <div class=" js-font-resize my-30">
         {{ $comments->appends(request()->input())->links('vendor.pagination.panel') }}
     </div>
 

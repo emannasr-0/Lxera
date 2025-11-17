@@ -32,7 +32,7 @@
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class=" js-font-resize container">
         <div>
             
             <img src="{{ $dynamicImage }}" alt="Dynamic Certificate Image">

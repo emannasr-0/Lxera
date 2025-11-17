@@ -1,36 +1,36 @@
-<div class="row no-gutters">
-  <div class="col-xl-8">
-    <div class="crop-container">
-      <img src="{{ $img->url . '?timestamp=' . $img->time }}" class="img img-responsive">
+<div class=" js-font-resize row no-gutters">
+  <div class=" js-font-resize col-xl-8">
+    <div class=" js-font-resize crop-container">
+      <img src="{{ $img->url . '?timestamp=' . $img->time }}" class=" js-font-resize img img-responsive">
     </div>
   </div>
-  <div class="col-xl-4">
-    <div class="text-center">
-      <div class="img-preview center-block"></div>
+  <div class=" js-font-resize col-xl-4">
+    <div class=" js-font-resize text-center">
+      <div class=" js-font-resize img-preview center-block"></div>
       <br>
-      <div class="btn-group clearfix">
-        <label class="btn btn-info btn-aspectRatio active" onclick="changeAspectRatio(this, 16 / 9)">
+      <div class=" js-font-resize btn-group clearfix">
+        <label class=" js-font-resize btn btn-info btn-aspectRatio active" onclick="changeAspectRatio(this, 16 / 9)">
           16:9
         </label>
-        <label class="btn btn-info btn-aspectRatio" onclick="changeAspectRatio(this, 4 / 3)">
+        <label class=" js-font-resize btn btn-info btn-aspectRatio" onclick="changeAspectRatio(this, 4 / 3)">
           4:3
         </label>
-        <label class="btn btn-info btn-aspectRatio" onclick="changeAspectRatio(this, 1)">
+        <label class=" js-font-resize btn btn-info btn-aspectRatio" onclick="changeAspectRatio(this, 1)">
           1:1
         </label>
-        <label class="btn btn-info btn-aspectRatio" onclick="changeAspectRatio(this, 2 / 3)">
+        <label class=" js-font-resize btn btn-info btn-aspectRatio" onclick="changeAspectRatio(this, 2 / 3)">
           2:3
         </label>
-        <label class="btn btn-info btn-aspectRatio" onclick="changeAspectRatio(this, null)">
+        <label class=" js-font-resize btn btn-info btn-aspectRatio" onclick="changeAspectRatio(this, null)">
           {{ trans('laravel-filemanager::lfm.btn-crop-free') }}
         </label>
       </div>
       <br>
       <br>
-      <div class="btn-group clearfix">
-        <button class="btn btn-secondary" onclick="loadItems()">{{ trans('laravel-filemanager::lfm.btn-cancel') }}</button>
-        <button class="btn btn-warning" onclick="performCropNew()">{{ trans('laravel-filemanager::lfm.btn-copy-crop') }}</button>
-        <button class="btn btn-primary" onclick="performCrop()">{{ trans('laravel-filemanager::lfm.btn-crop') }}</button>
+      <div class=" js-font-resize btn-group clearfix">
+        <button class=" js-font-resize btn btn-secondary" onclick="loadItems()">{{ trans('laravel-filemanager::lfm.btn-cancel') }}</button>
+        <button class=" js-font-resize btn btn-warning" onclick="performCropNew()">{{ trans('laravel-filemanager::lfm.btn-copy-crop') }}</button>
+        <button class=" js-font-resize btn btn-primary" onclick="performCrop()">{{ trans('laravel-filemanager::lfm.btn-crop') }}</button>
       </div>
       <form id='cropForm'>
         <input type="hidden" id="img" name="img" value="{{ $img->name }}">

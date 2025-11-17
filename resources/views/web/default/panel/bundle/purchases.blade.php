@@ -24,11 +24,11 @@
 </style>
 
 @section('content')
-    <section class="mt-25">
+    <section class=" js-font-resize mt-25">
         @if (!empty($sales) and !$sales->isEmpty())
             <div
-                class="d-flex align-items-start align-items-md-center justify-content-between flex-column flex-md-row mt-50 ">
-                <h2 class="section-title text-pink">{{ trans('panel.registered_programs') }} </h2>
+                class=" js-font-resize d-flex align-items-start align-items-md-center justify-content-between flex-column flex-md-row mt-50 ">
+                <h2 class=" js-font-resize section-title text-pink">{{ trans('panel.registered_programs') }} </h2>
             </div>
             @foreach ($sales as $sale)
                 @php
@@ -45,12 +45,12 @@
                         });
 
                     @endphp
-                    <section class="mb-80">
-                        <div class="d-flex justify-content-between align-items-center mt-30">
+                    <section class=" js-font-resize mb-80">
+                        <div class=" js-font-resize d-flex justify-content-between align-items-center mt-30">
 
-                            <h2 class="section-title after-line text-pink">{{ trans('product.courses') }} {{ $item->title }}</h2>
+                            <h2 class=" js-font-resize section-title after-line text-pink">{{ trans('product.courses') }} {{ $item->title }}</h2>
                             @if ($item->content_table && $item->start_date <= time() && $hasActiveWebinars && $sale->access_to_purchased_item)
-                                <a href="{{ $item->content_table }}" class="text-pink  mr-50 font-weight-bold"
+                                <a href="{{ $item->content_table }}" class=" js-font-resize text-pink  mr-50 font-weight-bold"
                                     target="_blank" style="font-size:18px">
                                     {{trans('panel.download_schedule')}}<!-- You can customize the button text here -->
                                 </a>
@@ -61,16 +61,16 @@
                             !empty($item->bundleWebinars) and
                                 !$item->bundleWebinars->isEmpty() and
                                 $item->start_date <= time() && $hasActiveWebinars && $sale->access_to_purchased_item)
-                            <div class="row mt-10">
-                                <div class="col-12 pt-20">
+                            <div class=" js-font-resize row mt-10">
+                                <div class=" js-font-resize col-12 pt-20">
 
-                                    <div class="table-responsive  bg-secondary-acadima  shadow border pt-20">
-                                        <table class="table table-striped text-center font-14 text-dark">
+                                    <div class=" js-font-resize table-responsive  bg-secondary-acadima  shadow border pt-20">
+                                        <table class=" js-font-resize table table-striped text-center font-14 text-dark">
 
                                             <tr>
                                                 <th>ID</th>
                                                 <th>{{trans('panel.course_name')}}</th>
-                                                {{-- <th class="text-left">{{ trans('public.instructor') }}</th> --}}
+                                                {{-- <th class=" js-font-resize text-left">{{ trans('public.instructor') }}</th> --}}
                                                 <th>{{ trans('public.start_date') }}</th>
                                                 <th>{{trans('panel.tasks')}}</th>
                                                 <th>{{trans('panel.number_of_submissions')}}</th>
@@ -93,7 +93,7 @@
                                                         <td>{{ $loop->index + 1 }}</td>
                                                         <th>{{ $bundleWebinar->webinar->title }}</th>
 
-                                                        {{-- <td class="text-left">
+                                                        {{-- <td class=" js-font-resize text-left">
                                                             {{ $bundleWebinar->webinar->teacher->full_name }}</td> --}}
 
                                                         <td>{{ dateTimeFormat($bundleWebinar->webinar->start_date, 'j F Y ') }}
@@ -152,17 +152,17 @@
                                                             @if ($bundleWebinar->webinar->duration != 0)
                                                                 {{-- @if ($bundleWebinar->webinar->video_demo)
                                                                     <a target="_blank" rel="noopener noreferrer"
-                                                                        class="btn btn-primary"
+                                                                        class=" js-font-resize btn btn-primary"
                                                                         style="width:190px;height:50px"
                                                                         href="{{ $bundleWebinar->webinar->video_demo }}">اضغط
                                                                         هنا للذهاب للمحاضرا</a>
                                                                 @else
-                                                                    <button class="btn btn-primary"
+                                                                    <button class=" js-font-resize btn btn-primary"
                                                                         style="width:190px;height:50px; background-color: #808080;"
                                                                         disabled>اضغط هنا للذهاب للمحاضرا</button>
                                                                 @endif --}}
 
-                                                                <a class="btn btn-acadima-primary"
+                                                                <a class=" js-font-resize btn btn-acadima-primary"
                                                                     href="{{ $bundleWebinar->getWebinarLearningPageUrl() }}"
                                                                     target="_blank" rel="noopener noreferrer">{{trans('panel.lecture')}}
                                                                 </a>
@@ -172,7 +172,7 @@
                                                 @endif
                                             @endforeach
                                         </table>
-                                        <p class="pb-20 text-center">{{trans('panel.total_hours')}} : {{ $totalHours }}</p>
+                                        <p class=" js-font-resize pb-20 text-center">{{trans('panel.total_hours')}} : {{ $totalHours }}</p>
                                     </div>
 
                                 </div>
@@ -198,12 +198,12 @@
     </section>
 
     {{-- <section>
-        <h2 class="section-title">{{ trans('panel.my_activity') }}</h2>
+        <h2 class=" js-font-resize section-title">{{ trans('panel.my_activity') }}</h2>
 
-        <div class="activities-container mt-25 p-20 p-lg-35">
-            <div class="row">
-                <div class="col-12 d-flex align-items-center justify-content-center">
-                    <div class="d-flex flex-column align-items-center text-center">
+        <div class=" js-font-resize activities-container mt-25 p-20 p-lg-35">
+            <div class=" js-font-resize row">
+                <div class=" js-font-resize col-12 d-flex align-items-center justify-content-center">
+                    <div class=" js-font-resize d-flex flex-column align-items-center text-center">
                         <svg width="56" height="56" viewBox="0 0 56 56" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
                             <g clip-path="url(#clip0_78_2397)">
@@ -226,25 +226,25 @@
                                 </clipPath>
                             </defs>
                         </svg>
-                        <strong class="font-30 text-dark font-weight-bold mt-5"> {{ $totalWebinars }}</strong>
-                        <span class="font-16 text-gray font-weight-500">إجمالي عدد المقررات</span>
+                        <strong class=" js-font-resize font-30 text-dark font-weight-bold mt-5"> {{ $totalWebinars }}</strong>
+                        <span class=" js-font-resize font-16 text-gray font-weight-500">إجمالي عدد المقررات</span>
                     </div>
                 </div>
 
-                <div class="col-4 d-flex align-items-center justify-content-center">
-                    <div class="d-flex flex-column align-items-center text-center">
+                <div class=" js-font-resize col-4 d-flex align-items-center justify-content-center">
+                    <div class=" js-font-resize d-flex flex-column align-items-center text-center">
                         <img src="/assets/default/img/activity/hours.svg" width="64" height="64" alt="">
                         <strong
-                            class="font-30 text-dark font-weight-bold mt-5">{{ convertMinutesToHourAndMinute($hours) }}</strong>
-                        <span class="font-16 text-gray font-weight-500">{{ trans('home.hours') }}</span>
+                            class=" js-font-resize font-30 text-dark font-weight-bold mt-5">{{ convertMinutesToHourAndMinute($hours) }}</strong>
+                        <span class=" js-font-resize font-16 text-gray font-weight-500">{{ trans('home.hours') }}</span>
                     </div>
                 </div>
 
-                <div class="col-4 d-flex align-items-center justify-content-center">
-                    <div class="d-flex flex-column align-items-center text-center">
+                <div class=" js-font-resize col-4 d-flex align-items-center justify-content-center">
+                    <div class=" js-font-resize d-flex flex-column align-items-center text-center">
                         <img src="/assets/default/img/activity/upcoming.svg" width="64" height="64" alt="">
-                        <strong class="font-30 text-dark font-weight-bold mt-5">{{ $upComing }}</strong>
-                        <span class="font-16 text-gray font-weight-500">{{ trans('panel.upcoming') }}</span>
+                        <strong class=" js-font-resize font-30 text-dark font-weight-bold mt-5">{{ $upComing }}</strong>
+                        <span class=" js-font-resize font-16 text-gray font-weight-500">{{ trans('panel.upcoming') }}</span>
                     </div>
                 </div>
 
@@ -254,7 +254,7 @@
 
 
 
-    <div class="my-30">
+    <div class=" js-font-resize my-30">
         {{ $sales->appends(request()->input())->links('vendor.pagination.panel') }}
     </div>
 

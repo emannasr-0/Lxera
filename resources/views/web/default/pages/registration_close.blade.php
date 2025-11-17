@@ -1,14 +1,14 @@
 @extends(getTemplate() . '.layouts.app')
 
 @section('content')
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8 col-11">
-                <div class="d-flex justify-content-center align-items-center flex-column">
+    <div class=" js-font-resize container">
+        <div class=" js-font-resize row justify-content-center">
+            <div class=" js-font-resize col-md-8 col-11">
+                <div class=" js-font-resize d-flex justify-content-center align-items-center flex-column">
 
-                    <img src="/store/1/close.png" alt="" class="col-10 col-md-8">
+                    <img src="/store/1/close.png" alt="" class=" js-font-resize col-10 col-md-8">
 
-                    <p class="font-20">
+                    <p class=" js-font-resize font-20">
                         @if (isset($message))
                             {{ $message }}
                         @else

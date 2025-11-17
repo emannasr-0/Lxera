@@ -5,54 +5,54 @@
 @endpush
 
 @section('content')
-    <div class="container">
-        <section class="mt-40">
-            <h2 class="font-weight-bold font-16 text-light">{{ $quiz->title }}</h2>
-            <p class="text-gray font-14 mt-5">
-                <a href="{{ $quiz->webinar->getUrl() }}" target="_blank" class="text-gray">{{ $quiz->webinar->title }}</a>
+    <div class=" js-font-resize container">
+        <section class=" js-font-resize mt-40">
+            <h2 class=" js-font-resize font-weight-bold font-16 text-light">{{ $quiz->title }}</h2>
+            <p class=" js-font-resize text-gray font-14 mt-5">
+                <a href="{{ $quiz->webinar->getUrl() }}" target="_blank" class=" js-font-resize text-gray">{{ $quiz->webinar->title }}</a>
                 | {{ trans('public.by') }}
-                <span class="font-weight-bold">
-                    <a href="{{ $quiz->creator->getProfileUrl() }}" target="_blank" class="font-14"> {{ $quiz->creator->full_name }}</a>
+                <span class=" js-font-resize font-weight-bold">
+                    <a href="{{ $quiz->creator->getProfileUrl() }}" target="_blank" class=" js-font-resize font-14"> {{ $quiz->creator->full_name }}</a>
                 </span>
             </p>
 
-            <div class="activities-container shadow-sm rounded-lg mt-25 p-20 p-lg-35">
-                <div class="row">
-                    <div class="col-6 col-md-3 d-flex align-items-center justify-content-center">
-                        <div class="d-flex flex-column align-items-center text-center">
+            <div class=" js-font-resize activities-container shadow-sm rounded-lg mt-25 p-20 p-lg-35">
+                <div class=" js-font-resize row">
+                    <div class=" js-font-resize col-6 col-md-3 d-flex align-items-center justify-content-center">
+                        <div class=" js-font-resize d-flex flex-column align-items-center text-center">
                             <img src="/assets/default/img/activity/58.svg" width="64" height="64" alt="">
-                            <strong class="font-30 font-weight-bold text-secondary mt-5">{{  $quiz->pass_mark }}/{{  $quizQuestions->sum('grade') }}</strong>
-                            <span class="font-16 text-gray">{{ trans('public.min') }} {{ trans('quiz.grade') }}</span>
+                            <strong class=" js-font-resize font-30 font-weight-bold text-secondary mt-5">{{  $quiz->pass_mark }}/{{  $quizQuestions->sum('grade') }}</strong>
+                            <span class=" js-font-resize font-16 text-gray">{{ trans('public.min') }} {{ trans('quiz.grade') }}</span>
                         </div>
                     </div>
 
-                    <div class="col-6 col-md-3 d-flex align-items-center justify-content-center">
-                        <div class="d-flex flex-column align-items-center text-center">
+                    <div class=" js-font-resize col-6 col-md-3 d-flex align-items-center justify-content-center">
+                        <div class=" js-font-resize d-flex flex-column align-items-center text-center">
                             <img src="/assets/default/img/activity/88.svg" width="64" height="64" alt="">
-                            <strong class="font-30 font-weight-bold text-secondary mt-5">{{ $attempt_count }}/{{ $quiz->attempt }}</strong>
-                            <span class="font-16 text-gray">{{ trans('quiz.attempts') }}</span>
+                            <strong class=" js-font-resize font-30 font-weight-bold text-secondary mt-5">{{ $attempt_count }}/{{ $quiz->attempt }}</strong>
+                            <span class=" js-font-resize font-16 text-gray">{{ trans('quiz.attempts') }}</span>
                         </div>
                     </div>
 
-                    <div class="col-6 col-md-3 mt-30 mt-md-0 d-flex align-items-center justify-content-center mt-5 mt-md-0">
-                        <div class="d-flex flex-column align-items-center text-center">
+                    <div class=" js-font-resize col-6 col-md-3 mt-30 mt-md-0 d-flex align-items-center justify-content-center mt-5 mt-md-0">
+                        <div class=" js-font-resize d-flex flex-column align-items-center text-center">
                             <img src="/assets/default/img/activity/47.svg" width="64" height="64" alt="">
-                            <strong class="font-30 font-weight-bold text-secondary mt-5">{{ $totalQuestionsCount }}</strong>
-                            <span class="font-16 text-gray">{{ trans('public.questions') }}</span>
+                            <strong class=" js-font-resize font-30 font-weight-bold text-secondary mt-5">{{ $totalQuestionsCount }}</strong>
+                            <span class=" js-font-resize font-16 text-gray">{{ trans('public.questions') }}</span>
                         </div>
                     </div>
 
-                    <div class="col-6 col-md-3 mt-30 mt-md-0 d-flex align-items-center justify-content-center mt-5 mt-md-0">
-                        <div class="d-flex flex-column align-items-center text-center">
+                    <div class=" js-font-resize col-6 col-md-3 mt-30 mt-md-0 d-flex align-items-center justify-content-center mt-5 mt-md-0">
+                        <div class=" js-font-resize d-flex flex-column align-items-center text-center">
                             <img src="/assets/default/img/activity/clock.svg" width="64" height="64" alt="">
                             @if(!empty($quiz->time))
-                                <strong class="font-30 font-weight-bold text-secondary mt-5">
-                                    <div class="d-flex align-items-center timer ltr" data-minutes-left="{{ $quiz->time }}"></div>
+                                <strong class=" js-font-resize font-30 font-weight-bold text-secondary mt-5">
+                                    <div class=" js-font-resize d-flex align-items-center timer ltr" data-minutes-left="{{ $quiz->time }}"></div>
                                 </strong>
                             @else
-                                <strong class="font-30 font-weight-bold text-secondary mt-5">{{ trans('quiz.unlimited') }}</strong>
+                                <strong class=" js-font-resize font-30 font-weight-bold text-secondary mt-5">{{ trans('quiz.unlimited') }}</strong>
                             @endif
-                            <span class="font-16 text-gray">{{ trans('quiz.remaining_time') }}</span>
+                            <span class=" js-font-resize font-16 text-gray">{{ trans('quiz.remaining_time') }}</span>
                         </div>
                     </div>
 
@@ -61,61 +61,61 @@
             </div>
         </section>
 
-        <section class="mt-30 quiz-form">
-            <form action="/panel/quizzes/{{ $quiz->id }}/store-result" method="post" class="">
+        <section class=" js-font-resize mt-30 quiz-form">
+            <form action="/panel/quizzes/{{ $quiz->id }}/store-result" method="post" class=" js-font-resize ">
                 {{ csrf_field() }}
-                <input type="hidden" name="quiz_result_id" value="{{ $newQuizStart->id }}" class="form-control" placeholder=""/>
-                <input type="hidden" name="attempt_number" value="{{ $attempt_count }}" class="form-control" placeholder=""/>
+                <input type="hidden" name="quiz_result_id" value="{{ $newQuizStart->id }}" class=" js-font-resize form-control" placeholder=""/>
+                <input type="hidden" name="attempt_number" value="{{ $attempt_count }}" class=" js-font-resize form-control" placeholder=""/>
 
                 @foreach($quizQuestions as $key => $question)
 
-                    <fieldset class="question-step question-step-{{ $key + 1 }}">
-                        <div class="rounded-lg shadow-sm py-25 px-10">
-                            <div class="quiz-card">
+                    <fieldset class=" js-font-resize question-step question-step-{{ $key + 1 }}">
+                        <div class=" js-font-resize rounded-lg shadow-sm py-25 px-10">
+                            <div class=" js-font-resize quiz-card">
 
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <p class="text-gray font-14">
+                                <div class=" js-font-resize d-flex align-items-center justify-content-between">
+                                    <p class=" js-font-resize text-gray font-14">
                                         <span>{{ trans('quiz.question_grade') }} : {{ $question->grade }} </span>
                                     </p>
 
-                                    <div class="rounded-sm border border-gray200 p-15 text-gray">{{ $key + 1 }}/{{ $totalQuestionsCount }}</div>
+                                    <div class=" js-font-resize rounded-sm border border-gray200 p-15 text-gray">{{ $key + 1 }}/{{ $totalQuestionsCount }}</div>
                                 </div>
 
                                 @if(!empty($question->image) or !empty($question->video))
-                                    <div class="quiz-question-media-card rounded-lg mt-10 mb-15">
+                                    <div class=" js-font-resize quiz-question-media-card rounded-lg mt-10 mb-15">
                                         @if(!empty($question->image))
-                                            <img src="{{ $question->image }}" class="img-cover rounded-lg" alt="">
+                                            <img src="{{ $question->image }}" class=" js-font-resize img-cover rounded-lg" alt="">
                                         @else
-                                            <video id="questionVideo{{ $question->id }}" oncontextmenu="return false;" controlsList="nodownload" class="video-js" controls preload="auto" width="100%" data-setup='{"fluid": true}'>
+                                            <video id="questionVideo{{ $question->id }}" oncontextmenu="return false;" controlsList="nodownload" class=" js-font-resize video-js" controls preload="auto" width="100%" data-setup='{"fluid": true}'>
                                                 <source src="{{ $question->video }}" type="video/mp4"/>
                                             </video>
                                         @endif
                                     </div>
                                 @endif
 
-                                <div class="">
-                                    <h3 class="font-weight-bold font-16 text-secondary">{{ $question->title }}</h3>
+                                <div class=" js-font-resize ">
+                                    <h3 class=" js-font-resize font-weight-bold font-16 text-secondary">{{ $question->title }}</h3>
                                 </div>
 
                                 @if($question->type === \App\Models\QuizzesQuestion::$descriptive)
-                                    <div class="form-group mt-35">
-                                        <textarea name="question[{{ $question->id }}][answer]" rows="15" class="form-control"></textarea>
+                                    <div class=" js-font-resize form-group mt-35">
+                                        <textarea name="question[{{ $question->id }}][answer]" rows="15" class=" js-font-resize form-control"></textarea>
                                     </div>
                                 @else
-                                    <div class="question-multi-answers mt-35">
+                                    <div class=" js-font-resize question-multi-answers mt-35">
                                         @foreach($question->quizzesQuestionsAnswers as $key => $answer)
-                                            <div class="answer-item">
+                                            <div class=" js-font-resize answer-item">
                                                 <input id="asw-{{ $answer->id }}" type="radio" name="question[{{ $question->id }}][answer]" value="{{ $answer->id }}">
                                                 @if(!$answer->image)
-                                                    <label for="asw-{{ $answer->id }}" class="answer-label font-16 text-pink d-flex align-items-center justify-content-center">
-                                                            <span class="answer-title">
+                                                    <label for="asw-{{ $answer->id }}" class=" js-font-resize answer-label font-16 text-pink d-flex align-items-center justify-content-center">
+                                                            <span class=" js-font-resize answer-title">
                                                                 {{ $answer->title }}
                                                             </span>
                                                     </label>
                                                 @else
-                                                    <label for="asw-{{ $answer->id }}" class="answer-label font-16 text-pink d-flex align-items-center justify-content-center">
-                                                        <div class="image-container">
-                                                            <img src="{{ config('app_url') . $answer->image }}" class="img-cover" alt="">
+                                                    <label for="asw-{{ $answer->id }}" class=" js-font-resize answer-label font-16 text-pink d-flex align-items-center justify-content-center">
+                                                        <div class=" js-font-resize image-container">
+                                                            <img src="{{ config('app_url') . $answer->image }}" class=" js-font-resize img-cover" alt="">
                                                         </div>
                                                     </label>
                                                 @endif
@@ -128,10 +128,10 @@
                     </fieldset>
                 @endforeach
 
-                <div class="row d-flex align-items-center m-10">
-                    <button type="button" class="previous btn btn-sm btn-primary mr-md-10 mr-5">{{ trans('quiz.previous_question') }}</button>
-                    <button type="button" class="next btn btn-sm btn-primary mr-auto">{{ trans('quiz.next_question') }}</button>
-                    <button type="submit" class="finish btn btn-sm btn-danger">{{ trans('public.finish') }}</button>
+                <div class=" js-font-resize row d-flex align-items-center m-10">
+                    <button type="button" class=" js-font-resize previous btn btn-sm btn-primary mr-md-10 mr-5">{{ trans('quiz.previous_question') }}</button>
+                    <button type="button" class=" js-font-resize next btn btn-sm btn-primary mr-auto">{{ trans('quiz.next_question') }}</button>
+                    <button type="submit" class=" js-font-resize finish btn btn-sm btn-danger">{{ trans('public.finish') }}</button>
                 </div>
             </form>
         </section>

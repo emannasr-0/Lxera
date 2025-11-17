@@ -8,19 +8,19 @@
 @section('content')
     @include('web.default.panel.requirements.requirements_includes.progress')
     @if (Session::has('success'))
-        <div class="container d-flex justify-content-center mt-80">
-            <p class="alert alert-success w-75 text-center"> {{ Session::get('success') }} </p>
+        <div class=" js-font-resize container d-flex justify-content-center mt-80">
+            <p class=" js-font-resize alert alert-success w-75 text-center"> {{ Session::get('success') }} </p>
         </div>
     @else
         @if (!$requirementUploaded || $requirementStatus=="rejected")
             @include('web.default.panel.requirements.requirements_includes.basic_information')
         @else
-        <div class="container mt-80 text-center ">
-            <p class="alert alert-success text-center">
+        <div class=" js-font-resize container mt-80 text-center ">
+            <p class=" js-font-resize alert alert-success text-center">
         لقد تم بالفعل رفع متطلبات القبول يرجي الذهاب لصفحة المتطلبات لرؤية حالة الطلب
             </p>
             <a href="/panel/requirements"
-                class="btn btn-primary p-5 mt-20">للذهاب لصفحة متطلبات القبول برجي الضغط هنا</a>
+                class=" js-font-resize btn btn-primary p-5 mt-20">للذهاب لصفحة متطلبات القبول برجي الضغط هنا</a>
         </div>
         @endif
     @endif

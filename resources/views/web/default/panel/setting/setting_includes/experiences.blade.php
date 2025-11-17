@@ -1,8 +1,8 @@
-<section class="mt-30">
-    <div class="d-flex justify-content-between align-items-center mb-10">
-        <h2 class="section-title after-line">{{ trans('site.experiences') }}</h2>
+<section class=" js-font-resize mt-30">
+    <div class=" js-font-resize d-flex justify-content-between align-items-center mb-10">
+        <h2 class=" js-font-resize section-title after-line">{{ trans('site.experiences') }}</h2>
         <button id="userAddExperiences" type="button"
-            class="btn btn-primary btn-sm">{{ trans('site.add_experiences') }}</button>
+            class=" js-font-resize btn btn-primary btn-sm">{{ trans('site.add_experiences') }}</button>
     </div>
 
     <div id="userListExperiences">
@@ -13,18 +13,18 @@
         @endphp
         @if (!empty($experiences) and !$experiences->isEmpty())
             @foreach ($experiences as $experience)
-                <div class="row mt-20">
-                    <div class="col-12">
+                <div class=" js-font-resize row mt-20">
+                    <div class=" js-font-resize col-12">
                         <div
-                            class="experience-card py-15 py-lg-30 px-10 px-lg-25 rounded-sm panel-shadow bg-secondary-acadima d-flex align-items-center justify-content-between">
-                            <div class="col-10 text-secondary font-weight-500 text-left experience-value"
+                            class=" js-font-resize experience-card py-15 py-lg-30 px-10 px-lg-25 rounded-sm panel-shadow bg-secondary-acadima d-flex align-items-center justify-content-between">
+                            <div class=" js-font-resize col-10 text-secondary font-weight-500 text-left experience-value"
                                 experience-value="{{ $experience->value }}">
                                 @if (preg_match($pattern, $experience->value, $matches))
-                                    <div class="row">
-                                        <p class="col-12 col-sm-6">
+                                    <div class=" js-font-resize row">
+                                        <p class=" js-font-resize col-12 col-sm-6">
                                             {{trans('public.experience_field')}} {{ $matches[1] }}
                                         </p>
-                                        <p class="col-12 col-sm-6">
+                                        <p class=" js-font-resize col-12 col-sm-6">
                                             {{trans('public.years_of_experience')}} {{ trans('application_form.'.$matches[2]) }}
                                         </p>
                                     </div>
@@ -32,18 +32,18 @@
                                     {{ $experience->value }}
                                 @endif
                             </div>
-                            <div class="col-2 text-right">
-                                <div class="btn-group dropdown table-actions">
-                                    <button type="button" class="btn-transparent dropdown-toggle"
+                            <div class=" js-font-resize col-2 text-right">
+                                <div class=" js-font-resize btn-group dropdown table-actions">
+                                    <button type="button" class=" js-font-resize btn-transparent dropdown-toggle"
                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i data-feather="more-vertical" height="20" class="text-black"></i>
+                                        <i data-feather="more-vertical" height="20" class=" js-font-resize text-black"></i>
                                     </button>
-                                    <div class="dropdown-menu font-weight-normal bg-secondaary-acadima">
+                                    <div class=" js-font-resize dropdown-menu font-weight-normal bg-secondaary-acadima">
                                         <button type="button" data-experience-id="{{ $experience->id }}"
                                             data-user-id="{{ (!empty($user) and empty($new_user)) ? $user->id : '' }}"
-                                            class="d-block btn-transparent edit-experience">{{ trans('public.edit') }}</button>
+                                            class=" js-font-resize d-block btn-transparent edit-experience">{{ trans('public.edit') }}</button>
                                         <a href="/panel/setting/metas/{{ $experience->id }}/delete?user_id={{ (!empty($user) and empty($new_user)) ? $user->id : '' }}"
-                                            class="delete-action d-block mt-10 btn-transparent">{{ trans('public.delete') }}</a>
+                                            class=" js-font-resize delete-action d-block mt-10 btn-transparent">{{ trans('public.delete') }}</a>
                                     </div>
                                 </div>
                             </div>
@@ -62,33 +62,33 @@
 
 </section>
 
-<div class="d-none" id="newExperienceModal">
-    <h3 class="section-title after-line">{{ trans('site.new_experience') }}</h3>
-    <div class="mt-20">
-        <div  class="text-center">
-           {{-- <img src="/assets/default/img/info.png" width="108" height="96" class="rounded-circle" alt=""> --}} 
-            <div class="swal2-icon swal2-warning swal2-icon-show" style="display: flex;"><div class="swal2-icon-content">!</div></div>
-            <h4 class="font-16 mt-20 text-black font-weight-bold">{{ trans('site.new_experience_hint') }}</h4>
-            <span class="d-block mt-10 text-gray font-14">{{ trans('site.new_experience_exam') }}</span>
+<div class=" js-font-resize d-none" id="newExperienceModal">
+    <h3 class=" js-font-resize section-title after-line">{{ trans('site.new_experience') }}</h3>
+    <div class=" js-font-resize mt-20">
+        <div  class=" js-font-resize text-center">
+           {{-- <img src="/assets/default/img/info.png" width="108" height="96" class=" js-font-resize rounded-circle" alt=""> --}} 
+            <div class=" js-font-resize swal2-icon swal2-warning swal2-icon-show" style="display: flex;"><div class=" js-font-resize swal2-icon-content">!</div></div>
+            <h4 class=" js-font-resize font-16 mt-20 text-black font-weight-bold">{{ trans('site.new_experience_hint') }}</h4>
+            <span class=" js-font-resize d-block mt-10 text-gray font-14">{{ trans('site.new_experience_exam') }}</span>
         </div>
 
-        <div class="form-group mt-15 px-20">
-            <label class="form-label text-left text-black">
+        <div class=" js-font-resize form-group mt-15 px-20">
+            <label class=" js-font-resize form-label text-left text-black">
                 {{trans('public.mention_experience_field')}}
-                 <span class="text-danger">*</span></label>
+                 <span class=" js-font-resize text-danger">*</span></label>
 
-            <input type="text" id="new_experience_val" required class="form-control" placeholder="{{trans('panel.enter_field_of_expertise')}}">
-            <div class="invalid-feedback">{{ trans('validation.required', ['attribute' => 'مجال الخبرة']) }}</div>
+            <input type="text" id="new_experience_val" required class=" js-font-resize form-control" placeholder="{{trans('panel.enter_field_of_expertise')}}">
+            <div class=" js-font-resize invalid-feedback">{{ trans('validation.required', ['attribute' => 'مجال الخبرة']) }}</div>
         </div>
 
-        <div class="form-group mt-15 px-20">
-            <label class="form-label text-left text-black">
+        <div class=" js-font-resize form-group mt-15 px-20">
+            <label class=" js-font-resize form-label text-left text-black">
                 {{trans('public.choose_years_of_experience')}}
-                <span class="text-danger">*</span></label>
+                <span class=" js-font-resize text-danger">*</span></label>
 
-            <div class="row mr-5 mt-5 col-12  text-gray">
+            <div class=" js-font-resize row mr-5 mt-5 col-12  text-gray">
                 {{-- less than 5 --}}
-                <div class="col-12 "> {{-- col-sm-4 --}}
+                <div class=" js-font-resize col-12 "> {{-- col-sm-4 --}}
                     <input type="radio" id="less_than_5" name="new_experience_val2"
                     value="less_than_5" required >
                     <label for="less_than_5">
@@ -97,7 +97,7 @@
                 </div>
 
                 {{--  5-10 --}}
-                <div class="col-12 "> {{-- col-sm-4 --}}
+                <div class=" js-font-resize col-12 "> {{-- col-sm-4 --}}
                     <input type="radio" id="5-10" name="new_experience_val2"
                     value="5-10" required >
                     <label for="5-10">
@@ -106,7 +106,7 @@
                 </div>
 
                 {{-- more than 10 --}}
-                <div class="col-12 "> {{-- col-sm-4 --}}
+                <div class=" js-font-resize col-12 "> {{-- col-sm-4 --}}
                     <input type="radio" id="more_than_10" name="new_experience_val2"
                     value="more_than_10" required >
                     <label for="more_than_10">
@@ -116,14 +116,14 @@
 
             </div>
 
-            {{-- <input type="number" id="new_experience_val2" required class="form-control"
+            {{-- <input type="number" id="new_experience_val2" required class=" js-font-resize form-control"
                 placeholder="أذكر عدد سنوات الخبرة "> --}}
-            <div class="invalid-feedback" id="experience_val2_feedback">{{ trans('validation.required', ['attribute' => 'عدد سنوت الخبرة']) }}</div>
+            <div class=" js-font-resize invalid-feedback" id="experience_val2_feedback">{{ trans('validation.required', ['attribute' => 'عدد سنوت الخبرة']) }}</div>
         </div>
     </div>
 
-    <div class="mt-30 d-flex align-items-center justify-content-end">
-        <button type="button" id="saveExperience" class="btn btn-sm btn-primary">{{ trans('public.save') }}</button>
-        <button type="button" class="btn btn-sm btn-danger ml-10 close-swl">{{ trans('public.close') }}</button>
+    <div class=" js-font-resize mt-30 d-flex align-items-center justify-content-end">
+        <button type="button" id="saveExperience" class=" js-font-resize btn btn-sm btn-primary">{{ trans('public.save') }}</button>
+        <button type="button" class=" js-font-resize btn btn-sm btn-danger ml-10 close-swl">{{ trans('public.close') }}</button>
     </div>
 </div>
