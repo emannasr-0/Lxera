@@ -4,23 +4,23 @@
 
 @section('content')
     <!-- Modal -->
-    <div class="" id='confirmModal' tabindex="-1">
-        <div class="">
-            <div class="">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="confirmModalLabel"> طلب تحويل من برنامج </h5>
+    <div class=" js-font-resize " id='confirmModal' tabindex="-1">
+        <div class=" js-font-resize ">
+            <div class=" js-font-resize ">
+                <div class=" js-font-resize modal-header">
+                    <h5 class=" js-font-resize modal-title" id="confirmModalLabel"> طلب تحويل من برنامج </h5>
                 </div>
-                <form class="modal-body" method="post" action="/panel/services/{{ $service->id }}/bundleTransform">
+                <form class=" js-font-resize modal-body" method="post" action="/panel/services/{{ $service->id }}/bundleTransform">
                     @csrf
                     @php
                         $user = auth()->user();
                         $purchasedFormBundles = $user->bundleSales;
                     @endphp
 
-                    <div class="form-group">
-                        <label class="input-label">محول من برنامج :</label>
-                        <select class="form-control @error('from_bundle_id')  is-invalid @enderror" name="from_bundle_id" id="from_bundle_id" >
-                            <option value="" price="0" class="placeholder" disabled selected>اختر التخصص الذي تود التحويل منه
+                    <div class=" js-font-resize form-group">
+                        <label class=" js-font-resize input-label">محول من برنامج :</label>
+                        <select class=" js-font-resize form-control @error('from_bundle_id')  is-invalid @enderror" name="from_bundle_id" id="from_bundle_id" >
+                            <option value="" price="0" class=" js-font-resize placeholder" disabled selected>اختر التخصص الذي تود التحويل منه
                             </option>
                             @foreach ($purchasedFormBundles as $bundleSale)
                                 @php
@@ -34,15 +34,15 @@
                             @endforeach
                         </select>
                         @error('from_bundle_id')
-                            <div class="invalid-feedback d-block">
+                            <div class=" js-font-resize invalid-feedback d-block">
                                 {{ $message }}
                             </div>
                         @enderror
                     </div>
 
-                    <div class="form-group">
-                        <label class="input-label">تحويل الي برنامج :</label><br>
-                        <select id="to_bundle_id" class="form-control @error('to_bundle_id')  is-invalid @enderror"
+                    <div class=" js-font-resize form-group">
+                        <label class=" js-font-resize input-label">تحويل الي برنامج :</label><br>
+                        <select id="to_bundle_id" class=" js-font-resize form-control @error('to_bundle_id')  is-invalid @enderror"
                             name="to_bundle_id" required onchange="CertificateSectionToggle();">
                             <option selected disabled price="0">اختر البرنامج المرام التحويل إليه
                             </option>
@@ -77,40 +77,40 @@
                         </select>
 
                         @error('to_bundle_id')
-                            <div class="invalid-feedback d-block">
+                            <div class=" js-font-resize invalid-feedback d-block">
                                 {{ $message }}
                             </div>
                         @enderror
                     </div>
 
                     {{-- certificate --}}
-                    <div class="form-group col-12  d-none" id="certificate_section">
+                    <div class=" js-font-resize form-group col-12  d-none" id="certificate_section">
                         <label style="width: auto">{{ trans('application_form.want_certificate') }} ؟
                             *</label>
-                        <span class="text-danger font-12 font-weight-bold" id="certificate_message"> </span>
+                        <span class=" js-font-resize text-danger font-12 font-weight-bold" id="certificate_message"> </span>
                         @error('certificate')
-                            <div class="invalid-feedback d-block">
+                            <div class=" js-font-resize invalid-feedback d-block">
                                 {{ $message }}
                             </div>
                         @enderror
-                        <div class="row mr-5 mt-3">
+                        <div class=" js-font-resize row mr-5 mt-3">
                             {{-- want certificate --}}
-                            <div class="col-sm-4 col">
+                            <div class=" js-font-resize col-sm-4 col">
                                 <label for="want_certificate">
                                     <input type="radio" id="want_certificate" name="certificate" value="1"
                                         onchange="showCertificateMessage()"
-                                        class=" @error('certificate') is-invalid @enderror"
+                                        class=" js-font-resize  @error('certificate') is-invalid @enderror"
                                         {{ old('certificate', $user->student->certificate ?? null) === '1' ? 'checked' : '' }}>
                                     نعم
                                 </label>
                             </div>
 
                             {{-- does not want certificate --}}
-                            <div class="col">
+                            <div class=" js-font-resize col">
                                 <label for="doesn't_want_certificate">
                                     <input type="radio" id="doesn't_want_certificate" name="certificate"
                                         onchange="showCertificateMessage()" value="0"
-                                        class="@error('certificate') is-invalid @enderror"
+                                        class=" js-font-resize @error('certificate') is-invalid @enderror"
                                         {{ old('certificate', $user->student->certificate ?? null) === '0' ? 'checked' : '' }}>
                                     لا
                                 </label>
@@ -118,14 +118,14 @@
                         </div>
                     </div>
 
-                    <div class="form-group text-secondary d-none" id="price-diff">
+                    <div class=" js-font-resize form-group text-secondary d-none" id="price-diff">
 
 
                     </div>
 
-                    <div class="modal-footer">
+                    <div class=" js-font-resize modal-footer">
 
-                        <button type="submit" class="btn btn-danger" id="confirmAction">ارسال</button>
+                        <button type="submit" class=" js-font-resize btn btn-danger" id="confirmAction">ارسال</button>
                     </div>
                 </form>
             </div>
@@ -164,8 +164,8 @@
                     }).join('');
 
                     hiddenInput.outerHTML =
-                        '<select id="bundle_id" name="to_bundle_id"  class="form-control" onchange="CertificateSectionToggle()" required>' +
-                        '<option value="" class="placeholder" disabled="" selected="selected">اختر التخصص الذي تود دراسته في اكاديمية انس للفنون</option>' +
+                        '<select id="bundle_id" name="to_bundle_id"  class=" js-font-resize form-control" onchange="CertificateSectionToggle()" required>' +
+                        '<option value="" class=" js-font-resize placeholder" disabled="" selected="selected">اختر التخصص الذي تود دراسته في اكاديمية انس للفنون</option>' +
                         options +
                         '</select>';
 
@@ -175,8 +175,8 @@
                 }
             } else {
                 hiddenInput.outerHTML =
-                    '<select id="bundle_id" name="to_bundle_id"  class="form-control" onchange="CertificateSectionToggle()" >' +
-                    '<option value="" class="placeholder" selected hidden >اختر التخصص الذي تود دراسته في اكاديمية انس للفنون</option> </select>';
+                    '<select id="bundle_id" name="to_bundle_id"  class=" js-font-resize form-control" onchange="CertificateSectionToggle()" >' +
+                    '<option value="" class=" js-font-resize placeholder" selected hidden >اختر التخصص الذي تود دراسته في اكاديمية انس للفنون</option> </select>';
                 hiddenLabel.style.display = "none";
                 hiddenLabel.closest('div').classList.add('d-none');
             }
@@ -199,13 +199,13 @@
         //     if(toBundlePrice>fromBundlePrice){
         //         priceDiff.classList.remove('d-none');
         //         priceDiff.innerHTML = `<p>*سوف تقوم بدفع
-        //                     <span  class="font-weight-bold text-primary"> ${toBundlePrice - fromBundlePrice} رس</span>
+        //                     <span  class=" js-font-resize font-weight-bold text-primary"> ${toBundlePrice - fromBundlePrice} رس</span>
         //                     كفرق بين البرنامج المحول منه وإليه
         //                 </p>`;
         //     }else if(toBundlePrice<fromBundlePrice){
         //         priceDiff.classList.remove('d-none');
         //         priceDiff.innerHTML = `<p>*سوف تقوم بإستيرداد مبلغ
-        //                     <span  class="font-weight-bold text-primary"> ${Math.abs(toBundlePrice - fromBundlePrice)} رس</span>
+        //                     <span  class=" js-font-resize font-weight-bold text-primary"> ${Math.abs(toBundlePrice - fromBundlePrice)} رس</span>
         //                     كفرق بين البرنامج المحول منه وإليه
         //                 </p>`;
         //     }else{

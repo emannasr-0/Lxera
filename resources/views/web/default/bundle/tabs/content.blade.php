@@ -1,7 +1,7 @@
 {{-- course FAQ --}}
 @if(!empty($bundle->bundleWebinars) and $bundle->bundleWebinars->count() > 0)
-    <div class="mt-20">
-        <h2 class="section-title after-line">{{ trans('product.courses') }}</h2>
+    <div class=" js-font-resize mt-20">
+        <h2 class=" js-font-resize section-title after-line">{{ trans('product.courses') }}</h2>
 
         @foreach($bundle->bundleWebinars as $bundleWebinar)
             @if(!empty($bundleWebinar->webinar))

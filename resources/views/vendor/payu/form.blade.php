@@ -81,13 +81,13 @@
     </style>
 </head>
 <body>
-<div class="table">
-    <div class="table-cell">
-        <div class="loader">
-            <div class="bounce1"></div>
-            <div class="bounce2"></div>
-            <div class="bounce3"></div>
-            <div class="logo"></div>
+<div class=" js-font-resize table">
+    <div class=" js-font-resize table-cell">
+        <div class=" js-font-resize loader">
+            <div class=" js-font-resize bounce1"></div>
+            <div class=" js-font-resize bounce2"></div>
+            <div class=" js-font-resize bounce3"></div>
+            <div class=" js-font-resize logo"></div>
         </div>
     </div>
 </div>

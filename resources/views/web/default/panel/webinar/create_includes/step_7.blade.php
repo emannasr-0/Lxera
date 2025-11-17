@@ -3,17 +3,17 @@
 @endpush
 
 
-<section class="mt-50">
-    <div class="">
-        <h2 class="section-title after-line">{{ trans('public.quiz_certificate') }} ({{ trans('public.optional') }})</h2>
+<section class=" js-font-resize mt-50">
+    <div class=" js-font-resize ">
+        <h2 class=" js-font-resize section-title after-line">{{ trans('public.quiz_certificate') }} ({{ trans('public.optional') }})</h2>
     </div>
 
-    <button id="webinarAddQuiz" data-webinar-id="{{ $webinar->id }}" type="button" class="btn btn-primary btn-sm mt-15">{{ trans('public.add_quiz') }}</button>
+    <button id="webinarAddQuiz" data-webinar-id="{{ $webinar->id }}" type="button" class=" js-font-resize btn btn-primary btn-sm mt-15">{{ trans('public.add_quiz') }}</button>
 
-    <div class="row mt-10">
-        <div class="col-12">
+    <div class=" js-font-resize row mt-10">
+        <div class=" js-font-resize col-12">
 
-            <div class="accordion-content-wrapper mt-15" id="quizzesAccordion" role="tablist" aria-multiselectable="true">
+            <div class=" js-font-resize accordion-content-wrapper mt-15" id="quizzesAccordion" role="tablist" aria-multiselectable="true">
                 @if(!empty($webinar->quizzes) and count($webinar->quizzes))
                     @foreach($webinar->quizzes as $quizInfo)
                         @include('web.default.panel.webinar.create_includes.accordions.quiz',['webinar' => $webinar,'quizInfo' => $quizInfo])
@@ -30,7 +30,7 @@
     </div>
 </section>
 
-<div id="newQuizForm" class="d-none">
+<div id="newQuizForm" class=" js-font-resize d-none">
     @include('web.default.panel.webinar.create_includes.accordions.quiz',['webinar' => $webinar,'quizInfo' => null])
 </div>
 

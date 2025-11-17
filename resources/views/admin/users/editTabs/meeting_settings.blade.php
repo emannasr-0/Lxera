@@ -2,88 +2,88 @@
     <link rel="stylesheet" href="/assets/vendors/leaflet/leaflet.css">
 @endpush
 
-<div class="tab-pane mt-3 fade" id="meetingSettings" role="tabpanel" aria-labelledby="meetingSettings-tab">
-    <div class="row">
-        <div class="col-12">
+<div class=" js-font-resize tab-pane mt-3 fade" id="meetingSettings" role="tabpanel" aria-labelledby="meetingSettings-tab">
+    <div class=" js-font-resize row">
+        <div class=" js-font-resize col-12">
             <form action="{{ getAdminPanelUrl() }}/users/{{ $user->id }}/meetingSettings" method="Post">
                 {{ csrf_field() }}
 
-                <div class="row mt-20">
-                    <div class="col-12 col-lg-4">
+                <div class=" js-font-resize row mt-20">
+                    <div class=" js-font-resize col-12 col-lg-4">
 
-                        <div class="form-group mb-30 mt-30">
-                            <label class="input-label">{{ trans('update.gender') }}:</label>
+                        <div class=" js-font-resize form-group mb-30 mt-30">
+                            <label class=" js-font-resize input-label">{{ trans('update.gender') }}:</label>
 
-                            <div class="d-flex align-items-center">
-                                <div class="custom-control mr-2 custom-radio">
-                                    <input type="radio" name="gender" value="man" {{ (!empty($user->gender) and $user->gender == 'man') ? 'checked="checked"' : ''}} id="man" class="custom-control-input">
-                                    <label class="custom-control-label cursor-pointer" for="man">{{ trans('update.man') }}</label>
+                            <div class=" js-font-resize d-flex align-items-center">
+                                <div class=" js-font-resize custom-control mr-2 custom-radio">
+                                    <input type="radio" name="gender" value="man" {{ (!empty($user->gender) and $user->gender == 'man') ? 'checked="checked"' : ''}} id="man" class=" js-font-resize custom-control-input">
+                                    <label class=" js-font-resize custom-control-label cursor-pointer" for="man">{{ trans('update.man') }}</label>
                                 </div>
 
-                                <div class="custom-control mr-2 custom-radio ml-15">
-                                    <input type="radio" name="gender" value="woman" id="woman" {{ (!empty($user->gender) and $user->gender == 'woman') ? 'checked="checked"' : ''}} class="custom-control-input">
-                                    <label class="custom-control-label cursor-pointer" for="woman">{{ trans('update.woman') }}</label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group mb-30">
-                            <label class="input-label">{{ trans('update.age') }}:</label>
-                            <input type="number" name="age" value="{{ !empty($user->age) ? $user->age : ''}}" class="form-control">
-                        </div>
-
-                        <div class="form-group mb-30">
-                            <label class="input-label">{{ trans('update.meeting_type') }}:</label>
-
-                            <div class="d-flex align-items-center">
-                                <div class="custom-control mr-2 custom-radio">
-                                    <input type="radio" name="meeting_type" value="in_person" id="in_person" {{ (!empty($user->meeting_type) and $user->meeting_type == 'in_person') ? 'checked="checked"' : ''}} class="custom-control-input">
-                                    <label class="custom-control-label cursor-pointer" for="in_person">{{ trans('update.in_person') }}</label>
-                                </div>
-
-                                <div class="custom-control mr-2 custom-radio ml-10">
-                                    <input type="radio" name="meeting_type" value="online" id="online" {{ (!empty($user->meeting_type) and $user->meeting_type == 'online') ? 'checked="checked"' : ''}} class="custom-control-input">
-                                    <label class="custom-control-label cursor-pointer" for="online">{{ trans('update.online') }}</label>
-                                </div>
-
-                                <div class="custom-control mr-2 custom-radio ml-10">
-                                    <input type="radio" name="meeting_type" value="all" id="all" {{ (!empty($user->meeting_type) and $user->meeting_type == 'all') ? 'checked="checked"' : ''}} class="custom-control-input">
-                                    <label class="custom-control-label cursor-pointer" for="all">{{ trans('public.all') }}</label>
+                                <div class=" js-font-resize custom-control mr-2 custom-radio ml-15">
+                                    <input type="radio" name="gender" value="woman" id="woman" {{ (!empty($user->gender) and $user->gender == 'woman') ? 'checked="checked"' : ''}} class=" js-font-resize custom-control-input">
+                                    <label class=" js-font-resize custom-control-label cursor-pointer" for="woman">{{ trans('update.woman') }}</label>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="form-group mb-30">
-                            <label class="input-label">{{ trans('update.level_of_training') }}:</label>
+                        <div class=" js-font-resize form-group mb-30">
+                            <label class=" js-font-resize input-label">{{ trans('update.age') }}:</label>
+                            <input type="number" name="age" value="{{ !empty($user->age) ? $user->age : ''}}" class=" js-font-resize form-control">
+                        </div>
 
-                            <div class="d-flex align-items-center">
-                                <div class="custom-control mr-2 custom-checkbox">
-                                    <input type="checkbox" name="level_of_training[]" value="beginner" id="beginner" {{ (!empty($user->level_of_training) and is_array($user->level_of_training) and in_array('beginner',$user->level_of_training)) ? 'checked="checked"' : ''}} class="custom-control-input">
-                                    <label class="custom-control-label cursor-pointer" for="beginner">{{ trans('update.beginner') }}</label>
+                        <div class=" js-font-resize form-group mb-30">
+                            <label class=" js-font-resize input-label">{{ trans('update.meeting_type') }}:</label>
+
+                            <div class=" js-font-resize d-flex align-items-center">
+                                <div class=" js-font-resize custom-control mr-2 custom-radio">
+                                    <input type="radio" name="meeting_type" value="in_person" id="in_person" {{ (!empty($user->meeting_type) and $user->meeting_type == 'in_person') ? 'checked="checked"' : ''}} class=" js-font-resize custom-control-input">
+                                    <label class=" js-font-resize custom-control-label cursor-pointer" for="in_person">{{ trans('update.in_person') }}</label>
                                 </div>
 
-                                <div class="custom-control mr-2 custom-checkbox ml-10">
-                                    <input type="checkbox" name="level_of_training[]" value="middle" id="middle" {{ (!empty($user->level_of_training) and is_array($user->level_of_training) and in_array('middle',$user->level_of_training)) ? 'checked="checked"' : ''}} class="custom-control-input">
-                                    <label class="custom-control-label cursor-pointer" for="middle">{{ trans('update.middle') }}</label>
+                                <div class=" js-font-resize custom-control mr-2 custom-radio ml-10">
+                                    <input type="radio" name="meeting_type" value="online" id="online" {{ (!empty($user->meeting_type) and $user->meeting_type == 'online') ? 'checked="checked"' : ''}} class=" js-font-resize custom-control-input">
+                                    <label class=" js-font-resize custom-control-label cursor-pointer" for="online">{{ trans('update.online') }}</label>
                                 </div>
 
-                                <div class="custom-control mr-2 custom-checkbox ml-10">
-                                    <input type="checkbox" name="level_of_training[]" value="expert" id="expert" {{ (!empty($user->level_of_training) and is_array($user->level_of_training) and in_array('expert',$user->level_of_training)) ? 'checked="checked"' : ''}} class="custom-control-input">
-                                    <label class="custom-control-label cursor-pointer" for="expert">{{ trans('update.expert') }}</label>
+                                <div class=" js-font-resize custom-control mr-2 custom-radio ml-10">
+                                    <input type="radio" name="meeting_type" value="all" id="all" {{ (!empty($user->meeting_type) and $user->meeting_type == 'all') ? 'checked="checked"' : ''}} class=" js-font-resize custom-control-input">
+                                    <label class=" js-font-resize custom-control-label cursor-pointer" for="all">{{ trans('public.all') }}</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class=" js-font-resize form-group mb-30">
+                            <label class=" js-font-resize input-label">{{ trans('update.level_of_training') }}:</label>
+
+                            <div class=" js-font-resize d-flex align-items-center">
+                                <div class=" js-font-resize custom-control mr-2 custom-checkbox">
+                                    <input type="checkbox" name="level_of_training[]" value="beginner" id="beginner" {{ (!empty($user->level_of_training) and is_array($user->level_of_training) and in_array('beginner',$user->level_of_training)) ? 'checked="checked"' : ''}} class=" js-font-resize custom-control-input">
+                                    <label class=" js-font-resize custom-control-label cursor-pointer" for="beginner">{{ trans('update.beginner') }}</label>
+                                </div>
+
+                                <div class=" js-font-resize custom-control mr-2 custom-checkbox ml-10">
+                                    <input type="checkbox" name="level_of_training[]" value="middle" id="middle" {{ (!empty($user->level_of_training) and is_array($user->level_of_training) and in_array('middle',$user->level_of_training)) ? 'checked="checked"' : ''}} class=" js-font-resize custom-control-input">
+                                    <label class=" js-font-resize custom-control-label cursor-pointer" for="middle">{{ trans('update.middle') }}</label>
+                                </div>
+
+                                <div class=" js-font-resize custom-control mr-2 custom-checkbox ml-10">
+                                    <input type="checkbox" name="level_of_training[]" value="expert" id="expert" {{ (!empty($user->level_of_training) and is_array($user->level_of_training) and in_array('expert',$user->level_of_training)) ? 'checked="checked"' : ''}} class=" js-font-resize custom-control-input">
+                                    <label class=" js-font-resize custom-control-label cursor-pointer" for="expert">{{ trans('update.expert') }}</label>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <h2 class="section-title after-line">{{ trans('update.region') }}</h2>
+                <h2 class=" js-font-resize section-title after-line">{{ trans('update.region') }}</h2>
 
-                <div class="row mt-30">
-                    <div class="col-12 col-lg-4">
-                        <div class="form-group ">
-                            <label class="input-label">{{ trans('update.country') }}:</label>
+                <div class=" js-font-resize row mt-30">
+                    <div class=" js-font-resize col-12 col-lg-4">
+                        <div class=" js-font-resize form-group ">
+                            <label class=" js-font-resize input-label">{{ trans('update.country') }}:</label>
 
-                            <select name="country_id" class="form-control " {{ empty($countries) ? 'disabled' : '' }}>
+                            <select name="country_id" class=" js-font-resize form-control " {{ empty($countries) ? 'disabled' : '' }}>
                                 <option value="">{{ trans('update.select_country') }}</option>
 
                                 @if(!empty($countries))
@@ -98,10 +98,10 @@
                             </select>
                         </div>
 
-                        <div class="form-group mt-30">
-                            <label class="input-label">{{ trans('update.province') }}:</label>
+                        <div class=" js-font-resize form-group mt-30">
+                            <label class=" js-font-resize input-label">{{ trans('update.province') }}:</label>
 
-                            <select name="province_id" class="form-control " {{ empty($provinces) ? 'disabled' : '' }}>
+                            <select name="province_id" class=" js-font-resize form-control " {{ empty($provinces) ? 'disabled' : '' }}>
                                 <option value="">{{ trans('update.select_province') }}</option>
 
                                 @if(!empty($provinces))
@@ -116,10 +116,10 @@
                             </select>
                         </div>
 
-                        <div class="form-group mt-30">
-                            <label class="input-label">{{ trans('update.city') }}:</label>
+                        <div class=" js-font-resize form-group mt-30">
+                            <label class=" js-font-resize input-label">{{ trans('update.city') }}:</label>
 
-                            <select name="city_id" class="form-control " {{ empty($cities) ? 'disabled' : '' }}>
+                            <select name="city_id" class=" js-font-resize form-control " {{ empty($cities) ? 'disabled' : '' }}>
                                 <option value="">{{ trans('update.select_city') }}</option>
 
                                 @if(!empty($cities))
@@ -134,10 +134,10 @@
                             </select>
                         </div>
 
-                        <div class="form-group mt-30">
-                            <label class="input-label">{{ trans('update.district') }}:</label>
+                        <div class=" js-font-resize form-group mt-30">
+                            <label class=" js-font-resize input-label">{{ trans('update.district') }}:</label>
 
-                            <select name="district_id" class="form-control " {{ empty($districts) ? 'disabled' : '' }}>
+                            <select name="district_id" class=" js-font-resize form-control " {{ empty($districts) ? 'disabled' : '' }}>
                                 <option value="">{{ trans('update.select_district') }}</option>
 
                                 @if(!empty($districts))
@@ -152,33 +152,33 @@
                             </select>
                         </div>
 
-                        <div class="form-group mb-30">
-                            <label class="input-label">{{ trans('update.address') }}:</label>
-                            <input type="text" name="address" value="{{ !empty($user->address) ? $user->address : '' }}" class="form-control">
+                        <div class=" js-font-resize form-group mb-30">
+                            <label class=" js-font-resize input-label">{{ trans('update.address') }}:</label>
+                            <input type="text" name="address" value="{{ !empty($user->address) ? $user->address : '' }}" class=" js-font-resize form-control">
                         </div>
                     </div>
 
-                    <div class="col-12 col-lg-8">
-                        <div class="form-group">
+                    <div class=" js-font-resize col-12 col-lg-8">
+                        <div class=" js-font-resize form-group">
                             <input type="hidden" id="LocationLatitude" name="latitude" value="{{ (!empty($user->location)) ? $user->location[0] : '' }}">
                             <input type="hidden" id="LocationLongitude" name="longitude" value="{{ (!empty($user->location)) ? $user->location[1] : '' }}">
 
-                            <div id="mapContainer" class="d-none">
-                                <label class="input-label">{{ trans('update.select_location') }}</label>
-                                <span class="d-block">{{ trans('update.select_location_hint') }}</span>
+                            <div id="mapContainer" class=" js-font-resize d-none">
+                                <label class=" js-font-resize input-label">{{ trans('update.select_location') }}</label>
+                                <span class=" js-font-resize d-block">{{ trans('update.select_location_hint') }}</span>
 
-                                <div class="region-map mt-10" id="mapBox"
+                                <div class=" js-font-resize region-map mt-10" id="mapBox"
                                      data-zoom="12"
                                 >
-                                    <img src="/assets/default/img/location.png" class="marker">
+                                    <img src="/assets/default/img/location.png" class=" js-font-resize marker">
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class=" mt-4">
-                    <button class="btn btn-primary">{{ trans('admin/main.submit') }}</button>
+                <div class=" js-font-resize  mt-4">
+                    <button class=" js-font-resize btn btn-primary">{{ trans('admin/main.submit') }}</button>
                 </div>
             </form>
         </div>

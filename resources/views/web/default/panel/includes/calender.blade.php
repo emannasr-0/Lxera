@@ -153,25 +153,25 @@
 
 </style>
 
-<div class="container_cal rounded-sm shadow border">
+<div class=" js-font-resize container_cal rounded-sm shadow border">
     <h1 id="current-month-year">Calendar</h1>
-    <div class="row_cal">
-        <div class="col_cal">
-            <div class="d-flex_cal justify-content-between_cal my-15 my-lg-0">
-                <button class="btn btn-acadima-primary" id="prev-month">{{ trans('panel.previous_month') }}</button>
-                <button class="btn btn-acadima-primary" id="next-month">{{ trans('panel.next_month') }}</button>
+    <div class=" js-font-resize row_cal">
+        <div class=" js-font-resize col_cal">
+            <div class=" js-font-resize d-flex_cal justify-content-between_cal my-15 my-lg-0">
+                <button class=" js-font-resize btn btn-acadima-primary" id="prev-month">{{ trans('panel.previous_month') }}</button>
+                <button class=" js-font-resize btn btn-acadima-primary" id="next-month">{{ trans('panel.next_month') }}</button>
             </div>
-            <div class="table-container">
-            <table class="table ">
-                <thead class="_cal">
-                    <tr class="_cal">
-                        <th class="_cal">{{ trans('panel.sunday') }}</th>
-                        <th class="_cal">{{ trans('panel.monday') }}</th>
-                        <th class="_cal">{{ trans('panel.tuesday') }}</th>
-                        <th class="_cal">{{ trans('panel.wednesday') }}</th>
-                        <th class="_cal">{{ trans('panel.thursday') }}</th>
-                        <th class="_cal">{{ trans('panel.friday') }}</th>
-                        <th class="_cal">{{ trans('panel.saturday') }}</th>
+            <div class=" js-font-resize table-container">
+            <table class=" js-font-resize table ">
+                <thead class=" js-font-resize _cal">
+                    <tr class=" js-font-resize _cal">
+                        <th class=" js-font-resize _cal">{{ trans('panel.sunday') }}</th>
+                        <th class=" js-font-resize _cal">{{ trans('panel.monday') }}</th>
+                        <th class=" js-font-resize _cal">{{ trans('panel.tuesday') }}</th>
+                        <th class=" js-font-resize _cal">{{ trans('panel.wednesday') }}</th>
+                        <th class=" js-font-resize _cal">{{ trans('panel.thursday') }}</th>
+                        <th class=" js-font-resize _cal">{{ trans('panel.friday') }}</th>
+                        <th class=" js-font-resize _cal">{{ trans('panel.saturday') }}</th>
                     </tr>
                 </thead>
                 <tbody id="calendar-body"></tbody>
@@ -182,19 +182,19 @@
 </div>
 
 <!-- Popup -->
-<div class="modal fade" id="bundlePopup" tabindex="-1" role="dialog" aria-labelledby="bundlePopupLabel"
+<div class=" js-font-resize modal fade" id="bundlePopup" tabindex="-1" role="dialog" aria-labelledby="bundlePopupLabel"
     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content bg-secondary-acadima">
-            <div class="modal-header">
-                <h5 class="modal-title" id="bundlePopupLabel">{{ trans('panel.courses_on_this_day') }} </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <div class=" js-font-resize modal-dialog" role="document">
+        <div class=" js-font-resize modal-content bg-secondary-acadima">
+            <div class=" js-font-resize modal-header">
+                <h5 class=" js-font-resize modal-title" id="bundlePopupLabel">{{ trans('panel.courses_on_this_day') }} </h5>
+                <button type="button" class=" js-font-resize close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body" id="bundleStartDate"></div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-acadima-primary  " data-dismiss="modal">{{ trans('panel.close') }}</button>
+            <div class=" js-font-resize modal-body" id="bundleStartDate"></div>
+            <div class=" js-font-resize modal-footer">
+                <button type="button" class=" js-font-resize btn btn-acadima-primary  " data-dismiss="modal">{{ trans('panel.close') }}</button>
             </div>
         </div>
     </div>
@@ -273,7 +273,7 @@
                     details = "lectures";
                 }
 
-                row.append(`<td class=" ${dayClass}" data-date="${formattedDate}">
+                row.append(`<td class=" js-font-resize  ${dayClass}" data-date="${formattedDate}">
                     ${currentDay}
                     <p class='course-title'></p>
                 </td>`);

@@ -5,81 +5,81 @@
 @endpush
 
 @section('content')
-    <section class="section">
-        <div class="section-header">
+    <section class=" js-font-resize section">
+        <div class=" js-font-resize section-header">
             <h1>{{ $pageTitle }}</h1>
-            <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ getAdminPanelUrl() }}">{{trans('admin/main.dashboard')}}</a>
+            <div class=" js-font-resize section-header-breadcrumb">
+                <div class=" js-font-resize breadcrumb-item active"><a href="{{ getAdminPanelUrl() }}">{{trans('admin/main.dashboard')}}</a>
                 </div>
-                <div class="breadcrumb-item">{{ $pageTitle }}</div>
+                <div class=" js-font-resize breadcrumb-item">{{ $pageTitle }}</div>
             </div>
         </div>
 
-        <div class="section-body">
+        <div class=" js-font-resize section-body">
 
-            <div class="row">
-                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                    <div class="card card-statistic-1">
-                        <div class="card-icon bg-primary">
-                            <i class="fas fa-box"></i>
+            <div class=" js-font-resize row">
+                <div class=" js-font-resize col-lg-3 col-md-6 col-sm-6 col-12">
+                    <div class=" js-font-resize card card-statistic-1">
+                        <div class=" js-font-resize card-icon bg-primary">
+                            <i class=" js-font-resize fas fa-box"></i>
                         </div>
-                        <div class="card-wrap">
-                            <div class="card-header">
+                        <div class=" js-font-resize card-wrap">
+                            <div class=" js-font-resize card-header">
                                 <h4>{{trans('update.total_physical_products')}}</h4>
                             </div>
-                            <div class="card-body d-flex flex-column p-0">
+                            <div class=" js-font-resize card-body d-flex flex-column p-0">
                                 <span>{{ $totalPhysicalProducts }}</span>
-                                <span class="font-12 font-weight-normal mt-1">{{ trans('admin/main.sales') }}: {{ $totalPhysicalSales }}</span>
+                                <span class=" js-font-resize font-12 font-weight-normal mt-1">{{ trans('admin/main.sales') }}: {{ $totalPhysicalSales }}</span>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                    <div class="card card-statistic-1">
-                        <div class="card-icon bg-warning">
-                            <i class="fas fa-file-download"></i>
+                <div class=" js-font-resize col-lg-3 col-md-6 col-sm-6 col-12">
+                    <div class=" js-font-resize card card-statistic-1">
+                        <div class=" js-font-resize card-icon bg-warning">
+                            <i class=" js-font-resize fas fa-file-download"></i>
                         </div>
 
-                        <div class="card-wrap">
-                            <div class="card-header">
+                        <div class=" js-font-resize card-wrap">
+                            <div class=" js-font-resize card-header">
                                 <h4>{{ trans('update.total_virtual_products') }}</h4>
                             </div>
-                            <div class="card-body d-flex flex-column p-0">
+                            <div class=" js-font-resize card-body d-flex flex-column p-0">
                                 <span>{{ $totalVirtualProducts }}</span>
-                                <span class="font-12 font-weight-normal mt-1">{{ trans('admin/main.sales') }}: {{ $totalVirtualSales }}</span>
+                                <span class=" js-font-resize font-12 font-weight-normal mt-1">{{ trans('admin/main.sales') }}: {{ $totalVirtualSales }}</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
 
-                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                    <div class="card card-statistic-1">
-                        <div class="card-icon bg-info">
-                            <i class="fas fa-store"></i>
+                <div class=" js-font-resize col-lg-3 col-md-6 col-sm-6 col-12">
+                    <div class=" js-font-resize card card-statistic-1">
+                        <div class=" js-font-resize card-icon bg-info">
+                            <i class=" js-font-resize fas fa-store"></i>
                         </div>
 
-                        <div class="card-wrap">
-                            <div class="card-header">
+                        <div class=" js-font-resize card-wrap">
+                            <div class=" js-font-resize card-header">
                                 <h4>{{trans('update.total_sellers')}}</h4>
                             </div>
-                            <div class="card-body">
+                            <div class=" js-font-resize card-body">
                                 {{ $totalSellers }}
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                    <div class="card card-statistic-1">
-                        <div class="card-icon bg-success">
-                            <i class="fas fa-users"></i>
+                <div class=" js-font-resize col-lg-3 col-md-6 col-sm-6 col-12">
+                    <div class=" js-font-resize card card-statistic-1">
+                        <div class=" js-font-resize card-icon bg-success">
+                            <i class=" js-font-resize fas fa-users"></i>
                         </div>
-                        <div class="card-wrap">
-                            <div class="card-header">
+                        <div class=" js-font-resize card-wrap">
+                            <div class=" js-font-resize card-header">
                                 <h4>{{trans('update.total_buyers')}}</h4>
                             </div>
-                            <div class="card-body">
+                            <div class=" js-font-resize card-body">
                                 {{ $totalBuyers }}
                             </div>
                         </div>
@@ -87,40 +87,40 @@
                 </div>
             </div>
 
-            <section class="card">
-                <div class="card-body">
-                    <form method="get" class="mb-0">
+            <section class=" js-font-resize card">
+                <div class=" js-font-resize card-body">
+                    <form method="get" class=" js-font-resize mb-0">
                         <input type="hidden" name="type" value="{{ request()->get('type') }}">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label class="input-label">{{trans('admin/main.search')}}</label>
-                                    <input name="title" type="text" class="form-control" value="{{ request()->get('title') }}">
+                        <div class=" js-font-resize row">
+                            <div class=" js-font-resize col-md-3">
+                                <div class=" js-font-resize form-group">
+                                    <label class=" js-font-resize input-label">{{trans('admin/main.search')}}</label>
+                                    <input name="title" type="text" class=" js-font-resize form-control" value="{{ request()->get('title') }}">
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label class="input-label">{{trans('admin/main.start_date')}}</label>
-                                    <div class="input-group">
-                                        <input type="date" id="from" class="text-center form-control" name="from" value="{{ request()->get('from') }}" placeholder="Start Date">
+                            <div class=" js-font-resize col-md-3">
+                                <div class=" js-font-resize form-group">
+                                    <label class=" js-font-resize input-label">{{trans('admin/main.start_date')}}</label>
+                                    <div class=" js-font-resize input-group">
+                                        <input type="date" id="from" class=" js-font-resize text-center form-control" name="from" value="{{ request()->get('from') }}" placeholder="Start Date">
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label class="input-label">{{trans('admin/main.end_date')}}</label>
-                                    <div class="input-group">
-                                        <input type="date" id="to" class="text-center form-control" name="to" value="{{ request()->get('to') }}" placeholder="End Date">
+                            <div class=" js-font-resize col-md-3">
+                                <div class=" js-font-resize form-group">
+                                    <label class=" js-font-resize input-label">{{trans('admin/main.end_date')}}</label>
+                                    <div class=" js-font-resize input-group">
+                                        <input type="date" id="to" class=" js-font-resize text-center form-control" name="to" value="{{ request()->get('to') }}" placeholder="End Date">
                                     </div>
                                 </div>
                             </div>
 
 
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label class="input-label">{{trans('admin/main.filters')}}</label>
-                                    <select name="sort" data-plugin-selectTwo class="form-control populate">
+                            <div class=" js-font-resize col-md-3">
+                                <div class=" js-font-resize form-group">
+                                    <label class=" js-font-resize input-label">{{trans('admin/main.filters')}}</label>
+                                    <select name="sort" data-plugin-selectTwo class=" js-font-resize form-control populate">
                                         <option value="">{{trans('admin/main.filter_type')}}</option>
                                         <option value="has_discount" @if(request()->get('sort') == 'has_discount') selected @endif>{{trans('admin/main.discounted_classes')}}</option>
                                         <option value="sales_asc" @if(request()->get('sort') == 'sales_asc') selected @endif>{{trans('admin/main.sales_ascending')}}</option>
@@ -141,10 +141,10 @@
                             </div>
 
 
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label class="input-label">{{trans('update.seller')}}</label>
-                                    <select name="creator_ids[]" multiple="multiple" class="form-control search-user-select2"
+                            <div class=" js-font-resize col-md-3">
+                                <div class=" js-font-resize form-group">
+                                    <label class=" js-font-resize input-label">{{trans('update.seller')}}</label>
+                                    <select name="creator_ids[]" multiple="multiple" class=" js-font-resize form-control search-user-select2"
                                             data-placeholder="{{trans('update.search_seller')}}">
 
                                         @if(!empty($teachers) and $teachers->count() > 0)
@@ -157,10 +157,10 @@
                             </div>
 
 
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label class="input-label">{{trans('admin/main.category')}}</label>
-                                    <select name="category_id" data-plugin-selectTwo class="form-control populate">
+                            <div class=" js-font-resize col-md-3">
+                                <div class=" js-font-resize form-group">
+                                    <label class=" js-font-resize input-label">{{trans('admin/main.category')}}</label>
+                                    <select name="category_id" data-plugin-selectTwo class=" js-font-resize form-control populate">
                                         <option value="">{{trans('admin/main.all_categories')}}</option>
 
                                         @foreach($categories as $category)
@@ -179,10 +179,10 @@
                             </div>
 
 
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label class="input-label">{{trans('admin/main.status')}}</label>
-                                    <select name="status" data-plugin-selectTwo class="form-control populate">
+                            <div class=" js-font-resize col-md-3">
+                                <div class=" js-font-resize form-group">
+                                    <label class=" js-font-resize input-label">{{trans('admin/main.status')}}</label>
+                                    <select name="status" data-plugin-selectTwo class=" js-font-resize form-control populate">
                                         <option value="">{{trans('admin/main.all_status')}}</option>
                                         <option value="pending" @if(request()->get('status') == 'pending') selected @endif>{{trans('admin/main.pending')}}</option>
                                         <option value="inactive" @if(request()->get('status') == 'inactive') selected @endif>{{trans('admin/main.rejected')}}</option>
@@ -192,10 +192,10 @@
                             </div>
 
 
-                            <div class="col-md-3">
-                                <div class="form-group mt-1">
-                                    <label class="input-label mb-4"> </label>
-                                    <input type="submit" class="text-center btn btn-primary w-100" value="{{trans('admin/main.show_results')}}">
+                            <div class=" js-font-resize col-md-3">
+                                <div class=" js-font-resize form-group mt-1">
+                                    <label class=" js-font-resize input-label mb-4"> </label>
+                                    <input type="submit" class=" js-font-resize text-center btn btn-primary w-100" value="{{trans('admin/main.show_results')}}">
                                 </div>
                             </div>
                         </div>
@@ -203,28 +203,28 @@
                 </div>
             </section>
 
-            <div class="row">
-                <div class="col-12 col-md-12">
-                    <div class="card">
-                        <div class="card-header text-right">
+            <div class=" js-font-resize row">
+                <div class=" js-font-resize col-12 col-md-12">
+                    <div class=" js-font-resize card">
+                        <div class=" js-font-resize card-header text-right">
                             @can('admin_store_export_products')
-                                <a href="{{ getAdminPanelUrl() }}/store/products/excel?{{ !empty($inHouseProducts) ? 'in_house_products=true&' : '' }}{{ http_build_query(request()->all()) }}" class="btn btn-primary">{{ trans('admin/main.export_xls') }}</a>
+                                <a href="{{ getAdminPanelUrl() }}/store/products/excel?{{ !empty($inHouseProducts) ? 'in_house_products=true&' : '' }}{{ http_build_query(request()->all()) }}" class=" js-font-resize btn btn-primary">{{ trans('admin/main.export_xls') }}</a>
                             @endcan
 
                             @if(!empty($inHouseProducts))
                                 @can('admin_store_new_product')
-                                    <a href="{{ getAdminPanelUrl() }}/store/products/create?in_house_product=true" target="_blank" class="btn btn-primary ml-2">{{ trans('update.create_new_product') }}</a>
+                                    <a href="{{ getAdminPanelUrl() }}/store/products/create?in_house_product=true" target="_blank" class=" js-font-resize btn btn-primary ml-2">{{ trans('update.create_new_product') }}</a>
                                 @endcan
                             @endif
                         </div>
 
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-striped font-14 ">
+                        <div class=" js-font-resize card-body">
+                            <div class=" js-font-resize table-responsive">
+                                <table class=" js-font-resize table table-striped font-14 ">
                                     <tr>
                                         <th>{{trans('admin/main.id')}}</th>
-                                        <th class="text-left">{{trans('admin/main.title')}}</th>
-                                        <th class="text-left">{{trans('admin/main.creator')}}</th>
+                                        <th class=" js-font-resize text-left">{{trans('admin/main.title')}}</th>
+                                        <th class=" js-font-resize text-left">{{trans('admin/main.creator')}}</th>
                                         <th>{{trans('admin/main.type')}}</th>
                                         <th>{{trans('update.inventory')}}</th>
                                         <th>{{trans('admin/main.price')}}</th>
@@ -238,25 +238,25 @@
                                     </tr>
 
                                     @foreach($products as $product)
-                                        <tr class="text-center">
+                                        <tr class=" js-font-resize text-center">
                                             <td>{{ $product->id }}</td>
-                                            <td width="18%" class="text-left">
-                                                <a class="text-primary mt-0 mb-1 font-weight-bold" href="{{ $product->getUrl() }}">{{ $product->title }}</a>
+                                            <td width="18%" class=" js-font-resize text-left">
+                                                <a class=" js-font-resize text-primary mt-0 mb-1 font-weight-bold" href="{{ $product->getUrl() }}">{{ $product->title }}</a>
                                                 @if(!empty($product->category->title))
-                                                    <div class="text-small">{{ $product->category->title }}</div>
+                                                    <div class=" js-font-resize text-small">{{ $product->category->title }}</div>
                                                 @else
-                                                    <div class="text-small text-warning">{{trans('admin/main.no_category')}}</div>
+                                                    <div class=" js-font-resize text-small text-warning">{{trans('admin/main.no_category')}}</div>
                                                 @endif
                                             </td>
 
-                                            <td class="text-left">{{ $product->creator->full_name }}</td>
+                                            <td class=" js-font-resize text-left">{{ $product->creator->full_name }}</td>
 
                                             <td>
                                                 {{ trans('update.'.$product->type) }}
                                             </td>
 
                                             <td>
-                                                <span class="text-primary mt-0 mb-1 font-weight-bold">
+                                                <span class=" js-font-resize text-primary mt-0 mb-1 font-weight-bold">
                                                     @php
                                                         $getAvailability = $product->getAvailability();
                                                     @endphp
@@ -274,39 +274,39 @@
                                             </td>
 
                                             <td>
-                                                <span class="text-primary mt-0 mb-1 font-weight-bold">
+                                                <span class=" js-font-resize text-primary mt-0 mb-1 font-weight-bold">
                                                     {{ $product->salesCount() }}
                                                 </span>
                                             </td>
 
                                             <td>{{ handlePrice($product->sales()->sum('total_amount')) }}</td>
 
-                                            <td class="font-12">{{ dateTimeFormat($product->updated_at, 'Y M j | H:i') }}</td>
+                                            <td class=" js-font-resize font-12">{{ dateTimeFormat($product->updated_at, 'Y M j | H:i') }}</td>
 
-                                            <td class="font-12">{{ dateTimeFormat($product->created_at, 'Y M j | H:i') }}</td>
+                                            <td class=" js-font-resize font-12">{{ dateTimeFormat($product->created_at, 'Y M j | H:i') }}</td>
 
                                             <td>
                                                 @switch($product->status)
                                                     @case(\App\Models\Product::$active)
-                                                    <div class="text-success font-600-bold">{{ trans('admin/main.published') }}</div>
+                                                    <div class=" js-font-resize text-success font-600-bold">{{ trans('admin/main.published') }}</div>
                                                     @break
                                                     @case(\App\Models\Product::$draft)
-                                                    <span class="text-dark">{{ trans('admin/main.is_draft') }}</span>
+                                                    <span class=" js-font-resize text-dark">{{ trans('admin/main.is_draft') }}</span>
                                                     @break
                                                     @case(\App\Models\Product::$pending)
-                                                    <span class="text-warning">{{ trans('admin/main.waiting') }}</span>
+                                                    <span class=" js-font-resize text-warning">{{ trans('admin/main.waiting') }}</span>
                                                     @break
                                                     @case(\App\Models\Product::$inactive)
-                                                    <span class="text-danger">{{ trans('public.rejected') }}</span>
+                                                    <span class=" js-font-resize text-danger">{{ trans('public.rejected') }}</span>
                                                     @break
                                                 @endswitch
                                             </td>
 
-                                            <td width="120" class="btn-sm">
+                                            <td width="120" class=" js-font-resize btn-sm">
 
                                                 @can('admin_store_edit_product')
-                                                    <a href="{{ getAdminPanelUrl() }}/store/products/{{ $product->id }}/edit" target="_blank" class="btn-transparent btn-sm text-primary mt-1" data-toggle="tooltip" data-placement="top" title="{{ trans('admin/main.edit') }}">
-                                                        <i class="fa fa-edit"></i>
+                                                    <a href="{{ getAdminPanelUrl() }}/store/products/{{ $product->id }}/edit" target="_blank" class=" js-font-resize btn-transparent btn-sm text-primary mt-1" data-toggle="tooltip" data-placement="top" title="{{ trans('admin/main.edit') }}">
+                                                        <i class=" js-font-resize fa fa-edit"></i>
                                                     </a>
                                                 @endcan
 
@@ -320,7 +320,7 @@
                             </div>
                         </div>
 
-                        <div class="card-footer text-center">
+                        <div class=" js-font-resize card-footer text-center">
                             {{ $products->appends(request()->input())->links() }}
                         </div>
 

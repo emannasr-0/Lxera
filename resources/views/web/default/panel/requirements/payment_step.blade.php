@@ -26,7 +26,7 @@
 @section('content')
 
     @include('web.default.panel.requirements.requirements_includes.progress')
-    <section class="row mt-50 mt-lg-80 mx-0 justify-content-center">
+    <section class=" js-font-resize row mt-50 mt-lg-80 mx-0 justify-content-center">
         @if (count($bundleInstallments) > 0)
             @php
                 $count = 0;
@@ -38,12 +38,12 @@
                 @endphp
 
                 <section
-                    class="bg-secondary-acadima position-relative col-xl-9 col-12 justify-content-center align-items-center rounded-sm mb-80 py-35 px-0 shadow border">
-                    <h2 class="mb-25 col-12 text-pink">
+                    class=" js-font-resize bg-secondary-acadima position-relative col-xl-9 col-12 justify-content-center align-items-center rounded-sm mb-80 py-35 px-0 shadow border">
+                    <h2 class=" js-font-resize mb-25 col-12 text-pink">
                         {{ clean($bundleData['bundle']->bundle->title, 't') }}
 
                         {{-- @if (!$bundleData['bundle']->bundle->checkUserHasBought(auth()->user()) && $bundleData['bundle']->bundle->early_enroll != 1)
-                            <span class="font-14 font-weight-bold text-center text-danger mt-15 discount pr-2">
+                            <span class=" js-font-resize font-14 font-weight-bold text-center text-danger mt-15 discount pr-2">
                                 خصم 30%
                             </span>
                         @endif --}}
@@ -51,41 +51,41 @@
 
 
                     @if ($bundleData['bundle']->status == 'pending')
-                        <div class="w-100 text-center">
-                            <p class="alert alert-info text-center mx-30">
+                        <div class=" js-font-resize w-100 text-center">
+                            <p class=" js-font-resize alert alert-info text-center mx-30">
                                 {{ trans('panel.seat_reservation_under_review') }}
                             </p>
                         </div>
                     @elseif ($bundleData['bundle']->status == 'fee_rejected')
-                        <div class="w-100 text-center">
-                            <p class="alert alert-danger text-center text-white mx-30">
+                        <div class=" js-font-resize w-100 text-center">
+                            <p class=" js-font-resize alert alert-danger text-center text-white mx-30">
                                 {{ trans('panel.seat_reservation_rejected') }}
 
                             </p>
-                            <a href="/panel/financial/offline-payments" class="btn btn-success p-5 mt-20 bg-secondary">
+                            <a href="/panel/financial/offline-payments" class=" js-font-resize btn btn-success p-5 mt-20 bg-secondary">
                                 {{ trans('panel.go_to_follow_request') }}
 
                             </a>
                         </div>
                     @elseif ($bundleData['bundle']->status == 'paying')
-                        <div class="w-100 text-center">
-                            <p class="alert alert-info text-center mx-30">
+                        <div class=" js-font-resize w-100 text-center">
+                            <p class=" js-font-resize alert alert-info text-center mx-30">
                                 {{ trans('panel.request_under_review') }}
                             </p>
                         </div>
                     @elseif ($bundleData['bundle']->status == 'rejected')
-                        <div class="w-100 text-center">
-                            <p class="alert alert-danger text-center text-white mx-30">
+                        <div class=" js-font-resize w-100 text-center">
+                            <p class=" js-font-resize alert alert-danger text-center text-white mx-30">
                                 {{ trans('panel.request_rejected') }}
                             </p>
-                            <a href="/panel/financial/offline-payments" class="btn btn-success p-5 mt-20 bg-secondary">
+                            <a href="/panel/financial/offline-payments" class=" js-font-resize btn btn-success p-5 mt-20 bg-secondary">
                                 {{ trans('panel.go_to_follow_request') }}
                             </a>
                         </div>
 
                         {{-- @elseif ($bundleData['bundle']->bundle->early_enroll)
-                        <div class="w-100 text-center">
-                            <p class="alert alert-info text-center mx-30">
+                        <div class=" js-font-resize w-100 text-center">
+                            <p class=" js-font-resize alert alert-info text-center mx-30">
                                 يرجى ملاحظة أن التسجيل الرسمي سيبدأ يوم 30 يوليو.
                                 <br> بمجرد فتح التسجيل، ستتمكن من استكمال اجراءات التسجيل.
                             </p>
@@ -98,12 +98,12 @@
                 </section>
             @endforeach
         @else
-            <section class="w-100 text-center">
-                <p class="alert alert-info text-center mx-30">
+            <section class=" js-font-resize w-100 text-center">
+                <p class=" js-font-resize alert alert-info text-center mx-30">
                     {{ trans('panel.no_diploma_registered') }}
                 </p>
                 <a href="{{ auth()->user()->student ? '/panel/newEnrollment' : '/apply' }}"
-                    class="btn bg-secondary text-white p-5 mt-20">
+                    class=" js-font-resize btn bg-secondary text-white p-5 mt-20">
                     {{ trans('panel.register_here') }}
                 </a>
             </section>

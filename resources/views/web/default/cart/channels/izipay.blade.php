@@ -23,18 +23,18 @@
 </head>
 <body>
 <!-- payment form -->
-<div class="kr-embedded"  kr-form-token="{{ $formToken }}">
+<div class=" js-font-resize kr-embedded"  kr-form-token="{{ $formToken }}">
 
     <!-- payment form fields -->
-    <div class="kr-pan"></div>
-    <div class="kr-expiry"></div>
-    <div class="kr-security-code"></div>
+    <div class=" js-font-resize kr-pan"></div>
+    <div class=" js-font-resize kr-expiry"></div>
+    <div class=" js-font-resize kr-security-code"></div>
 
     <!-- payment form submit button -->
-    <button class="kr-payment-button"></button>
+    <button class=" js-font-resize kr-payment-button"></button>
 
     <!-- error zone -->
-    <div class="kr-form-error"></div>
+    <div class=" js-font-resize kr-form-error"></div>
 </div>
 </body>
 </html>

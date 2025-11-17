@@ -118,25 +118,25 @@
 @endpush
 
 @section('content')
-    <div class="application container-fluid">
-        <div class="col-12 px-0">
-            <div class="col-lg-12 px-0">
-                <Section class="section1 main-section p-lg-40 pt-40 p-0 bg-transparent shadow border">
-                    <h2 class="section-title text-pink">
+    <div class=" js-font-resize application container-fluid">
+        <div class=" js-font-resize col-12 px-0">
+            <div class=" js-font-resize col-lg-12 px-0">
+                <Section class=" js-font-resize section1 main-section p-lg-40 pt-40 p-0 bg-transparent shadow border">
+                    <h2 class=" js-font-resize section-title text-pink">
                         <!-- {{ trans('panel.new_rgstr') }} -->
                           Enrol to a new program registration request
                     </h2>
-                    <div class="container_form bg-secondary-acadima">
+                    <div class=" js-font-resize container_form bg-secondary-acadima">
                         <form action="/apply" method="POST" id="myForm">
                             @csrf
                             <input type="hidden" name="user_id" value="{{ $user->id }}">
 
                             {{-- application type --}}
-                            {{-- <div class="form-group col-12 col-sm-6 text-light">
-                                <label class="form-label">{{ trans('panel.select_application_type') }}<span
-                                        class="text-danger">*</span></label>
+                            {{-- <div class=" js-font-resize form-group col-12 col-sm-6 text-light">
+                                <label class=" js-font-resize form-label">{{ trans('panel.select_application_type') }}<span
+                                        class=" js-font-resize text-danger">*</span></label>
                                 <select id="typeSelect" name="type" required
-                                    class="form-control @error('type') is-invalid @enderror" onchange="toggleHiddenType()">
+                                    class=" js-font-resize form-control @error('type') is-invalid @enderror" onchange="toggleHiddenType()">
                                     <option selected hidden value="">
                                         {{ trans('panel.choose_application_type') }}
                                     </option>
@@ -151,18 +151,18 @@
                                 </select>
 
                                 @error('type')
-                                    <div class="invalid-feedback d-block">
+                                    <div class=" js-font-resize invalid-feedback d-block">
                                         {{ $message }}
                                     </div>
                                 @enderror
                             </div> --}}
 
                             {{-- course --}}
-                            {{-- <div class="form-group col-12 col-sm-6 text-light">
-                                <label for="application2" class="form-label" id="all_course">{{trans('panel.training_courses')}}<span
-                                        class="text-danger">*</span></label>
+                            {{-- <div class=" js-font-resize form-group col-12 col-sm-6 text-light">
+                                <label for="application2" class=" js-font-resize form-label" id="all_course">{{trans('panel.training_courses')}}<span
+                                        class=" js-font-resize text-danger">*</span></label>
                                 <select id="mySelect2" name="webinar_id" onchange="coursesToggle()"
-                                    class="form-control @error('webinar_id') is-invalid @enderror">
+                                    class=" js-font-resize form-control @error('webinar_id') is-invalid @enderror">
                                     <option selected hidden value="">
                                         {{ trans('panel.choose_training_course') }}
                                     </option>
@@ -176,26 +176,26 @@
                                 </select>
 
                                 @error('webinar_id')
-                                    <div class="invalid-feedback d-block">
+                                    <div class=" js-font-resize invalid-feedback d-block">
                                         {{ $message }}
                                     </div>
                                 @enderror
                             </div> --}}
 
                             {{-- course endorsement --}}
-                            <div class="col-12 d-none">
+                            <div class=" js-font-resize col-12 d-none">
                                 <input type="checkbox" id="course_endorsement" name="course_endorsement">
-                                <span class="text-light">
+                                <span class=" js-font-resize text-light">
                                     {{ trans('panel.acknowledge_experience') }}
                                 </span>
                                 @error('course_endorsement')
-                                    <div class="invalid-feedback d-block">
+                                    <div class=" js-font-resize invalid-feedback d-block">
                                         {{ $message }}
                                     </div>
                                 @enderror
-                                <div class="mt-3">
+                                <div class=" js-font-resize mt-3">
                                     <input type="checkbox" id="course_endorsement2">
-                                    <span class="text-light">
+                                    <span class=" js-font-resize text-light">
                                         {{ trans('panel.acknowledge_time_limit') }}
                                     </span>
                                 </div>
@@ -206,15 +206,15 @@
                                 {{-- diploma --}}
 
                                 {{-- specialization --}}
-                                <div class="form-group col-12 col-sm-6 text-dark">
+                                <div class=" js-font-resize form-group col-12 col-sm-6 text-dark">
                                     <label for="bundle_id">
-                                        {{ trans('panel.program') }}<span class="text-danger">*</span>
+                                        {{ trans('panel.program') }}<span class=" js-font-resize text-danger">*</span>
                                     </label>
                                     {{-- <input type="text" id="bundle_id" name="bundle_id"
-                                        class="form-control @error('bundle_id') is-invalid @enderror"
+                                        class=" js-font-resize form-control @error('bundle_id') is-invalid @enderror"
                                         value="{{ old('bundle_id', $bundle ? $bundle->id : '') }}"> --}}
 
-                                    <select id="bundle_id" class="custom-select  @error('bundle_id')  is-invalid @enderror"
+                                    <select id="bundle_id" class=" js-font-resize custom-select  @error('bundle_id')  is-invalid @enderror"
                                         name="bundle_id" onchange="CertificateSectionToggle()">
                                         <option selected hidden value="">
                                             {{ trans('panel.choose_program') }}
@@ -251,60 +251,60 @@
 
 
                                     @error('bundle_id')
-                                        <div class="invalid-feedback d-block">
+                                        <div class=" js-font-resize invalid-feedback d-block">
                                             {{ $message }}
                                         </div>
                                     @enderror
                                 </div>
 
-                                <div class="d-none font-14 font-weight-bold mb-10 col-12" id="early_enroll"
+                                <div class=" js-font-resize d-none font-14 font-weight-bold mb-10 col-12" id="early_enroll"
                                     style="color: #5F2B80;">
                                     {{ trans('panel.registration_available') }}
                                 </div>
 
                                 {{-- certificate --}}
-                                <div class="form-group col-12  d-none" id="certificate_section">
-                                    <label class="text-light">{{ trans('application_form.want_certificate') }} ؟ <span
-                                            class="text-danger">*</span></label>
-                                    <span class="text-danger font-12 font-weight-bold text-light" id="certificate_message">
+                                <div class=" js-font-resize form-group col-12  d-none" id="certificate_section">
+                                    <label class=" js-font-resize text-light">{{ trans('application_form.want_certificate') }} ؟ <span
+                                            class=" js-font-resize text-danger">*</span></label>
+                                    <span class=" js-font-resize text-danger font-12 font-weight-bold text-light" id="certificate_message">
                                     </span>
                                     @error('certificate')
-                                        <div class="invalid-feedback d-block text-light">
+                                        <div class=" js-font-resize invalid-feedback d-block text-light">
                                             {{ $message }}
                                         </div>
                                     @enderror
-                                    <div class="row mr-5 mt-5">
+                                    <div class=" js-font-resize row mr-5 mt-5">
                                         {{-- want certificate --}}
-                                        <div class="col-sm-4 col">
+                                        <div class=" js-font-resize col-sm-4 col">
                                             <label for="want_certificate">
                                                 <input type="radio" id="want_certificate" name="certificate"
                                                     value="1" onchange="showCertificateMessage()"
-                                                    class=" @error('certificate') is-invalid @enderror"
+                                                    class=" js-font-resize  @error('certificate') is-invalid @enderror"
                                                     {{ old('certificate', $student->certificate ?? null) === '1' ? 'checked' : '' }}>
-                                                <span class="text-light">{{ trans('public.yes') }} (
+                                                <span class=" js-font-resize text-light">{{ trans('public.yes') }} (
                                                     {{ trans('panel.pay_later') }} )</span>
                                             </label>
                                         </div>
 
                                         {{-- does not want certificate --}}
-                                        <div class="col">
+                                        <div class=" js-font-resize col">
                                             <label for="doesn't_want_certificate">
                                                 <input type="radio" id="doesn't_want_certificate" name="certificate"
                                                     onchange="showCertificateMessage()" value="0"
-                                                    class="@error('certificate') is-invalid @enderror"
+                                                    class=" js-font-resize @error('certificate') is-invalid @enderror"
                                                     {{ old('certificate', $student->certificate ?? null) === '0' ? 'checked' : '' }}>
-                                                <span class="text-light">{{ trans('public.none') }}</span>
+                                                <span class=" js-font-resize text-light">{{ trans('public.none') }}</span>
                                             </label>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="d-none col-12">
+                                <div class=" js-font-resize d-none col-12">
                                     <!--
                                     <input type="checkbox" id="requirement_endorsement" name="requirement_endorsement">
-                                    <span class="text-light">
+                                    <span class=" js-font-resize text-light">
                                         {{ trans('panel.acknowledge_terms') }}
-                                        <a class="text-cyan" href="https://anasacademy.uk/admission/" target="_blank">
+                                        <a class=" js-font-resize text-cyan" href="https://anasacademy.uk/admission/" target="_blank">
                                             {{ trans('panel.registration_requirements') }}
                                         </a>
                                         {{ trans('panel.commit_to_requirements') }}
@@ -312,7 +312,7 @@
                                     </span>
 
                                     @error('requirement_endorsement')
-                                        <div class="invalid-feedback d-block">
+                                        <div class=" js-font-resize invalid-feedback d-block">
                                             {{ $message }}
                                         </div>
                                     @enderror
@@ -320,23 +320,23 @@
                                 </div>
                             </section>
 
-                            <label class="mt-30 col-12 text-dark">
+                            <label class=" js-font-resize mt-30 col-12 text-dark">
                                 <input type="checkbox" id="terms" name="terms" required>
                                 <!--{{ trans('application_form.agree_terms_conditions') }}-->
                                 <!-- {{ trans('panel.confirm_registration_data') }} -->
                                 {{ trans('panel.confirmation_agreement') }}
-                                <!-- <a target="_blank" class="text-cyan"
+                                <!-- <a target="_blank" class=" js-font-resize text-cyan"
                                                 href="https://anasacademy.uk/wp-content/uploads/2024/02/Contract.pdf">
                                                 {{ trans('panel.click_here_to_view') }}
                                             </a> -->
 
                             </label>
-                            <div class="col-12 mt-3">
+                            <div class=" js-font-resize col-12 mt-3">
                                 <input type="hidden" id="direct_register" name="direct_register" value="">
                                 <button type="button" id="form_button"
-                                    class="btn btn-acadima-primary ">{{ trans('panel.register') }} </button>
+                                    class=" js-font-resize btn btn-acadima-primary ">{{ trans('panel.register') }} </button>
 
-                               <!-- <button type="submit" class="btn btn-acadima-primary mr-3" id="formSubmit">
+                               <!-- <button type="submit" class=" js-font-resize btn btn-acadima-primary mr-3" id="formSubmit">
                                     {{ trans('panel.seat_reservation_label') }}
                                 </button>  -->
 
@@ -347,7 +347,7 @@
 
                     {{-- display errors --}}
                     @if ($errors->any())
-                        <div class="alert alert-danger">
+                        <div class=" js-font-resize alert alert-danger">
                             <ul>
                                 @foreach ($errors->all() as $error)
                                     <li>{{ $error }}</li>
@@ -434,23 +434,23 @@
                     }).join('');
 
                     hiddenInput.outerHTML =
-                        '<select id="bundle_id" name="bundle_id"  class="form-control" onchange="CertificateSectionToggle()" >' +
-                        '<option value="" class="placeholder" selected hidden >{{ trans('panel.choose_specialization') }}</option>' +
+                        '<select id="bundle_id" name="bundle_id"  class=" js-font-resize form-control" onchange="CertificateSectionToggle()" >' +
+                        '<option value="" class=" js-font-resize placeholder" selected hidden >{{ trans('panel.choose_specialization') }}</option>' +
                         options +
                         '</select>';
                     hiddenLabel.style.display = "block";
                     hiddenLabel.closest('div').classList.remove('d-none');
                 } else {
                     hiddenInput.outerHTML =
-                        '<select id="bundle_id" name="bundle_id"  class="form-control" onchange="CertificateSectionToggle()" >' +
-                        '<option value="" class="placeholder" selected hidden >{{ trans('panel.choose_specialization') }}</option> </select>';
+                        '<select id="bundle_id" name="bundle_id"  class=" js-font-resize form-control" onchange="CertificateSectionToggle()" >' +
+                        '<option value="" class=" js-font-resize placeholder" selected hidden >{{ trans('panel.choose_specialization') }}</option> </select>';
                     hiddenLabel.style.display = "none";
                     hiddenLabel.closest('div').classList.add('d-none');
                 }
             } else {
                 hiddenInput.outerHTML =
-                    '<select id="bundle_id" name="bundle_id"  class="form-control" onchange="CertificateSectionToggle()" >' +
-                    '<option value="" class="placeholder" selected hidden >{{ trans('panel.choose_specialization') }}</option> </select>';
+                    '<select id="bundle_id" name="bundle_id"  class=" js-font-resize form-control" onchange="CertificateSectionToggle()" >' +
+                    '<option value="" class=" js-font-resize placeholder" selected hidden >{{ trans('panel.choose_specialization') }}</option> </select>';
                 hiddenLabel.style.display = "none";
                 hiddenLabel.closest('div').classList.add('d-none');
 

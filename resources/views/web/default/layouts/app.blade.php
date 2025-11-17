@@ -68,10 +68,10 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
-<body class="@if ($isRtl) rtl @endif">
+<body class=" js-font-resize @if ($isRtl) rtl @endif">
 
     <div id="app"
-        class="{{ (!empty($floatingBar) and $floatingBar->position == 'top' and $floatingBar->fixed) ? 'has-fixed-top-floating-bar' : '' }}">
+        class=" js-font-resize {{ (!empty($floatingBar) and $floatingBar->position == 'top' and $floatingBar->fixed) ? 'has-fixed-top-floating-bar' : '' }}">
         @if (!empty($floatingBar) and $floatingBar->position == 'top')
             @include('web.default.includes.floating_bar')
         @endif

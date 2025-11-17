@@ -6,11 +6,11 @@
     <link href="/assets/default/css/font.css" rel="stylesheet">
     <link rel="stylesheet" href="/assets/default/css/app.css">
 </head>
-<body class="play-iframe-page">
+<body class=" js-font-resize play-iframe-page">
 @if(!empty($iframe))
     {!! $iframe !!}
 @else
-    <iframe src="{{ $path }}" frameborder="0" allowfullscreen class="interactive-file-iframe"></iframe>
+    <iframe src="{{ $path }}" frameborder="0" allowfullscreen class=" js-font-resize interactive-file-iframe"></iframe>
 @endif
 </body>
 </html>

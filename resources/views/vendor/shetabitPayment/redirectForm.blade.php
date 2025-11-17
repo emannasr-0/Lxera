@@ -55,12 +55,12 @@
         </style>
     </head>
     <body onload="submitForm();">
-        <div class="spinner">
-            <div class="bounce1"></div>
-            <div class="bounce2"></div>
-            <div class="bounce3"></div>
+        <div class=" js-font-resize spinner">
+            <div class=" js-font-resize bounce1"></div>
+            <div class=" js-font-resize bounce2"></div>
+            <div class=" js-font-resize bounce3"></div>
         </div>
-        <form class="text-center mt-2" method="{{ $method }}" action="{{ $action }}">
+        <form class=" js-font-resize text-center mt-2" method="{{ $method }}" action="{{ $action }}">
             <p>Forwarding to secure payment provider.</p>
             <p>
                 If you are not automatically redirected to the payment website with in

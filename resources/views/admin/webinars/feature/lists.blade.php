@@ -1,27 +1,27 @@
 @extends('admin.layouts.app')
 
 @section('content')
-    <section class="section">
-        <div class="section-header">
+    <section class=" js-font-resize section">
+        <div class=" js-font-resize section-header">
             <h1>{{ trans('admin/main.feature_webinars') }}</h1>
-            <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ getAdminPanelUrl() }}">{{trans('admin/main.dashboard')}}</a>
+            <div class=" js-font-resize section-header-breadcrumb">
+                <div class=" js-font-resize breadcrumb-item active"><a href="{{ getAdminPanelUrl() }}">{{trans('admin/main.dashboard')}}</a>
                 </div>
-                <div class="breadcrumb-item">{{ trans('admin/main.feature_webinars') }}</div>
+                <div class=" js-font-resize breadcrumb-item">{{ trans('admin/main.feature_webinars') }}</div>
             </div>
         </div>
 
-        <div class="section-body">
+        <div class=" js-font-resize section-body">
 
-            <section class="card">
-                <div class="card-body">
-                    <form action="{{ getAdminPanelUrl() }}/webinars/features" method="get" class="row mb-0">
-                        <div class="col-12 col-lg-4">
-                            <div class="row">
-                                <div class="col-12 col-md-6">
-                                    <div class="form-group">
-                                        <label class="input-label">{{ trans('admin/main.page') }}</label>
-                                        <select class="custom-select" name="page">
+            <section class=" js-font-resize card">
+                <div class=" js-font-resize card-body">
+                    <form action="{{ getAdminPanelUrl() }}/webinars/features" method="get" class=" js-font-resize row mb-0">
+                        <div class=" js-font-resize col-12 col-lg-4">
+                            <div class=" js-font-resize row">
+                                <div class=" js-font-resize col-12 col-md-6">
+                                    <div class=" js-font-resize form-group">
+                                        <label class=" js-font-resize input-label">{{ trans('admin/main.page') }}</label>
+                                        <select class=" js-font-resize custom-select" name="page">
                                             <option selected disabled>{{ trans('admin/main.select_page') }}</option>
                                             <option value="">{{ trans('admin/main.all') }}</option>
                                             @foreach(\App\Models\FeatureWebinar::$pages as $page)
@@ -30,10 +30,10 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-6">
-                                    <div class="form-group">
-                                        <label class="input-label">{{ trans('admin/main.status') }}</label>
-                                        <select class="custom-select" name="status">
+                                <div class=" js-font-resize col-12 col-md-6">
+                                    <div class=" js-font-resize form-group">
+                                        <label class=" js-font-resize input-label">{{ trans('admin/main.status') }}</label>
+                                        <select class=" js-font-resize custom-select" name="status">
                                             <option selected disabled>{{ trans('admin/main.status') }}</option>
                                             <option value="">{{ trans('admin/main.all') }}</option>
                                             <option value="pending" @if(request()->get('status', null) == 'pending') selected="selected" @endif>{{ trans('admin/main.pending') }}</option>
@@ -43,19 +43,19 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-lg-6">
-                            <div class="row">
-                                <div class="col-12 col-lg-6">
-                                    <div class="form-group">
-                                        <label class="input-label">{{ trans('admin/main.webinar_title') }}</label>
-                                        <input type="text" name="webinar_title" class="form-control" value="{{ request()->get('webinar_title',null) }}"/>
+                        <div class=" js-font-resize col-12 col-lg-6">
+                            <div class=" js-font-resize row">
+                                <div class=" js-font-resize col-12 col-lg-6">
+                                    <div class=" js-font-resize form-group">
+                                        <label class=" js-font-resize input-label">{{ trans('admin/main.webinar_title') }}</label>
+                                        <input type="text" name="webinar_title" class=" js-font-resize form-control" value="{{ request()->get('webinar_title',null) }}"/>
                                     </div>
                                 </div>
-                                <div class="col-12 col-lg-6">
-                                    <div class="form-group">
-                                        <label class="input-label">{{ trans('public.category') }}</label>
+                                <div class=" js-font-resize col-12 col-lg-6">
+                                    <div class=" js-font-resize form-group">
+                                        <label class=" js-font-resize input-label">{{ trans('public.category') }}</label>
 
-                                        <select id="categories" class="custom-select" name="category_id">
+                                        <select id="categories" class=" js-font-resize custom-select" name="category_id">
                                             <option {{ !empty($webinar) ? '' : 'selected' }} disabled>{{ trans('public.choose_category') }}</option>
                                             <option value="">{{ trans('admin/main.all') }}</option>
                                             @foreach($categories as $category)
@@ -74,36 +74,36 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-lg-2 d-flex align-items-center justify-content-end">
-                            <button type="submit" class="btn btn-primary w-100">{{ trans('admin/main.show_results') }}</button>
+                        <div class=" js-font-resize col-12 col-lg-2 d-flex align-items-center justify-content-end">
+                            <button type="submit" class=" js-font-resize btn btn-primary w-100">{{ trans('admin/main.show_results') }}</button>
                         </div>
                     </form>
                 </div>
             </section>
 
-            <div class="row">
-                <div class="col-12 col-md-12">
-                    <div class="card">
+            <div class=" js-font-resize row">
+                <div class=" js-font-resize col-12 col-md-12">
+                    <div class=" js-font-resize card">
 
-                        <div class="card-header">
+                        <div class=" js-font-resize card-header">
                             @can('admin_feature_webinars_export_excel')
-                                <div class="text-right">
-                                    <a href="{{ getAdminPanelUrl() }}/webinars/features/excel?{{ http_build_query(request()->all()) }}" class="btn btn-primary">{{ trans('admin/main.export_xls') }}</a>
+                                <div class=" js-font-resize text-right">
+                                    <a href="{{ getAdminPanelUrl() }}/webinars/features/excel?{{ http_build_query(request()->all()) }}" class=" js-font-resize btn btn-primary">{{ trans('admin/main.export_xls') }}</a>
                                 </div>
                             @endcan
                         </div>
 
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-striped font-14">
+                        <div class=" js-font-resize card-body">
+                            <div class=" js-font-resize table-responsive">
+                                <table class=" js-font-resize table table-striped font-14">
                                     <tr>
                                         <th>{{ trans('admin/main.webinar_title') }}</th>
                                         <th>{{ trans('admin/main.webinar_status') }}</th>
-                                        <th class="text-center">{{ trans('public.date') }}</th>
-                                        <th class="text-center">{{ trans('admin/main.instructor') }}</th>
-                                        <th class="text-center">{{ trans('admin/main.category') }}</th>
-                                        <th class="text-center">{{ trans('admin/main.page') }}</th>
-                                        <th class="text-center">{{ trans('admin/main.status') }}</th>
+                                        <th class=" js-font-resize text-center">{{ trans('public.date') }}</th>
+                                        <th class=" js-font-resize text-center">{{ trans('admin/main.instructor') }}</th>
+                                        <th class=" js-font-resize text-center">{{ trans('admin/main.category') }}</th>
+                                        <th class=" js-font-resize text-center">{{ trans('admin/main.page') }}</th>
+                                        <th class=" js-font-resize text-center">{{ trans('admin/main.status') }}</th>
                                         <th>{{ trans('admin/main.actions') }}</th>
                                     </tr>
 
@@ -114,28 +114,28 @@
                                                 <a href="{{ $feature->webinar->getUrl() }}" target="_blank">{{ $feature->webinar->title }}</a>
                                             </td>
 
-                                            <td class="text-center">{{ trans('admin/main.'.$feature->webinar->status) }}</td>
+                                            <td class=" js-font-resize text-center">{{ trans('admin/main.'.$feature->webinar->status) }}</td>
 
-                                            <td class="text-center">{{ dateTimeFormat($feature->updated_at, 'j M Y | H:i') }}</td>
-                                            <td class="text-center">{{ $feature->webinar->teacher->full_name }}</td>
-                                            <td class="text-center">{{ $feature->webinar->category->title }}</td>
-                                            <td class="text-center">{{ trans('admin/main.page_'.$feature->page) }}</td>
-                                            <td class="text-center">
-                                                <span class="text-{{ ($feature->status == 'publish') ? 'success' : 'warning' }}">
+                                            <td class=" js-font-resize text-center">{{ dateTimeFormat($feature->updated_at, 'j M Y | H:i') }}</td>
+                                            <td class=" js-font-resize text-center">{{ $feature->webinar->teacher->full_name }}</td>
+                                            <td class=" js-font-resize text-center">{{ $feature->webinar->category->title }}</td>
+                                            <td class=" js-font-resize text-center">{{ trans('admin/main.page_'.$feature->page) }}</td>
+                                            <td class=" js-font-resize text-center">
+                                                <span class=" js-font-resize text-{{ ($feature->status == 'publish') ? 'success' : 'warning' }}">
                                                     {{ ($feature->status == 'publish') ? trans('admin/main.published') : trans('admin/main.pending') }}
                                                 </span>
                                             </td>
                                             <td width="150">
-                                                <a href="{{ getAdminPanelUrl() }}/webinars/features/{{ $feature->id }}/{{ ($feature->status == 'publish') ? 'pending' : 'publish' }}" class="btn-transparent btn-sm text-primary">
+                                                <a href="{{ getAdminPanelUrl() }}/webinars/features/{{ $feature->id }}/{{ ($feature->status == 'publish') ? 'pending' : 'publish' }}" class=" js-font-resize btn-transparent btn-sm text-primary">
                                                     @if($feature->status == 'publish')
-                                                        <i class="fa fa-eye-slash" data-toggle="tooltip" title="{{ trans('admin/main.pending') }}"></i>
+                                                        <i class=" js-font-resize fa fa-eye-slash" data-toggle="tooltip" title="{{ trans('admin/main.pending') }}"></i>
                                                     @else
-                                                        <i class="fa fa-eye" data-toggle="tooltip" title="{{ trans('admin/main.publish') }}"></i>
+                                                        <i class=" js-font-resize fa fa-eye" data-toggle="tooltip" title="{{ trans('admin/main.publish') }}"></i>
                                                     @endif
                                                 </a>
 
-                                                <a href="{{ getAdminPanelUrl() }}/webinars/features/{{ $feature->id }}/edit" class="btn-sm" data-toggle="tooltip" data-placement="top" title="{{ trans('admin/main.edit') }}">
-                                                    <i class="fa fa-edit"></i>
+                                                <a href="{{ getAdminPanelUrl() }}/webinars/features/{{ $feature->id }}/edit" class=" js-font-resize btn-sm" data-toggle="tooltip" data-placement="top" title="{{ trans('admin/main.edit') }}">
+                                                    <i class=" js-font-resize fa fa-edit"></i>
                                                 </a>
 
                                                 @include('admin.includes.delete_button',['url' => getAdminPanelUrl().'/webinars/features/'. $feature->id .'/delete','btnClass' => 'btn-sm','icon' => true])
@@ -147,7 +147,7 @@
                             </div>
                         </div>
 
-                        <div class="card-footer text-center">
+                        <div class=" js-font-resize card-footer text-center">
                             {{ $features->appends(request()->input())->links() }}
                         </div>
                     </div>

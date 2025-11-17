@@ -32,21 +32,21 @@
     @include('web.default.panel.services.includes.progress', ['title' => trans('panel.electronic_services')])
 
     @if (Session::has('success'))
-        <div class="container d-flex justify-content-center mt-80">
-            <p class="alert alert-success w-75 text-center"> {{ Session::get('success') }} </p>
+        <div class=" js-font-resize container d-flex justify-content-center mt-80">
+            <p class=" js-font-resize alert alert-success w-75 text-center"> {{ Session::get('success') }} </p>
         </div>
     @endif
 
     @if (Session::has('error'))
-            <div class="container d-flex justify-content-center mt-80">
-                <p class="alert alert-danger w-75 text-center"> {{ Session::get('error') }} </p>
+            <div class=" js-font-resize container d-flex justify-content-center mt-80">
+                <p class=" js-font-resize alert alert-danger w-75 text-center"> {{ Session::get('error') }} </p>
             </div>
         @endif
 
     @if ($services->count() > 0)
-        <section class="row p-20">
+        <section class=" js-font-resize row p-20">
             @foreach ($services as $service)
-                <div class="col-12 col-lg-3 mt-35 ">
+                <div class=" js-font-resize col-12 col-lg-3 mt-35 ">
                     @include('web.default.panel.services.includes.service_card', ['service' => $service])
                 </div>
             @endforeach

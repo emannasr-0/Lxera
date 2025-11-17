@@ -1,4 +1,4 @@
-<div class="content-tab p-15 pb-50 shadow border">
+<div class=" js-font-resize content-tab p-15 pb-50 shadow border">
 
     @if(
         (empty($sessionsWithoutChapter) or !count($sessionsWithoutChapter)) and
@@ -6,14 +6,14 @@
         (empty($filesWithoutChapter) or !count($filesWithoutChapter)) and
         (empty($course->chapters) or !count($course->chapters))
     )
-        <div class="learning-page-forum-empty d-flex align-items-center justify-content-center flex-column">
-            <div class="learning-page-forum-empty-icon d-flex align-items-center justify-content-center">
-                <img src="/assets/default/img/learning/content-empty.svg" class="img-fluid" alt="">
+        <div class=" js-font-resize learning-page-forum-empty d-flex align-items-center justify-content-center flex-column">
+            <div class=" js-font-resize learning-page-forum-empty-icon d-flex align-items-center justify-content-center">
+                <img src="/assets/default/img/learning/content-empty.svg" class=" js-font-resize img-fluid" alt="">
             </div>
 
-            <div class="d-flex align-items-center flex-column mt-10 text-center">
-                <h3 class="font-20 font-weight-bold text-light text-center">{{ trans('update.learning_page_empty_content_title') }}</h3>
-                <p class="font-14 font-weight-500 text-gray mt-5 text-center">{{ trans('update.learning_page_empty_content_hint') }}</p>
+            <div class=" js-font-resize d-flex align-items-center flex-column mt-10 text-center">
+                <h3 class=" js-font-resize font-20 font-weight-bold text-light text-center">{{ trans('update.learning_page_empty_content_title') }}</h3>
+                <p class=" js-font-resize font-14 font-weight-500 text-gray mt-5 text-center">{{ trans('update.learning_page_empty_content_hint') }}</p>
             </div>
         </div>
     @else

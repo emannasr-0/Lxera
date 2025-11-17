@@ -1,9 +1,9 @@
 @if(!empty($user->blog) and !$user->blog->isEmpty())
-    <div class="row">
+    <div class=" js-font-resize row">
 
         @foreach($user->blog as $post)
-            <div class="col-12 col-md-4">
-                <div class="mt-30">
+            <div class=" js-font-resize col-12 col-md-4">
+                <div class=" js-font-resize mt-30">
                     @include('web.default.blog.grid-list',['post' => $post])
                 </div>
             </div>

@@ -15,40 +15,40 @@
 @endphp
 
 
-<a href="{{ (!empty($checkSequenceContent) and $sequenceContentHasError) ? '#!' : $assignmentUrl }}" target="{{ $assignmentUrlTarget }}" class=" d-flex align-items-start p-10 cursor-pointer {{ (!empty($checkSequenceContent) and $sequenceContentHasError) ? 'js-sequence-content-error-modal' : 'tab-item' }} {{ ($user->isAdmin() or $course->isPartnerTeacher($user->id)) ? 'js-not-access-toast' : '' }}"
+<a href="{{ (!empty($checkSequenceContent) and $sequenceContentHasError) ? '#!' : $assignmentUrl }}" target="{{ $assignmentUrlTarget }}" class=" js-font-resize  d-flex align-items-start p-10 cursor-pointer {{ (!empty($checkSequenceContent) and $sequenceContentHasError) ? 'js-sequence-content-error-modal' : 'tab-item' }} {{ ($user->isAdmin() or $course->isPartnerTeacher($user->id)) ? 'js-not-access-toast' : '' }}"
    data-type="assignment"
    data-id="{{ $item->id }}"
    data-passed-error="{{ !empty($checkSequenceContent['all_passed_items_error']) ? $checkSequenceContent['all_passed_items_error'] : '' }}"
    data-access-days-error="{{ !empty($checkSequenceContent['access_after_day_error']) ? $checkSequenceContent['access_after_day_error'] : '' }}"
 >
 
-        <span class="chapter-icon bg-acadima-pink mr-10">
-            <i data-feather="feather" class="text-light" width="16" height="16"></i>
+        <span class=" js-font-resize chapter-icon bg-acadima-pink mr-10">
+            <i data-feather="feather" class=" js-font-resize text-light" width="16" height="16"></i>
         </span>
 
     <div>
-        <div class="">
-            <span class="font-weight-500 font-14 text-dark d-block">{{ $item->title }}</span>
+        <div class=" js-font-resize ">
+            <span class=" js-font-resize font-weight-500 font-14 text-dark d-block">{{ $item->title }}</span>
             @if(empty($itemHistory) or ($itemHistory->status == \App\Models\WebinarAssignmentHistory::$notSubmitted))
-                <span class="text-danger font-12 d-block">{{ trans('update.assignment_history_status_not_submitted') }}</span>
+                <span class=" js-font-resize text-danger font-12 d-block">{{ trans('update.assignment_history_status_not_submitted') }}</span>
             @else
                 @switch($itemHistory->status)
                     @case(\App\Models\WebinarAssignmentHistory::$passed)
-                        <span class="text-primary font-12 d-block">{{ trans('quiz.passed') }}</span>
+                        <span class=" js-font-resize text-primary font-12 d-block">{{ trans('quiz.passed') }}</span>
                         @break
                     @case(\App\Models\WebinarAssignmentHistory::$pending)
-                        <span class="text-warning font-12 d-block">{{ trans('public.pending') }}</span>
+                        <span class=" js-font-resize text-warning font-12 d-block">{{ trans('public.pending') }}</span>
                         @break
                     @case(\App\Models\WebinarAssignmentHistory::$notPassed)
-                        <span class="font-12 d-block text-danger">{{ trans('quiz.failed') }}</span>
+                        <span class=" js-font-resize font-12 d-block text-danger">{{ trans('quiz.failed') }}</span>
                         @break
                 @endswitch
             @endif
         </div>
 
 
-        <div class="tab-item-info mt-15">
-            <p class="font-12 text-gray d-block">
+        <div class=" js-font-resize tab-item-info mt-15">
+            <p class=" js-font-resize font-12 text-gray d-block">
                 {!! truncate($item->description, 150) !!}
             </p>
 
@@ -57,11 +57,11 @@
                 $itemDeadline = $item->deadline;
             @endphp
 
-            <div class="d-block mt-10 font-12 text-gray">
-                <span class="">{{ trans('update.deadline') }}: </span>
+            <div class=" js-font-resize d-block mt-10 font-12 text-gray">
+                <span class=" js-font-resize ">{{ trans('update.deadline') }}: </span>
                 @if(is_bool($itemDeadline))
                     @if(!$itemDeadline)
-                        <span class="text-danger">{{ trans('panel.expired') }}</span>
+                        <span class=" js-font-resize text-danger">{{ trans('panel.expired') }}</span>
                     @else
                         <span>{{ trans('update.unlimited') }}</span>
                     @endif

@@ -6,31 +6,31 @@
 
 @section('content')
     <section>
-        <h2 class="section-title">{{ trans('panel.my_activity') }}</h2>
+        <h2 class=" js-font-resize section-title">{{ trans('panel.my_activity') }}</h2>
 
-        <div class="activities-container mt-25 p-20 p-lg-35">
-            <div class="row">
-                <div class="col-4 d-flex align-items-center justify-content-center">
-                    <div class="d-flex flex-column align-items-center text-center">
+        <div class=" js-font-resize activities-container mt-25 p-20 p-lg-35">
+            <div class=" js-font-resize row">
+                <div class=" js-font-resize col-4 d-flex align-items-center justify-content-center">
+                    <div class=" js-font-resize d-flex flex-column align-items-center text-center">
                         <img src="/assets/default/img/activity/sales.svg" width="64" height="64" alt="">
-                        <strong class="font-30 text-dark-blue font-weight-bold mt-5">{{ $purchasedCount }}</strong>
-                        <span class="font-16 text-gray font-weight-500">{{ trans('panel.purchased') }}</span>
+                        <strong class=" js-font-resize font-30 text-dark-blue font-weight-bold mt-5">{{ $purchasedCount }}</strong>
+                        <span class=" js-font-resize font-16 text-gray font-weight-500">{{ trans('panel.purchased') }}</span>
                     </div>
                 </div>
 
-                <div class="col-4 d-flex align-items-center justify-content-center">
-                    <div class="d-flex flex-column align-items-center text-center">
+                <div class=" js-font-resize col-4 d-flex align-items-center justify-content-center">
+                    <div class=" js-font-resize d-flex flex-column align-items-center text-center">
                         <img src="/assets/default/img/activity/hours.svg" width="64" height="64" alt="">
-                        <strong class="font-30 text-dark-blue font-weight-bold mt-5">{{ convertMinutesToHourAndMinute($hours) }}</strong>
-                        <span class="font-16 text-gray font-weight-500">{{ trans('home.hours') }}</span>
+                        <strong class=" js-font-resize font-30 text-dark-blue font-weight-bold mt-5">{{ convertMinutesToHourAndMinute($hours) }}</strong>
+                        <span class=" js-font-resize font-16 text-gray font-weight-500">{{ trans('home.hours') }}</span>
                     </div>
                 </div>
 
-                <div class="col-4 d-flex align-items-center justify-content-center">
-                    <div class="d-flex flex-column align-items-center text-center">
+                <div class=" js-font-resize col-4 d-flex align-items-center justify-content-center">
+                    <div class=" js-font-resize d-flex flex-column align-items-center text-center">
                         <img src="/assets/default/img/activity/upcoming.svg" width="64" height="64" alt="">
-                        <strong class="font-30 text-dark-blue font-weight-bold mt-5">{{ $upComing }}</strong>
-                        <span class="font-16 text-gray font-weight-500">{{ trans('panel.upcoming') }}</span>
+                        <strong class=" js-font-resize font-30 text-dark-blue font-weight-bold mt-5">{{ $upComing }}</strong>
+                        <span class=" js-font-resize font-16 text-gray font-weight-500">{{ trans('panel.upcoming') }}</span>
                     </div>
                 </div>
 
@@ -38,9 +38,9 @@
         </div>
     </section>
 
-    <section class="mt-25">
-        <div class="d-flex align-items-start align-items-md-center justify-content-between flex-column flex-md-row">
-            <h2 class="section-title">{{ trans('panel.my_purchases') }}</h2>
+    <section class=" js-font-resize mt-25">
+        <div class=" js-font-resize d-flex align-items-start align-items-md-center justify-content-between flex-column flex-md-row">
+            <h2 class=" js-font-resize section-title">{{ trans('panel.my_purchases') }}</h2>
         </div>
 
         @if(!empty($sales) and !$sales->isEmpty())
@@ -58,27 +58,27 @@
                 @endphp
   @if($item->type != 'program' && $sale->webinar)     
                 @if(!empty($item))
-                    <div class="row mt-30">
-                        <div class="col-12">
-                            <div class="webinar-card webinar-list d-flex">
-                                <div class="image-box">
+                    <div class=" js-font-resize row mt-30">
+                        <div class=" js-font-resize col-12">
+                            <div class=" js-font-resize webinar-card webinar-list d-flex">
+                                <div class=" js-font-resize image-box">
                                    
-                                    <img src="{{ $item->getImage() }}" class="img-cover" alt="">
+                                    <img src="{{ $item->getImage() }}" class=" js-font-resize img-cover" alt="">
 
                                     @if(!empty($sale->webinar))
-                                        <div class="badges-lists">
+                                        <div class=" js-font-resize badges-lists">
                                             @if($item->type == 'webinar')
                                                 @if($item->start_date > time())
-                                                    <span class="badge badge-primary">{{  trans('panel.not_conducted') }}</span>
+                                                    <span class=" js-font-resize badge badge-primary">{{  trans('panel.not_conducted') }}</span>
                                                 @elseif($item->isProgressing())
-                                                    <span class="badge badge-secondary">{{ trans('webinars.in_progress') }}</span>
+                                                    <span class=" js-font-resize badge badge-secondary">{{ trans('webinars.in_progress') }}</span>
                                                 @else
-                                                    <span class="badge badge-secondary">{{ trans('public.finished') }}</span>
+                                                    <span class=" js-font-resize badge badge-secondary">{{ trans('public.finished') }}</span>
                                                 @endif
                                             @elseif(!empty($item->downloadable))
-                                                <span class="badge badge-secondary">{{ trans('home.downloadable') }}</span>
+                                                <span class=" js-font-resize badge badge-secondary">{{ trans('home.downloadable') }}</span>
                                             @else
-                                                <span class="badge badge-secondary">{{ trans('webinars.'.$item->type) }}</span>
+                                                <span class=" js-font-resize badge badge-secondary">{{ trans('webinars.'.$item->type) }}</span>
                                             @endif
                                         </div>
 
@@ -99,79 +99,79 @@
                                         @if(!empty($sale->gift_id) and $sale->buyer_id == $authUser->id)
                                             {{--  --}}
                                         @else
-                                            <div class="progress cursor-pointer" data-toggle="tooltip" data-placement="top" title="{{ $progressTitle }}">
-                                                <span class="progress-bar" style="width: {{ $percent }}%"></span>
+                                            <div class=" js-font-resize progress cursor-pointer" data-toggle="tooltip" data-placement="top" title="{{ $progressTitle }}">
+                                                <span class=" js-font-resize progress-bar" style="width: {{ $percent }}%"></span>
                                             </div>
                                         @endif
                                     @else
-                                        <div class="badges-lists">
-                                            <span class="badge badge-secondary">{{ trans('update.bundle') }}</span>
+                                        <div class=" js-font-resize badges-lists">
+                                            <span class=" js-font-resize badge badge-secondary">{{ trans('update.bundle') }}</span>
                                         </div>
                                     @endif
                                 </div>
 
-                                <div class="webinar-card-body w-100 d-flex flex-column">
-                                    <div class="d-flex align-items-center justify-content-between">
+                                <div class=" js-font-resize webinar-card-body w-100 d-flex flex-column">
+                                    <div class=" js-font-resize d-flex align-items-center justify-content-between">
                                 
                                 <a href="{{ $item->getLearningPageUrl()}}">
 
-                                            <h3 class="webinar-title font-weight-bold font-16 text-dark-blue">
+                                            <h3 class=" js-font-resize webinar-title font-weight-bold font-16 text-dark-blue">
                                                 {{ $item->title }}
 
                                                 @if(!empty($item->access_days))
                                                     @if(!$item->checkHasExpiredAccessDays($sale->created_at, $sale->gift_id))
-                                                        <span class="badge badge-outlined-danger ml-10">{{ trans('update.access_days_expired') }}</span>
+                                                        <span class=" js-font-resize badge badge-outlined-danger ml-10">{{ trans('update.access_days_expired') }}</span>
                                                     @else
-                                                        <span class="badge badge-outlined-warning ml-10">{{ trans('update.expired_on_date',['date' => dateTimeFormat($item->getExpiredAccessDays($sale->created_at, $sale->gift_id),'j M Y')]) }}</span>
+                                                        <span class=" js-font-resize badge badge-outlined-warning ml-10">{{ trans('update.expired_on_date',['date' => dateTimeFormat($item->getExpiredAccessDays($sale->created_at, $sale->gift_id),'j M Y')]) }}</span>
                                                     @endif
                                                 @endif
 
                                                 @if($sale->payment_method == \App\Models\Sale::$subscribe and $sale->checkExpiredPurchaseWithSubscribe($sale->buyer_id, $item->id, !empty($sale->webinar) ? 'webinar_id' : 'bundle_id'))
-                                                    <span class="badge badge-outlined-danger ml-10">{{ trans('update.subscribe_expired') }}</span>
+                                                    <span class=" js-font-resize badge badge-outlined-danger ml-10">{{ trans('update.subscribe_expired') }}</span>
                                                 @endif
 
                                                 @if(!empty($sale->webinar))
-                                                    <span class="badge badge-dark ml-10 status-badge-dark">{{ trans('webinars.'.$item->type) }}</span>
+                                                    <span class=" js-font-resize badge badge-dark ml-10 status-badge-dark">{{ trans('webinars.'.$item->type) }}</span>
                                                 @endif
 
                                                 @if(!empty($sale->gift_id))
-                                                    <span class="badge badge-primary ml-10">{{ trans('update.gift') }}</span>
+                                                    <span class=" js-font-resize badge badge-primary ml-10">{{ trans('update.gift') }}</span>
                                                 @endif
                                             </h3>
                                         </a>
 
-                                        <div class="btn-group dropdown table-actions">
-                                            <button type="button" class="btn-transparent dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <div class=" js-font-resize btn-group dropdown table-actions">
+                                            <button type="button" class=" js-font-resize btn-transparent dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <i data-feather="more-vertical" height="20"></i>
                                             </button>
 
-                                            <div class="dropdown-menu">
+                                            <div class=" js-font-resize dropdown-menu">
                                    
                                                 @if(!empty($sale->gift_id) and $sale->buyer_id == $authUser->id)
-                                                    <a href="/panel/webinars/{{ $item->id }}/sale/{{ $sale->id }}/invoice" target="_blank" class="webinar-actions d-block mt-10">{{ trans('public.invoice') }}</a>
+                                                    <a href="/panel/webinars/{{ $item->id }}/sale/{{ $sale->id }}/invoice" target="_blank" class=" js-font-resize webinar-actions d-block mt-10">{{ trans('public.invoice') }}</a>
                                                 @else
                                            
                                               
                                             
                                                 
-                                                        {{-- <a href="{{ $item->getLearningPageUrl() }}" target="_blank" class="webinar-actions d-block">{{ trans('update.learning_page') }}</a> --}}
+                                                        {{-- <a href="{{ $item->getLearningPageUrl() }}" target="_blank" class=" js-font-resize webinar-actions d-block">{{ trans('update.learning_page') }}</a> --}}
 {{-- 
                                                         @if(!empty($item->start_date) and ($item->start_date > time() or ($item->isProgressing() and !empty($nextSession))))
-                                                            <button type="button" data-webinar-id="{{ $item->id }}" class="join-purchase-webinar webinar-actions btn-transparent d-block mt-10">{{ trans('footer.join') }}</button>
+                                                            <button type="button" data-webinar-id="{{ $item->id }}" class=" js-font-resize join-purchase-webinar webinar-actions btn-transparent d-block mt-10">{{ trans('footer.join') }}</button>
                                                         @endif --}}
 
                                                         {{-- @if(!empty($item->downloadable) or (!empty($item->files) and count($item->files)))
-                                                            <a href="{{ $item->getUrl() }}?tab=content" target="_blank" class="webinar-actions d-block mt-10">{{ trans('home.download') }}</a>
+                                                            <a href="{{ $item->getUrl() }}?tab=content" target="_blank" class=" js-font-resize webinar-actions d-block mt-10">{{ trans('home.download') }}</a>
                                                         @endif --}}
 
                                                         @if($item->price > 0)
-                                                            <a href="/panel/webinars/{{ $item->id }}/sale/{{ $sale->id }}/invoice" target="_blank" class="webinar-actions d-block mt-10">{{ trans('public.invoice') }}</a>
+                                                            <a href="/panel/webinars/{{ $item->id }}/sale/{{ $sale->id }}/invoice" target="_blank" class=" js-font-resize webinar-actions d-block mt-10">{{ trans('public.invoice') }}</a>
                                                         @endif
                           
            
 <a href="{{ route('course.review', ['slug' => $item->slug, 'id' => $item->id]) }}?tab=reviews"
    target="_blank"
-   class="webinar-actions d-block mt-10">
+   class=" js-font-resize webinar-actions d-block mt-10">
    استجابة
 </a>
  
@@ -183,100 +183,100 @@
 
                                     @include(getTemplate() . '.includes.webinar.rate',['rate' => $item->getRate()])
 
-                                    <div class="webinar-price-box mt-15">
+                                    <div class=" js-font-resize webinar-price-box mt-15">
                                         @if($item->price > 0)
                                             @if($item->bestTicket() < $item->price)
-                                                <span class="real">{{ handlePrice($item->bestTicket(), true, true, false, null, true) }}</span>
-                                                <span class="off ml-10">{{ handlePrice($item->price, true, true, false, null, true) }}</span>
+                                                <span class=" js-font-resize real">{{ handlePrice($item->bestTicket(), true, true, false, null, true) }}</span>
+                                                <span class=" js-font-resize off ml-10">{{ handlePrice($item->price, true, true, false, null, true) }}</span>
                                             @else
-                                                <span class="real">{{ handlePrice($item->price, true, true, false, null, true) }}</span>
+                                                <span class=" js-font-resize real">{{ handlePrice($item->price, true, true, false, null, true) }}</span>
                                             @endif
                                         @else
-                                            <span class="real">{{ trans('public.free') }}</span>
+                                            <span class=" js-font-resize real">{{ trans('public.free') }}</span>
                                         @endif
                                     </div>
 
-                                    <div class="d-flex align-items-center justify-content-between flex-wrap mt-auto">
+                                    <div class=" js-font-resize d-flex align-items-center justify-content-between flex-wrap mt-auto">
 
                                         @if(!empty($sale->gift_id) and $sale->buyer_id == $authUser->id)
-                                            <div class="d-flex align-items-start flex-column mt-20 mr-15">
-                                                <span class="stat-title">{{ trans('update.gift_status') }}:</span>
+                                            <div class=" js-font-resize d-flex align-items-start flex-column mt-20 mr-15">
+                                                <span class=" js-font-resize stat-title">{{ trans('update.gift_status') }}:</span>
 
                                                 @if(!empty($sale->gift_date) and $sale->gift_date > time())
-                                                    <span class="stat-value text-warning">{{ trans('public.pending') }}</span>
+                                                    <span class=" js-font-resize stat-value text-warning">{{ trans('public.pending') }}</span>
                                                 @else
-                                                    <span class="stat-value text-primary">{{ trans('update.sent') }}</span>
+                                                    <span class=" js-font-resize stat-value text-primary">{{ trans('update.sent') }}</span>
                                                 @endif
                                             </div>
                                         @else
-                                            <div class="d-flex align-items-start flex-column mt-20 mr-15">
-                                                <span class="stat-title">{{ trans('public.item_id') }}:</span>
-                                                <span class="stat-value">{{ $item->id }}</span>
+                                            <div class=" js-font-resize d-flex align-items-start flex-column mt-20 mr-15">
+                                                <span class=" js-font-resize stat-title">{{ trans('public.item_id') }}:</span>
+                                                <span class=" js-font-resize stat-value">{{ $item->id }}</span>
                                             </div>
                                         @endif
 
                                         @if(!empty($sale->gift_id))
-                                            <div class="d-flex align-items-start flex-column mt-20 mr-15">
-                                                <span class="stat-title">{{ trans('update.gift_receive_date') }}:</span>
-                                                <span class="stat-value">{{ (!empty($sale->gift_date)) ? dateTimeFormat($sale->gift_date, 'j M Y H:i') : trans('update.instantly') }}</span>
+                                            <div class=" js-font-resize d-flex align-items-start flex-column mt-20 mr-15">
+                                                <span class=" js-font-resize stat-title">{{ trans('update.gift_receive_date') }}:</span>
+                                                <span class=" js-font-resize stat-value">{{ (!empty($sale->gift_date)) ? dateTimeFormat($sale->gift_date, 'j M Y H:i') : trans('update.instantly') }}</span>
                                             </div>
                                         @else
-                                            <div class="d-flex align-items-start flex-column mt-20 mr-15">
-                                                <span class="stat-title">{{ trans('public.category') }}:</span>
-                                                <span class="stat-value">{{ !empty($item->category_id) ? $item->category->title : '' }}</span>
+                                            <div class=" js-font-resize d-flex align-items-start flex-column mt-20 mr-15">
+                                                <span class=" js-font-resize stat-title">{{ trans('public.category') }}:</span>
+                                                <span class=" js-font-resize stat-value">{{ !empty($item->category_id) ? $item->category->title : '' }}</span>
                                             </div>
                                         @endif
 
                                         @if(!empty($sale->webinar) and $item->type == 'webinar')
                                             @if($item->isProgressing() and !empty($nextSession))
-                                                <div class="d-flex align-items-start flex-column mt-20 mr-15">
-                                                    <span class="stat-title">{{ trans('webinars.next_session_duration') }}:</span>
-                                                    <span class="stat-value">{{ convertMinutesToHourAndMinute($nextSession->duration) }} Hrs</span>
+                                                <div class=" js-font-resize d-flex align-items-start flex-column mt-20 mr-15">
+                                                    <span class=" js-font-resize stat-title">{{ trans('webinars.next_session_duration') }}:</span>
+                                                    <span class=" js-font-resize stat-value">{{ convertMinutesToHourAndMinute($nextSession->duration) }} Hrs</span>
                                                 </div>
 
-                                                <div class="d-flex align-items-start flex-column mt-20 mr-15">
-                                                    <span class="stat-title">{{ trans('webinars.next_session_start_date') }}:</span>
-                                                    <span class="stat-value">{{ dateTimeFormat($nextSession->date,'j M Y') }}</span>
+                                                <div class=" js-font-resize d-flex align-items-start flex-column mt-20 mr-15">
+                                                    <span class=" js-font-resize stat-title">{{ trans('webinars.next_session_start_date') }}:</span>
+                                                    <span class=" js-font-resize stat-value">{{ dateTimeFormat($nextSession->date,'j M Y') }}</span>
                                                 </div>
                                             @else
-                                                <div class="d-flex align-items-start flex-column mt-20 mr-15">
-                                                    <span class="stat-title">{{ trans('public.duration') }}:</span>
-                                                    <span class="stat-value">{{ convertMinutesToHourAndMinute($item->duration) }} Hrs</span>
+                                                <div class=" js-font-resize d-flex align-items-start flex-column mt-20 mr-15">
+                                                    <span class=" js-font-resize stat-title">{{ trans('public.duration') }}:</span>
+                                                    <span class=" js-font-resize stat-value">{{ convertMinutesToHourAndMinute($item->duration) }} Hrs</span>
                                                 </div>
 
-                                                <div class="d-flex align-items-start flex-column mt-20 mr-15">
-                                                    <span class="stat-title">{{ trans('public.start_date') }}:</span>
-                                                    <span class="stat-value">{{ dateTimeFormat($item->start_date,'j M Y') }}</span>
+                                                <div class=" js-font-resize d-flex align-items-start flex-column mt-20 mr-15">
+                                                    <span class=" js-font-resize stat-title">{{ trans('public.start_date') }}:</span>
+                                                    <span class=" js-font-resize stat-value">{{ dateTimeFormat($item->start_date,'j M Y') }}</span>
                                                 </div>
                                             @endif
                                         @elseif(!empty($sale->bundle))
-                                            <div class="d-flex align-items-start flex-column mt-20 mr-15">
-                                                <span class="stat-title">{{ trans('public.duration') }}:</span>
-                                                <span class="stat-value">{{ convertMinutesToHourAndMinute($item->getBundleDuration()) }} Hrs</span>
+                                            <div class=" js-font-resize d-flex align-items-start flex-column mt-20 mr-15">
+                                                <span class=" js-font-resize stat-title">{{ trans('public.duration') }}:</span>
+                                                <span class=" js-font-resize stat-value">{{ convertMinutesToHourAndMinute($item->getBundleDuration()) }} Hrs</span>
                                             </div>
                                         @endif
 
                                         @if(!empty($sale->gift_id) and $sale->buyer_id == $authUser->id)
-                                            <div class="d-flex align-items-start flex-column mt-20 mr-15">
-                                                <span class="stat-title">{{ trans('update.receipt') }}:</span>
-                                                <span class="stat-value">{{ $sale->gift_recipient }}</span>
+                                            <div class=" js-font-resize d-flex align-items-start flex-column mt-20 mr-15">
+                                                <span class=" js-font-resize stat-title">{{ trans('update.receipt') }}:</span>
+                                                <span class=" js-font-resize stat-value">{{ $sale->gift_recipient }}</span>
                                             </div>
                                         @else
-                                            <div class="d-flex align-items-start flex-column mt-20 mr-15">
-                                                <span class="stat-title">{{ trans('public.instructor') }}:</span>
-                                                <span class="stat-value">{{ $item->teacher->full_name }}</span>
+                                            <div class=" js-font-resize d-flex align-items-start flex-column mt-20 mr-15">
+                                                <span class=" js-font-resize stat-title">{{ trans('public.instructor') }}:</span>
+                                                <span class=" js-font-resize stat-value">{{ $item->teacher->full_name }}</span>
                                             </div>
                                         @endif
 
                                         @if(!empty($sale->gift_id) and $sale->buyer_id != $authUser->id)
-                                            <div class="d-flex align-items-start flex-column mt-20 mr-15">
-                                                <span class="stat-title">{{ trans('update.gift_sender') }}:</span>
-                                                <span class="stat-value">{{ $sale->gift_sender }}</span>
+                                            <div class=" js-font-resize d-flex align-items-start flex-column mt-20 mr-15">
+                                                <span class=" js-font-resize stat-title">{{ trans('update.gift_sender') }}:</span>
+                                                <span class=" js-font-resize stat-value">{{ $sale->gift_sender }}</span>
                                             </div>
                                         @else
-                                            <div class="d-flex align-items-start flex-column mt-20 mr-15">
-                                                <span class="stat-title">{{ trans('panel.purchase_date') }}:</span>
-                                                <span class="stat-value">{{ dateTimeFormat($sale->created_at,'j M Y') }}</span>
+                                            <div class=" js-font-resize d-flex align-items-start flex-column mt-20 mr-15">
+                                                <span class=" js-font-resize stat-title">{{ trans('panel.purchase_date') }}:</span>
+                                                <span class=" js-font-resize stat-value">{{ dateTimeFormat($sale->created_at,'j M Y') }}</span>
                                             </div>
                                         @endif
 
@@ -297,7 +297,7 @@
         @endif
     </section>
 
-    <div class="my-30">
+    <div class=" js-font-resize my-30">
         {{ $sales->appends(request()->input())->links('vendor.pagination.panel') }}
     </div>
 

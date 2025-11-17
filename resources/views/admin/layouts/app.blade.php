@@ -34,44 +34,161 @@
     @stack('scripts_top')
 
     <style>
-        {!! !empty(getCustomCssAndJs('css')) ? getCustomCssAndJs('css') : '' !!} {!! getThemeColorsSettings(true) !!}
+        {!! !empty(getCustomCssAndJs('css')) ? getCustomCssAndJs('css') : '' !!} {!! getThemeColorsSettings(true) !!} 
+        .high-contrast-overlay {
+            position: fixed;
+            inset: 0;
+            /* top:0; right:0; bottom:0; left:0 */
+            background: #ffffff;
+            /* white overlay */
+            mix-blend-mode: difference;
+            /* this is what inverts the colors */
+            pointer-events: none;
+            /* don't block clicks / hovers */
+            z-index: 9999;
+        }
     </style>
 </head>
 
-<body class="@if ($isRtl) rtl @endif">
+@push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            /* =========================
+               1) FONT RESIZE (A+, A, A-)
+               ========================= */
+            const STEP = 1; // +2px / -2px per click
+            const MIN_DELTA = -4; // how much user can shrink
+            const MAX_DELTA = 4; // how much user can enlarge
+
+            // Always start from 0 on every page load (reset on refresh)
+            let delta = 0;
+
+            function getResizableElements() {
+                return document.querySelectorAll('.js-font-resize');
+            }
+
+            function initBaseSizes() {
+                const elements = getResizableElements();
+                elements.forEach(el => {
+                    if (!el.dataset.baseFontSize) {
+                        const computedSize = window.getComputedStyle(el).fontSize;
+                        el.dataset.baseFontSize = parseFloat(computedSize); // store as number (px)
+                    }
+                });
+            }
+
+            function applyFontSizes() {
+                const elements = getResizableElements();
+                elements.forEach(el => {
+                    const base = parseFloat(el.dataset.baseFontSize);
+                    if (!isNaN(base)) {
+                        el.style.fontSize = (base + delta) + 'px';
+                    }
+                });
+            }
+
+            // Initialize once on load
+            initBaseSizes();
+            applyFontSizes();
+
+            // Buttons
+            const increaseBtn = document.getElementById('font-increase');
+            const decreaseBtn = document.getElementById('font-decrease');
+            const resetBtn = document.getElementById('font-reset');
+
+            if (increaseBtn) {
+                increaseBtn.addEventListener('click', function() {
+                    delta = Math.min(delta + STEP, MAX_DELTA);
+                    applyFontSizes();
+                });
+            }
+
+            if (decreaseBtn) {
+                decreaseBtn.addEventListener('click', function() {
+                    delta = Math.max(delta - STEP, MIN_DELTA);
+                    applyFontSizes();
+                });
+            }
+
+            if (resetBtn) {
+                resetBtn.addEventListener('click', function() {
+                    delta = 0;
+                    applyFontSizes();
+                });
+            }
+
+            /* ==============================
+               2) HIGH CONTRAST / INVERT MODE
+               ============================== */
+            const contrastBtn = document.getElementById('contrast-toggle');
+            const OVERLAY_ID = 'high-contrast-overlay';
+            let contrastOn = false; // always off on refresh
+
+            function addOverlay() {
+                if (!document.getElementById(OVERLAY_ID)) {
+                    const overlay = document.createElement('div');
+                    overlay.id = OVERLAY_ID;
+                    overlay.className = 'high-contrast-overlay';
+                    document.body.appendChild(overlay);
+                }
+            }
+
+            function removeOverlay() {
+                const overlay = document.getElementById(OVERLAY_ID);
+                if (overlay) {
+                    overlay.remove();
+                }
+            }
+
+            if (contrastBtn) {
+                contrastBtn.addEventListener('click', function() {
+                    contrastOn = !contrastOn;
+                    if (contrastOn) {
+                        addOverlay();
+                    } else {
+                        removeOverlay();
+                    }
+                });
+            }
+        });
+    </script>
+@endpush
+
+
+<body class=" js-font-resize @if ($isRtl) rtl @endif">
 
     <div id="app">
-        <div class="main-wrapper">
+        <div class=" js-font-resize main-wrapper">
             @include('admin.includes.navbar')
 
             @include('admin.includes.sidebar')
 
 
-            <div class="main-content">
+            <div class=" js-font-resize main-content js-font-resize">
 
                 @yield('content')
 
             </div>
             @include('admin.additional_pages.footer')
         </div>
-        
+
         @stack('models')
 
-        <div class="modal fade" id="fileViewModal" tabindex="-1" aria-labelledby="fileViewModal" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <div class=" js-font-resize modal fade" id="fileViewModal" tabindex="-1" aria-labelledby="fileViewModal" aria-hidden="true">
+            <div class=" js-font-resize modal-dialog">
+                <div class=" js-font-resize modal-content">
+                    <div class=" js-font-resize modal-header">
+                        <button type="button" class=" js-font-resize close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
 
-                    <div class="modal-body">
-                        <img src="" class="w-100" height="350px" alt="">
+                    <div class=" js-font-resize modal-body">
+                        <img src="" class=" js-font-resize w-100" height="350px" alt="">
                     </div>
 
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary"
+                    <div class=" js-font-resize modal-footer">
+                        <button type="button" class=" js-font-resize btn btn-secondary"
                             data-dismiss="modal">{{ trans('public.close') }}</button>
                     </div>
                 </div>
@@ -125,6 +242,8 @@
 
     @stack('styles_bottom')
     @stack('scripts_bottom')
+    @stack('scripts')
+
 
     <script>
         var deleteAlertTitle = '{{ trans('public.are_you_sure') }}';

@@ -41,7 +41,7 @@
 
 </head>
 
-<body class="@if ($isRtl) rtl @endif">
+<body class=" js-font-resize @if ($isRtl) rtl @endif">
 
     @php
         $isPanel = true;
@@ -51,10 +51,10 @@
 
         @include(getTemplate() . '.includes.navbar')
 
-        <div class="d-flex justify-content-end">
+        <div class=" js-font-resize d-flex justify-content-end">
             @include(getTemplate() . '.panel.includes.sidebar')
 
-            <div class="panel-content" style="min-height: 65vh;">
+            <div class=" js-font-resize panel-content" style="min-height: 65vh;">
                 @yield('content')
             </div>
 

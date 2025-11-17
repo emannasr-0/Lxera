@@ -1,8 +1,8 @@
-<ul class="nav nav-pills flex-column">
+<ul class=" js-font-resize nav nav-pills flex-column">
   @foreach($root_folders as $root_folder)
-    <li class="nav-item">
-      <a class="nav-link" href="#" data-type="0" onclick="moveToNewFolder(`{{$root_folder->url}}`)">
-        <i class="fa fa-folder fa-fw"></i> {{ $root_folder->name }}
+    <li class=" js-font-resize nav-item">
+      <a class=" js-font-resize nav-link" href="#" data-type="0" onclick="moveToNewFolder(`{{$root_folder->url}}`)">
+        <i class=" js-font-resize fa fa-folder fa-fw"></i> {{ $root_folder->name }}
         <input type="hidden" id="goToFolder" name="goToFolder" value="{{ $root_folder->url }}">
         <div id="items">
           @foreach($items as $i)
@@ -12,9 +12,9 @@
       </a>
     </li>
     @foreach($root_folder->children as $directory)
-    <li class="nav-item sub-item">
-      <a class="nav-link" href="#" data-type="0" onclick="moveToNewFolder(`{{$directory->url}}`)">
-        <i class="fa fa-folder fa-fw"></i> {{ $directory->name }}
+    <li class=" js-font-resize nav-item sub-item">
+      <a class=" js-font-resize nav-link" href="#" data-type="0" onclick="moveToNewFolder(`{{$directory->url}}`)">
+        <i class=" js-font-resize fa fa-folder fa-fw"></i> {{ $directory->name }}
         <input type="hidden" id="goToFolder" name="goToFolder" value="{{ $directory->url }}">
         <div id="items">
           @foreach($items as $i)

@@ -1,14 +1,14 @@
-<section class="p-15 m-15 border rounded-lg bg-secondaary-acadima">
-    <h3 class="font-20 font-weight-bold text-secondary">{{ $courseForum->title }}</h3>
+<section class=" js-font-resize p-15 m-15 border rounded-lg bg-secondaary-acadima">
+    <h3 class=" js-font-resize font-20 font-weight-bold text-secondary">{{ $courseForum->title }}</h3>
 
-    <span class="d-block font-14 font-weight-500 text-gray mt-5">{{ trans('public.by') }} <span class="font-weight-bold">{{ $courseForum->user->full_name }}</span> {{ trans('public.in') }} {{ dateTimeFormat($courseForum->created_at, 'j M Y | H:i') }}</span>
+    <span class=" js-font-resize d-block font-14 font-weight-500 text-gray mt-5">{{ trans('public.by') }} <span class=" js-font-resize font-weight-bold">{{ $courseForum->user->full_name }}</span> {{ trans('public.in') }} {{ dateTimeFormat($courseForum->created_at, 'j M Y | H:i') }}</span>
 
-    <div class="mt-15 ">
+    <div class=" js-font-resize mt-15 ">
         <nav aria-label="breadcrumb">
-            <ol class="breadcrumb p-0 m-0">
-                <li class="breadcrumb-item font-12 text-gray"><a href="{{ $course->getLearningPageUrl() }}">{{ $course->title }}</a></li>
-                <li class="breadcrumb-item font-12 text-gray"><a href="{{ $course->getForumPageUrl() }}">{{ trans('update.forum') }}</a></li>
-                <li class="breadcrumb-item font-12 text-gray font-weight-bold" aria-current="page">{{ $courseForum->title }}</li>
+            <ol class=" js-font-resize breadcrumb p-0 m-0">
+                <li class=" js-font-resize breadcrumb-item font-12 text-gray"><a href="{{ $course->getLearningPageUrl() }}">{{ $course->title }}</a></li>
+                <li class=" js-font-resize breadcrumb-item font-12 text-gray"><a href="{{ $course->getForumPageUrl() }}">{{ trans('update.forum') }}</a></li>
+                <li class=" js-font-resize breadcrumb-item font-12 text-gray font-weight-bold" aria-current="page">{{ $courseForum->title }}</li>
             </ol>
         </nav>
     </div>
@@ -25,20 +25,20 @@
 @endif
 
 {{-- Post Answer Card  --}}
-<div class="mt-25">
-    <h3 class="font-20 font-weight-bold text-secondary px-15">{{ trans('update.write_a_reply') }}</h3>
+<div class=" js-font-resize mt-25">
+    <h3 class=" js-font-resize font-20 font-weight-bold text-secondary px-15">{{ trans('update.write_a_reply') }}</h3>
 
     <form action="{{ $course->getForumPageUrl() }}/{{ $courseForum->id }}/answers" method="post">
-        <div class="course-forum-answer-card py-15 m-15 rounded-lg">
-            <div class="d-flex flex-wrap">
-                <div class="col-12 col-md-3">
-                    <div class="position-relative bg-info-light d-flex flex-column align-items-center justify-content-center rounded-lg w-100 h-100 p-20">
-                        <div class="user-avatar rounded-circle">
-                            <img src="{{ $user->getAvatar(72) }}" class="img-cover rounded-circle" alt="{{ $user->full_name }}">
+        <div class=" js-font-resize course-forum-answer-card py-15 m-15 rounded-lg">
+            <div class=" js-font-resize d-flex flex-wrap">
+                <div class=" js-font-resize col-12 col-md-3">
+                    <div class=" js-font-resize position-relative bg-info-light d-flex flex-column align-items-center justify-content-center rounded-lg w-100 h-100 p-20">
+                        <div class=" js-font-resize user-avatar rounded-circle">
+                            <img src="{{ $user->getAvatar(72) }}" class=" js-font-resize img-cover rounded-circle" alt="{{ $user->full_name }}">
                         </div>
-                        <h4 class="font-14 text-secondary mt-15 font-weight-bold">{{ $user->full_name }}</h4>
+                        <h4 class=" js-font-resize font-14 text-secondary mt-15 font-weight-bold">{{ $user->full_name }}</h4>
 
-                        <span class="px-10 py-5 mt-5 rounded-lg border bg-info-light text-center font-12 text-gray">
+                        <span class=" js-font-resize px-10 py-5 mt-5 rounded-lg border bg-info-light text-center font-12 text-gray">
                         @if($user->isUser())
                                 {{ trans('quiz.student') }}
                             @elseif($user->isTeacher())
@@ -52,16 +52,16 @@
                     </div>
                 </div>
 
-                <div class="col-12 col-md-9 mt-15 mt-md-0">
-                    <div class="form-group mb-0 h-100 w-100">
-                        <textarea name="description" class="form-control h-100"></textarea>
-                        <div class="invalid-feedback"></div>
+                <div class=" js-font-resize col-12 col-md-9 mt-15 mt-md-0">
+                    <div class=" js-font-resize form-group mb-0 h-100 w-100">
+                        <textarea name="description" class=" js-font-resize form-control h-100"></textarea>
+                        <div class=" js-font-resize invalid-feedback"></div>
                     </div>
                 </div>
             </div>
 
-            <div class="mt-10 text-right px-15">
-                <button type="button" class="js-reply-course-question btn btn-primary btn-sm">{{ trans('update.post_reply') }}</button>
+            <div class=" js-font-resize mt-10 text-right px-15">
+                <button type="button" class=" js-font-resize js-reply-course-question btn btn-primary btn-sm">{{ trans('update.post_reply') }}</button>
             </div>
         </div>
     </form>

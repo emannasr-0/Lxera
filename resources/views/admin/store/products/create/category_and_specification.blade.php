@@ -1,13 +1,13 @@
 <section>
-    <h2 class="section-title after-line mt-2 mb-4">{{ trans('public.category') }}</h2>
+    <h2 class=" js-font-resize section-title after-line mt-2 mb-4">{{ trans('public.category') }}</h2>
 
-    <div class="row">
-        <div class="col-12 col-md-6 mt-30">
+    <div class=" js-font-resize row">
+        <div class=" js-font-resize col-12 col-md-6 mt-30">
 
-            <div class="form-group">
-                <label class="input-label">{{ trans('public.category') }}</label>
+            <div class=" js-font-resize form-group">
+                <label class=" js-font-resize input-label">{{ trans('public.category') }}</label>
 
-                <select id="categories" class="custom-select @error('category_id')  is-invalid @enderror" name="category_id" required>
+                <select id="categories" class=" js-font-resize custom-select @error('category_id')  is-invalid @enderror" name="category_id" required>
                     <option {{ (!empty($product) and !empty($product->category_id)) ? '' : 'selected' }} disabled>{{ trans('public.choose_category') }}</option>
                     @foreach($productCategories as $productCategory)
                         @if(!empty($productCategory->subCategories) and $productCategory->subCategories->count() > 0)
@@ -22,24 +22,24 @@
                     @endforeach
                 </select>
                 @error('category_id')
-                <div class="invalid-feedback">
+                <div class=" js-font-resize invalid-feedback">
                     {{ $message }}
                 </div>
                 @enderror
             </div>
         </div>
 
-        <div class="col-12 mt-20">
-            <div class="form-group {{ (!empty($productCategoryFilters) and count($productCategoryFilters)) ? '' : 'd-none' }}" id="categoriesFiltersContainer">
-                <span class="input-label d-block">{{ trans('public.category_filters') }}</span>
-                <div id="categoriesFiltersCard" class="row">
+        <div class=" js-font-resize col-12 mt-20">
+            <div class=" js-font-resize form-group {{ (!empty($productCategoryFilters) and count($productCategoryFilters)) ? '' : 'd-none' }}" id="categoriesFiltersContainer">
+                <span class=" js-font-resize input-label d-block">{{ trans('public.category_filters') }}</span>
+                <div id="categoriesFiltersCard" class=" js-font-resize row">
 
                     @if(!empty($productCategoryFilters) and count($productCategoryFilters))
                         @foreach($productCategoryFilters as $filter)
-                            <div class="col-12 col-md-3 mt-3">
-                                <div class="webinar-category-filters">
-                                    <strong class="category-filter-title d-block">{{ $filter->title }}</strong>
-                                    <div class="py-2"></div>
+                            <div class=" js-font-resize col-12 col-md-3 mt-3">
+                                <div class=" js-font-resize webinar-category-filters">
+                                    <strong class=" js-font-resize category-filter-title d-block">{{ $filter->title }}</strong>
+                                    <div class=" js-font-resize py-2"></div>
 
                                     @php
                                         $productFilterOptions = $product->selectedFilterOptions->pluck('filter_option_id')->toArray();
@@ -50,11 +50,11 @@
                                     @endphp
 
                                     @foreach($filter->options as $option)
-                                        <div class="form-group d-flex align-items-center justify-content-between">
-                                            <label class="cursor-pointer font-14 text-gray" for="filterOptions{{ $option->id }}">{{ $option->title }}</label>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" name="filters[]" value="{{ $option->id }}" {{ ((!empty($productFilterOptions) && in_array($option->id, $productFilterOptions)) ? 'checked' : '') }} class="custom-control-input" id="filterOptions{{ $option->id }}">
-                                                <label class="custom-control-label" for="filterOptions{{ $option->id }}"></label>
+                                        <div class=" js-font-resize form-group d-flex align-items-center justify-content-between">
+                                            <label class=" js-font-resize cursor-pointer font-14 text-gray" for="filterOptions{{ $option->id }}">{{ $option->title }}</label>
+                                            <div class=" js-font-resize custom-control custom-checkbox">
+                                                <input type="checkbox" name="filters[]" value="{{ $option->id }}" {{ ((!empty($productFilterOptions) && in_array($option->id, $productFilterOptions)) ? 'checked' : '') }} class=" js-font-resize custom-control-input" id="filterOptions{{ $option->id }}">
+                                                <label class=" js-font-resize custom-control-label" for="filterOptions{{ $option->id }}"></label>
                                             </div>
                                         </div>
                                     @endforeach
@@ -67,16 +67,16 @@
             </div>
         </div>
 
-        <div class="col-12 mt-20">
-            <div class="d-flex justify-content-between align-items-center">
-                <h2 class="section-title after-line">{{ trans('update.specifications') }}</h2>
+        <div class=" js-font-resize col-12 mt-20">
+            <div class=" js-font-resize d-flex justify-content-between align-items-center">
+                <h2 class=" js-font-resize section-title after-line">{{ trans('update.specifications') }}</h2>
 
-                <div class="px-2 mt-3">
-                    <button type="button" id="productAddSpecification" class="btn btn-primary btn-sm">{{ trans('update.new_specification') }}</button>
+                <div class=" js-font-resize px-2 mt-3">
+                    <button type="button" id="productAddSpecification" class=" js-font-resize btn btn-primary btn-sm">{{ trans('update.new_specification') }}</button>
                 </div>
             </div>
 
-            <div class="accordion-content-wrapper mt-15" id="specificationsAccordion" role="tablist" aria-multiselectable="true">
+            <div class=" js-font-resize accordion-content-wrapper mt-15" id="specificationsAccordion" role="tablist" aria-multiselectable="true">
                 @if(!empty($product->selectedSpecifications) and count($product->selectedSpecifications))
                     <div>
                         @foreach($product->selectedSpecifications as $selectedSpecificationRow)
@@ -92,21 +92,21 @@
                 @endif
             </div>
 
-            <div id="newSpecificationForm" class="d-none">
+            <div id="newSpecificationForm" class=" js-font-resize d-none">
                 @include('admin.store.products.create.accordions.specification')
             </div>
         </div>
 
-        <div class="col-12 mt-4">
-            <div class="d-flex justify-content-between align-items-center">
-                <h2 class="section-title after-line">{{ trans('public.faq') }}</h2>
+        <div class=" js-font-resize col-12 mt-4">
+            <div class=" js-font-resize d-flex justify-content-between align-items-center">
+                <h2 class=" js-font-resize section-title after-line">{{ trans('public.faq') }}</h2>
 
-                <div class="px-2 mt-3">
-                    <button type="button" id="productAddFAQ" class="btn btn-primary btn-sm mt-10">{{ trans('webinars.add_new_faqs') }}</button>
+                <div class=" js-font-resize px-2 mt-3">
+                    <button type="button" id="productAddFAQ" class=" js-font-resize btn btn-primary btn-sm mt-10">{{ trans('webinars.add_new_faqs') }}</button>
                 </div>
             </div>
 
-            <div class="accordion-content-wrapper mt-15" id="faqsAccordion" role="tablist" aria-multiselectable="true">
+            <div class=" js-font-resize accordion-content-wrapper mt-15" id="faqsAccordion" role="tablist" aria-multiselectable="true">
                 @if(!empty($product->faqs) and count($product->faqs))
                     <div>
                         @foreach($product->faqs as $faqRow)
@@ -122,7 +122,7 @@
                 @endif
             </div>
 
-            <div id="newFaqForm" class="d-none">
+            <div id="newFaqForm" class=" js-font-resize d-none">
                 @include('admin.store.products.create.accordions.faq')
             </div>
         </div>

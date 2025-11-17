@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}" class="w-100 h-100">
+<html lang="{{ app()->getLocale() }}" class=" js-font-resize w-100 h-100">
 <head>
     <meta charset="utf-8">
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="/assets/default/css/app.css">
 </head>
 
-<body class="w-100 h-100">
-    <div class="w-100 h-100" id="meet"></div>
+<body class=" js-font-resize w-100 h-100">
+    <div class=" js-font-resize w-100 h-100" id="meet"></div>
 
 
 </body>

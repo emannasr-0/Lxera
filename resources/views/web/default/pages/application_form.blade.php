@@ -148,11 +148,11 @@
     ])
 
 
-    <div class="application container">
-        <div class="col-12 col-lg-10 col-md-11 px-0">
-            <div class="col-lg-12 col-md-12 px-0">
-                <Section class="section1 main-section">
-                    <div class="container_form bg-secondary-acadima">
+    <div class=" js-font-resize application container">
+        <div class=" js-font-resize col-12 col-lg-10 col-md-11 px-0">
+            <div class=" js-font-resize col-lg-12 col-md-12 px-0">
+                <Section class=" js-font-resize section1 main-section">
+                    <div class=" js-font-resize container_form bg-secondary-acadima">
                         <!--Form Title-->
 
                         <p style="padding: 40px 0;font-size:18px;font-weight:600;line-height:1.5em">
@@ -166,10 +166,10 @@
                             <input type="hidden" name="user_id" value="{{ $user->id ?? '' }}">
 
                             {{-- application type --}}
-                            <div class="form-group col-12 col-sm-6">
-                                <label class="form-label">حدد نوع التقديم<span class="text-danger">*</span></label>
+                            <div class=" js-font-resize form-group col-12 col-sm-6">
+                                <label class=" js-font-resize form-label">حدد نوع التقديم<span class=" js-font-resize text-danger">*</span></label>
                                 <select id="typeSelect" name="type" required
-                                    class="form-control @error('type') is-invalid @enderror" onchange="toggleHiddenType()">
+                                    class=" js-font-resize form-control @error('type') is-invalid @enderror" onchange="toggleHiddenType()">
                                     <option selected hidden value="">ختر الدورة التدربيه التي تريد دراستها
                                         في
                                         اكاديما</option>
@@ -181,18 +181,18 @@
                                 </select>
 
                                 @error('type')
-                                    <div class="invalid-feedback d-block">
+                                    <div class=" js-font-resize invalid-feedback d-block">
                                         {{ $message }}
                                     </div>
                                 @enderror
                             </div>
 
                             {{-- course --}}
-                            <div class="form-group col-12 col-sm-6">
-                                <label for="application2" class="form-label" id="all_course">الدورات التدربيه<span
-                                        class="text-danger">*</span></label>
+                            <div class=" js-font-resize form-group col-12 col-sm-6">
+                                <label for="application2" class=" js-font-resize form-label" id="all_course">الدورات التدربيه<span
+                                        class=" js-font-resize text-danger">*</span></label>
                                 <select id="mySelect2" name="webinar_id" onchange="coursesToggle()"
-                                    class="form-control @error('webinar_id') is-invalid @enderror">
+                                    class=" js-font-resize form-control @error('webinar_id') is-invalid @enderror">
                                     <option selected hidden value="">اختر الدورة التدربيه التي تريد دراستها
                                         في
                                         اكاديما</option>
@@ -206,26 +206,26 @@
                                 </select>
 
                                 @error('webinar_id')
-                                    <div class="invalid-feedback d-block">
+                                    <div class=" js-font-resize invalid-feedback d-block">
                                         {{ $message }}
                                     </div>
                                 @enderror
                             </div>
 
                             {{-- course endorsement --}}
-                            <div class="col-12 text-light d-none">
+                            <div class=" js-font-resize col-12 text-light d-none">
                                 <input type="checkbox" id="course_endorsement" name="course_endorsement">
-                                <span  class="text-light">
+                                <span  class=" js-font-resize text-light">
                                 أقر بأن لدي خبرة عملية ومعرفة جيدة بالبرامج التي سأتقدم للاختبار بها، وأفهم أن الدورة تؤهل
                                 للاختبار فقط ولا تعلم البرامج من الصفر.
                                 </span>
                                 @error('course_endorsement')
-                                    <div class="invalid-feedback d-block">
+                                    <div class=" js-font-resize invalid-feedback d-block">
                                         {{ $message }}
                                     </div>
                                 @enderror
 
-                                <div class="mt-3 text-light">
+                                <div class=" js-font-resize mt-3 text-light">
                                     <input type="checkbox" id="course_endorsement2" >
                                     إقرار بعدم تجاوز المتدرب فترة 30 يوم للتقدم للاختبار متضمنة فترة التأهيل وعند التجاوز يتطلب من المتدرب دفع غرامة مالية تحددها الأكاديمية ليتمكن من تمديد الدورة التأهيلية ومدة الاختبار
                                 </div>
@@ -233,15 +233,15 @@
 
 
                             {{-- diplomas --}}
-                            <section class="" id="diplomas_section">
+                            <section class=" js-font-resize " id="diplomas_section">
 
                                 {{-- diploma --}}
-                                {{-- <div class="form-group col-12 col-sm-6">
-                                    <label for="application" class="form-label"
+                                {{-- <div class=" js-font-resize form-group col-12 col-sm-6">
+                                    <label for="application" class=" js-font-resize form-label"
                                         id="degree">{{ trans('application_form.application') }}<span
-                                            class="text-danger">*</span></label>
+                                            class=" js-font-resize text-danger">*</span></label>
                                     <select id="mySelect1" name="category_id"
-                                        class="form-control @error('category_id') is-invalid @enderror"
+                                        class=" js-font-resize form-control @error('category_id') is-invalid @enderror"
                                         onchange="toggleHiddenInput()">
                                         <option selected hidden value="">اختر البرنامج الذي تريد
                                             دراسته في
@@ -254,19 +254,19 @@
                                     </select>
 
                                     @error('category_id')
-                                        <div class="invalid-feedback d-block">
+                                        <div class=" js-font-resize invalid-feedback d-block">
                                             {{ $message }}
                                         </div>
                                     @enderror
                                 </div> --}}
 
                                 {{-- specialization --}}
-                                <div class="form-group col-12 col-sm-6">
+                                <div class=" js-font-resize form-group col-12 col-sm-6">
                                     <label for="bundle_id">
-                                        البرنامج<span class="text-danger">*</span>
+                                        البرنامج<span class=" js-font-resize text-danger">*</span>
                                     </label>
 
-                                    <select id="bundle_id" class="custom-select @error('bundle_id')  is-invalid @enderror"
+                                    <select id="bundle_id" class=" js-font-resize custom-select @error('bundle_id')  is-invalid @enderror"
                                         name="bundle_id" onchange="CertificateSectionToggle()">
                                         <option selected hidden value="">اختر الدورة التدربيه التي تريد دراستها
                                             في
@@ -303,66 +303,66 @@
 
 
                                     @error('bundle_id')
-                                        <div class="invalid-feedback d-block">
+                                        <div class=" js-font-resize invalid-feedback d-block">
                                             {{ $message }}
                                         </div>
                                     @enderror
                                 </div>
 
-                                <div class="d-none font-14 font-weight-bold mb-10 col-12" id="early_enroll"
+                                <div class=" js-font-resize d-none font-14 font-weight-bold mb-10 col-12" id="early_enroll"
                                     style="color: #5F2B80;">
                                     التسجيل متاح لهذا البرنامج للدفعة التاسعة، علمًا أن الدراسة في هذا البرنامج ستبدأ في يناير 2025 بإذن الله تعالى
                                 </div>
 
                                 {{-- certificate --}}
-                                <div class="form-group col-12 text-light d-none" id="certificate_section">
-                                    <label><span class="text-light">{{ trans('application_form.want_certificate') }} ؟ </span><span
-                                            class="text-danger">*</span></label>
-                                    <span class="text-danger font-12 font-weight-bold" id="certificate_message"> </span>
+                                <div class=" js-font-resize form-group col-12 text-light d-none" id="certificate_section">
+                                    <label><span class=" js-font-resize text-light">{{ trans('application_form.want_certificate') }} ؟ </span><span
+                                            class=" js-font-resize text-danger">*</span></label>
+                                    <span class=" js-font-resize text-danger font-12 font-weight-bold" id="certificate_message"> </span>
                                     @error('certificate')
-                                        <div class="invalid-feedback d-block text-light">
-                                            <span class="text-light">{{ $message }}</span>
+                                        <div class=" js-font-resize invalid-feedback d-block text-light">
+                                            <span class=" js-font-resize text-light">{{ $message }}</span>
                                         </div>
                                     @enderror
-                                    <div class="row mr-5 mt-5">
+                                    <div class=" js-font-resize row mr-5 mt-5">
                                         {{-- want certificate --}}
-                                        <div class="col-sm-4 col text-light">
-                                            <label for="want_certificate" class="text-light">
+                                        <div class=" js-font-resize col-sm-4 col text-light">
+                                            <label for="want_certificate" class=" js-font-resize text-light">
                                                 <input type="radio" id="want_certificate" name="certificate"
                                                     value="1" onchange="showCertificateMessage()"
-                                                    class=" @error('certificate') is-invalid @enderror"
+                                                    class=" js-font-resize  @error('certificate') is-invalid @enderror"
                                                     {{ old('certificate', $student->certificate ?? null) === '1' ? 'checked' : '' }}>
-                                                    <span class="text-light"> نعم ( ادفع الرسوم لاحقاً ) </span>
+                                                    <span class=" js-font-resize text-light"> نعم ( ادفع الرسوم لاحقاً ) </span>
                                             </label>
                                         </div>
 
                                         {{-- does not want certificate --}}
-                                        <div class="col">
+                                        <div class=" js-font-resize col">
                                             <label for="doesn't_want_certificate" >
                                                 <input type="radio" id="doesn't_want_certificate" name="certificate"
                                                     onchange="showCertificateMessage()" value="0"
-                                                    class="@error('certificate') is-invalid @enderror"
+                                                    class=" js-font-resize @error('certificate') is-invalid @enderror"
                                                     {{ old('certificate', $student->certificate ?? null) === '0' ? 'checked' : '' }}>
-                                                <span class="text-light">لا</span>
+                                                <span class=" js-font-resize text-light">لا</span>
                                             </label>
                                         </div>
                                     </div>
                                 </div>
 
 
-                                <div class="col-12 d-none text-light">
+                                <div class=" js-font-resize col-12 d-none text-light">
                                     <input type="checkbox" id="requirement_endorsement" name="requirement_endorsement">
                                     أقر بأني اطلعت على <a href="https://anasacademy.uk/admission/" target="_blank">متطلبات
                                         التسجيل</a> في البرنامج التدريبي الذي اخترته وأتعهد بتقديم كافة
                                     المتطلبات قبل التخرج.
 
                                     @error('requirement_endorsement')
-                                        <div class="invalid-feedback d-block">
+                                        <div class=" js-font-resize invalid-feedback d-block">
                                             {{ $message }}
                                         </div>
                                     @enderror
                                 </div>
-                                {{-- <div class="col-12 d-none mt-3">
+                                {{-- <div class=" js-font-resize col-12 d-none mt-3">
                                     <input type="checkbox" id="register_endorsement" name="register_endorsement">
 
                                     أقر بأنني سألتزم بتسديد قيمة البرنامج المسجل به، في حال عدم التسديد فإن أكاديمية أنس
@@ -370,7 +370,7 @@
                                     رسوم تأخير إضافية.
 
                                     @error('register_endorsement')
-                                        <div class="invalid-feedback d-block">
+                                        <div class=" js-font-resize invalid-feedback d-block">
                                             {{ $message }}
                                         </div>
                                     @enderror
@@ -379,72 +379,72 @@
 
                             </section>
 
-                            <h1 class=" mt-50 mb-25">بيانات المتدرب الأساسية</h1>
+                            <h1 class=" js-font-resize  mt-50 mb-25">بيانات المتدرب الأساسية</h1>
 
 
                             {{-- personal details --}}
                             <section>
-                                <h2 class="form-main-title text-cyan">البيانات الشخصية</h2>
+                                <h2 class=" js-font-resize form-main-title text-cyan">البيانات الشخصية</h2>
                                 <section
-                                    class="main-container border border-2 border-secondary-subtle rounded p-3 mt-2 mb-25 row mx-0">
+                                    class=" js-font-resize main-container border border-2 border-secondary-subtle rounded p-3 mt-2 mb-25 row mx-0">
                                     {{-- arabic name --}}
-                                    <div class="form-group col-12 col-sm-6">
+                                    <div class=" js-font-resize form-group col-12 col-sm-6">
                                         <label for="name">{{ trans('application_form.name') }}<span
-                                                class="text-danger">*</span></label>
+                                                class=" js-font-resize text-danger">*</span></label>
                                         <input type="text" id="name" name="ar_name" {{-- value="{{ $student ? $student->ar_name : '' }}" --}}
                                             value="{{ old('ar_name', $student ? $student->ar_name : $user->full_name ?? '') }}"
                                             placeholder="ادخل الإسم باللغه العربية فقط" required
-                                            class="form-control @error('ar_name') is-invalid @enderror">
+                                            class=" js-font-resize form-control @error('ar_name') is-invalid @enderror">
 
                                         @error('ar_name')
-                                            <div class="invalid-feedback d-block">
+                                            <div class=" js-font-resize invalid-feedback d-block">
                                                 {{ $message }}
                                             </div>
                                         @enderror
                                     </div>
 
                                     {{-- english name --}}
-                                    <div class="form-group col-12 col-sm-6">
+                                    <div class=" js-font-resize form-group col-12 col-sm-6">
                                         <label for="name_en">{{ trans('application_form.name_en') }}<span
-                                                class="text-danger">*</span></label>
+                                                class=" js-font-resize text-danger">*</span></label>
                                         <input type="text" id="name_en" name="en_name" {{-- value="{{ $student ? $student->en_name : '' }}" --}}
                                             value="{{ old('en_name', $student ? $student->en_name : $user->en_name) }}"
                                             placeholder="ادخل الإسم باللغه الإنجليزيه فقط" required
-                                            class="form-control @error('en_name') is-invalid @enderror">
+                                            class=" js-font-resize form-control @error('en_name') is-invalid @enderror">
 
                                         @error('en_name')
-                                            <div class="invalid-feedback d-block">
+                                            <div class=" js-font-resize invalid-feedback d-block">
                                                 {{ $message }}
                                             </div>
                                         @enderror
                                     </div>
 
                                     {{-- identifier number --}}
-                                    {{-- <div class="form-group col-12 col-sm-6">
+                                    {{-- <div class=" js-font-resize form-group col-12 col-sm-6">
                                         <label for="identifier_num">رقم الهوية الوطنية أو جواز السفر <span
-                                                class="text-danger">*</span></label>
+                                                class=" js-font-resize text-danger">*</span></label>
                                         <input type="text" id="identifier_num" name="identifier_num"
 
                                             value="{{ old('identifier_num', $student ? $student->identifier_num : '') }}"
                                             placeholder="الرجاء إدخال الرقم كامًلا والمكون من 10 أرقام للهوية أو 6 أرقام للجواز"
-                                            required class="form-control  @error('identifier_num') is-invalid @enderror">
+                                            required class=" js-font-resize form-control  @error('identifier_num') is-invalid @enderror">
 
                                         @error('identifier_num')
-                                            <div class="invalid-feedback d-block">
+                                            <div class=" js-font-resize invalid-feedback d-block">
                                                 {{ $message }}
                                             </div>
                                         @enderror
                                     </div> --}}
 
                                     {{-- birthday --}}
-                                    <div class="form-group col-12 col-sm-6">
+                                    <div class=" js-font-resize form-group col-12 col-sm-6">
                                         <label for="birthday">{{ trans('application_form.birthday') }}<span
-                                                class="text-danger">*</span></label>
+                                                class=" js-font-resize text-danger">*</span></label>
                                         <input type="date" id="birthday" name="birthdate" {{-- value="{{ $student ? $student->birthdate : '' }}" --}}
                                             value="{{ old('birthdate', $student ? $student->birthdate : '') }}" required
-                                            class="form-control @error('birthdate') is-invalid @enderror">
+                                            class=" js-font-resize form-control @error('birthdate') is-invalid @enderror">
                                         @error('birthdate')
-                                            <div class="invalid-feedback d-block">
+                                            <div class=" js-font-resize invalid-feedback d-block">
                                                 {{ $message }}
                                             </div>
                                         @enderror
@@ -453,9 +453,9 @@
 
 
                                     {{-- nationality --}}
-                                    <div class="form-group col-12 col-sm-6">
+                                    <div class=" js-font-resize form-group col-12 col-sm-6">
                                         <label for="nationality">{{ trans('application_form.nationality') }}<span
-                                                class="text-danger">*</span></label>
+                                                class=" js-font-resize text-danger">*</span></label>
                                         @php
                                             $nationalities = [
                                                 'سعودي/ة',
@@ -481,9 +481,9 @@
                                             ];
                                         @endphp
                                         <select id="nationality" name="nationality" required
-                                            class="form-control  @error('nationality') is-invalid @enderror"
+                                            class=" js-font-resize form-control  @error('nationality') is-invalid @enderror"
                                             onchange="toggleNationality()">
-                                            <option value="" class="placeholder" disabled>
+                                            <option value="" class=" js-font-resize placeholder" disabled>
                                                 اختر جنسيتك</option>
                                             @foreach ($nationalities as $nationality)
                                                 <option value="{{ $nationality }}"
@@ -495,7 +495,7 @@
                                                 اخرى</option>
                                         </select>
                                         @error('nationality')
-                                            <div class="invalid-feedback d-block">
+                                            <div class=" js-font-resize invalid-feedback d-block">
                                                 {{ $message }}
                                             </div>
                                         @enderror
@@ -503,27 +503,27 @@
 
 
                                     {{-- other nationality --}}
-                                    <div class="form-group col-12 col-sm-6" id="other_nationality_section"
+                                    <div class=" js-font-resize form-group col-12 col-sm-6" id="other_nationality_section"
                                         style="display: none">
-                                        <label for="nationality">ادخل الجنسية <span class="text-danger">*</span></label>
+                                        <label for="nationality">ادخل الجنسية <span class=" js-font-resize text-danger">*</span></label>
                                         <input type="text"
-                                            class="form-control @error('other_nationality') is-invalid @enderror"
+                                            class=" js-font-resize form-control @error('other_nationality') is-invalid @enderror"
                                             id="other_nationality" name="other_nationality" placeholder="اكتب الجنسية"
                                             {{-- value="{{ $student ? $student->other_nationality : '' }}" --}}
                                             value="{{ old('other_nationality', $student ? $student->other_nationality : '') }}"
                                             onkeyup="setNationality()">
 
                                         @error('other_nationality')
-                                            <div class="invalid-feedback d-block">
+                                            <div class=" js-font-resize invalid-feedback d-block">
                                                 {{ $message }}
                                             </div>
                                         @enderror
                                     </div>
 
                                     {{-- country --}}
-                                    <div class="form-group col-12 col-sm-6">
+                                    <div class=" js-font-resize form-group col-12 col-sm-6">
                                         <label for="country">{{ trans('application_form.country') }}<span
-                                                class="text-danger">*</span></label>
+                                                class=" js-font-resize text-danger">*</span></label>
                                         @php
                                             $countries = [
                                                 'السعودية',
@@ -550,9 +550,9 @@
                                             ];
                                         @endphp
                                         <select id="mySelect" name="country" required
-                                            class="form-control @error('country') is-invalid @enderror"
+                                            class=" js-font-resize form-control @error('country') is-invalid @enderror"
                                             onchange="toggleHiddenInputs()">
-                                            <option value="" class="placeholder" disabled="">اختر دولتك</option>
+                                            <option value="" class=" js-font-resize placeholder" disabled="">اختر دولتك</option>
                                             @foreach ($countries as $country)
                                                 <option value="{{ $country }}"
                                                     {{ old('country', $student->country ?? null) == $country ? 'selected' : '' }}>
@@ -565,91 +565,91 @@
                                         </select>
 
                                         @error('country')
-                                            <div class="invalid-feedback d-block">
+                                            <div class=" js-font-resize invalid-feedback d-block">
                                                 {{ $message }}
                                             </div>
                                         @enderror
                                     </div>
 
                                     {{-- other country --}}
-                                    <div class="form-group col-12 col-sm-6" id="anotherCountrySection"
+                                    <div class=" js-font-resize form-group col-12 col-sm-6" id="anotherCountrySection"
                                         style="display: none">
-                                        <label for="city" class="form-label">ادخل البلد<span
-                                                class="text-danger">*</span></label>
+                                        <label for="city" class=" js-font-resize form-label">ادخل البلد<span
+                                                class=" js-font-resize text-danger">*</span></label>
                                         <input type="text" id="city" name="city"
-                                            class="form-control  @error('city') is-invalid @enderror"
+                                            class=" js-font-resize form-control  @error('city') is-invalid @enderror"
                                             placeholder="ادخل دولتك"
                                             value="{{ old('city', $student ? $student->city : '') }}"
                                             onkeyup="setCountry()">
 
                                         @error('city')
-                                            <div class="invalid-feedback d-block">
+                                            <div class=" js-font-resize invalid-feedback d-block">
                                                 {{ $message }}
                                             </div>
                                         @enderror
                                     </div>
 
                                     {{-- region --}}
-                                    <div class="form-group col-12 col-sm-6" id="region" style="display: none">
-                                        <label for="area" class="form-label">المنطقة<span
-                                                class="text-danger">*</span></label>
+                                    <div class=" js-font-resize form-group col-12 col-sm-6" id="region" style="display: none">
+                                        <label for="area" class=" js-font-resize form-label">المنطقة<span
+                                                class=" js-font-resize text-danger">*</span></label>
                                         <input type="text" id="area" name="area"
-                                            class="form-control  @error('area') is-invalid @enderror"
+                                            class=" js-font-resize form-control  @error('area') is-invalid @enderror"
                                             placeholder="اكتب المنطقة"
                                             value="{{ old('area', $student ? $student->area : '') }}">
 
                                         @error('area')
-                                            <div class="invalid-feedback d-block">
+                                            <div class=" js-font-resize invalid-feedback d-block">
                                                 {{ $message }}
                                             </div>
                                         @enderror
                                     </div>
 
                                     {{-- city --}}
-                                    <div class="form-group col-12 col-sm-6">
+                                    <div class=" js-font-resize form-group col-12 col-sm-6">
                                         <div id="cityContainer">
                                             <label for="town"
                                                 id="cityLabel">{{ trans('application_form.city') }}<span
-                                                    class="text-danger">*</span></label>
+                                                    class=" js-font-resize text-danger">*</span></label>
                                             <input type="text" id="town" name="town"
                                                 placeholder="اكتب مدينه السكن الحاليه"
                                                 value="{{ old('town', $student ? $student->town : '') }}" required
-                                                class="form-control @error('town') is-invalid @enderror">
+                                                class=" js-font-resize form-control @error('town') is-invalid @enderror">
                                         </div>
                                         @error('town')
-                                            <div class="invalid-feedback d-block">
+                                            <div class=" js-font-resize invalid-feedback d-block">
                                                 {{ $message }}
                                             </div>
                                         @enderror
                                     </div>
 
                                     {{-- gender --}}
-                                    <div class="form-group col-12 col-sm-6">
+                                    <div class=" js-font-resize form-group col-12 col-sm-6">
                                         <label for="gender">{{ trans('application_form.gender') }}<span
-                                                class="text-danger">*</span></label>
+                                                class=" js-font-resize text-danger">*</span></label>
 
                                         @error('gender')
-                                            <div class="invalid-feedback d-inline">
+                                            <div class=" js-font-resize invalid-feedback d-inline">
                                                 {{ $message }}
                                             </div>
                                         @enderror
 
-                                        <div class="row mr-5 mt-5">
+                                        <div class=" js-font-resize row mr-5 mt-5">
                                             {{-- female --}}
-                                            <div class="col-sm-4 col">
+                                            <div class=" js-font-resize col-sm-4 col">
                                                 <label for="female">
                                                     <input type="radio" id="female" name="gender" value="female"
-                                                        class=" @error('gender') is-invalid @enderror" required
+                                                        class=" js-font-resize  @error('gender') is-invalid @enderror" required
                                                         {{ old('gender', $student->gender ?? null) == 'female' ? 'checked' : '' }}>
                                                     انثي
                                                 </label>
                                             </div>
 
                                             {{-- male --}}
-                                            <div class="col">
+                                            <div class=" js-font-resize col">
                                                 <label for="male">
                                                     <input type="radio" id="male" name="gender" value="male"
-                                                        class=" @error('gender') is-invalid @enderror" required
+                                                        class=" js-font-resize  @error('gender') is-invalid @enderror" required
                                                         {{ old('gender', $student->gender ?? null) == 'male' ? 'checked' : '' }}>
                                                     ذكر
                                                 </label>
@@ -661,12 +661,12 @@
 
 
                             {{-- about us --}}
-                            <div class="form-group col-12">
-                                <label class="text-light">{{ trans('application_form.heard_about_us') }}<span
-                                        class="text-danger">*</span></label>
+                            <div class=" js-font-resize form-group col-12">
+                                <label class=" js-font-resize text-light">{{ trans('application_form.heard_about_us') }}<span
+                                        class=" js-font-resize text-danger">*</span></label>
 
                                 @error('about_us')
-                                    <div class="invalid-feedback d-inline text-light">
+                                    <div class=" js-font-resize invalid-feedback d-inline text-light">
                                         {{ $message }}
                                     </div>
                                 @enderror
@@ -674,52 +674,52 @@
 
                                 <br>
 
-                                <label for="snapchat" class="text-light">
+                                <label for="snapchat" class=" js-font-resize text-light">
                                     <input type="radio" id="snapchat" name="about_us" required value="snapchat"
-                                        class=" @error('about_us') is-invalid @enderror"
+                                        class=" js-font-resize  @error('about_us') is-invalid @enderror"
                                         {{ old('about_us', $student->about_us ?? null) == 'snapchat' ? 'checked' : '' }}>
                                     {{ trans('application_form.snapchat') }}
                                 </label><br>
-                                <label for="twitter" class="text-light">
+                                <label for="twitter" class=" js-font-resize text-light">
                                     <input type="radio" id="twitter" name="about_us" required value="twitter"
-                                        class=" @error('about_us') is-invalid @enderror"
+                                        class=" js-font-resize  @error('about_us') is-invalid @enderror"
                                         {{ old('about_us', $student->about_us ?? null) == 'twitter' ? 'checked' : '' }}>
                                     {{ trans('application_form.twitter') }}
                                 </label><br>
-                                <label for="friend" class="text-light">
+                                <label for="friend" class=" js-font-resize text-light">
                                     <input type="radio" id="friend" name="about_us" required value="friend"
-                                        class=" @error('about_us') is-invalid @enderror"
+                                        class=" js-font-resize  @error('about_us') is-invalid @enderror"
                                         {{ old('about_us', $student->about_us ?? null) == 'friend' ? 'checked' : '' }}>
                                     {{ trans('application_form.friend') }}
                                 </label><br>
                                 <label for="instagram">
                                     <input type="radio" id="instagram" name="about_us" required value="instagram"
-                                        class=" @error('about_us') is-invalid @enderror"
+                                        class=" js-font-resize  @error('about_us') is-invalid @enderror"
                                         {{ old('about_us', $student->about_us ?? null) == 'instagram' ? 'checked' : '' }}>
                                     {{ trans('application_form.instagram') }}
                                 </label><br>
                                 <label for="facebook">
                                     <input type="radio" id="facebook" name="about_us" required value="facebook"
-                                        class=" @error('about_us') is-invalid @enderror"
+                                        class=" js-font-resize  @error('about_us') is-invalid @enderror"
                                         {{ old('about_us', $student->about_us ?? null) == 'facebook' ? 'checked' : '' }}>
                                     {{ trans('application_form.facebook') }}
                                 </label><br>
                                 <label for="other">
                                     <input type="radio" id="other" name="about_us" required value="other"
-                                        class=" @error('about_us') is-invalid @enderror"
+                                        class=" js-font-resize  @error('about_us') is-invalid @enderror"
                                         {{ old('about_us', $student->about_us ?? null) == 'other' ? 'checked' : '' }}>
                                     {{ trans('application_form.other') }}
                                 </label><br>
                                 <label id="otherLabel"style="display:none">أدخل المصدر <span
-                                        class="text-danger">*</span></label>
+                                        class=" js-font-resize text-danger">*</span></label>
                                 <input type="text" id="otherInput" placeholder="" name="other_about_us"
-                                    class="form-control @error('about_us') is-invalid @enderror"
+                                    class=" js-font-resize form-control @error('about_us') is-invalid @enderror"
                                     style="display:none"><br>
 
 
                                 <label>
                                     <input type="checkbox" id="terms" name="terms" required
-                                        class="@error('terms') is-invalid @enderror">
+                                        class=" js-font-resize @error('terms') is-invalid @enderror">
 
                                     اقر أنا المسجل بياناتي اعلاه بموافقتي على لائحة الحقوق والوجبات واحكام وشروط
                                     القبول
@@ -735,7 +735,7 @@
                                 </label>
 
                                 @error('terms')
-                                    <div class="invalid-feedback d-block">
+                                    <div class=" js-font-resize invalid-feedback d-block">
                                         {{ $message }}
                                     </div>
                                 @enderror
@@ -743,7 +743,7 @@
 
                             {{-- display errors --}}
                             {{-- @if ($errors->any())
-                                <div class="alert alert-danger">
+                                <div class=" js-font-resize alert alert-danger">
                                     <ul>
                                         @foreach ($errors->all() as $error)
                                             <li>{{ $error }}</li>
@@ -753,9 +753,9 @@
                             @endif --}}
 
                             <input type="hidden" id="direct_register" name="direct_register" value="">
-                            <button type="button" id="form_button" class="btn btn-primary">تسجيل </button>
+                            <button type="button" id="form_button" class=" js-font-resize btn btn-primary">تسجيل </button>
 
-                            <button type="submit" class="btn btn-acadima-primary mr-3 " id="formSubmit">
+                            <button type="submit" class=" js-font-resize btn btn-acadima-primary mr-3 " id="formSubmit">
                                 تسجيل
                             </button>
                         </form>
@@ -863,16 +863,16 @@
                     }).join('');
 
                     hiddenInput.outerHTML =
-                        '<select id="bundle_id" name="bundle_id"  class="form-control" onchange="CertificateSectionToggle()" >' +
-                        '<option value="" class="placeholder" selected hidden>اختر التخصص الذي تود دراسته في اكاديما</option>' +
+                        '<select id="bundle_id" name="bundle_id"  class=" js-font-resize form-control" onchange="CertificateSectionToggle()" >' +
+                        '<option value="" class=" js-font-resize placeholder" selected hidden>اختر التخصص الذي تود دراسته في اكاديما</option>' +
                         options +
                         '</select>';
                     hiddenLabel.style.display = "block";
                     hiddenLabel.closest('div').classList.remove('d-none');
                 } else {
                     hiddenInput.outerHTML =
-                        '<select id="bundle_id" name="bundle_id"  class="form-control" onchange="CertificateSectionToggle()" >' +
-                        '<option value="" class="placeholder" selected hidden >اختر التخصص الذي تود دراسته في اكاديما</option> </select>';
+                        '<select id="bundle_id" name="bundle_id"  class=" js-font-resize form-control" onchange="CertificateSectionToggle()" >' +
+                        '<option value="" class=" js-font-resize placeholder" selected hidden >اختر التخصص الذي تود دراسته في اكاديما</option> </select>';
                     hiddenLabel.style.display = "none";
                     hiddenLabel.closest('div').classList.add('d-none');
                 }
@@ -932,8 +932,8 @@
 
             } else {
                 hiddenInput.outerHTML =
-                    '<select id="bundle_id" name="bundle_id"  class="form-control" onchange="CertificateSectionToggle()" >' +
-                    '<option value="" class="placeholder" selected hidden >اختر التخصص الذي تود دراسته في اكاديما</option> </select>';
+                    '<select id="bundle_id" name="bundle_id"  class=" js-font-resize form-control" onchange="CertificateSectionToggle()" >' +
+                    '<option value="" class=" js-font-resize placeholder" selected hidden >اختر التخصص الذي تود دراسته في اكاديما</option> </select>';
                 hiddenLabel.style.display = "none";
                 hiddenLabel.closest('div').classList.add('d-none');
 
@@ -1140,7 +1140,7 @@
             }
             if (select && cityLabel && town) {
                 if (select.value === "السعودية") {
-                    town.outerHTML = '<select id="town" name="town"  class="form-control" required>' +
+                    town.outerHTML = '<select id="town" name="town"  class=" js-font-resize form-control" required>' +
                         '<option value="الرياض" selected="selected">الرياض</option>' +
                         '<option value="جده">جده </option>' +
                         '<option value="مكة المكرمة">مكة المكرمة</option>' +
@@ -1172,7 +1172,7 @@
                 } else {
 
                     town.outerHTML =
-                        `<input type="text" id="town" name="town" placeholder="اكتب مدينه السكن الحاليه" class="form-control" value="{{ old('town', $student ? $student->town : '') }}" >`;
+                        `<input type="text" id="town" name="town" placeholder="اكتب مدينه السكن الحاليه" class=" js-font-resize form-control" value="{{ old('town', $student ? $student->town : '') }}" >`;
                 }
             }
         }

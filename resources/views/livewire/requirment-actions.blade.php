@@ -1,17 +1,17 @@
 <div>
-    <div id="loading-message" class="text-warning font-bold mr-4 " style="display: none;font-size:20px;">
-        <div class="spinner-grow text-warning" role="status">
-            <span class="sr-only">Loading...</span>
+    <div id="loading-message" class=" js-font-resize text-warning font-bold mr-4 " style="display: none;font-size:20px;">
+        <div class=" js-font-resize spinner-grow text-warning" role="status">
+            <span class=" js-font-resize sr-only">Loading...</span>
         </div>
         {{ trans('admin/main.loading_data') }}
     </div>
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-striped font-14 ">
+    <div class=" js-font-resize card-body">
+        <div class=" js-font-resize table-responsive">
+            <table class=" js-font-resize table table-striped font-14 ">
                 <tr>
                     <th>{{ '#' }}</th>
-                    <th class="text-left">{{ trans('admin/main.student_code') }}</th>
-                    <th class="text-left">{{ trans('admin/main.student_name') }}</th>
+                    <th class=" js-font-resize text-left">{{ trans('admin/main.student_code') }}</th>
+                    <th class=" js-font-resize text-left">{{ trans('admin/main.student_name') }}</th>
                     <th>{{ trans('admin/main.registered_program') }}</th>
                     <th>{{ trans('admin/main.specialization') }}</th>
                     <th>{{ trans('admin/main.id_attachment') }}</th>
@@ -22,28 +22,28 @@
                     <th width="120">{{ trans('admin/main.actions') }}</th>
                 </tr>
                 @foreach ($requirements as $index => $requirement)
-                    <tr class="text-center">
+                    <tr class=" js-font-resize text-center">
                         <td>{{ ++$index }}</td>
-                        <td class="text-left">
+                        <td class=" js-font-resize text-left">
                             {{ $requirement->bundleStudent->student->registeredUser->user_code ?? '' }}
                         </td>
-                        <td class="text-left">
-                            <div class="d-flex align-items-center">
-                                <div class="media-body ml-1">
-                                    <div class="mt-0 mb-1 font-weight-bold">
+                        <td class=" js-font-resize text-left">
+                            <div class=" js-font-resize d-flex align-items-center">
+                                <div class=" js-font-resize media-body ml-1">
+                                    <div class=" js-font-resize mt-0 mb-1 font-weight-bold">
                                         {{ $requirement->bundleStudent->student
                                             ? $requirement->bundleStudent->student->ar_name
                                             : $requirement->bundleStudent->student->registeredUser->full_name }}
                                     </div>
 
                                     @if ($requirement->bundleStudent->student->registeredUser->mobile ?? '')
-                                        <div class="text-primary text-small font-600-bold">
+                                        <div class=" js-font-resize text-primary text-small font-600-bold">
                                             {{ $requirement->bundleStudent->student->registeredUser->mobile }}
                                         </div>
                                     @endif
 
                                     @if ($requirement->bundleStudent->student->registeredUser->email ?? '')
-                                        <div class="text-primary text-small font-600-bold">
+                                        <div class=" js-font-resize text-primary text-small font-600-bold">
                                             {{ $requirement->bundleStudent->student->registeredUser->email }}
                                         </div>
                                     @endif
@@ -60,7 +60,7 @@
                                         <img src="/store/{{ $requirement->identity_attachment }}"
                                             alt="identity_attachment" width="100px" style="max-height:100px">
                                     @else
-                                        {{ trans('admin/main.pdf_file') }} <i class="fas fa-file font-20"></i>
+                                        {{ trans('admin/main.pdf_file') }} <i class=" js-font-resize fas fa-file font-20"></i>
                                     @endif
                                 </a>
                             @else
@@ -74,7 +74,7 @@
                                         <img src="/store/{{ $requirement->admission_attachment }}"
                                             alt="admission_attachment" width="100px" style="max-height:100px">
                                     @else
-                                        {{ trans('admin/main.pdf_file') }} <i class="fas fa-file font-20"></i>
+                                        {{ trans('admin/main.pdf_file') }} <i class=" js-font-resize fas fa-file font-20"></i>
                                     @endif
                                 </a>
                             @else
@@ -83,17 +83,17 @@
                         </td>
                         <td>
                             @if ($requirement->status == 'pending')
-                                <span class="text-success"> {{ trans('admin/main.not_available') }}</span>
+                                <span class=" js-font-resize text-success"> {{ trans('admin/main.not_available') }}</span>
                             @elseif($requirement->status == 'approved')
-                                <span class="text-primary"> {{ trans('admin/main.status_approved') }}</span>
+                                <span class=" js-font-resize text-primary"> {{ trans('admin/main.status_approved') }}</span>
                             @elseif($requirement->status == 'rejected')
-                                <div class="text-danger">
-                                    <span class=""> {{ trans('admin/main.status_rejected') }}</span>
+                                <div class=" js-font-resize text-danger">
+                                    <span class=" js-font-resize "> {{ trans('admin/main.status_rejected') }}</span>
                                     @include('admin.includes.message_button', [
                                         'url' => '#',
                                         'btnClass' => 'd-flex align-items-center mt-1',
                                         'btnText' =>
-                                            '<span class="ml-2">' . __('admin/main.rejection_reason') . '</span>',
+                                            '<span class=" js-font-resize ml-2">' . __('admin/main.rejection_reason') . '</span>',
                                         'hideDefaultClass' => true,
                                         'deleteConfirmMsg' => __('admin/main.rejection_reason_example'),
                                         'message' => $requirement->message,
@@ -104,24 +104,24 @@
                         </td>
                         <td>{{ $requirement->admin ? $requirement->admin->full_name : '' }}
                         </td>
-                        <td class="font-12">
+                        <td class=" js-font-resize font-12">
                             {{ Carbon\Carbon::parse($requirement->created_at)->translatedFormat(handleDateAndTimeFormat('Y M j | H:i')) }}
                         </td>
 
-                        <td width="200" class="">
-                            <div class="d-flex justify-content-center align-items-baseline gap-3">
+                        <td width="200" class=" js-font-resize ">
+                            <div class=" js-font-resize d-flex justify-content-center align-items-baseline gap-3">
                                 @can('admin_requirements_approve')
-                                    <button class="btn btn-primary d-flex align-items-center btn-sm mt-1 ml-3"
+                                    <button class=" js-font-resize btn btn-primary d-flex align-items-center btn-sm mt-1 ml-3"
                                         data-toggle="modal" data-target="#approve_modal"
                                         wire:click="approve({{ $requirement->id }})">
-                                        <i class="fa fa-check"></i><span class="ml-2"> {{ trans('admin/main.accept') }}
+                                        <i class=" js-font-resize fa fa-check"></i><span class=" js-font-resize ml-2"> {{ trans('admin/main.accept') }}
                                     </button>
                                 @endcan
 
                                 @can('admin_requirements_reject')
-                                    <button class="btn btn-danger d-flex align-items-center btn-sm mt-1" data-toggle="modal"
+                                    <button class=" js-font-resize btn btn-danger d-flex align-items-center btn-sm mt-1" data-toggle="modal"
                                         data-target="#reject_modal" wire:click="reject({{ $requirement->id }})">
-                                        <i class="fa fa-times"></i><span class="ml-2">
+                                        <i class=" js-font-resize fa fa-times"></i><span class=" js-font-resize ml-2">
                                             {{ trans('admin/main.reject') }}
                                         </span>
                                     </button>
@@ -131,34 +131,34 @@
                     </tr>
                 @endforeach
             </table>
-            <div class="card-footer text-center">
+            <div class=" js-font-resize card-footer text-center">
                 {{ $requirements->links() }}
             </div>
         </div>
     </div>
 
     <!--Approve modal -->
-    <div wire:ignore.self class="modal fade" id="approve_modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ trans('admin/main.confirm_acceptance') }}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <div wire:ignore.self class=" js-font-resize modal fade" id="approve_modal" tabindex="-1" role="dialog">
+        <div class=" js-font-resize modal-dialog" role="document">
+            <div class=" js-font-resize modal-content">
+                <div class=" js-font-resize modal-header">
+                    <h5 class=" js-font-resize modal-title" id="exampleModalLabel">{{ trans('admin/main.confirm_acceptance') }}</h5>
+                    <button type="button" class=" js-font-resize close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <div wire:loading class="text-warning text-bold m-3 p-3">
+                <div class=" js-font-resize modal-body">
+                    <div wire:loading class=" js-font-resize text-warning text-bold m-3 p-3">
                         {{ trans('admin/main.updating_data') }}
                     </div>
                     <b>{{ $stu_name }}</b>
                 </div>
-                <div class="modal-footer">
+                <div class=" js-font-resize modal-footer">
                     <a href="{{ route('requirment.approve', $requirement_id) }}" type="button"
-                        class="btn btn-primary">
-                        <span class="ml-2"> <i class="fa fa-check"></i> {{ trans('admin/main.accept') }}</span>
+                        class=" js-font-resize btn btn-primary">
+                        <span class=" js-font-resize ml-2"> <i class=" js-font-resize fa fa-check"></i> {{ trans('admin/main.accept') }}</span>
                     </a>
-                    <button type="button" class="btn btn-danger mr-3" data-dismiss="modal">{{ trans('admin/main.close') }}</button>
+                    <button type="button" class=" js-font-resize btn btn-danger mr-3" data-dismiss="modal">{{ trans('admin/main.close') }}</button>
                 </div>
             </div>
         </div>
@@ -169,19 +169,19 @@
 
 
     <!-- Rejection Modal -->
-    <div wire:ignore.self class="modal fade" id="reject_modal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="confirmModalLabel">{{ trans('admin/main.confirm_rejection') }}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <div wire:ignore.self class=" js-font-resize modal fade" id="reject_modal" tabindex="-1">
+        <div class=" js-font-resize modal-dialog">
+            <div class=" js-font-resize modal-content">
+                <div class=" js-font-resize modal-header">
+                    <h5 class=" js-font-resize modal-title" id="confirmModalLabel">{{ trans('admin/main.confirm_rejection') }}</h5>
+                    <button type="button" class=" js-font-resize close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form class="modal-body" method="GET" action="{{ route('requirment.reject', $requirement_id) }}"
+                <form class=" js-font-resize modal-body" method="GET" action="{{ route('requirment.reject', $requirement_id) }}"
                     id="deleteForm" onsubmit="submitForm(event)">
-                    <label for="message" class="form-label">{{ trans('admin/main.state_rejection_reason') }}</label>
-                    <select name="reason" id="reason" class="form-control mb-3" required>
+                    <label for="message" class=" js-font-resize form-label">{{ trans('admin/main.state_rejection_reason') }}</label>
+                    <select name="reason" id="reason" class=" js-font-resize form-control mb-3" required>
 
                         <option value="" selected disabled>{{ trans('admin/main.select_rejection_reason') }}</option>
 
@@ -214,11 +214,11 @@
                         </option>
 
                     </select>
-                    <textarea class="form-control" id="message" name="message" placeholder="{{ trans('admin/main.detailed_rejection_reason') }}"></textarea>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary ml-3"
+                    <textarea class=" js-font-resize form-control" id="message" name="message" placeholder="{{ trans('admin/main.detailed_rejection_reason') }}"></textarea>
+                    <div class=" js-font-resize modal-footer">
+                        <button type="button" class=" js-font-resize btn btn-secondary ml-3"
                             data-dismiss="modal">{{ trans('admin/main.cancel') }}</button>
-                        <button type="submit" class="btn btn-danger"
+                        <button type="submit" class=" js-font-resize btn btn-danger"
                             id="confirmAction">{{ trans('admin/main.send') }}</button>
                     </div>
                 </form>

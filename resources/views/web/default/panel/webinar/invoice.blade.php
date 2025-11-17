@@ -20,28 +20,28 @@
 <body>
 
 <div id="app">
-    <section class="section">
-        <div class="container mt-5">
-            <div class="row">
-                <div class="col-12 col-md-10 offset-md-1 col-lg-10 offset-lg-1">
+    <section class=" js-font-resize section">
+        <div class=" js-font-resize container mt-5">
+            <div class=" js-font-resize row">
+                <div class=" js-font-resize col-12 col-md-10 offset-md-1 col-lg-10 offset-lg-1">
 
-                    <div class="card card-primary">
-                        <div class="row m-0">
-                            <div class="col-12 col-md-12">
-                                <div class="card-body">
+                    <div class=" js-font-resize card card-primary">
+                        <div class=" js-font-resize row m-0">
+                            <div class=" js-font-resize col-12 col-md-12">
+                                <div class=" js-font-resize card-body">
 
-                                    <div class="section-body">
-                                        <div class="invoice">
-                                            <div class="invoice-print">
-                                                <div class="row">
-                                                    <div class="col-lg-12">
-                                                        <div class="invoice-title">
+                                    <div class=" js-font-resize section-body">
+                                        <div class=" js-font-resize invoice">
+                                            <div class=" js-font-resize invoice-print">
+                                                <div class=" js-font-resize row">
+                                                    <div class=" js-font-resize col-lg-12">
+                                                        <div class=" js-font-resize invoice-title">
                                                             <h2>{{ $generalSettings['site_name'] }}</h2>
-                                                            <div class="invoice-number">{{ trans('public.item_id') }}: #{{ $webinar->id }}</div>
+                                                            <div class=" js-font-resize invoice-number">{{ trans('public.item_id') }}: #{{ $webinar->id }}</div>
                                                         </div>
                                                         <hr>
-                                                        <div class="row">
-                                                            <div class="col-md-6">
+                                                        <div class=" js-font-resize row">
+                                                            <div class=" js-font-resize col-md-6">
                                                                 <address>
                                                                     <strong>{{ trans('quiz.student') }}:</strong>
                                                                     <br>
@@ -59,15 +59,15 @@
                                                                     <br>
                                                                 </address>
                                                             </div>
-                                                            <div class="col-md-6 text-md-right">
+                                                            <div class=" js-font-resize col-md-6 text-md-right">
                                                                 <address>
                                                                     <strong>{{ trans('home.platform_address') }}:</strong><br>
                                                                     {!! nl2br(getContactPageSettings('address')) !!}
                                                                 </address>
                                                             </div>
                                                         </div>
-                                                        <div class="row">
-                                                            <div class="col-md-6">
+                                                        <div class=" js-font-resize row">
+                                                            <div class=" js-font-resize col-md-6">
                                                                 <address>
                                                                     <strong>{{ trans('home.teachers') }}:</strong><br>
                                                                     {{ $webinar->teacher->full_name }} <br>
@@ -80,7 +80,7 @@
                                                                 </address>
                                                             </div>
 
-                                                            <div class="col-md-6 text-md-right">
+                                                            <div class=" js-font-resize col-md-6 text-md-right">
                                                                 <address>
                                                                     <strong>{{ trans('panel.purchase_date') }}:</strong><br>
                                                                     {{ dateTimeFormat($sale->created_at,'j M Y | H:i') }}<br><br>
@@ -90,39 +90,39 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="row mt-4">
-                                                    <div class="col-md-12">
-                                                        <div class="section-title">{{ trans('home.order_summary') }}</div>
-                                                        <div class="table-responsive">
-                                                            <table class="table table-striped table-hover table-md">
+                                                <div class=" js-font-resize row mt-4">
+                                                    <div class=" js-font-resize col-md-12">
+                                                        <div class=" js-font-resize section-title">{{ trans('home.order_summary') }}</div>
+                                                        <div class=" js-font-resize table-responsive">
+                                                            <table class=" js-font-resize table table-striped table-hover table-md">
                                                                 <tr>
                                                                     <th data-width="40">#</th>
                                                                     <th>{{ trans('cart.item') }}</th>
-                                                                    <th class="text-center">{{ trans('admin/main.type') }}</th>
-                                                                    <th class="text-center">{{ trans('public.price') }}</th>
-                                                                    <th class="text-center">{{ trans('panel.discount') }}</th>
-                                                                    <th class="text-right">{{ trans('cart.total') }}</th>
+                                                                    <th class=" js-font-resize text-center">{{ trans('admin/main.type') }}</th>
+                                                                    <th class=" js-font-resize text-center">{{ trans('public.price') }}</th>
+                                                                    <th class=" js-font-resize text-center">{{ trans('panel.discount') }}</th>
+                                                                    <th class=" js-font-resize text-right">{{ trans('cart.total') }}</th>
                                                                 </tr>
 
                                                                 <tr>
                                                                     <td>{{ $webinar->id }}</td>
                                                                     <td>{{ $webinar->title }}</td>
-                                                                    <td class="text-center">{{ trans('webinars.'.$webinar->type) }}</td>
-                                                                    <td class="text-center">
+                                                                    <td class=" js-font-resize text-center">{{ trans('webinars.'.$webinar->type) }}</td>
+                                                                    <td class=" js-font-resize text-center">
                                                                         @if(!empty($sale->amount))
                                                                             {{ handlePrice($sale->amount) }}
                                                                         @else
                                                                             {{ trans('public.free') }}
                                                                         @endif
                                                                     </td>
-                                                                    <td class="text-center">
+                                                                    <td class=" js-font-resize text-center">
                                                                         @if(!empty($sale->discount))
                                                                             {{ handlePrice($sale->discount) }}
                                                                         @else
                                                                             -
                                                                         @endif
                                                                     </td>
-                                                                    <td class="text-right">
+                                                                    <td class=" js-font-resize text-right">
                                                                         @if(!empty($sale->total_amount))
                                                                             {{ handlePrice($sale->total_amount) }}
                                                                         @else
@@ -132,16 +132,16 @@
                                                                 </tr>
                                                             </table>
                                                         </div>
-                                                        <div class="row mt-4">
+                                                        <div class=" js-font-resize row mt-4">
 
-                                                            <div class="col-lg-12 text-right">
-                                                                <div class="invoice-detail-item">
-                                                                    <div class="invoice-detail-name">{{ trans('cart.sub_total') }}</div>
-                                                                    <div class="invoice-detail-value">{{ handlePrice($sale->amount) }}</div>
+                                                            <div class=" js-font-resize col-lg-12 text-right">
+                                                                <div class=" js-font-resize invoice-detail-item">
+                                                                    <div class=" js-font-resize invoice-detail-name">{{ trans('cart.sub_total') }}</div>
+                                                                    <div class=" js-font-resize invoice-detail-value">{{ handlePrice($sale->amount) }}</div>
                                                                 </div>
-                                                                <div class="invoice-detail-item">
-                                                                    <div class="invoice-detail-name">{{ trans('cart.tax') }} ({{ getFinancialSettings('tax') }}%)</div>
-                                                                    <div class="invoice-detail-value">
+                                                                <div class=" js-font-resize invoice-detail-item">
+                                                                    <div class=" js-font-resize invoice-detail-name">{{ trans('cart.tax') }} ({{ getFinancialSettings('tax') }}%)</div>
+                                                                    <div class=" js-font-resize invoice-detail-value">
                                                                         @if(!empty($sale->tax))
                                                                             {{ handlePrice($sale->tax) }}
                                                                         @else
@@ -149,9 +149,9 @@
                                                                         @endif
                                                                     </div>
                                                                 </div>
-                                                                <div class="invoice-detail-item">
-                                                                    <div class="invoice-detail-name">{{ trans('public.discount') }}</div>
-                                                                    <div class="invoice-detail-value">
+                                                                <div class=" js-font-resize invoice-detail-item">
+                                                                    <div class=" js-font-resize invoice-detail-name">{{ trans('public.discount') }}</div>
+                                                                    <div class=" js-font-resize invoice-detail-value">
                                                                         @if(!empty($sale->discount))
                                                                             {{ handlePrice($sale->discount) }}
                                                                         @else
@@ -159,10 +159,10 @@
                                                                         @endif
                                                                     </div>
                                                                 </div>
-                                                                <hr class="mt-2 mb-2">
-                                                                <div class="invoice-detail-item">
-                                                                    <div class="invoice-detail-name">{{ trans('cart.total') }}</div>
-                                                                    <div class="invoice-detail-value invoice-detail-value-lg">
+                                                                <hr class=" js-font-resize mt-2 mb-2">
+                                                                <div class=" js-font-resize invoice-detail-item">
+                                                                    <div class=" js-font-resize invoice-detail-name">{{ trans('cart.total') }}</div>
+                                                                    <div class=" js-font-resize invoice-detail-value invoice-detail-value-lg">
                                                                         @if(!empty($sale->total_amount))
                                                                             {{ handlePrice($sale->total_amount) }}
                                                                         @else
@@ -176,9 +176,9 @@
                                                 </div>
                                             </div>
                                             <hr>
-                                            <div class="text-md-right">
+                                            <div class=" js-font-resize text-md-right">
 
-                                                <button type="button" onclick="window.print()" class="btn btn-warning btn-icon icon-left"><i class="fas fa-print"></i> Print</button>
+                                                <button type="button" onclick="window.print()" class=" js-font-resize btn btn-warning btn-icon icon-left"><i class=" js-font-resize fas fa-print"></i> Print</button>
                                             </div>
                                         </div>
                                     </div>

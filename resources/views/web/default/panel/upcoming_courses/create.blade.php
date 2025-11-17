@@ -5,9 +5,9 @@
 @endpush
 
 @section('content')
-    <div class="">
+    <div class=" js-font-resize ">
 
-        <form method="post" action="/panel/upcoming_courses/{{ !empty($upcomingCourse) ? $upcomingCourse->id .'/update' : 'store' }}" id="upcomingCourseForm" class="webinar-form">
+        <form method="post" action="/panel/upcoming_courses/{{ !empty($upcomingCourse) ? $upcomingCourse->id .'/update' : 'store' }}" id="upcomingCourseForm" class=" js-font-resize webinar-form">
             @include('web.default.panel.upcoming_courses.create_includes.progress')
 
             {{ csrf_field() }}
@@ -26,25 +26,25 @@
         </form>
 
 
-        <div class="create-webinar-footer d-flex flex-column flex-md-row align-items-center justify-content-between mt-20 pt-15 border-top">
-            <div class="d-flex align-items-center">
+        <div class=" js-font-resize create-webinar-footer d-flex flex-column flex-md-row align-items-center justify-content-between mt-20 pt-15 border-top">
+            <div class=" js-font-resize d-flex align-items-center">
 
                 @if(!empty($upcomingCourse))
-                    <a href="/panel/upcoming_courses/{{ $upcomingCourse->id }}/step/{{ ($currentStep - 1) }}" class="btn btn-sm btn-primary {{ $currentStep < 2 ? 'disabled' : '' }}">{{ trans('webinars.previous') }}</a>
+                    <a href="/panel/upcoming_courses/{{ $upcomingCourse->id }}/step/{{ ($currentStep - 1) }}" class=" js-font-resize btn btn-sm btn-primary {{ $currentStep < 2 ? 'disabled' : '' }}">{{ trans('webinars.previous') }}</a>
                 @else
-                    <a href="" class="btn btn-sm btn-primary disabled">{{ trans('webinars.previous') }}</a>
+                    <a href="" class=" js-font-resize btn btn-sm btn-primary disabled">{{ trans('webinars.previous') }}</a>
                 @endif
 
-                <button type="button" id="getNextStep" class="btn btn-sm btn-primary ml-15" @if($currentStep >= 8) disabled @endif>{{ trans('webinars.next') }}</button>
+                <button type="button" id="getNextStep" class=" js-font-resize btn btn-sm btn-primary ml-15" @if($currentStep >= 8) disabled @endif>{{ trans('webinars.next') }}</button>
             </div>
 
-            <div class="mt-20 mt-md-0">
-                <button type="button" id="sendForReview" class="btn btn-sm btn-primary">{{ trans('public.send_for_review') }}</button>
+            <div class=" js-font-resize mt-20 mt-md-0">
+                <button type="button" id="sendForReview" class=" js-font-resize btn btn-sm btn-primary">{{ trans('public.send_for_review') }}</button>
 
-                <button type="button" id="saveAsDraft" class=" btn btn-sm btn-primary">{{ trans('public.save_as_draft') }}</button>
+                <button type="button" id="saveAsDraft" class=" js-font-resize  btn btn-sm btn-primary">{{ trans('public.save_as_draft') }}</button>
 
                 @if(!empty($upcomingCourse) and $upcomingCourse->creator_id == $authUser->id)
-                    <a href="/panel/upcoming_courses/{{ $upcomingCourse->id }}/delete?redirect_to=/panel/upcoming_courses" class="delete-action webinar-actions btn btn-sm btn-danger mt-20 mt-md-0">{{ trans('public.delete') }}</a>
+                    <a href="/panel/upcoming_courses/{{ $upcomingCourse->id }}/delete?redirect_to=/panel/upcoming_courses" class=" js-font-resize delete-action webinar-actions btn btn-sm btn-danger mt-20 mt-md-0">{{ trans('public.delete') }}</a>
                 @endif
             </div>
         </div>

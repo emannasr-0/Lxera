@@ -7,12 +7,12 @@
 
 
 @section('content')
-    <section class="course-cover-container {{ empty($activeSpecialOffer) ? 'not-active-special-offer' : '' }}">
-        <img src="{{ asset('store/Acadima/hero-placeholder.png') }}" class="img-cover course-cover-img"
+    <section class=" js-font-resize course-cover-container {{ empty($activeSpecialOffer) ? 'not-active-special-offer' : '' }}">
+        <img src="{{ asset('store/Acadima/hero-placeholder.png') }}" class=" js-font-resize img-cover course-cover-img"
             alt="{{ $course->title }}" />
 
-        <div class="cover-content pt-40">
-            <div class="container position-relative">
+        <div class=" js-font-resize cover-content pt-40">
+            <div class=" js-font-resize container position-relative">
                 @if (!empty($activeSpecialOffer))
                     @include('web.default.course.special_offer')
                 @endif
@@ -21,31 +21,31 @@
     </section>
 
     <section
-        class="container course-content-section {{ $course->type }} {{ ($hasBought or $course->isWebinar()) ? 'has-progress-bar' : '' }}">
-        <div class="row">
-            <div class="col-12 col-lg-8">
-                <div class="course-content-body user-select-none">
-                    <div class="course-body-on-cover text-dark">
-                        <h1 class="font-30 course-title">
+        class=" js-font-resize container course-content-section {{ $course->type }} {{ ($hasBought or $course->isWebinar()) ? 'has-progress-bar' : '' }}">
+        <div class=" js-font-resize row">
+            <div class=" js-font-resize col-12 col-lg-8">
+                <div class=" js-font-resize course-content-body user-select-none">
+                    <div class=" js-font-resize course-body-on-cover text-dark">
+                        <h1 class=" js-font-resize font-30 course-title">
                             {{ clean($course->title, 't') }}
                         </h1>
 
                         @if (!empty($course->category))
-                            <span class="d-block font-16 mt-10">{{ trans('public.in') }} <a
+                            <span class=" js-font-resize d-block font-16 mt-10">{{ trans('public.in') }} <a
                                     href="{{ $course->category->getUrl() }}" target="_blank"
-                                    class="font-weight-500 text-decoration-underline text-dark">{{ $course->category->title }}</a></span>
+                                    class=" js-font-resize font-weight-500 text-decoration-underline text-dark">{{ $course->category->title }}</a></span>
                         @endif
 
-                        <div class="d-flex align-items-center">
+                        <div class=" js-font-resize d-flex align-items-center">
                             @include('web.default.includes.webinar.rate', ['rate' => $course->getRate()])
-                            <span class="ml-10 mt-15 font-14">({{ $course->reviews->pluck('creator_id')->count() }}
+                            <span class=" js-font-resize ml-10 mt-15 font-14">({{ $course->reviews->pluck('creator_id')->count() }}
                                 {{ trans('public.ratings') }})</span>
                         </div>
 
-                        <div class="mt-15">
-                            <span class="font-14">{{ trans('public.created_by') }}</span>
+                        <div class=" js-font-resize mt-15">
+                            <span class=" js-font-resize font-14">{{ trans('public.created_by') }}</span>
                             <a href="{{ $course->teacher->getProfileUrl() }}" target="_blank"
-                                class="text-decoration-underline text-dark font-14 font-weight-500">{{ $course->teacher->full_name }}</a>
+                                class=" js-font-resize text-decoration-underline text-dark font-14 font-weight-500">{{ $course->teacher->full_name }}</a>
                         </div>
 
                         @php
@@ -53,13 +53,13 @@
                         @endphp
 
                         @if ($hasBought or $percent)
-                            <div class="mt-30 d-flex align-items-center">
-                                <div class="progress course-progress flex-grow-1 shadow-xs rounded-sm">
-                                    <span class="progress-bar rounded-sm bg-acadima-pink"
+                            <div class=" js-font-resize mt-30 d-flex align-items-center">
+                                <div class=" js-font-resize progress course-progress flex-grow-1 shadow-xs rounded-sm">
+                                    <span class=" js-font-resize progress-bar rounded-sm bg-acadima-pink"
                                         style="width: {{ $percent }}%"></span>
                                 </div>
 
-                                <span class="ml-15 font-14 font-weight-500">
+                                <span class=" js-font-resize ml-15 font-14 font-weight-500">
                                     @if ($hasBought and (!$course->isWebinar() or $course->isProgressing()))
                                         {{ trans('public.course_learning_passed', ['percent' => $percent]) }}
                                     @elseif(!is_null($course->capacity))
@@ -72,38 +72,38 @@
                         @endif
                     </div>
 
-                    <div class="mt-35">
-                        <ul class="nav nav-tabs bg-secondary rounded-sm p-15 d-flex align-items-center justify-content-between"
+                    <div class=" js-font-resize mt-35">
+                        <ul class=" js-font-resize nav nav-tabs bg-secondary rounded-sm p-15 d-flex align-items-center justify-content-between"
                             id="tabs-tab" role="tablist">
-                            <li class="nav-item">
-                                <a class="position-relative font-14 text-secondary {{ (empty(request()->get('tab', '')) or request()->get('tab', '') == 'information') ? 'active' : '' }}"
+                            <li class=" js-font-resize nav-item">
+                                <a class=" js-font-resize position-relative font-14 text-secondary {{ (empty(request()->get('tab', '')) or request()->get('tab', '') == 'information') ? 'active' : '' }}"
                                     id="information-tab" data-toggle="tab" href="#information" role="tab"
                                     aria-controls="information" aria-selected="true">{{ trans('product.information') }}</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="position-relative font-14 text-secondary {{ request()->get('tab', '') == 'content' ? 'active' : '' }}"
+                            <li class=" js-font-resize nav-item">
+                                <a class=" js-font-resize position-relative font-14 text-secondary {{ request()->get('tab', '') == 'content' ? 'active' : '' }}"
                                     id="content-tab" data-toggle="tab" href="#content" role="tab"
                                     aria-controls="content" aria-selected="false">{{ trans('product.content') }}
                                     ({{ $webinarContentCount }})</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="position-relative font-14 text-secondary {{ request()->get('tab', '') == 'reviews' ? 'active' : '' }}"
+                            <li class=" js-font-resize nav-item">
+                                <a class=" js-font-resize position-relative font-14 text-secondary {{ request()->get('tab', '') == 'reviews' ? 'active' : '' }}"
                                     id="reviews-tab" data-toggle="tab" href="#reviews" role="tab"
                                     aria-controls="reviews" aria-selected="false">{{ trans('product.reviews') }}
                                     ({{ $course->reviews->count() > 0 ? $course->reviews->pluck('creator_id')->count() : 0 }})</a>
                             </li>
                         </ul>
 
-                        <div class="tab-content" id="nav-tabContent">
-                            <div class="tab-pane fade {{ (empty(request()->get('tab', '')) or request()->get('tab', '') == 'information') ? 'show active' : '' }} "
+                        <div class=" js-font-resize tab-content" id="nav-tabContent">
+                            <div class=" js-font-resize tab-pane fade {{ (empty(request()->get('tab', '')) or request()->get('tab', '') == 'information') ? 'show active' : '' }} "
                                 id="information" role="tabpanel" aria-labelledby="information-tab">
                                 @include(getTemplate() . '.course.tabs.information')
                             </div>
-                            <div class="tab-pane fade {{ request()->get('tab', '') == 'content' ? 'show active' : '' }}"
+                            <div class=" js-font-resize tab-pane fade {{ request()->get('tab', '') == 'content' ? 'show active' : '' }}"
                                 id="content" role="tabpanel" aria-labelledby="content-tab">
                                 @include(getTemplate() . '.course.tabs.content')
                             </div>
-                            <div class="tab-pane fade {{ request()->get('tab', '') == 'reviews' ? 'show active' : '' }}"
+                            <div class=" js-font-resize tab-pane fade {{ request()->get('tab', '') == 'reviews' ? 'show active' : '' }}"
                                 id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
                                 @include(getTemplate() . '.course.tabs.reviews')
                             </div>
@@ -113,11 +113,11 @@
                 </div>
             </div>
 
-            <div class="course-content-sidebar col-12 col-lg-4 mt-25 mt-lg-0">
-                <div class="rounded-lg shadow-sm">
-                    <div class="course-img {{ $course->video_demo ? 'has-video' : '' }}">
+            <div class=" js-font-resize course-content-sidebar col-12 col-lg-4 mt-25 mt-lg-0">
+                <div class=" js-font-resize rounded-lg shadow-sm">
+                    <div class=" js-font-resize course-img {{ $course->video_demo ? 'has-video' : '' }}">
 
-                        <img src="{{ asset('store/Acadima/reviwebg.png') }}" class="img-cover"
+                        <img src="{{ asset('store/Acadima/reviwebg.png') }}" class=" js-font-resize img-cover"
                             alt="{{ $course->title }}" />
 
 
@@ -125,13 +125,13 @@
                             <div id="webinarDemoVideoBtn"
                                 data-video-path="{{ $course->video_demo_source == 'upload' ? url($course->video_demo) : $course->video_demo }}"
                                 data-video-source="{{ $course->video_demo_source }}"
-                                class="course-video-icon cursor-pointer d-flex align-items-center justify-content-center">
+                                class=" js-font-resize course-video-icon cursor-pointer d-flex align-items-center justify-content-center">
                                 <i data-feather="play" width="25" height="25"></i>
                             </div>
                         @endif
                     </div>
 
-                    <div class="px-20 pb-30">
+                    <div class=" js-font-resize px-20 pb-30">
                         <form action="/cart/store" method="post">
                             {{ csrf_field() }}
                             <input type="hidden" name="item_id" value="{{ $course->id }}">
@@ -139,20 +139,20 @@
 
                             @if (!empty($course->tickets))
                                 @foreach ($course->tickets as $ticket)
-                                    <div class="form-check mt-20">
-                                        <input class="form-check-input" @if (!$ticket->isValid()) disabled @endif
+                                    <div class=" js-font-resize form-check mt-20">
+                                        <input class=" js-font-resize form-check-input" @if (!$ticket->isValid()) disabled @endif
                                             type="radio"
                                             data-discount-price="{{ handlePrice($ticket->getPriceWithDiscount($course->price, !empty($activeSpecialOffer) ? $activeSpecialOffer : null)) }}"
                                             value="{{ $ticket->isValid() ? $ticket->id : '' }}" name="ticket_id"
                                             id="courseOff{{ $ticket->id }}">
-                                        <label class="form-check-label d-flex flex-column cursor-pointer"
+                                        <label class=" js-font-resize form-check-label d-flex flex-column cursor-pointer"
                                             for="courseOff{{ $ticket->id }}">
-                                            <span class="font-16 font-weight-500 text-dark-blue">{{ $ticket->title }}
+                                            <span class=" js-font-resize font-16 font-weight-500 text-dark-blue">{{ $ticket->title }}
                                                 @if (!empty($ticket->discount))
                                                     ({{ $ticket->discount }}% {{ trans('public.off') }})
                                                 @endif
                                             </span>
-                                            <span class="font-14 text-gray">{{ $ticket->getSubTitle() }}</span>
+                                            <span class=" js-font-resize font-14 text-gray">{{ $ticket->getSubTitle() }}</span>
                                         </label>
                                     </div>
                                 @endforeach
@@ -164,16 +164,16 @@
                                 $canSale = ($course->canSale() and !$hasBought);
                             @endphp
 
-                            <div class="mt-20 d-flex flex-column">
+                            <div class=" js-font-resize mt-20 d-flex flex-column">
                                 @if (!$canSale and $course->canJoinToWaitlist())
                                     <button type="button" data-slug="{{ $course->slug }}"
-                                        class="btn btn-primary {{ !empty($authUser) ? 'js-join-waitlist-user' : 'js-join-waitlist-guest' }}">{{ trans('update.join_waitlist') }}</button>
+                                        class=" js-font-resize btn btn-primary {{ !empty($authUser) ? 'js-join-waitlist-user' : 'js-join-waitlist-guest' }}">{{ trans('update.join_waitlist') }}</button>
                                 @elseif($hasBought or !empty($course->getInstallmentOrder()))
                                     <a href="{{ $course->getLearningPageUrl() }}"
-                                        class="btn btn-primary">{{ trans('update.go_to_learning_page') }}</a>
+                                        class=" js-font-resize btn btn-primary">{{ trans('update.go_to_learning_page') }}</a>
                                 @elseif($course->price > 0)
                                     <button type="button"
-                                        class="btn btn-primary {{ $canSale ? 'js-course-add-to-cart-btn' : $course->cantSaleStatus($hasBought) . ' disabled ' }}">
+                                        class=" js-font-resize btn btn-primary {{ $canSale ? 'js-course-add-to-cart-btn' : $course->cantSaleStatus($hasBought) . ' disabled ' }}">
                                         @if (!$canSale)
                                             {{ trans('update.disabled_add_to_cart') }}
                                         @else
@@ -183,12 +183,12 @@
 
                                     @if ($canSale and $course->subscribe)
                                         <a href="/subscribes/apply/{{ $course->slug }}"
-                                            class="btn btn-outline-primary btn-subscribe mt-20 @if (!$canSale) disabled @endif">{{ trans('public.subscribe') }}</a>
+                                            class=" js-font-resize btn btn-outline-primary btn-subscribe mt-20 @if (!$canSale) disabled @endif">{{ trans('public.subscribe') }}</a>
                                     @endif
 
                                     @if ($canSale and !empty($course->points))
                                         <a href="{{ !auth()->check() ? '/login' : '#' }}"
-                                            class="{{ auth()->check() ? 'js-buy-with-point' : '' }} btn btn-outline-warning mt-20 {{ !$canSale ? 'disabled' : '' }}"
+                                            class=" js-font-resize {{ auth()->check() ? 'js-buy-with-point' : '' }} btn btn-outline-warning mt-20 {{ !$canSale ? 'disabled' : '' }}"
                                             rel="nofollow">
                                             {!! trans('update.buy_with_n_points', ['points' => $course->points]) !!}
                                         </a>
@@ -196,20 +196,20 @@
 
                                     @if ($canSale and !empty(getFeaturesSettings('direct_classes_payment_button_status')))
                                         <button type="button"
-                                            class="btn btn-outline-danger mt-20 js-course-direct-payment">
+                                            class=" js-font-resize btn btn-outline-danger mt-20 js-course-direct-payment">
                                             {{ trans('update.buy_now') }}
                                         </button>
                                     @endif
 
                                     @if (!empty($installments) and count($installments) and getInstallmentsSettings('display_installment_button'))
                                         <a href="/course/{{ $course->slug }}/installments"
-                                            class="btn btn-outline-primary mt-20">
+                                            class=" js-font-resize btn btn-outline-primary mt-20">
                                             {{ trans('update.pay_with_installments') }}
                                         </a>
                                     @endif
                                 @else
                                     <a href="{{ $canSale ? '/course/' . $course->slug . '/free' : '#' }}"
-                                        class="btn btn-primary {{ !$canSale ? ' disabled ' . $course->cantSaleStatus($hasBought) : '' }}">{{ trans('public.enroll_on_webinar') }}</a>
+                                        class=" js-font-resize btn btn-primary {{ !$canSale ? ' disabled ' . $course->cantSaleStatus($hasBought) : '' }}">{{ trans('public.enroll_on_webinar') }}</a>
                                 @endif
                             </div>
 
@@ -218,79 +218,79 @@
                         @if (
                             !empty(getOthersPersonalizationSettings('show_guarantee_text')) and
                                 getOthersPersonalizationSettings('show_guarantee_text'))
-                            <div class="mt-20 d-flex align-items-center justify-content-center text-gray">
+                            <div class=" js-font-resize mt-20 d-flex align-items-center justify-content-center text-gray">
                                 <i data-feather="thumbs-up" width="20" height="20"></i>
-                                <span class="ml-5 font-14">{{ getOthersPersonalizationSettings('guarantee_text') }}</span>
+                                <span class=" js-font-resize ml-5 font-14">{{ getOthersPersonalizationSettings('guarantee_text') }}</span>
                             </div>
                         @endif
 
-                        <div class="mt-35">
+                        <div class=" js-font-resize mt-35">
                             <strong
-                                class="d-block text-secondary font-weight-bold">{{ trans('webinars.this_webinar_includes', ['classes' => trans('webinars.' . $course->type)]) }}</strong>
+                                class=" js-font-resize d-block text-secondary font-weight-bold">{{ trans('webinars.this_webinar_includes', ['classes' => trans('webinars.' . $course->type)]) }}</strong>
                             @if ($course->isDownloadable())
-                                <div class="mt-20 d-flex align-items-center text-gray">
+                                <div class=" js-font-resize mt-20 d-flex align-items-center text-gray">
                                     <i data-feather="download-cloud" width="20" height="20"></i>
                                     <span
-                                        class="ml-5 font-14 font-weight-500">{{ trans('webinars.downloadable_content') }}</span>
+                                        class=" js-font-resize ml-5 font-14 font-weight-500">{{ trans('webinars.downloadable_content') }}</span>
                                 </div>
                             @endif
 
                             @if ($course->quizzes->where('certificate', 1)->count() > 0)
-                                <div class="mt-20 d-flex align-items-center text-gray">
+                                <div class=" js-font-resize mt-20 d-flex align-items-center text-gray">
                                     <i data-feather="award" width="20" height="20"></i>
                                     <span
-                                        class="ml-5 font-14 font-weight-500">{{ trans('webinars.official_certificate') }}</span>
+                                        class=" js-font-resize ml-5 font-14 font-weight-500">{{ trans('webinars.official_certificate') }}</span>
                                 </div>
                             @endif
 
                             @if ($course->quizzes->where('status', \App\models\Quiz::ACTIVE)->count() > 0)
-                                <div class="mt-20 d-flex align-items-center text-gray">
+                                <div class=" js-font-resize mt-20 d-flex align-items-center text-gray">
                                     <i data-feather="file-text" width="20" height="20"></i>
                                     <span
-                                        class="ml-5 font-14 font-weight-500">{{ trans('webinars.online_quizzes_count', ['quiz_count' => $course->quizzes->where('status', \App\models\Quiz::ACTIVE)->count()]) }}</span>
+                                        class=" js-font-resize ml-5 font-14 font-weight-500">{{ trans('webinars.online_quizzes_count', ['quiz_count' => $course->quizzes->where('status', \App\models\Quiz::ACTIVE)->count()]) }}</span>
                                 </div>
                             @endif
 
                             @if ($course->support)
-                                <div class="mt-20 d-flex align-items-center text-gray">
+                                <div class=" js-font-resize mt-20 d-flex align-items-center text-gray">
                                     <i data-feather="headphones" width="20" height="20"></i>
                                     <span
-                                        class="ml-5 font-14 font-weight-500">{{ trans('webinars.instructor_support') }}</span>
+                                        class=" js-font-resize ml-5 font-14 font-weight-500">{{ trans('webinars.instructor_support') }}</span>
                                 </div>
                             @endif
                         </div>
 
-                        <div class="mt-40 p-10 rounded-sm border row align-items-center favorites-share-box">
+                        <div class=" js-font-resize mt-40 p-10 rounded-sm border row align-items-center favorites-share-box">
                             @if ($course->isWebinar())
-                                <div class="col">
+                                <div class=" js-font-resize col">
                                     <a href="{{ $course->addToCalendarLink() }}" target="_blank"
-                                        class="d-flex flex-column align-items-center text-center text-gray">
+                                        class=" js-font-resize d-flex flex-column align-items-center text-center text-gray">
                                         <i data-feather="calendar" width="20" height="20"></i>
-                                        <span class="font-12">{{ trans('public.reminder') }}</span>
+                                        <span class=" js-font-resize font-12">{{ trans('public.reminder') }}</span>
                                     </a>
                                 </div>
                             @endif
 
-                            <div class="col">
+                            <div class=" js-font-resize col">
                                 <a href="/favorites/{{ $course->slug }}/toggle" id="favoriteToggle"
-                                    class="d-flex flex-column align-items-center text-gray">
-                                    <i data-feather="heart" class="{{ !empty($isFavorite) ? 'favorite-active' : '' }}"
+                                    class=" js-font-resize d-flex flex-column align-items-center text-gray">
+                                    <i data-feather="heart" class=" js-font-resize {{ !empty($isFavorite) ? 'favorite-active' : '' }}"
                                         width="20" height="20"></i>
-                                    <span class="font-12">{{ trans('panel.favorite') }}</span>
+                                    <span class=" js-font-resize font-12">{{ trans('panel.favorite') }}</span>
                                 </a>
                             </div>
 
-                            <div class="col">
-                                <a href="#" class="js-share-course d-flex flex-column align-items-center text-gray">
+                            <div class=" js-font-resize col">
+                                <a href="#" class=" js-font-resize js-share-course d-flex flex-column align-items-center text-gray">
                                     <i data-feather="share-2" width="20" height="20"></i>
-                                    <span class="font-12">{{ trans('public.share') }}</span>
+                                    <span class=" js-font-resize font-12">{{ trans('public.share') }}</span>
                                 </a>
                             </div>
                         </div>
 
-                        <div class="mt-30 text-center">
+                        <div class=" js-font-resize mt-30 text-center">
                             <button type="button" id="webinarReportBtn"
-                                class="font-14 text-gray btn-transparent">{{ trans('webinars.report_this_webinar') }}</button>
+                                class=" js-font-resize font-14 text-gray btn-transparent">{{ trans('webinars.report_this_webinar') }}</button>
                         </div>
                     </div>
                 </div>
@@ -304,124 +304,124 @@
                         !empty(getGiftsGeneralSettings('status')) and
                         !empty(getGiftsGeneralSettings('allow_sending_gift_for_courses')))
                     <a href="/gift/course/{{ $course->slug }}"
-                        class="d-flex align-items-center mt-30 rounded-lg border p-15">
-                        <div class="size-40 d-flex-center rounded-circle bg-gray200">
-                            <i data-feather="gift" class="text-gray" width="20" height="20"></i>
+                        class=" js-font-resize d-flex align-items-center mt-30 rounded-lg border p-15">
+                        <div class=" js-font-resize size-40 d-flex-center rounded-circle bg-gray200">
+                            <i data-feather="gift" class=" js-font-resize text-gray" width="20" height="20"></i>
                         </div>
-                        <div class="ml-5">
-                            <h4 class="font-14 font-weight-bold text-gray">{{ trans('update.gift_this_course') }}</h4>
-                            <p class="font-12 text-gray">{{ trans('update.gift_this_course_hint') }}</p>
+                        <div class=" js-font-resize ml-5">
+                            <h4 class=" js-font-resize font-14 font-weight-bold text-gray">{{ trans('update.gift_this_course') }}</h4>
+                            <p class=" js-font-resize font-12 text-gray">{{ trans('update.gift_this_course_hint') }}</p>
                         </div>
                     </a>
                 @endif
 
                 @if ($course->teacher->offline)
-                    <div class="rounded-lg shadow-sm mt-35 d-flex">
-                        <div class="offline-icon offline-icon-left d-flex align-items-stretch">
-                            <div class="d-flex align-items-center">
+                    <div class=" js-font-resize rounded-lg shadow-sm mt-35 d-flex">
+                        <div class=" js-font-resize offline-icon offline-icon-left d-flex align-items-stretch">
+                            <div class=" js-font-resize d-flex align-items-center">
                                 <img src="/assets/default/img/profile/time-icon.png" alt="offline">
                             </div>
                         </div>
 
-                        <div class="p-15">
-                            <h3 class="font-16 text-dark-blue">{{ trans('public.instructor_is_not_available') }}</h3>
-                            <p class="font-14 font-weight-500 text-gray mt-15">{{ $course->teacher->offline_message }}</p>
+                        <div class=" js-font-resize p-15">
+                            <h3 class=" js-font-resize font-16 text-dark-blue">{{ trans('public.instructor_is_not_available') }}</h3>
+                            <p class=" js-font-resize font-14 font-weight-500 text-gray mt-15">{{ $course->teacher->offline_message }}</p>
                         </div>
                     </div>
                 @endif
 
-                <div class="rounded-lg shadow-sm mt-35 px-25 py-20">
-                    <h3 class="sidebar-title font-16 text-secondary font-weight-bold">
+                <div class=" js-font-resize rounded-lg shadow-sm mt-35 px-25 py-20">
+                    <h3 class=" js-font-resize sidebar-title font-16 text-secondary font-weight-bold">
                         {{ trans('webinars.' . $course->type) . ' ' . trans('webinars.specifications') }}</h3>
 
-                    <div class="mt-30">
+                    <div class=" js-font-resize mt-30">
                         @if ($course->isWebinar())
-                            <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
-                                <div class="d-flex align-items-center">
+                            <div class=" js-font-resize mt-20 d-flex align-items-center justify-content-between text-gray">
+                                <div class=" js-font-resize d-flex align-items-center">
                                     <i data-feather="calendar" width="20" height="20"></i>
-                                    <span class="ml-5 font-14 font-weight-500">{{ trans('public.start_date') }}:</span>
+                                    <span class=" js-font-resize ml-5 font-14 font-weight-500">{{ trans('public.start_date') }}:</span>
                                 </div>
-                                <span class="font-14">{{ dateTimeFormat($course->start_date, 'j M Y | H:i') }}</span>
+                                <span class=" js-font-resize font-14">{{ dateTimeFormat($course->start_date, 'j M Y | H:i') }}</span>
                             </div>
                         @endif
 
-                        <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
-                            <div class="d-flex align-items-center">
+                        <div class=" js-font-resize mt-20 d-flex align-items-center justify-content-between text-gray">
+                            <div class=" js-font-resize d-flex align-items-center">
                                 <i data-feather="user" width="20" height="20"></i>
-                                <span class="ml-5 font-14 font-weight-500">{{ trans('public.capacity') }}:</span>
+                                <span class=" js-font-resize ml-5 font-14 font-weight-500">{{ trans('public.capacity') }}:</span>
                             </div>
                             @if (!is_null($course->capacity))
-                                <span class="font-14">{{ $course->capacity }} {{ trans('quiz.students') }}</span>
+                                <span class=" js-font-resize font-14">{{ $course->capacity }} {{ trans('quiz.students') }}</span>
                             @else
-                                <span class="font-14">{{ trans('update.unlimited') }}</span>
+                                <span class=" js-font-resize font-14">{{ trans('update.unlimited') }}</span>
                             @endif
                         </div>
 
-                        <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
-                            <div class="d-flex align-items-center">
+                        <div class=" js-font-resize mt-20 d-flex align-items-center justify-content-between text-gray">
+                            <div class=" js-font-resize d-flex align-items-center">
                                 <i data-feather="clock" width="20" height="20"></i>
-                                <span class="ml-5 font-14 font-weight-500">{{ trans('public.duration') }}:</span>
+                                <span class=" js-font-resize ml-5 font-14 font-weight-500">{{ trans('public.duration') }}:</span>
                             </div>
                             <span
-                                class="font-14">{{ convertMinutesToHourAndMinute(!empty($course->duration) ? $course->duration : 0) }}
+                                class=" js-font-resize font-14">{{ convertMinutesToHourAndMinute(!empty($course->duration) ? $course->duration : 0) }}
                                 {{ trans('home.hours') }}</span>
                         </div>
 
-                        <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
-                            <div class="d-flex align-items-center">
+                        <div class=" js-font-resize mt-20 d-flex align-items-center justify-content-between text-gray">
+                            <div class=" js-font-resize d-flex align-items-center">
                                 <i data-feather="users" width="20" height="20"></i>
-                                <span class="ml-5 font-14 font-weight-500">{{ trans('quiz.students') }}:</span>
+                                <span class=" js-font-resize ml-5 font-14 font-weight-500">{{ trans('quiz.students') }}:</span>
                             </div>
-                            <span class="font-14">{{ $course->sales_count }}</span>
+                            <span class=" js-font-resize font-14">{{ $course->sales_count }}</span>
                         </div>
 
                         @if ($course->isWebinar())
-                            <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
-                                <div class="d-flex align-items-center">
+                            <div class=" js-font-resize mt-20 d-flex align-items-center justify-content-between text-gray">
+                                <div class=" js-font-resize d-flex align-items-center">
                                     <img src="/assets/default/img/icons/sessions.svg" width="20" alt="">
-                                    <span class="ml-5 font-14 font-weight-500">{{ trans('public.sessions') }}:</span>
+                                    <span class=" js-font-resize ml-5 font-14 font-weight-500">{{ trans('public.sessions') }}:</span>
                                 </div>
-                                <span class="font-14">{{ $course->sessions->count() }}</span>
+                                <span class=" js-font-resize font-14">{{ $course->sessions->count() }}</span>
                             </div>
                         @endif
 
                         @if ($course->isTextCourse())
-                            <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
-                                <div class="d-flex align-items-center">
+                            <div class=" js-font-resize mt-20 d-flex align-items-center justify-content-between text-gray">
+                                <div class=" js-font-resize d-flex align-items-center">
                                     <img src="/assets/default/img/icons/sessions.svg" width="20" alt="">
                                     <span
-                                        class="ml-5 font-14 font-weight-500">{{ trans('webinars.text_lessons') }}:</span>
+                                        class=" js-font-resize ml-5 font-14 font-weight-500">{{ trans('webinars.text_lessons') }}:</span>
                                 </div>
-                                <span class="font-14">{{ $course->textLessons->count() }}</span>
+                                <span class=" js-font-resize font-14">{{ $course->textLessons->count() }}</span>
                             </div>
                         @endif
 
                         @if ($course->isCourse() or $course->isTextCourse())
-                            <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
-                                <div class="d-flex align-items-center">
+                            <div class=" js-font-resize mt-20 d-flex align-items-center justify-content-between text-gray">
+                                <div class=" js-font-resize d-flex align-items-center">
                                     <img src="/assets/default/img/icons/sessions.svg" width="20" alt="">
-                                    <span class="ml-5 font-14 font-weight-500">{{ trans('public.files') }}:</span>
+                                    <span class=" js-font-resize ml-5 font-14 font-weight-500">{{ trans('public.files') }}:</span>
                                 </div>
-                                <span class="font-14">{{ $course->files->count() }}</span>
+                                <span class=" js-font-resize font-14">{{ $course->files->count() }}</span>
                             </div>
 
-                            <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
-                                <div class="d-flex align-items-center">
+                            <div class=" js-font-resize mt-20 d-flex align-items-center justify-content-between text-gray">
+                                <div class=" js-font-resize d-flex align-items-center">
                                     <img src="/assets/default/img/icons/sessions.svg" width="20" alt="">
-                                    <span class="ml-5 font-14 font-weight-500">{{ trans('public.created_at') }}:</span>
+                                    <span class=" js-font-resize ml-5 font-14 font-weight-500">{{ trans('public.created_at') }}:</span>
                                 </div>
-                                <span class="font-14">{{ dateTimeFormat($course->created_at, 'j M Y') }}</span>
+                                <span class=" js-font-resize font-14">{{ dateTimeFormat($course->created_at, 'j M Y') }}</span>
                             </div>
                         @endif
 
                         @if (!empty($course->access_days))
-                            <div class="mt-20 d-flex align-items-center justify-content-between text-gray">
-                                <div class="d-flex align-items-center">
+                            <div class=" js-font-resize mt-20 d-flex align-items-center justify-content-between text-gray">
+                                <div class=" js-font-resize d-flex align-items-center">
                                     <i data-feather="alert-circle" width="20" height="20"></i>
                                     <span
-                                        class="ml-5 font-14 font-weight-500">{{ trans('update.access_period') }}:</span>
+                                        class=" js-font-resize ml-5 font-14 font-weight-500">{{ trans('update.access_period') }}:</span>
                                 </div>
-                                <span class="font-14">{{ $course->access_days }} {{ trans('public.days') }}</span>
+                                <span class=" js-font-resize font-14">{{ $course->access_days }} {{ trans('public.days') }}</span>
                             </div>
                         @endif
                     </div>
@@ -449,24 +449,24 @@
 
                 {{-- tags --}}
                 @if ($course->tags->count() > 0)
-                    <div class="rounded-lg tags-card shadow-sm mt-35 px-25 py-20">
-                        <h3 class="sidebar-title font-16 text-secondary font-weight-bold">{{ trans('public.tags') }}</h3>
+                    <div class=" js-font-resize rounded-lg tags-card shadow-sm mt-35 px-25 py-20">
+                        <h3 class=" js-font-resize sidebar-title font-16 text-secondary font-weight-bold">{{ trans('public.tags') }}</h3>
 
-                        <div class="d-flex flex-wrap mt-10">
+                        <div class=" js-font-resize d-flex flex-wrap mt-10">
                             @foreach ($course->tags as $tag)
                                 <a href=""
-                                    class="tag-item bg-gray200 p-5 font-14 text-gray font-weight-500 rounded">{{ $tag->title }}</a>
+                                    class=" js-font-resize tag-item bg-gray200 p-5 font-14 text-gray font-weight-500 rounded">{{ $tag->title }}</a>
                             @endforeach
                         </div>
                     </div>
                 @endif
                 {{-- ads --}}
                 @if (!empty($advertisingBannersSidebar) and count($advertisingBannersSidebar))
-                    <div class="row">
+                    <div class=" js-font-resize row">
                         @foreach ($advertisingBannersSidebar as $sidebarBanner)
-                            <div class="rounded-lg sidebar-ads mt-35 col-{{ $sidebarBanner->size }}">
+                            <div class=" js-font-resize rounded-lg sidebar-ads mt-35 col-{{ $sidebarBanner->size }}">
                                 <a href="{{ $sidebarBanner->link }}">
-                                    <img src="{{ $sidebarBanner->image }}" class="img-cover rounded-lg"
+                                    <img src="{{ $sidebarBanner->image }}" class=" js-font-resize img-cover rounded-lg"
                                         alt="{{ $sidebarBanner->title }}">
                                 </a>
                             </div>
@@ -478,12 +478,12 @@
 
         {{-- Ads Bannaer --}}
         @if (!empty($advertisingBanners) and count($advertisingBanners))
-            <div class="mt-30 mt-md-50">
-                <div class="row">
+            <div class=" js-font-resize mt-30 mt-md-50">
+                <div class=" js-font-resize row">
                     @foreach ($advertisingBanners as $banner)
-                        <div class="col-{{ $banner->size }}">
+                        <div class=" js-font-resize col-{{ $banner->size }}">
                             <a href="{{ $banner->link }}">
-                                <img src="{{ $banner->image }}" class="img-cover rounded-sm"
+                                <img src="{{ $banner->image }}" class=" js-font-resize img-cover rounded-sm"
                                     alt="{{ $banner->title }}">
                             </a>
                         </div>
@@ -494,36 +494,36 @@
         {{-- ./ Ads Bannaer --}}
     </section>
 
-    <div id="webinarReportModal" class="d-none">
-        <h3 class="section-title after-line font-20 text-dark-blue">{{ trans('product.report_the_course') }}</h3>
+    <div id="webinarReportModal" class=" js-font-resize d-none">
+        <h3 class=" js-font-resize section-title after-line font-20 text-dark-blue">{{ trans('product.report_the_course') }}</h3>
 
-        <form action="/course/{{ $course->id }}/report" method="post" class="mt-25">
+        <form action="/course/{{ $course->id }}/report" method="post" class=" js-font-resize mt-25">
 
-            <div class="form-group">
-                <label class="text-dark-blue font-14">{{ trans('product.reason') }}</label>
-                <select id="reason" name="reason" class="form-control">
+            <div class=" js-font-resize form-group">
+                <label class=" js-font-resize text-dark-blue font-14">{{ trans('product.reason') }}</label>
+                <select id="reason" name="reason" class=" js-font-resize form-control">
                     <option value="" selected disabled>{{ trans('product.select_reason') }}</option>
 
                     @foreach (getReportReasons() as $reason)
                         <option value="{{ $reason }}">{{ $reason }}</option>
                     @endforeach
                 </select>
-                <div class="invalid-feedback"></div>
+                <div class=" js-font-resize invalid-feedback"></div>
             </div>
 
-            <div class="form-group">
-                <label class="text-dark-blue font-14"
+            <div class=" js-font-resize form-group">
+                <label class=" js-font-resize text-dark-blue font-14"
                     for="message_to_reviewer">{{ trans('public.message_to_reviewer') }}</label>
-                <textarea name="message" id="message_to_reviewer" class="form-control" rows="10"></textarea>
-                <div class="invalid-feedback"></div>
+                <textarea name="message" id="message_to_reviewer" class=" js-font-resize form-control" rows="10"></textarea>
+                <div class=" js-font-resize invalid-feedback"></div>
             </div>
-            <p class="text-gray font-16">{{ trans('product.report_modal_hint') }}</p>
+            <p class=" js-font-resize text-gray font-16">{{ trans('product.report_modal_hint') }}</p>
 
-            <div class="mt-30 d-flex align-items-center justify-content-end">
+            <div class=" js-font-resize mt-30 d-flex align-items-center justify-content-end">
                 <button type="button"
-                    class="js-course-report-submit btn btn-sm btn-primary">{{ trans('panel.report') }}</button>
+                    class=" js-font-resize js-course-report-submit btn btn-sm btn-primary">{{ trans('panel.report') }}</button>
                 <button type="button"
-                    class="btn btn-sm btn-danger ml-10 close-swl">{{ trans('public.close') }}</button>
+                    class=" js-font-resize btn btn-sm btn-danger ml-10 close-swl">{{ trans('public.close') }}</button>
             </div>
         </form>
     </div>

@@ -7,39 +7,39 @@
 
 @section('content')
     <section>
-        <h2 class="section-title">{{ trans('update.purchases_statistics') }}</h2>
+        <h2 class=" js-font-resize section-title">{{ trans('update.purchases_statistics') }}</h2>
 
-        <div class="activities-container mt-25 p-20 p-lg-35">
-            <div class="row">
-                <div class="col-6 col-md-3 d-flex align-items-center justify-content-center">
-                    <div class="d-flex flex-column align-items-center text-center">
+        <div class=" js-font-resize activities-container mt-25 p-20 p-lg-35">
+            <div class=" js-font-resize row">
+                <div class=" js-font-resize col-6 col-md-3 d-flex align-items-center justify-content-center">
+                    <div class=" js-font-resize d-flex flex-column align-items-center text-center">
                         <img src="/assets/default/img/activity/physical_product3.png" width="64" height="64" alt="">
-                        <strong class="font-30 font-weight-bold mt-5 text-light">{{ $totalOrders }}</strong>
-                        <span class="font-16 font-weight-500 text-gray">{{ trans('update.total_orders') }}</span>
+                        <strong class=" js-font-resize font-30 font-weight-bold mt-5 text-light">{{ $totalOrders }}</strong>
+                        <span class=" js-font-resize font-16 font-weight-500 text-gray">{{ trans('update.total_orders') }}</span>
                     </div>
                 </div>
 
-                <div class="col-6 col-md-3 d-flex align-items-center justify-content-center">
-                    <div class="d-flex flex-column align-items-center text-center">
+                <div class=" js-font-resize col-6 col-md-3 d-flex align-items-center justify-content-center">
+                    <div class=" js-font-resize d-flex flex-column align-items-center text-center">
                         <img src="/assets/default/img/activity/physical_product2.png" width="64" height="64" alt="">
-                        <strong class="font-30 font-weight-bold mt-5 text-light">{{ $pendingOrders }}</strong>
-                        <span class="font-16 font-weight-500 text-gray">{{ trans('update.pending_orders') }}</span>
+                        <strong class=" js-font-resize font-30 font-weight-bold mt-5 text-light">{{ $pendingOrders }}</strong>
+                        <span class=" js-font-resize font-16 font-weight-500 text-gray">{{ trans('update.pending_orders') }}</span>
                     </div>
                 </div>
 
-                <div class="col-6 col-md-3 d-flex align-items-center justify-content-center mt-5 mt-md-0">
-                    <div class="d-flex flex-column align-items-center text-center">
+                <div class=" js-font-resize col-6 col-md-3 d-flex align-items-center justify-content-center mt-5 mt-md-0">
+                    <div class=" js-font-resize d-flex flex-column align-items-center text-center">
                         <img src="/assets/default/img/activity/physical_product1.png" width="64" height="64" alt="">
-                        <strong class="font-30 font-weight-bold mt-5 text-light">{{ $canceledOrders }}</strong>
-                        <span class="font-16 font-weight-500 text-gray">{{ trans('update.canceled_orders') }}</span>
+                        <strong class=" js-font-resize font-30 font-weight-bold mt-5 text-light">{{ $canceledOrders }}</strong>
+                        <span class=" js-font-resize font-16 font-weight-500 text-gray">{{ trans('update.canceled_orders') }}</span>
                     </div>
                 </div>
 
-                <div class="col-6 col-md-3 d-flex align-items-center justify-content-center mt-5 mt-md-0">
-                    <div class="d-flex flex-column align-items-center text-center">
+                <div class=" js-font-resize col-6 col-md-3 d-flex align-items-center justify-content-center mt-5 mt-md-0">
+                    <div class=" js-font-resize d-flex flex-column align-items-center text-center">
                         <img src="/assets/default/img/activity/33.png" width="64" height="64" alt="">
-                        <strong class="font-30 font-weight-bold mt-5 text-light">{{ !empty($totalPurchase) ? handlePrice($totalPurchase) : 0 }}</strong>
-                        <span class="font-16 font-weight-500 text-gray">{{ trans('update.total_purchase') }}</span>
+                        <strong class=" js-font-resize font-30 font-weight-bold mt-5 text-light">{{ !empty($totalPurchase) ? handlePrice($totalPurchase) : 0 }}</strong>
+                        <span class=" js-font-resize font-16 font-weight-500 text-gray">{{ trans('update.total_purchase') }}</span>
                     </div>
                 </div>
 
@@ -47,38 +47,38 @@
         </div>
     </section>
 
-    <section class="mt-25">
-        <h2 class="section-title">{{ trans('update.purchases_report') }}</h2>
+    <section class=" js-font-resize mt-25">
+        <h2 class=" js-font-resize section-title">{{ trans('update.purchases_report') }}</h2>
 
-        <div class="panel-section-card py-20 px-25 mt-20">
-            <form action="" method="get" class="row">
-                <div class="col-12 col-lg-4">
-                    <div class="row">
-                        <div class="col-12 col-md-6">
-                            <div class="form-group">
-                                <label class="input-label">{{ trans('public.from') }}</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="dateInputGroupPrepend">
-                                            <i data-feather="calendar" width="18" height="18" class="text-white"></i>
+        <div class=" js-font-resize panel-section-card py-20 px-25 mt-20">
+            <form action="" method="get" class=" js-font-resize row">
+                <div class=" js-font-resize col-12 col-lg-4">
+                    <div class=" js-font-resize row">
+                        <div class=" js-font-resize col-12 col-md-6">
+                            <div class=" js-font-resize form-group">
+                                <label class=" js-font-resize input-label">{{ trans('public.from') }}</label>
+                                <div class=" js-font-resize input-group">
+                                    <div class=" js-font-resize input-group-prepend">
+                                        <span class=" js-font-resize input-group-text" id="dateInputGroupPrepend">
+                                            <i data-feather="calendar" width="18" height="18" class=" js-font-resize text-white"></i>
                                         </span>
                                     </div>
-                                    <input type="text" name="from" autocomplete="off" class="form-control @if(!empty(request()->get('from'))) datepicker @else datefilter @endif"
+                                    <input type="text" name="from" autocomplete="off" class=" js-font-resize form-control @if(!empty(request()->get('from'))) datepicker @else datefilter @endif"
                                            aria-describedby="dateInputGroupPrepend"
                                            value="{{  request()->get('from',null)  }}"/>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-md-6">
-                            <div class="form-group">
-                                <label class="input-label">{{ trans('public.to') }}</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="dateInputGroupPrepend">
-                                            <i data-feather="calendar" width="18" height="18" class="text-white"></i>
+                        <div class=" js-font-resize col-12 col-md-6">
+                            <div class=" js-font-resize form-group">
+                                <label class=" js-font-resize input-label">{{ trans('public.to') }}</label>
+                                <div class=" js-font-resize input-group">
+                                    <div class=" js-font-resize input-group-prepend">
+                                        <span class=" js-font-resize input-group-text" id="dateInputGroupPrepend">
+                                            <i data-feather="calendar" width="18" height="18" class=" js-font-resize text-white"></i>
                                         </span>
                                     </div>
-                                    <input type="text" name="to" autocomplete="off" class="form-control @if(!empty(request()->get('to'))) datepicker @else datefilter @endif"
+                                    <input type="text" name="to" autocomplete="off" class=" js-font-resize form-control @if(!empty(request()->get('to'))) datepicker @else datefilter @endif"
                                            aria-describedby="dateInputGroupPrepend"
                                            value="{{  request()->get('to',null)  }}"/>
                                 </div>
@@ -86,13 +86,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-lg-6">
-                    <div class="row">
-                        <div class="col-12 col-lg-5">
-                            <div class="form-group">
-                                <label class="input-label">{{ trans('update.seller') }}</label>
+                <div class=" js-font-resize col-12 col-lg-6">
+                    <div class=" js-font-resize row">
+                        <div class=" js-font-resize col-12 col-lg-5">
+                            <div class=" js-font-resize form-group">
+                                <label class=" js-font-resize input-label">{{ trans('update.seller') }}</label>
 
-                                <select name="seller_id" class="form-control select2" data-allow-clear="false">
+                                <select name="seller_id" class=" js-font-resize form-control select2" data-allow-clear="false">
                                     <option value="all">{{ trans('public.all') }}</option>
 
                                     @foreach($sellers as $seller)
@@ -102,10 +102,10 @@
                             </div>
                         </div>
 
-                        <div class="col-12 col-lg-3">
-                            <div class="form-group">
-                                <label class="input-label">{{ trans('public.type') }}</label>
-                                <select class="form-control" id="type" name="type">
+                        <div class=" js-font-resize col-12 col-lg-3">
+                            <div class=" js-font-resize form-group">
+                                <label class=" js-font-resize input-label">{{ trans('public.type') }}</label>
+                                <select class=" js-font-resize form-control" id="type" name="type">
                                     <option value="all"
                                             @if(request()->get('type',null) == 'all') selected="selected" @endif>{{ trans('public.all') }}</option>
 
@@ -117,10 +117,10 @@
                             </div>
                         </div>
 
-                        <div class="col-12 col-lg-3">
-                            <div class="form-group">
-                                <label class="input-label">{{ trans('public.status') }}</label>
-                                <select class="form-control" id="status" name="status">
+                        <div class=" js-font-resize col-12 col-lg-3">
+                            <div class=" js-font-resize form-group">
+                                <label class=" js-font-resize input-label">{{ trans('public.status') }}</label>
+                                <select class=" js-font-resize form-control" id="status" name="status">
                                     <option value="all"
                                             @if(request()->get('status',null) == 'all') selected="selected" @endif>{{ trans('public.all') }}</option>
 
@@ -135,36 +135,36 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-lg-2 d-flex align-items-center justify-content-end">
-                    <button type="submit" class="btn btn-sm btn-acadima-primary w-100 mt-2">{{ trans('public.show_results') }}</button>
+                <div class=" js-font-resize col-12 col-lg-2 d-flex align-items-center justify-content-end">
+                    <button type="submit" class=" js-font-resize btn btn-sm btn-acadima-primary w-100 mt-2">{{ trans('public.show_results') }}</button>
                 </div>
             </form>
         </div>
     </section>
 
     @if(!empty($orders) and !$orders->isEmpty())
-        <section class="mt-35">
-            <div class="d-flex align-items-start align-items-md-center justify-content-between flex-column flex-md-row">
-                <h2 class="section-title">{{ trans('update.purchases_history') }}</h2>
+        <section class=" js-font-resize mt-35">
+            <div class=" js-font-resize d-flex align-items-start align-items-md-center justify-content-between flex-column flex-md-row">
+                <h2 class=" js-font-resize section-title">{{ trans('update.purchases_history') }}</h2>
             </div>
 
-            <div class="panel-section-card py-20 px-25 mt-20">
-                <div class="row">
-                    <div class="col-12 ">
-                        <div class="table-responsive">
-                            <table class="table text-center custom-table">
+            <div class=" js-font-resize panel-section-card py-20 px-25 mt-20">
+                <div class=" js-font-resize row">
+                    <div class=" js-font-resize col-12 ">
+                        <div class=" js-font-resize table-responsive">
+                            <table class=" js-font-resize table text-center custom-table">
                                 <thead>
                                 <tr>
                                     <th>{{ trans('update.seller') }}</th>
-                                    <th class=" text-left">{{ trans('update.order_id') }}</th>
-                                    <th class="text-center">{{ trans('public.price') }}</th>
-                                    <th class="text-center">{{ trans('public.discount') }}</th>
-                                    <th class="text-center">{{ trans('cart.tax') }}</th>
-                                    <th class="text-center">{{ trans('update.delivery_fee') }}</th>
-                                    <th class="text-center">{{ trans('financial.total_amount') }}</th>
-                                    <th class="text-center">{{ trans('public.type') }}</th>
-                                    <th class="text-center">{{ trans('public.status') }}</th>
-                                    <th class="text-center">{{ trans('public.date') }}</th>
+                                    <th class=" js-font-resize  text-left">{{ trans('update.order_id') }}</th>
+                                    <th class=" js-font-resize text-center">{{ trans('public.price') }}</th>
+                                    <th class=" js-font-resize text-center">{{ trans('public.discount') }}</th>
+                                    <th class=" js-font-resize text-center">{{ trans('cart.tax') }}</th>
+                                    <th class=" js-font-resize text-center">{{ trans('update.delivery_fee') }}</th>
+                                    <th class=" js-font-resize text-center">{{ trans('financial.total_amount') }}</th>
+                                    <th class=" js-font-resize text-center">{{ trans('public.type') }}</th>
+                                    <th class=" js-font-resize text-center">{{ trans('public.status') }}</th>
+                                    <th class=" js-font-resize text-center">{{ trans('public.date') }}</th>
                                     <th></th>
                                 </tr>
                                 </thead>
@@ -172,28 +172,28 @@
 
                                 @foreach($orders as $order)
                                     <tr>
-                                        <td class="text-left">
-                                            <div class="user-inline-avatar d-flex align-items-center">
-                                                <div class="avatar bg-gray200">
-                                                    <img src="{{ !empty($order->seller) ? $order->seller->getAvatar() : '' }}" class="img-cover" alt="">
+                                        <td class=" js-font-resize text-left">
+                                            <div class=" js-font-resize user-inline-avatar d-flex align-items-center">
+                                                <div class=" js-font-resize avatar bg-gray200">
+                                                    <img src="{{ !empty($order->seller) ? $order->seller->getAvatar() : '' }}" class=" js-font-resize img-cover" alt="">
                                                 </div>
-                                                <div class=" ml-5">
-                                                    <span class="d-block">{{ !empty($order->seller) ? $order->seller->full_name : '' }}</span>
-                                                    <span class="mt-5 font-12 text-gray d-block">{{ !empty($order->seller) ? $order->seller->email : '' }}</span>
+                                                <div class=" js-font-resize  ml-5">
+                                                    <span class=" js-font-resize d-block">{{ !empty($order->seller) ? $order->seller->full_name : '' }}</span>
+                                                    <span class=" js-font-resize mt-5 font-12 text-gray d-block">{{ !empty($order->seller) ? $order->seller->email : '' }}</span>
                                                 </div>
                                             </div>
                                         </td>
 
-                                        <td class=" text-left">
-                                            <span class="d-block font-weight-500 text-light font-16">{{ $order->id }}</span>
-                                            <span class="d-block font-12 text-gray">{{ $order->quantity }} {{ trans('update.product') }}</span>
+                                        <td class=" js-font-resize  text-left">
+                                            <span class=" js-font-resize d-block font-weight-500 text-light font-16">{{ $order->id }}</span>
+                                            <span class=" js-font-resize d-block font-12 text-gray">{{ $order->quantity }} {{ trans('update.product') }}</span>
                                         </td>
 
-                                        <td class="align-middle">
+                                        <td class=" js-font-resize align-middle">
                                             <span>{{ handlePrice($order->sale->amount) }}</span>
                                         </td>
 
-                                        <td class="align-middle">
+                                        <td class=" js-font-resize align-middle">
                                             @if(!empty($order->sale->discount) and (int)$order->sale->discount > 0)
                                                 {{ handlePrice($order->sale->discount ?? 0) }}
                                             @else
@@ -201,7 +201,7 @@
                                             @endif
                                         </td>
 
-                                        <td class="align-middle">
+                                        <td class=" js-font-resize align-middle">
                                             @if(!empty($order->sale->tax))
                                                 {{ handlePrice($order->sale->tax) }}
                                             @else
@@ -209,7 +209,7 @@
                                             @endif
                                         </td>
 
-                                        <td class="align-middle">
+                                        <td class=" js-font-resize align-middle">
                                             @if(!empty($order->sale->product_delivery_fee))
                                                 {{ handlePrice($order->sale->product_delivery_fee) }}
                                             @else
@@ -217,47 +217,47 @@
                                             @endif
                                         </td>
 
-                                        <td class="align-middle">
+                                        <td class=" js-font-resize align-middle">
                                             <span>{{ handlePrice($order->sale->total_amount) }}</span>
                                         </td>
 
-                                        <td class="align-middle">
+                                        <td class=" js-font-resize align-middle">
                                             @if(!empty($order) and !empty($order->product))
                                                 <span>{{ trans('update.product_type_'.$order->product->type) }}</span>
                                             @endif
                                         </td>
-                                        <td class="align-middle">
+                                        <td class=" js-font-resize align-middle">
                                             @if($order->status == \App\Models\ProductOrder::$waitingDelivery)
-                                                <span class="text-warning">{{ trans('update.product_order_status_waiting_delivery') }}</span>
+                                                <span class=" js-font-resize text-warning">{{ trans('update.product_order_status_waiting_delivery') }}</span>
                                             @elseif($order->status == \App\Models\ProductOrder::$success)
-                                                <span class="text-light">{{ trans('update.product_order_status_success') }}</span>
+                                                <span class=" js-font-resize text-light">{{ trans('update.product_order_status_success') }}</span>
                                             @elseif($order->status == \App\Models\ProductOrder::$shipped)
-                                                <span class="text-warning">{{ trans('update.product_order_status_shipped') }}</span>
+                                                <span class=" js-font-resize text-warning">{{ trans('update.product_order_status_shipped') }}</span>
                                             @elseif($order->status == \App\Models\ProductOrder::$canceled)
-                                                <span class="text-danger">{{ trans('update.product_order_status_canceled') }}</span>
+                                                <span class=" js-font-resize text-danger">{{ trans('update.product_order_status_canceled') }}</span>
                                             @endif
                                         </td>
-                                        <td class="align-middle">
+                                        <td class=" js-font-resize align-middle">
                                             <span>{{ dateTimeFormat($order->created_at, 'j M Y H:i') }}</span>
                                         </td>
 
-                                        <td class="text-center align-middle">
+                                        <td class=" js-font-resize text-center align-middle">
                                             @if(!empty($order) and $order->status != \App\Models\ProductOrder::$canceled)
-                                                <div class="btn-group dropdown table-actions">
-                                                    <button type="button" class="btn-transparent dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <div class=" js-font-resize btn-group dropdown table-actions">
+                                                    <button type="button" class=" js-font-resize btn-transparent dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                         <i data-feather="more-vertical" height="20"></i>
                                                     </button>
-                                                    <div class="dropdown-menu font-weight-normal">
-                                                        <a href="/panel/store/purchases/{{ $order->sale_id }}/productOrder/{{ $order->id }}/invoice" target="_blank" class="webinar-actions d-block mt-10">{{ trans('public.invoice') }}</a>
+                                                    <div class=" js-font-resize dropdown-menu font-weight-normal">
+                                                        <a href="/panel/store/purchases/{{ $order->sale_id }}/productOrder/{{ $order->id }}/invoice" target="_blank" class=" js-font-resize webinar-actions d-block mt-10">{{ trans('public.invoice') }}</a>
 
                                                         @if(!empty($order->product) and $order->status == \App\Models\ProductOrder::$success)
-                                                            <a href="{{ $order->product->getUrl() }}" class="webinar-actions d-block mt-10" target="_blank">{{ trans('public.feedback') }}</a>
+                                                            <a href="{{ $order->product->getUrl() }}" class=" js-font-resize webinar-actions d-block mt-10" target="_blank">{{ trans('public.feedback') }}</a>
                                                         @endif
 
                                                         @if($order->status == \App\Models\ProductOrder::$shipped)
-                                                            <button type="button" data-sale-id="{{ $order->sale_id }}" data-product-order-id="{{ $order->id }}" class="js-view-tracking-code webinar-actions btn-transparent d-block mt-10">{{ trans('update.view_tracking_code') }}</button>
+                                                            <button type="button" data-sale-id="{{ $order->sale_id }}" data-product-order-id="{{ $order->id }}" class=" js-font-resize js-view-tracking-code webinar-actions btn-transparent d-block mt-10">{{ trans('update.view_tracking_code') }}</button>
 
-                                                            <button type="button" data-sale-id="{{ $order->sale_id }}" data-product-order-id="{{ $order->id }}" class="js-got-the-parcel webinar-actions btn-transparent d-block mt-10">{{ trans('update.i_got_the_parcel') }}</button>
+                                                            <button type="button" data-sale-id="{{ $order->sale_id }}" data-product-order-id="{{ $order->id }}" class=" js-font-resize js-got-the-parcel webinar-actions btn-transparent d-block mt-10">{{ trans('update.i_got_the_parcel') }}</button>
                                                         @endif
                                                     </div>
                                                 </div>
@@ -273,7 +273,7 @@
                 </div>
             </div>
 
-            <div class="my-30">
+            <div class=" js-font-resize my-30">
                 {{ $orders->appends(request()->input())->links('vendor.pagination.panel') }}
             </div>
 

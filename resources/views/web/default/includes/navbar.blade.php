@@ -35,58 +35,58 @@
 
 @endphp
 <div id="navbarVacuum"></div>
-<nav id="navbar" class="navbar navbar-expand-lg bg-secondary-acadima d-lg-flex d-none ">
-    <div class="{{ (!empty($isPanel) and $isPanel) ? 'container-fluid' : 'container' }} flex-nowrap">
-        <div class="d-flex align-items-center justify-content-between">
+<nav id="navbar" class=" js-font-resize navbar navbar-expand-lg bg-secondary-acadima d-lg-flex d-none ">
+    <div class=" js-font-resize {{ (!empty($isPanel) and $isPanel) ? 'container-fluid' : 'container' }} flex-nowrap">
+        <div class=" js-font-resize d-flex align-items-center justify-content-between">
 
-            <a class="navbar-brand navbar-order  align-items-center justify-content-start mr-0 {{ (empty($navBtnUrl) and empty($navBtnText)) ? 'mr-auto' : '' }}"
+            <a class=" js-font-resize navbar-brand navbar-order  align-items-center justify-content-start mr-0 {{ (empty($navBtnUrl) and empty($navBtnText)) ? 'mr-auto' : '' }}"
                 href="">
                 @if (!empty($generalSettings['logo']))
-                    <img src="{{ asset('store/Acadima/logo2.webp') }}" class="logo-img-cover" width="70%" alt="site logo">
+                    <img src="{{ asset('store/Acadima/logo2.webp') }}" class=" js-font-resize logo-img-cover" width="70%" alt="site logo">
                 @endif
             </a>
 
 
-            <span class="d-none navbar-order"></span>
+            <span class=" js-font-resize d-none navbar-order"></span>
 
-            {{-- <div class="mx-lg-30 d-none d-lg-flex flex-grow-1 navbar-toggle-content " id="navbarContent">
-                <div class="navbar-toggle-header text-right d-lg-none">
-                    <button class="btn-transparent" id="navbarClose">
+            {{-- <div class=" js-font-resize mx-lg-30 d-none d-lg-flex flex-grow-1 navbar-toggle-content " id="navbarContent">
+                <div class=" js-font-resize navbar-toggle-header text-right d-lg-none">
+                    <button class=" js-font-resize btn-transparent" id="navbarClose">
                         <i data-feather="x" width="32" height="32"></i>
                     </button>
                 </div>
 
-                 <ul class="navbar-nav mr-auto d-flex align-items-center">
+                 <ul class=" js-font-resize navbar-nav mr-auto d-flex align-items-center">
                     @if (!empty($categories) and count($categories))
-                        <li class="mr-lg-25">
-                            <div class="menu-category">
+                        <li class=" js-font-resize mr-lg-25">
+                            <div class=" js-font-resize menu-category">
                                 <ul>
-                                    <li class="cursor-pointer user-select-none d-flex xs-categories-toggle">
-                                        <i data-feather="grid" width="20" height="20" class="mr-10 d-none d-lg-block"></i>
+                                    <li class=" js-font-resize cursor-pointer user-select-none d-flex xs-categories-toggle">
+                                        <i data-feather="grid" width="20" height="20" class=" js-font-resize mr-10 d-none d-lg-block"></i>
                                         {{ trans('categories.categories') }}
 
-                                        <ul class="cat-dropdown-menu">
+                                        <ul class=" js-font-resize cat-dropdown-menu">
                                             @foreach ($categories as $category)
                                                 <li>
                                                     <a href="{{ $category->getUrl() }}">
-                                                        <div class="d-flex align-items-center">
-                                                            <img src="{{ $category->icon }}" class="cat-dropdown-menu-icon mr-10" alt="{{ $category->title }} icon">
+                                                        <div class=" js-font-resize d-flex align-items-center">
+                                                            <img src="{{ $category->icon }}" class=" js-font-resize cat-dropdown-menu-icon mr-10" alt="{{ $category->title }} icon">
                                                             {{ $category->title }}
                                                         </div>
 
                                                         @if (!empty($category->subCategories) and count($category->subCategories))
-                                                            <i data-feather="chevron-right" width="20" height="20" class="d-none d-lg-inline-block mr-10"></i>
-                                                            <i data-feather="chevron-down" width="20" height="20" class="d-inline-block d-lg-none"></i>
+                                                            <i data-feather="chevron-right" width="20" height="20" class=" js-font-resize d-none d-lg-inline-block mr-10"></i>
+                                                            <i data-feather="chevron-down" width="20" height="20" class=" js-font-resize d-inline-block d-lg-none"></i>
                                                         @endif
                                                     </a>
 
                                                     @if (!empty($category->subCategories) and count($category->subCategories))
-                                                        <ul class="sub-menu" data-simplebar @if (!empty($isRtl) and $isRtl) data-simplebar-direction="rtl" @endif>
+                                                        <ul class=" js-font-resize sub-menu" data-simplebar @if (!empty($isRtl) and $isRtl) data-simplebar-direction="rtl" @endif>
                                                             @foreach ($category->subCategories as $subCategory)
                                                                 <li>
                                                                     <a href="{{ $subCategory->getUrl() }}">
                                                                         @if (!empty($subCategory->icon))
-                                                                            <img src="{{ $subCategory->icon }}" class="cat-dropdown-menu-icon mr-10" alt="{{ $subCategory->title }} icon">
+                                                                            <img src="{{ $subCategory->icon }}" class=" js-font-resize cat-dropdown-menu-icon mr-10" alt="{{ $subCategory->title }} icon">
                                                                         @endif
 
                                                                         {{ $subCategory->title }}
@@ -106,8 +106,8 @@
 
                     @if (!empty($navbarPages) and count($navbarPages))
                         @foreach ($navbarPages as $navbarPage)
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ $navbarPage['link'] }}">{{ $navbarPage['title'] }}</a>
+                            <li class=" js-font-resize nav-item">
+                                <a class=" js-font-resize nav-link" href="{{ $navbarPage['link'] }}">{{ $navbarPage['title'] }}</a>
                             </li>
                         @endforeach
                     @endif
@@ -120,17 +120,17 @@
         </div>
 
         {{-- "xs-w-100" --}}
-        <div class="d-flex align-items-center justify-content-between w-50 ">
-            <div class="d-flex">
+        <div class=" js-font-resize d-flex align-items-center justify-content-between w-50 ">
+            <div class=" js-font-resize d-flex">
 
                 {{-- @include(getTemplate().'.includes.shopping-cart-dropdwon') --}}
                 {{--  @include(getTemplate().'.includes.notification-dropdown') --}}
             </div>
 
             {{-- User Menu --}}
-            <div class="d-flex flex-nowrap align-items-center justify-content-between ">
+            <div class=" js-font-resize d-flex flex-nowrap align-items-center justify-content-between ">
                 {{-- currency --}}
-                <div class="d-flex align-items-center justify-content-between justify-content-md-center">
+                <div class=" js-font-resize d-flex align-items-center justify-content-between justify-content-md-center">
 
                     {{-- Currency --}}
                     @include('web.default.includes.top_nav.currency')
@@ -139,7 +139,7 @@
 
 
 @if (!empty($localLanguage) and count($localLanguage) > 1 and (session::get('impersonated') == null) )
-                    <form action="/locale" method="post" class="mr-15 mx-md-20">
+                    <form action="/locale" method="post" class=" js-font-resize mr-15 mx-md-20">
                             {{ csrf_field() }}
 
                             <input type="hidden" name="locale">
@@ -148,45 +148,45 @@
                                 <input type="hidden" name="previous_url" value="{{ $previousUrl }}">
                             @endif
 
-                            <div class="language-select ">
+                            <div class=" js-font-resize language-select ">
                                 <div id="localItems"
                                     data-selected-country="{{ localeToCountryCode(mb_strtoupper(app()->getLocale())) }}"
                                     data-countries='{{ json_encode($localLanguage) }}'></div>
                             </div>
                         </form>
                     @else
-                        <div class="mr-15 mx-md-20"></div>
+                        <div class=" js-font-resize mr-15 mx-md-20"></div>
                     @endif
 
 
-                    {{-- <form action="/search" method="get" class="form-inline my-2 my-lg-0 navbar-search position-relative">
-                    <input class="form-control mr-5 rounded" type="text" name="search" placeholder="{{ trans('navbar.search_anything') }}" aria-label="Search">
+                    {{-- <form action="/search" method="get" class=" js-font-resize form-inline my-2 my-lg-0 navbar-search position-relative">
+                    <input class=" js-font-resize form-control mr-5 rounded" type="text" name="search" placeholder="{{ trans('navbar.search_anything') }}" aria-label="Search">
 
-                        <button type="submit" class="btn-transparent d-flex align-items-center justify-content-center search-icon">
-                            <i data-feather="search" width="20" height="20" class="mr-10"></i>
+                        <button type="submit" class=" js-font-resize btn-transparent d-flex align-items-center justify-content-center search-icon">
+                            <i data-feather="search" width="20" height="20" class=" js-font-resize mr-10"></i>
                         </button>
                     </form> --}}
                 </div>
 
                 {{-- notification --}}
-                <div class="nav-icons-or-start-live mr-25 ">
+                <div class=" js-font-resize nav-icons-or-start-live mr-25 ">
 
                     @if (!empty($navBtnUrl))
                         <a href="{{ $navBtnUrl }}"
-                            class="d-none d-lg-flex btn btn-sm btn-primary nav-start-a-live-btn">
+                            class=" js-font-resize d-none d-lg-flex btn btn-sm btn-primary nav-start-a-live-btn">
                             {{ $navBtnText }}
                         </a>
 
                         <a href="{{ $navBtnUrl }}"
-                            class="d-flex d-lg-none text-primary nav-start-a-live-btn font-14">
+                            class=" js-font-resize d-flex d-lg-none text-primary nav-start-a-live-btn font-14">
                             {{ $navBtnText }}
                         </a>
                     @endif
 
-                    <div class="d-none nav-notify-cart-dropdown top-navbar     ">
+                    <div class=" js-font-resize d-none nav-notify-cart-dropdown top-navbar     ">
                         {{-- @include(getTemplate().'.includes.shopping-cart-dropdwon') --}}
 
-                        <div class="border-left mx-15"></div>
+                        <div class=" js-font-resize border-left mx-15"></div>
 
                         @include(getTemplate() . '.includes.notification-dropdown')
                     </div>

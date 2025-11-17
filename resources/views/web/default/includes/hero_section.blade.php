@@ -31,8 +31,8 @@
     }
 </style>
 
-<header class="hero cart-banner position-relative">
-    <section class="container hero-title ">
+<header class=" js-font-resize hero cart-banner position-relative">
+    <section class=" js-font-resize container hero-title ">
         {!! $inner !!}
     </section>
 </header>

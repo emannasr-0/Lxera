@@ -6,46 +6,46 @@
 
 @section('content')
 
-    <section class="mt-25">
-        <h2 class="section-title">{{ trans('quiz.filter_certificates') }}</h2>
+    <section class=" js-font-resize mt-25">
+        <h2 class=" js-font-resize section-title">{{ trans('quiz.filter_certificates') }}</h2>
 
-        <div class="panel-section-card py-20 px-25 mt-20">
-            <form action="" method="get" class="row">
-                <div class="col-12 col-lg-6">
-                    <div class="row">
-                        <div class="col-12 col-md-6">
-                            <div class="form-group">
-                                <label class="input-label">{{ trans('public.from') }}</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="dateInputGroupPrepend">
-                                            <i data-feather="calendar" width="18" height="18" class="text-light"></i>
+        <div class=" js-font-resize panel-section-card py-20 px-25 mt-20">
+            <form action="" method="get" class=" js-font-resize row">
+                <div class=" js-font-resize col-12 col-lg-6">
+                    <div class=" js-font-resize row">
+                        <div class=" js-font-resize col-12 col-md-6">
+                            <div class=" js-font-resize form-group">
+                                <label class=" js-font-resize input-label">{{ trans('public.from') }}</label>
+                                <div class=" js-font-resize input-group">
+                                    <div class=" js-font-resize input-group-prepend">
+                                        <span class=" js-font-resize input-group-text" id="dateInputGroupPrepend">
+                                            <i data-feather="calendar" width="18" height="18" class=" js-font-resize text-light"></i>
                                         </span>
                                     </div>
-                                    <input type="text" name="from" autocomplete="off" class="form-control @if(!empty(request()->get('from'))) datepicker @else datefilter @endif" value="{{ request()->get('from','') }}" aria-describedby="dateInputGroupPrepend"/>
+                                    <input type="text" name="from" autocomplete="off" class=" js-font-resize form-control @if(!empty(request()->get('from'))) datepicker @else datefilter @endif" value="{{ request()->get('from','') }}" aria-describedby="dateInputGroupPrepend"/>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-md-6">
-                            <div class="form-group">
-                                <label class="input-label">{{ trans('public.to') }}</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="dateInputGroupPrepend">
-                                            <i data-feather="calendar" width="18" height="18" class="text-light"></i>
+                        <div class=" js-font-resize col-12 col-md-6">
+                            <div class=" js-font-resize form-group">
+                                <label class=" js-font-resize input-label">{{ trans('public.to') }}</label>
+                                <div class=" js-font-resize input-group">
+                                    <div class=" js-font-resize input-group-prepend">
+                                        <span class=" js-font-resize input-group-text" id="dateInputGroupPrepend">
+                                            <i data-feather="calendar" width="18" height="18" class=" js-font-resize text-light"></i>
                                         </span>
                                     </div>
-                                    <input type="text" name="to" autocomplete="off" class="form-control @if(!empty(request()->get('to'))) datepicker @else datefilter @endif" value="{{ request()->get('to','') }}" aria-describedby="dateInputGroupPrepend"/>
+                                    <input type="text" name="to" autocomplete="off" class=" js-font-resize form-control @if(!empty(request()->get('to'))) datepicker @else datefilter @endif" value="{{ request()->get('to','') }}" aria-describedby="dateInputGroupPrepend"/>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-12 col-lg-4">
-                    <div class="form-group">
-                        <label class="input-label">{{ trans('product.course') }}</label>
-                        <select name="webinar_id" class="form-control">
+                <div class=" js-font-resize col-12 col-lg-4">
+                    <div class=" js-font-resize form-group">
+                        <label class=" js-font-resize input-label">{{ trans('product.course') }}</label>
+                        <select name="webinar_id" class=" js-font-resize form-control">
                             <option value="all">{{ trans('webinars.all_courses') }}</option>
 
                             @foreach($userWebinars as $userWebinar)
@@ -54,29 +54,29 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-12 col-lg-2 d-flex align-items-center justify-content-end">
-                    <button type="submit" class="btn btn-sm btn-acadima-primary w-100 mt-2">{{ trans('public.show_results') }}</button>
+                <div class=" js-font-resize col-12 col-lg-2 d-flex align-items-center justify-content-end">
+                    <button type="submit" class=" js-font-resize btn btn-sm btn-acadima-primary w-100 mt-2">{{ trans('public.show_results') }}</button>
                 </div>
             </form>
         </div>
     </section>
 
-    <section class="mt-35">
-        <div class="d-flex align-items-start align-items-md-center justify-content-between flex-column flex-md-row">
-            <h2 class="section-title">{{ trans('quiz.my_certificates') }}</h2>
+    <section class=" js-font-resize mt-35">
+        <div class=" js-font-resize d-flex align-items-start align-items-md-center justify-content-between flex-column flex-md-row">
+            <h2 class=" js-font-resize section-title">{{ trans('quiz.my_certificates') }}</h2>
         </div>
 
         @if(!empty($certificates) and count($certificates))
-            <div class="panel-section-card py-20 px-25 mt-20">
-                <div class="row">
-                    <div class="col-12 ">
-                        <div class="table-responsive">
-                            <table class="table text-center custom-table">
+            <div class=" js-font-resize panel-section-card py-20 px-25 mt-20">
+                <div class=" js-font-resize row">
+                    <div class=" js-font-resize col-12 ">
+                        <div class=" js-font-resize table-responsive">
+                            <table class=" js-font-resize table text-center custom-table">
                                 <thead>
                                 <tr>
                                     <th>{{ trans('product.course') }}</th>
-                                    <th class="text-center">{{ trans('public.certificate_id') }}</th>
-                                    <th class="text-center">{{ trans('public.date') }}</th>
+                                    <th class=" js-font-resize text-center">{{ trans('public.certificate_id') }}</th>
+                                    <th class=" js-font-resize text-center">{{ trans('public.date') }}</th>
                                     <th></th>
                                 </tr>
                                 </thead>
@@ -84,23 +84,23 @@
 
                                 @foreach($certificates as $certificate)
                                     <tr>
-                                        <td class="text-left">
-                                            <span class="d-block text-dark-blue font-weight-500">{{ $certificate->webinar->title }}</span>
+                                        <td class=" js-font-resize text-left">
+                                            <span class=" js-font-resize d-block text-dark-blue font-weight-500">{{ $certificate->webinar->title }}</span>
                                         </td>
-                                        <td class="align-middle">
+                                        <td class=" js-font-resize align-middle">
                                             {{ $certificate->id }}
                                         </td>
 
-                                        <td class="align-middle">
-                                            <span class="text-dark-blue font-weight-500">{{ dateTimeFormat($certificate->created_at, 'j M Y') }}</span>
+                                        <td class=" js-font-resize align-middle">
+                                            <span class=" js-font-resize text-dark-blue font-weight-500">{{ dateTimeFormat($certificate->created_at, 'j M Y') }}</span>
                                         </td>
-                                        <td class="align-middle font-weight-normal">
-                                            <div class="btn-group dropdown table-actions">
-                                                <button type="button" class="btn-transparent dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <td class=" js-font-resize align-middle font-weight-normal">
+                                            <div class=" js-font-resize btn-group dropdown table-actions">
+                                                <button type="button" class=" js-font-resize btn-transparent dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     <i data-feather="more-vertical" height="20"></i>
                                                 </button>
-                                                <div class="dropdown-menu">
-                                                    <a href="/panel/certificates/webinars/{{ $certificate->id }}/show" target="_blank" class="webinar-actions d-block">{{ trans('public.open') }}</a>
+                                                <div class=" js-font-resize dropdown-menu">
+                                                    <a href="/panel/certificates/webinars/{{ $certificate->id }}/show" target="_blank" class=" js-font-resize webinar-actions d-block">{{ trans('public.open') }}</a>
                                                 </div>
                                             </div>
                                         </td>
@@ -122,7 +122,7 @@
         @endif
     </section>
 
-    <div class="my-30">
+    <div class=" js-font-resize my-30">
         {{ $certificates->appends(request()->input())->links('vendor.pagination.panel') }}
     </div>
 

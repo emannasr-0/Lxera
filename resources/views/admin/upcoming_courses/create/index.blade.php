@@ -20,39 +20,39 @@
 @endpush
 
 @section('content')
-    <section class="section">
-        <div class="section-header">
+    <section class=" js-font-resize section">
+        <div class=" js-font-resize section-header">
             <h1>{{ $pageTitle }}</h1>
-            <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ getAdminPanelUrl() }}">{{ trans('admin/main.dashboard') }}</a>
+            <div class=" js-font-resize section-header-breadcrumb">
+                <div class=" js-font-resize breadcrumb-item active"><a href="{{ getAdminPanelUrl() }}">{{ trans('admin/main.dashboard') }}</a>
                 </div>
-                <div class="breadcrumb-item active">
+                <div class=" js-font-resize breadcrumb-item active">
                     <a href="{{ getAdminPanelUrl('/upcoming_courses') }}">{{ trans('update.upcoming_courses') }}</a>
                 </div>
-                <div class="breadcrumb-item">{{!empty($upcomingCourse) ?trans('/admin/main.edit'): trans('admin/main.new') }}</div>
+                <div class=" js-font-resize breadcrumb-item">{{!empty($upcomingCourse) ?trans('/admin/main.edit'): trans('admin/main.new') }}</div>
             </div>
         </div>
 
 
-        <div class="section-body">
+        <div class=" js-font-resize section-body">
 
-            <div class="row">
-                <div class="col-12 ">
-                    <div class="card">
-                        <div class="card-body">
+            <div class=" js-font-resize row">
+                <div class=" js-font-resize col-12 ">
+                    <div class=" js-font-resize card">
+                        <div class=" js-font-resize card-body">
 
-                            <form method="post" action="{{ getAdminPanelUrl('/upcoming_courses/'. (!empty($upcomingCourse) ? $upcomingCourse->id.'/update' : 'store')) }}" id="upcomingCourseForm" class="webinar-form">
+                            <form method="post" action="{{ getAdminPanelUrl('/upcoming_courses/'. (!empty($upcomingCourse) ? $upcomingCourse->id.'/update' : 'store')) }}" id="upcomingCourseForm" class=" js-font-resize webinar-form">
                                 {{ csrf_field() }}
 
                                 <section>
-                                    <h2 class="section-title after-line">{{ trans('public.basic_information') }}</h2>
+                                    <h2 class=" js-font-resize section-title after-line">{{ trans('public.basic_information') }}</h2>
 
                                     {{-- Basic Information --}}
                                     @include('admin.upcoming_courses.create.includes.basic_information')
                                 </section>
 
-                                <section class="mt-3">
-                                    <h2 class="section-title after-line">{{ trans('public.additional_information') }}</h2>
+                                <section class=" js-font-resize mt-3">
+                                    <h2 class=" js-font-resize section-title after-line">{{ trans('public.additional_information') }}</h2>
 
                                     {{-- Additional Information --}}
                                     @include('admin.upcoming_courses.create.includes.additional_information')
@@ -66,12 +66,12 @@
                                     {{-- Extra Description --}}
                                     @include('admin.upcoming_courses.create.includes.extraDescription')
 
-                                    <section class="mt-3">
-                                        <h2 class="section-title after-line">{{ trans('public.message_to_reviewer') }}</h2>
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="form-group mt-15">
-                                                    <textarea name="message_for_reviewer" rows="10" class="form-control">{{ (!empty($upcomingCourse) && $upcomingCourse->message_for_reviewer) ? $upcomingCourse->message_for_reviewer : old('message_for_reviewer') }}</textarea>
+                                    <section class=" js-font-resize mt-3">
+                                        <h2 class=" js-font-resize section-title after-line">{{ trans('public.message_to_reviewer') }}</h2>
+                                        <div class=" js-font-resize row">
+                                            <div class=" js-font-resize col-12">
+                                                <div class=" js-font-resize form-group mt-15">
+                                                    <textarea name="message_for_reviewer" rows="10" class=" js-font-resize form-control">{{ (!empty($upcomingCourse) && $upcomingCourse->message_for_reviewer) ? $upcomingCourse->message_for_reviewer : old('message_for_reviewer') }}</textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -80,12 +80,12 @@
 
                                 <input type="hidden" name="draft" value="no" id="forDraft"/>
 
-                                <div class="row">
-                                    <div class="col-12">
-                                        <button type="button" id="saveAndPublish" class="btn btn-success">{{ !empty($upcomingCourse) ? trans('admin/main.save_and_publish') : trans('admin/main.save_and_continue') }}</button>
+                                <div class=" js-font-resize row">
+                                    <div class=" js-font-resize col-12">
+                                        <button type="button" id="saveAndPublish" class=" js-font-resize btn btn-success">{{ !empty($upcomingCourse) ? trans('admin/main.save_and_publish') : trans('admin/main.save_and_continue') }}</button>
 
                                         @if(!empty($upcomingCourse))
-                                            <button type="button" id="saveReject" class="btn btn-warning">{{ trans('public.reject') }}</button>
+                                            <button type="button" id="saveReject" class=" js-font-resize btn btn-warning">{{ trans('public.reject') }}</button>
 
                                             @include('admin.includes.delete_button',[
                                                     'url' => getAdminPanelUrl('/upcoming_courses/'. $upcomingCourse->id .'/delete'),

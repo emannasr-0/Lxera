@@ -1,10 +1,10 @@
-<div class="mt-20 p-20 rounded-sm shadow-lg border border-gray300 filters-container">
-    <h3 class="category-filter-title font-20 font-weight-bold text-dark-blue">{{ trans('update.location') }}</h3>
+<div class=" js-font-resize mt-20 p-20 rounded-sm shadow-lg border border-gray300 filters-container">
+    <h3 class=" js-font-resize category-filter-title font-20 font-weight-bold text-dark-blue">{{ trans('update.location') }}</h3>
 
-    <div class="form-group mt-20">
-        <label class="input-label font-weight-500">{{ trans('update.country') }}</label>
+    <div class=" js-font-resize form-group mt-20">
+        <label class=" js-font-resize input-label font-weight-500">{{ trans('update.country') }}</label>
 
-        <select name="country_id" class="form-control">
+        <select name="country_id" class=" js-font-resize form-control">
             <option value="">{{ trans('update.select_country') }}</option>
 
             @if(!empty($countries))
@@ -15,10 +15,10 @@
         </select>
     </div>
 
-    <div class="form-group mt-10">
-        <label class="input-label font-weight-500">{{ trans('update.province') }}</label>
+    <div class=" js-font-resize form-group mt-10">
+        <label class=" js-font-resize input-label font-weight-500">{{ trans('update.province') }}</label>
 
-        <select name="province_id" class="form-control" {{ empty($provinces) ? 'disabled' : '' }}>
+        <select name="province_id" class=" js-font-resize form-control" {{ empty($provinces) ? 'disabled' : '' }}>
             <option value="">{{ trans('update.select_province') }}</option>
 
             @if(!empty($provinces))
@@ -29,10 +29,10 @@
         </select>
     </div>
 
-    <div class="form-group mt-10">
-        <label class="input-label font-weight-500">{{ trans('update.city') }}</label>
+    <div class=" js-font-resize form-group mt-10">
+        <label class=" js-font-resize input-label font-weight-500">{{ trans('update.city') }}</label>
 
-        <select name="city_id" class="form-control" {{ empty($cities) ? 'disabled' : '' }}>
+        <select name="city_id" class=" js-font-resize form-control" {{ empty($cities) ? 'disabled' : '' }}>
             <option value="">{{ trans('update.select_city') }}</option>
 
             @if(!empty($cities))
@@ -43,10 +43,10 @@
         </select>
     </div>
 
-    <div class="form-group mt-10">
-        <label class="input-label font-weight-500">{{ trans('update.district') }}</label>
+    <div class=" js-font-resize form-group mt-10">
+        <label class=" js-font-resize input-label font-weight-500">{{ trans('update.district') }}</label>
 
-        <select name="district_id" class="form-control" {{ empty($districts) ? 'disabled' : '' }}>
+        <select name="district_id" class=" js-font-resize form-control" {{ empty($districts) ? 'disabled' : '' }}>
             <option value="">{{ trans('update.select_district') }}</option>
 
             @if(!empty($districts))

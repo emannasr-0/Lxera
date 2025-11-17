@@ -7,20 +7,20 @@
 
 @section('content')
 
-    <div class="agora-page">
-        <div class="agora-navbar d-flex align-items-center justify-content-between shoa px-35 py-10">
-            <div class="d-flex align-items-center">
-                <a class="navbar-brand d-flex align-items-center justify-content-center mr-0" href="/">
+    <div class=" js-font-resize agora-page">
+        <div class=" js-font-resize agora-navbar d-flex align-items-center justify-content-between shoa px-35 py-10">
+            <div class=" js-font-resize d-flex align-items-center">
+                <a class=" js-font-resize navbar-brand d-flex align-items-center justify-content-center mr-0" href="/">
                     @if(!empty($generalSettings['logo']))
-                        <img src="{{ asset('store/Acadima/acadima-logo.webp') }}" class="" alt="site logo">
+                        <img src="{{ asset('store/Acadima/acadima-logo.webp') }}" class=" js-font-resize " alt="site logo">
                     @endif
                 </a>
 
-                <span class="font-weight-bold border-left border-gray200 ml-10 pl-10">{{ !empty($session->webinar) ? $session->webinar->title : $session->title }}</span>
+                <span class=" js-font-resize font-weight-bold border-left border-gray200 ml-10 pl-10">{{ !empty($session->webinar) ? $session->webinar->title : $session->title }}</span>
             </div>
 
-            <button id="collapseBtn" type="button" class="btn-transparent d-none d-lg-flex">
-                <i data-feather="menu" width="20" height="20" class=""></i>
+            <button id="collapseBtn" type="button" class=" js-font-resize btn-transparent d-none d-lg-flex">
+                <i data-feather="menu" width="20" height="20" class=" js-font-resize "></i>
             </button>
         </div>
 
@@ -32,39 +32,39 @@
     </form>
 
 
-        <div class="d-flex flex-column flex-lg-row">
-            <div class="agora-stream flex-grow-1 bg-info-light p-15">
+        <div class=" js-font-resize d-flex flex-column flex-lg-row">
+            <div class=" js-font-resize agora-stream flex-grow-1 bg-info-light p-15">
                 @include('web.default.course.agora.stream')
             </div>
 
-            <div class="agora-tabs show">
-                <ul class="nav nav-tabs pb-15 d-flex align-items-center justify-content-start px-15" id="tabs-tab" role="tablist">
-                    <li class="nav-item">
-                        <a class="position-relative font-14 d-flex align-items-center active" id="chat-tab"
+            <div class=" js-font-resize agora-tabs show">
+                <ul class=" js-font-resize nav nav-tabs pb-15 d-flex align-items-center justify-content-start px-15" id="tabs-tab" role="tablist">
+                    <li class=" js-font-resize nav-item">
+                        <a class=" js-font-resize position-relative font-14 d-flex align-items-center active" id="chat-tab"
                            data-toggle="tab" href="#chat" role="tab" aria-controls="chat"
                            aria-selected="true">
-                            <i data-feather="message-circle" width="16" height="16" class="agora-tabs-icons mr-1"></i>
-                            <span class="agora-tabs-link-text">{{ trans('update.chat') }}</span>
+                            <i data-feather="message-circle" width="16" height="16" class=" js-font-resize agora-tabs-icons mr-1"></i>
+                            <span class=" js-font-resize agora-tabs-link-text">{{ trans('update.chat') }}</span>
                         </a>
                     </li>
 
-                    {{--<li class="nav-item">
-                        <a class="position-relative font-14 d-flex align-items-center" id="users-tab" data-toggle="tab"
+                    {{--<li class=" js-font-resize nav-item">
+                        <a class=" js-font-resize position-relative font-14 d-flex align-items-center" id="users-tab" data-toggle="tab"
                            href="#users" role="tab" aria-controls="users"
                            aria-selected="false">
-                            <i data-feather="users" width="16" height="16" class="agora-tabs-icons mr-1"></i>
-                            <span class="agora-tabs-link-text">{{ trans('panel.users') }}</span>
+                            <i data-feather="users" width="16" height="16" class=" js-font-resize agora-tabs-icons mr-1"></i>
+                            <span class=" js-font-resize agora-tabs-link-text">{{ trans('panel.users') }}</span>
                         </a>
                     </li>--}}
                 </ul>
 
-                <div class="tab-content h-100" id="nav-tabContent">
-                    <div class="pb-20 tab-pane fade show active h-100" id="chat" role="tabpanel"
+                <div class=" js-font-resize tab-content h-100" id="nav-tabContent">
+                    <div class=" js-font-resize pb-20 tab-pane fade show active h-100" id="chat" role="tabpanel"
                          aria-labelledby="chat-tab">
                         @include('web.default.course.agora.chat')
                     </div>
 
-                    {{--<div class="pb-20 tab-pane fade  h-100" id="users" role="tabpanel"
+                    {{--<div class=" js-font-resize pb-20 tab-pane fade  h-100" id="users" role="tabpanel"
                          aria-labelledby="users-tab">
                         @include('web.default.course.agora.users')
                     </div>--}}

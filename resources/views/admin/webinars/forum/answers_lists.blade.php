@@ -5,44 +5,44 @@
 @endpush
 
 @section('content')
-    <section class="section">
-        <div class="section-header">
+    <section class=" js-font-resize section">
+        <div class=" js-font-resize section-header">
             <h1>{{ $pageTitle }}</h1>
-            <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ getAdminPanelUrl() }}">{{trans('admin/main.dashboard')}}</a>
+            <div class=" js-font-resize section-header-breadcrumb">
+                <div class=" js-font-resize breadcrumb-item active"><a href="{{ getAdminPanelUrl() }}">{{trans('admin/main.dashboard')}}</a>
                 </div>
-                <div class="breadcrumb-item">{{trans('admin/main.classes')}}</div>
+                <div class=" js-font-resize breadcrumb-item">{{trans('admin/main.classes')}}</div>
 
-                <div class="breadcrumb-item">{{ $pageTitle }}</div>
+                <div class=" js-font-resize breadcrumb-item">{{ $pageTitle }}</div>
             </div>
         </div>
 
-        <div class="section-body">
+        <div class=" js-font-resize section-body">
 
-            <div class="row">
-                <div class="col-12 col-md-12">
-                    <div class="card">
+            <div class=" js-font-resize row">
+                <div class=" js-font-resize col-12 col-md-12">
+                    <div class=" js-font-resize card">
 
-                        <div class="card-body ">
+                        <div class=" js-font-resize card-body ">
 
                             {{-- Question Card --}}
-                            <div class="d-flex align-items-start mb-3 border rounded-lg p-2">
-                                <img class="avatar mr-2" src="{{ $question->user->getAvatar() }}">
+                            <div class=" js-font-resize d-flex align-items-start mb-3 border rounded-lg p-2">
+                                <img class=" js-font-resize avatar mr-2" src="{{ $question->user->getAvatar() }}">
 
-                                <div class="ml-2">
-                                    <div class="font-weight-bold">{{ $question->user->full_name }}</div>
+                                <div class=" js-font-resize ml-2">
+                                    <div class=" js-font-resize font-weight-bold">{{ $question->user->full_name }}</div>
 
-                                    <h3 class="mt-2 font-16 font-weight-bold">{{ $question->title }}</h3>
-                                    <div class="mt-1">{!! $question->description !!}</div>
+                                    <h3 class=" js-font-resize mt-2 font-16 font-weight-bold">{{ $question->title }}</h3>
+                                    <div class=" js-font-resize mt-1">{!! $question->description !!}</div>
 
-                                    <div class="mt-2">
-                                        <span class="mr-2">{{ dateTimeFormat($question->created_at,'Y M j | H:i') }}</span>
+                                    <div class=" js-font-resize mt-2">
+                                        <span class=" js-font-resize mr-2">{{ dateTimeFormat($question->created_at,'Y M j | H:i') }}</span>
 
                                         @if(!empty($question->attach))
-                                            <a href="{{ $course->getForumPageUrl() }}/{{ $question->id }}/downloadAttach" target="_blank" class="text-success"><i class="fa fa-paperclip"></i> {{ trans('admin/main.open_attach') }}</a>
+                                            <a href="{{ $course->getForumPageUrl() }}/{{ $question->id }}/downloadAttach" target="_blank" class=" js-font-resize text-success"><i class=" js-font-resize fa fa-paperclip"></i> {{ trans('admin/main.open_attach') }}</a>
                                         @endif
 
-                                        <button type="button" data-action="{{ getAdminPanelUrl() }}/webinars/{{ $course->id }}/forums/{{ $question->id }}/edit" class="js-answer-edit btn-transparent ml-2 font-14 font-weight-500 text-gray">{{ trans('public.edit') }}</button>
+                                        <button type="button" data-action="{{ getAdminPanelUrl() }}/webinars/{{ $course->id }}/forums/{{ $question->id }}/edit" class=" js-font-resize js-answer-edit btn-transparent ml-2 font-14 font-weight-500 text-gray">{{ trans('public.edit') }}</button>
 
                                         @include('admin.includes.delete_button', [
                                             'url' => "/admin/webinars/$course->id/forums/$question->id/delete",
@@ -56,27 +56,27 @@
                             {{-- Answers Cards --}}
 
                             @foreach($answers as $answer)
-                                <div class="d-flex align-items-start mb-3 border rounded-lg p-2 {{ $answer->resolved ? 'border-danger' : '' }}">
+                                <div class=" js-font-resize d-flex align-items-start mb-3 border rounded-lg p-2 {{ $answer->resolved ? 'border-danger' : '' }}">
                                     <img src="{{ $answer->user->getAvatar() }}">
 
-                                    <div class="ml-2">
+                                    <div class=" js-font-resize ml-2">
 
-                                        <div class="font-weight-bold">{{ $answer->user->full_name }}</div>
+                                        <div class=" js-font-resize font-weight-bold">{{ $answer->user->full_name }}</div>
 
-                                        <div class="mt-1">{!! $answer->description !!}</div>
+                                        <div class=" js-font-resize mt-1">{!! $answer->description !!}</div>
 
-                                        <div class="d-flex align-items-center mt-2">
-                                            <span class="">{{ dateTimeFormat($answer->created_at,'Y M j | H:i') }}</span>
+                                        <div class=" js-font-resize d-flex align-items-center mt-2">
+                                            <span class=" js-font-resize ">{{ dateTimeFormat($answer->created_at,'Y M j | H:i') }}</span>
 
                                             @if($answer->resolved)
-                                                <span class="text-danger ml-2">{{ trans('update.resolved') }}</span>
+                                                <span class=" js-font-resize text-danger ml-2">{{ trans('update.resolved') }}</span>
                                             @endif
 
                                             @if($answer->pin)
-                                                <span class="text-success ml-2">{{ trans('update.pin') }}</span>
+                                                <span class=" js-font-resize text-success ml-2">{{ trans('update.pin') }}</span>
                                             @endif
 
-                                            <button type="button" data-action="{{ getAdminPanelUrl() }}/webinars/{{ $course->id }}/forums/{{ $question->id }}/answers/{{ $answer->id }}/edit" class="js-answer-edit btn-transparent ml-2 font-14 font-weight-500 text-gray">{{ trans('public.edit') }}</button>
+                                            <button type="button" data-action="{{ getAdminPanelUrl() }}/webinars/{{ $course->id }}/forums/{{ $question->id }}/answers/{{ $answer->id }}/edit" class=" js-font-resize js-answer-edit btn-transparent ml-2 font-14 font-weight-500 text-gray">{{ trans('public.edit') }}</button>
 
                                             @include('admin.includes.delete_button', [
                                                 'url' => "/admin/webinars/$course->id/forums/$question->id/answers/$answer->id/delete",

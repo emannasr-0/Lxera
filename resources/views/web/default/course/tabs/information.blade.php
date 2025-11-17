@@ -13,13 +13,13 @@
 @endif
 
 @if(!empty($learningMaterialsExtraDescription) and count($learningMaterialsExtraDescription))
-    <div class="mt-20 rounded-sm border bg-info-light p-15">
-        <h3 class="font-16 text-secondary font-weight-bold mb-15">{{ trans('update.what_you_will_learn') }}</h3>
+    <div class=" js-font-resize mt-20 rounded-sm border bg-info-light p-15">
+        <h3 class=" js-font-resize font-16 text-secondary font-weight-bold mb-15">{{ trans('update.what_you_will_learn') }}</h3>
 
         @foreach($learningMaterialsExtraDescription as $learningMaterial)
-            <p class="d-flex align-items-start font-14 text-gray mt-10">
-                <i data-feather="check" width="18" height="18" class="mr-10 webinar-extra-description-check-icon"></i>
-                <span class="">{{ $learningMaterial->value }}</span>
+            <p class=" js-font-resize d-flex align-items-start font-14 text-gray mt-10">
+                <i data-feather="check" width="18" height="18" class=" js-font-resize mr-10 webinar-extra-description-check-icon"></i>
+                <span class=" js-font-resize ">{{ $learningMaterial->value }}</span>
             </p>
         @endforeach
     </div>
@@ -27,9 +27,9 @@
 
 {{--course description--}}
 @if($course->description)
-    <div class="mt-20">
-        <h2 class="section-title after-line">{{ trans('product.Webinar_description') }}</h2>
-        <div class="mt-15 course-description">
+    <div class=" js-font-resize mt-20">
+        <h2 class=" js-font-resize section-title after-line">{{ trans('product.Webinar_description') }}</h2>
+        <div class=" js-font-resize mt-15 course-description">
             {!! nl2br($course->description) !!}
         </div>
     </div>
@@ -37,16 +37,16 @@
 {{-- ./ course description--}}
 
 @if(!empty($companyLogosExtraDescription) and count($companyLogosExtraDescription))
-    <div class="mt-20 rounded-sm border bg-white p-15">
-        <div class="mb-15">
-            <h3 class="font-16 text-secondary font-weight-bold">{{ trans('update.suggested_by_top_companies') }}</h3>
-            <p class="font-14 text-gray mt-5">{{ trans('update.suggested_by_top_companies_hint') }}</p>
+    <div class=" js-font-resize mt-20 rounded-sm border bg-white p-15">
+        <div class=" js-font-resize mb-15">
+            <h3 class=" js-font-resize font-16 text-secondary font-weight-bold">{{ trans('update.suggested_by_top_companies') }}</h3>
+            <p class=" js-font-resize font-14 text-gray mt-5">{{ trans('update.suggested_by_top_companies_hint') }}</p>
         </div>
 
-        <div class="row">
+        <div class=" js-font-resize row">
             @foreach($companyLogosExtraDescription as $companyLogo)
-                <div class="col text-center">
-                    <img src="{{ $companyLogo->value }}" class="webinar-extra-description-company-logos" alt="{{ trans('update.company_logos') }}">
+                <div class=" js-font-resize col text-center">
+                    <img src="{{ $companyLogo->value }}" class=" js-font-resize webinar-extra-description-company-logos" alt="{{ trans('update.company_logos') }}">
                 </div>
             @endforeach
         </div>
@@ -54,13 +54,13 @@
 @endif
 
 @if(!empty($requirementsExtraDescription) and count($requirementsExtraDescription))
-    <div class="mt-20">
-        <h3 class="font-16 text-secondary font-weight-bold mb-15">{{ trans('update.requirements') }}</h3>
+    <div class=" js-font-resize mt-20">
+        <h3 class=" js-font-resize font-16 text-secondary font-weight-bold mb-15">{{ trans('update.requirements') }}</h3>
 
         @foreach($requirementsExtraDescription as $requirementExtraDescription)
-            <p class="d-flex align-items-start font-14 text-gray mt-10">
-                <i data-feather="check" width="18" height="18" class="mr-10 webinar-extra-description-check-icon"></i>
-                <span class="">{{ $requirementExtraDescription->value }}</span>
+            <p class=" js-font-resize d-flex align-items-start font-14 text-gray mt-10">
+                <i data-feather="check" width="18" height="18" class=" js-font-resize mr-10 webinar-extra-description-check-icon"></i>
+                <span class=" js-font-resize ">{{ $requirementExtraDescription->value }}</span>
             </p>
         @endforeach
     </div>
@@ -69,8 +69,8 @@
 {{-- course prerequisites --}}
 @if(!empty($course->prerequisites) and $course->prerequisites->count() > 0)
 
-    <div class="mt-20">
-        <h2 class="section-title after-line">{{ trans('public.prerequisites') }}</h2>
+    <div class=" js-font-resize mt-20">
+        <h2 class=" js-font-resize section-title after-line">{{ trans('public.prerequisites') }}</h2>
 
         @foreach($course->prerequisites as $prerequisite)
             @if($prerequisite->prerequisiteWebinar)
@@ -83,20 +83,20 @@
 
 {{-- course FAQ --}}
 @if(!empty($course->faqs) and $course->faqs->count() > 0)
-    <div class="mt-20">
-        <h2 class="section-title after-line">{{ trans('public.faq') }}</h2>
+    <div class=" js-font-resize mt-20">
+        <h2 class=" js-font-resize section-title after-line">{{ trans('public.faq') }}</h2>
 
-        <div class="accordion-content-wrapper mt-15" id="accordion" role="tablist" aria-multiselectable="true">
+        <div class=" js-font-resize accordion-content-wrapper mt-15" id="accordion" role="tablist" aria-multiselectable="true">
             @foreach($course->faqs as $faq)
-                <div class="accordion-row rounded-sm shadow-lg border mt-20 py-20 px-35">
-                    <div class="font-weight-bold font-14 text-secondary" role="tab" id="faq_{{ $faq->id }}">
-                        <div href="#collapseFaq{{ $faq->id }}" aria-controls="collapseFaq{{ $faq->id }}" class="d-flex align-items-center justify-content-between" role="button" data-toggle="collapse" data-parent="#accordion" aria-expanded="true">
+                <div class=" js-font-resize accordion-row rounded-sm shadow-lg border mt-20 py-20 px-35">
+                    <div class=" js-font-resize font-weight-bold font-14 text-secondary" role="tab" id="faq_{{ $faq->id }}">
+                        <div href="#collapseFaq{{ $faq->id }}" aria-controls="collapseFaq{{ $faq->id }}" class=" js-font-resize d-flex align-items-center justify-content-between" role="button" data-toggle="collapse" data-parent="#accordion" aria-expanded="true">
                             <span>{{ clean($faq->title,'title') }}</span>
-                            <i class="collapse-chevron-icon" data-feather="chevron-down" width="25" class="text-gray"></i>
+                            <i class=" js-font-resize collapse-chevron-icon" data-feather="chevron-down" width="25" class=" js-font-resize text-gray"></i>
                         </div>
                     </div>
-                    <div id="collapseFaq{{ $faq->id }}" aria-labelledby="faq_{{ $faq->id }}" class=" collapse" role="tabpanel">
-                        <div class="panel-collapse text-gray">
+                    <div id="collapseFaq{{ $faq->id }}" aria-labelledby="faq_{{ $faq->id }}" class=" js-font-resize  collapse" role="tabpanel">
+                        <div class=" js-font-resize panel-collapse text-gray">
                             {{ clean($faq->answer,'answer') }}
                         </div>
                     </div>

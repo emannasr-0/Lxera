@@ -1,4 +1,4 @@
-<div class="main-sidebar">
+<div class="main-sidebar js-font-resize">
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand">
             <a href="/">

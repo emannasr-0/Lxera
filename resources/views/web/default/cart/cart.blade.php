@@ -2,130 +2,130 @@
 
 
 @section('content')
-    <section class="cart-banner position-relative text-center">
-        <h1 class="font-30 text-white font-weight-bold">
+    <section class=" js-font-resize cart-banner position-relative text-center">
+        <h1 class=" js-font-resize font-30 text-white font-weight-bold">
             {{ trans('cart.shopping_cart') }}
         </h1>
-        <span class="payment-hint font-20 text-white d-block">
+        <span class=" js-font-resize payment-hint font-20 text-white d-block">
              {{ handlePrice($subTotal) . ' ' . 
                 trans('cart.for_items',['count' => $carts->count()]) }}</span>
     </section>
 
-    <div class="container">
+    <div class=" js-font-resize container">
 
         @if(!empty($totalCashbackAmount))
-            <div class="d-flex align-items-center mt-45 p-15 success-transparent-alert">
-                <div class="success-transparent-alert__icon d-flex align-items-center justify-content-center">
-                    <i data-feather="credit-card" width="18" height="18" class=""></i>
+            <div class=" js-font-resize d-flex align-items-center mt-45 p-15 success-transparent-alert">
+                <div class=" js-font-resize success-transparent-alert__icon d-flex align-items-center justify-content-center">
+                    <i data-feather="credit-card" width="18" height="18" class=" js-font-resize "></i>
                 </div>
 
-                <div class="ml-10">
-                    <div class="font-14 font-weight-bold ">{{ trans('update.get_cashback') }}</div>
-                    <div class="font-12 ">{{ trans('update.by_purchasing_this_cart_you_will_get_amount_as_cashback',['amount' => handlePrice($totalCashbackAmount)]) }}</div>
+                <div class=" js-font-resize ml-10">
+                    <div class=" js-font-resize font-14 font-weight-bold ">{{ trans('update.get_cashback') }}</div>
+                    <div class=" js-font-resize font-12 ">{{ trans('update.by_purchasing_this_cart_you_will_get_amount_as_cashback',['amount' => handlePrice($totalCashbackAmount)]) }}</div>
                 </div>
             </div>
         @endif
 
-        <section class="mt-45">
-            <h2 class="section-title">{{ trans('cart.cart_items') }}</h2>
+        <section class=" js-font-resize mt-45">
+            <h2 class=" js-font-resize section-title">{{ trans('cart.cart_items') }}</h2>
 
-            <div class="rounded-sm shadow mt-20 py-25 px-10 px-md-30">
+            <div class=" js-font-resize rounded-sm shadow mt-20 py-25 px-10 px-md-30">
                 @if($carts->count() > 0)
-                    <div class="row d-none d-md-flex">
-                        <div class="col-12 col-lg-8"><span
-                                class="text-gray font-weight-500">{{ trans('cart.item') }}</span></div>
-                        <div class="col-6 col-lg-2 text-center"><span
-                                class="text-gray font-weight-500">{{ trans('public.price') }}</span></div>
-                        <div class="col-6 col-lg-2 text-center"><span
-                                class="text-gray font-weight-500">{{ trans('public.remove') }}</span></div>
+                    <div class=" js-font-resize row d-none d-md-flex">
+                        <div class=" js-font-resize col-12 col-lg-8"><span
+                                class=" js-font-resize text-gray font-weight-500">{{ trans('cart.item') }}</span></div>
+                        <div class=" js-font-resize col-6 col-lg-2 text-center"><span
+                                class=" js-font-resize text-gray font-weight-500">{{ trans('public.price') }}</span></div>
+                        <div class=" js-font-resize col-6 col-lg-2 text-center"><span
+                                class=" js-font-resize text-gray font-weight-500">{{ trans('public.remove') }}</span></div>
                     </div>
                 @endif
                 @foreach($carts as $index => $cart)
-                    <div class="row mt-5 cart-row">
-                        <div class="col-12 col-lg-8 mb-15 mb-md-0">
-                            <div class="webinar-card webinar-list-cart row">
-                                <div class="col-4">
-                                    <div class="image-box">
+                    <div class=" js-font-resize row mt-5 cart-row">
+                        <div class=" js-font-resize col-12 col-lg-8 mb-15 mb-md-0">
+                            <div class=" js-font-resize webinar-card webinar-list-cart row">
+                                <div class=" js-font-resize col-4">
+                                    <div class=" js-font-resize image-box">
                                         @php
                                             $cartItemInfo = $cart->getItemInfo();
                                             $cartTaxType = !empty($cartItemInfo['isProduct']) ? 'store' : 'general';
                                         @endphp
-                                        <img src="{{ $cartItemInfo['imgPath'] }}" class="img-cover" alt="user avatar">
+                                        <img src="{{ $cartItemInfo['imgPath'] }}" class=" js-font-resize img-cover" alt="user avatar">
                                     </div>
                                 </div>
 
-                                <div class="col-8">
-                                    <div class="webinar-card-body p-0 w-100 h-100 d-flex flex-column">
-                                        <div class="d-flex flex-column">
+                                <div class=" js-font-resize col-8">
+                                    <div class=" js-font-resize webinar-card-body p-0 w-100 h-100 d-flex flex-column">
+                                        <div class=" js-font-resize d-flex flex-column">
                                             <a href="{{ $cartItemInfo['itemUrl'] ?? '#!' }}" target="_blank">
-                                                <h3 class="font-16 font-weight-bold text-dark-blue">{{ $cartItemInfo['title'] }}</h3>
+                                                <h3 class=" js-font-resize font-16 font-weight-bold text-dark-blue">{{ $cartItemInfo['title'] }}</h3>
                                             </a>
 
                                             @if(!empty($cart->gift_id) and !empty($cart->gift))
-                                                <span class="d-block mt-5 text-gray font-12">{!! trans('update.a_gift_for_name_on_date',['name' => $cart->gift->name, 'date' => (!empty($cart->gift->date) ? dateTimeFormat($cart->gift->date, 'j M Y H:i') : trans('update.instantly'))]) !!}</span>
+                                                <span class=" js-font-resize d-block mt-5 text-gray font-12">{!! trans('update.a_gift_for_name_on_date',['name' => $cart->gift->name, 'date' => (!empty($cart->gift->date) ? dateTimeFormat($cart->gift->date, 'j M Y H:i') : trans('update.instantly'))]) !!}</span>
                                             @endif
                                         </div>
 
                                         @if(!empty($cart->reserve_meeting_id))
-                                            <div class="mt-10">
-                                                <span class="text-gray font-12 border rounded-pill py-5 px-10">{{ $cart->reserveMeeting->day .' '. $cart->reserveMeeting->meetingTime->time }} ({{ $cart->reserveMeeting->meeting->getTimezone() }})</span>
+                                            <div class=" js-font-resize mt-10">
+                                                <span class=" js-font-resize text-gray font-12 border rounded-pill py-5 px-10">{{ $cart->reserveMeeting->day .' '. $cart->reserveMeeting->meetingTime->time }} ({{ $cart->reserveMeeting->meeting->getTimezone() }})</span>
                                             </div>
 
                                             @if($cart->reserveMeeting->meeting->getTimezone() != getTimezone())
-                                                <div class="mt-10">
-                                                    <span class="text-danger font-12 border border-danger rounded-pill py-5 px-10">{{ $cart->reserveMeeting->day .' '. dateTimeFormat($cart->reserveMeeting->start_at,'h:iA',false).'-'.dateTimeFormat($cart->reserveMeeting->end_at,'h:iA',false) }} ({{ getTimezone() }})</span>
+                                                <div class=" js-font-resize mt-10">
+                                                    <span class=" js-font-resize text-danger font-12 border border-danger rounded-pill py-5 px-10">{{ $cart->reserveMeeting->day .' '. dateTimeFormat($cart->reserveMeeting->start_at,'h:iA',false).'-'.dateTimeFormat($cart->reserveMeeting->end_at,'h:iA',false) }} ({{ getTimezone() }})</span>
                                                 </div>
                                             @endif
                                         @endif
                                         
                                         <!---->
                                         @if(!empty($cart['certificate_bundle_id']))
-                                            <span class="text-gray font-14 mt-auto">
-                                                <p class="text-gray text-decoration">{{ \App\Models\Bundle::find($cart['certificate_bundle_id'])->title }}</p>
+                                            <span class=" js-font-resize text-gray font-14 mt-auto">
+                                                <p class=" js-font-resize text-gray text-decoration">{{ \App\Models\Bundle::find($cart['certificate_bundle_id'])->title }}</p>
                                             </span>
                                         @endif
                                         <!---->
 
 
                                         @if(!empty($cartItemInfo['profileUrl']) and !empty($cartItemInfo['teacherName']))
-                                            <span class="text-gray font-14 mt-auto">
+                                            <span class=" js-font-resize text-gray font-14 mt-auto">
                                                 {{ trans('public.by') }}
-                                                <a href="{{ $cartItemInfo['profileUrl'] }}" target="_blank" class="text-gray text-decoration-underline">{{ $cartItemInfo['teacherName'] }}</a>
+                                                <a href="{{ $cartItemInfo['profileUrl'] }}" target="_blank" class=" js-font-resize text-gray text-decoration-underline">{{ $cartItemInfo['teacherName'] }}</a>
                                             </span>
                                         @endif
                                         <!------------------------------------------------------------------>
                                         @if(!empty($certificates)&&(!empty($certificates[$index])))
                                         @foreach($certificates[$index] as $certIndex => $certificate)
-                                            <span class="text-gray font-14 mt-auto">
-                                                <a href="#" onclick="showPopup('{{ $index }}_{{ $certIndex }}', {{ $certificate->price }}, '{{  $certificate->title }}')" class="text-gray text-decoration-underline">
+                                            <span class=" js-font-resize text-gray font-14 mt-auto">
+                                                <a href="#" onclick="showPopup('{{ $index }}_{{ $certIndex }}', {{ $certificate->price }}, '{{  $certificate->title }}')" class=" js-font-resize text-gray text-decoration-underline">
                                                     للحصول أيضًا على شهادة {{ $certificate->title }}
                                                 </a>
 
                                             </span>
                                     
                                             <!-- Popup Template -->
-                                            <div id="coursePopup{{ $index }}_{{ $certIndex }}" class="modal fade">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title">تأكيد الشراء</h5>
-                                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <div id="coursePopup{{ $index }}_{{ $certIndex }}" class=" js-font-resize modal fade">
+                                                <div class=" js-font-resize modal-dialog">
+                                                    <div class=" js-font-resize modal-content">
+                                                        <div class=" js-font-resize modal-header">
+                                                            <h5 class=" js-font-resize modal-title">تأكيد الشراء</h5>
+                                                            <button type="button" class=" js-font-resize close" data-dismiss="modal">&times;</button>
                                                         </div>
                                     
-                                                        <div class="modal-body">
+                                                        <div class=" js-font-resize modal-body">
                                                             هل انت تريد شراء شهادة {{ $certificate->title }} مقابل {{ $certificate->price}} ريال سعودي
                                                         </div>
                                     
-                                                        <div class="modal-footer">
+                                                        <div class=" js-font-resize modal-footer">
                                                             <form action="/cart/store" method="post">
                                                                 {{ csrf_field() }}
                                                                 <input type="hidden" name="item_id" value="{{ $certificate->id }}">
                                                                 <input type="hidden" name="item_name" value="certificate_template_id">
                                                                 <input type="hidden" name="certificate_bundle_id" value="{{$cart['bundle_id']}}">
-                                                                <button type="submit" class="btn btn-primary" onclick="acceptPurchase({{ $index }}_{{ $certIndex }})">موافق</button>
+                                                                <button type="submit" class=" js-font-resize btn btn-primary" onclick="acceptPurchase({{ $index }}_{{ $certIndex }})">موافق</button>
                                                             </form>
                                     
-                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">إلغاء</button>
+                                                            <button type="button" class=" js-font-resize btn btn-secondary" data-dismiss="modal">إلغاء</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -136,7 +136,7 @@
                                         <!------------------------------------------------------------------>
 
                                         @if(!empty($cartItemInfo['extraHint']))
-                                            <span class="text-gray font-14 mt-auto">{{ $cartItemInfo['extraHint'] }}</span>
+                                            <span class=" js-font-resize text-gray font-14 mt-auto">{{ $cartItemInfo['extraHint'] }}</span>
                                         @endif
 
                                         @if(!is_null($cartItemInfo['rate']))
@@ -147,36 +147,36 @@
                             </div>
                         </div>
 
-                        <div class="col-6 col-lg-2 d-flex flex-md-column align-items-center justify-content-center">
-                            <span class="text-gray d-inline-block d-md-none">{{ trans('public.price') }} :</span>
+                        <div class=" js-font-resize col-6 col-lg-2 d-flex flex-md-column align-items-center justify-content-center">
+                            <span class=" js-font-resize text-gray d-inline-block d-md-none">{{ trans('public.price') }} :</span>
 
                             @if(!empty($cartItemInfo['discountPrice']))
-                                <span class="text-gray text-decoration-line-through mx-10 mx-md-0">{{ handlePrice($cartItemInfo['price'], true, true, false, null, true, $cartTaxType) }}</span>
-                                <span class="font-20 text-primary mt-0 mt-md-5 font-weight-bold">{{ handlePrice($cartItemInfo['discountPrice'], true, true, false, null, true, $cartTaxType) }}</span>
+                                <span class=" js-font-resize text-gray text-decoration-line-through mx-10 mx-md-0">{{ handlePrice($cartItemInfo['price'], true, true, false, null, true, $cartTaxType) }}</span>
+                                <span class=" js-font-resize font-20 text-primary mt-0 mt-md-5 font-weight-bold">{{ handlePrice($cartItemInfo['discountPrice'], true, true, false, null, true, $cartTaxType) }}</span>
                             @else
-                                <span class="font-20 text-primary mt-0 mt-md-5 font-weight-bold">{{ handlePrice($cartItemInfo['price'], true, true, false, null, true, $cartTaxType) }}</span>
+                                <span class=" js-font-resize font-20 text-primary mt-0 mt-md-5 font-weight-bold">{{ handlePrice($cartItemInfo['price'], true, true, false, null, true, $cartTaxType) }}</span>
                             @endif
 
                             @if(!empty($cartItemInfo['quantity']))
-                                <span class="font-12 text-warning font-weight-500 mt-0 mt-md-5">({{ $cartItemInfo['quantity'] }} {{ trans('update.product') }})</span>
+                                <span class=" js-font-resize font-12 text-warning font-weight-500 mt-0 mt-md-5">({{ $cartItemInfo['quantity'] }} {{ trans('update.product') }})</span>
                             @endif
 
                             @if(!empty($cartItemInfo['extraPriceHint']))
-                                <span class="font-12 text-gray font-weight-500 mt-0 mt-md-5">{{ $cartItemInfo['extraPriceHint'] }}</span>
+                                <span class=" js-font-resize font-12 text-gray font-weight-500 mt-0 mt-md-5">{{ $cartItemInfo['extraPriceHint'] }}</span>
                             @endif
                         </div>
 
-                        <div class="col-6 col-lg-2 d-flex flex-md-column align-items-center justify-content-center">
-                            <span class="text-gray d-inline-block d-md-none mr-10 mr-md-0">{{ trans('public.remove') }} :</span>
+                        <div class=" js-font-resize col-6 col-lg-2 d-flex flex-md-column align-items-center justify-content-center">
+                            <span class=" js-font-resize text-gray d-inline-block d-md-none mr-10 mr-md-0">{{ trans('public.remove') }} :</span>
 
-                            <a href="/cart/{{ $cart->id }}/delete" class="delete-action btn-cart-list-delete d-flex align-items-center justify-content-center">
-                                <i data-feather="x" width="20" height="20" class=""></i>
+                            <a href="/cart/{{ $cart->id }}/delete" class=" js-font-resize delete-action btn-cart-list-delete d-flex align-items-center justify-content-center">
+                                <i data-feather="x" width="20" height="20" class=" js-font-resize "></i>
                             </a>
                         </div>
                     </div>
                 @endforeach
 
-                <button type="button" onclick="window.history.back()" class="btn btn-sm btn-primary mt-25">{{ trans('cart.continue_shopping') }}</button>
+                <button type="button" onclick="window.history.back()" class=" js-font-resize btn btn-sm btn-primary mt-25">{{ trans('cart.continue_shopping') }}</button>
             </div>
         </section>
 
@@ -188,74 +188,74 @@
                 @include('web.default.cart.includes.shipping_and_delivery')
             @endif
 
-            <div class="row mt-30">
-                <div class="col-12 col-lg-6">
-                    <section class="mt-45">
-                        <h3 class="section-title">{{ trans('cart.coupon_code') }}</h3>
-                        <div class="rounded-sm shadow mt-20 py-25 px-20">
-                            <p class="text-gray font-14">{{ trans('cart.coupon_code_hint') }}</p>
+            <div class=" js-font-resize row mt-30">
+                <div class=" js-font-resize col-12 col-lg-6">
+                    <section class=" js-font-resize mt-45">
+                        <h3 class=" js-font-resize section-title">{{ trans('cart.coupon_code') }}</h3>
+                        <div class=" js-font-resize rounded-sm shadow mt-20 py-25 px-20">
+                            <p class=" js-font-resize text-gray font-14">{{ trans('cart.coupon_code_hint') }}</p>
 
                             @if(!empty($userGroup) and !empty($userGroup->discount))
-                                <p class="text-gray mt-25">{{ trans('cart.in_user_group',['group_name' => $userGroup->name , 'percent' => $userGroup->discount]) }}</p>
+                                <p class=" js-font-resize text-gray mt-25">{{ trans('cart.in_user_group',['group_name' => $userGroup->name , 'percent' => $userGroup->discount]) }}</p>
                             @endif
 
                             <form action="/carts/coupon/validate" method="Post">
                                 {{ csrf_field() }}
-                                <div class="form-group">
-                                    <input type="text" name="coupon" id="coupon_input" class="form-control mt-25"
+                                <div class=" js-font-resize form-group">
+                                    <input type="text" name="coupon" id="coupon_input" class=" js-font-resize form-control mt-25"
                                            placeholder="{{ trans('cart.enter_your_code_here') }}">
-                                    <span class="invalid-feedback">{{ trans('cart.coupon_invalid') }}</span>
-                                    <span class="valid-feedback">{{ trans('cart.coupon_valid') }}</span>
+                                    <span class=" js-font-resize invalid-feedback">{{ trans('cart.coupon_invalid') }}</span>
+                                    <span class=" js-font-resize valid-feedback">{{ trans('cart.coupon_valid') }}</span>
                                 </div>
 
                                 <button type="submit" id="checkCoupon"
-                                        class="btn btn-sm btn-primary mt-50">{{ trans('cart.validate') }}</button>
+                                        class=" js-font-resize btn btn-sm btn-primary mt-50">{{ trans('cart.validate') }}</button>
                             </form>
                         </div>
                     </section>
                 </div>
 
-                <div class="col-12 col-lg-6">
-                    <section class="mt-45">
-                        <h3 class="section-title">{{ trans('cart.cart_totals') }}</h3>
-                        <div class="rounded-sm shadow mt-20 pb-20 px-20">
+                <div class=" js-font-resize col-12 col-lg-6">
+                    <section class=" js-font-resize mt-45">
+                        <h3 class=" js-font-resize section-title">{{ trans('cart.cart_totals') }}</h3>
+                        <div class=" js-font-resize rounded-sm shadow mt-20 pb-20 px-20">
 
-                            <div class="cart-checkout-item">
-                                <h4 class="text-secondary font-14 font-weight-500">{{ trans('cart.sub_total') }}</h4>
-                                <span class="font-14 text-gray font-weight-bold">{{ handlePrice($subTotal) }}</span>
+                            <div class=" js-font-resize cart-checkout-item">
+                                <h4 class=" js-font-resize text-secondary font-14 font-weight-500">{{ trans('cart.sub_total') }}</h4>
+                                <span class=" js-font-resize font-14 text-gray font-weight-bold">{{ handlePrice($subTotal) }}</span>
                             </div>
 
-                            <div class="cart-checkout-item">
-                                <h4 class="text-secondary font-14 font-weight-500">{{ trans('public.discount') }}</h4>
-                                <span class="font-14 text-gray font-weight-bold">
+                            <div class=" js-font-resize cart-checkout-item">
+                                <h4 class=" js-font-resize text-secondary font-14 font-weight-500">{{ trans('public.discount') }}</h4>
+                                <span class=" js-font-resize font-14 text-gray font-weight-bold">
                                 <span id="totalDiscount">{{ handlePrice($totalDiscount) }}</span>
                             </span>
                             </div>
 
-                            <div class="cart-checkout-item">
-                                <h4 class="text-secondary font-14 font-weight-500">{{ trans('cart.tax') }}
+                            <div class=" js-font-resize cart-checkout-item">
+                                <h4 class=" js-font-resize text-secondary font-14 font-weight-500">{{ trans('cart.tax') }}
                                     @if(!$taxIsDifferent)
-                                        <span class="font-14 text-gray ">({{ $tax }}%)</span>
+                                        <span class=" js-font-resize font-14 text-gray ">({{ $tax }}%)</span>
                                     @endif
                                 </h4>
-                                <span class="font-14 text-gray font-weight-bold"><span id="taxPrice">{{ handlePrice($taxPrice) }}</span></span>
+                                <span class=" js-font-resize font-14 text-gray font-weight-bold"><span id="taxPrice">{{ handlePrice($taxPrice) }}</span></span>
                             </div>
 
                             @if(!empty($productDeliveryFee))
-                                <div class="cart-checkout-item">
-                                    <h4 class="text-secondary font-14 font-weight-500">
+                                <div class=" js-font-resize cart-checkout-item">
+                                    <h4 class=" js-font-resize text-secondary font-14 font-weight-500">
                                         {{ trans('update.delivery_fee') }}
                                     </h4>
-                                    <span class="font-14 text-gray font-weight-bold"><span id="taxPrice">{{ handlePrice($productDeliveryFee) }}</span></span>
+                                    <span class=" js-font-resize font-14 text-gray font-weight-bold"><span id="taxPrice">{{ handlePrice($productDeliveryFee) }}</span></span>
                                 </div>
                             @endif
 
-                            <div class="cart-checkout-item border-0">
-                                <h4 class="text-secondary font-14 font-weight-500">{{ trans('cart.total') }}</h4>
-                                <span class="font-14 text-gray font-weight-bold"><span id="totalAmount">{{ handlePrice($total) }}</span></span>
+                            <div class=" js-font-resize cart-checkout-item border-0">
+                                <h4 class=" js-font-resize text-secondary font-14 font-weight-500">{{ trans('cart.total') }}</h4>
+                                <span class=" js-font-resize font-14 text-gray font-weight-bold"><span id="totalAmount">{{ handlePrice($total) }}</span></span>
                             </div>
 
-                            <button type="submit" class="btn btn-sm btn-primary mt-15">{{ trans('cart.checkout') }}</button>
+                            <button type="submit" class=" js-font-resize btn btn-sm btn-primary mt-15">{{ trans('cart.checkout') }}</button>
                         </div>
                     </section>
                 </div>

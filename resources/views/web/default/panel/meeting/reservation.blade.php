@@ -6,31 +6,31 @@
 
 @section('content')
     <section>
-        <h2 class="section-title">{{ trans('panel.meeting_statistics') }}</h2>
+        <h2 class=" js-font-resize section-title">{{ trans('panel.meeting_statistics') }}</h2>
 
-        <div class="activities-container mt-25 p-20 p-lg-35">
-            <div class="row">
-                <div class="col-4 d-flex align-items-center justify-content-center">
-                    <div class="d-flex flex-column align-items-center text-center">
+        <div class=" js-font-resize activities-container mt-25 p-20 p-lg-35">
+            <div class=" js-font-resize row">
+                <div class=" js-font-resize col-4 d-flex align-items-center justify-content-center">
+                    <div class=" js-font-resize d-flex flex-column align-items-center text-center">
                         <img src="/assets/default/img/activity/49.svg" width="64" height="64" alt="">
-                        <strong class="font-30 font-weight-bold mt-5">{{ $openReserveCount }}</strong>
-                        <span class="font-16 text-light text-gray font-weight-500">{{ trans('panel.open_meetings') }}</span>
+                        <strong class=" js-font-resize font-30 font-weight-bold mt-5">{{ $openReserveCount }}</strong>
+                        <span class=" js-font-resize font-16 text-light text-gray font-weight-500">{{ trans('panel.open_meetings') }}</span>
                     </div>
                 </div>
 
-                <div class="col-4 d-flex align-items-center justify-content-center">
-                    <div class="d-flex flex-column align-items-center text-center">
+                <div class=" js-font-resize col-4 d-flex align-items-center justify-content-center">
+                    <div class=" js-font-resize d-flex flex-column align-items-center text-center">
                         <img src="/assets/default/img/activity/50.svg" width="64" height="64" alt="">
-                        <strong class="font-30 font-weight-bold mt-5">{{ $totalReserveCount }}</strong>
-                        <span class="font-16 text-light text-gray font-weight-500">{{ trans('panel.total_meetings') }}</span>
+                        <strong class=" js-font-resize font-30 font-weight-bold mt-5">{{ $totalReserveCount }}</strong>
+                        <span class=" js-font-resize font-16 text-light text-gray font-weight-500">{{ trans('panel.total_meetings') }}</span>
                     </div>
                 </div>
 
-                <div class="col-4 d-flex align-items-center justify-content-center">
-                    <div class="d-flex flex-column align-items-center text-center">
+                <div class=" js-font-resize col-4 d-flex align-items-center justify-content-center">
+                    <div class=" js-font-resize d-flex flex-column align-items-center text-center">
                         <img src="/assets/default/img/activity/hours.svg" width="64" height="64" alt="">
-                        <strong class="font-30 text-dark font-weight-bold mt-5">{{ $activeHoursCount }}</strong>
-                        <span class="font-16 text-gray font-weight-500">{{ trans('panel.active_hours') }}</span>
+                        <strong class=" js-font-resize font-30 text-dark font-weight-bold mt-5">{{ $activeHoursCount }}</strong>
+                        <span class=" js-font-resize font-16 text-gray font-weight-500">{{ trans('panel.active_hours') }}</span>
                     </div>
                 </div>
 
@@ -38,49 +38,49 @@
         </div>
     </section>
 
-    <section class="mt-25">
-        <h2 class="section-title">{{ trans('panel.filter_meetings') }}</h2>
+    <section class=" js-font-resize mt-25">
+        <h2 class=" js-font-resize section-title">{{ trans('panel.filter_meetings') }}</h2>
 
-        <div class="panel-section-card py-20 px-25 mt-20">
-            <form action="/panel/meetings/reservation" method="get" class="row">
-                <div class="col-12 col-lg-4">
-                    <div class="row">
-                        <div class="col-12 col-md-6">
-                            <div class="form-group">
-                                <label class="input-label">{{ trans('public.from') }}</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="dateInputGroupPrepend">
-                                            <i data-feather="calendar" width="18" height="18" class="text-light"></i>
+        <div class=" js-font-resize panel-section-card py-20 px-25 mt-20">
+            <form action="/panel/meetings/reservation" method="get" class=" js-font-resize row">
+                <div class=" js-font-resize col-12 col-lg-4">
+                    <div class=" js-font-resize row">
+                        <div class=" js-font-resize col-12 col-md-6">
+                            <div class=" js-font-resize form-group">
+                                <label class=" js-font-resize input-label">{{ trans('public.from') }}</label>
+                                <div class=" js-font-resize input-group">
+                                    <div class=" js-font-resize input-group-prepend">
+                                        <span class=" js-font-resize input-group-text" id="dateInputGroupPrepend">
+                                            <i data-feather="calendar" width="18" height="18" class=" js-font-resize text-light"></i>
                                         </span>
                                     </div>
-                                    <input type="text" name="from" autocomplete="off" class="form-control @if(!empty(request()->get('from'))) datepicker @else datefilter @endif"
+                                    <input type="text" name="from" autocomplete="off" class=" js-font-resize form-control @if(!empty(request()->get('from'))) datepicker @else datefilter @endif"
                                            aria-describedby="dateInputGroupPrepend" value="{{ request()->get('from','') }}"/>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-md-6">
-                            <div class="form-group">
-                                <label class="input-label">{{ trans('public.to') }}</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="dateInputGroupPrepend">
-                                            <i data-feather="calendar" width="18" height="18" class="text-light"></i>
+                        <div class=" js-font-resize col-12 col-md-6">
+                            <div class=" js-font-resize form-group">
+                                <label class=" js-font-resize input-label">{{ trans('public.to') }}</label>
+                                <div class=" js-font-resize input-group">
+                                    <div class=" js-font-resize input-group-prepend">
+                                        <span class=" js-font-resize input-group-text" id="dateInputGroupPrepend">
+                                            <i data-feather="calendar" width="18" height="18" class=" js-font-resize text-light"></i>
                                         </span>
                                     </div>
-                                    <input type="text" name="to" autocomplete="off" class="form-control @if(!empty(request()->get('to'))) datepicker @else datefilter @endif"
+                                    <input type="text" name="to" autocomplete="off" class=" js-font-resize form-control @if(!empty(request()->get('to'))) datepicker @else datefilter @endif"
                                            aria-describedby="dateInputGroupPrepend" value="{{ request()->get('to','') }}"/>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-lg-6">
-                    <div class="row">
-                        <div class="col-12 col-lg-4">
-                            <div class="form-group">
-                                <label class="input-label">{{ trans('public.day') }}</label>
-                                <select class="form-control" id="day" name="day">
+                <div class=" js-font-resize col-12 col-lg-6">
+                    <div class=" js-font-resize row">
+                        <div class=" js-font-resize col-12 col-lg-4">
+                            <div class=" js-font-resize form-group">
+                                <label class=" js-font-resize input-label">{{ trans('public.day') }}</label>
+                                <select class=" js-font-resize form-control" id="day" name="day">
                                     <option value="all">{{ trans('public.all_days') }}</option>
                                     <option value="saturday" {{ (request()->get('day') === "saturday") ? 'selected' : '' }}>{{ trans('public.saturday') }}</option>
                                     <option value="sunday" {{ (request()->get('day') === "sunday") ? 'selected' : '' }}>{{ trans('public.sunday') }}</option>
@@ -92,12 +92,12 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-12 col-lg-8">
-                            <div class="row">
-                                <div class="col-12 col-lg-8">
-                                    <div class="form-group">
-                                        <label class="input-label">{{ trans('public.instructor') }}</label>
-                                        <select name="instructor_id" class="form-control select2 ">
+                        <div class=" js-font-resize col-12 col-lg-8">
+                            <div class=" js-font-resize row">
+                                <div class=" js-font-resize col-12 col-lg-8">
+                                    <div class=" js-font-resize form-group">
+                                        <label class=" js-font-resize input-label">{{ trans('public.instructor') }}</label>
+                                        <select name="instructor_id" class=" js-font-resize form-control select2 ">
                                             <option value="all">{{ trans('webinars.all_instructors') }}</option>
 
                                             @foreach($instructors as $instructor)
@@ -106,10 +106,10 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-12 col-lg-4">
-                                    <div class="form-group">
-                                        <label class="input-label">{{ trans('public.status') }}</label>
-                                        <select class="form-control" id="status" name="status">
+                                <div class=" js-font-resize col-12 col-lg-4">
+                                    <div class=" js-font-resize form-group">
+                                        <label class=" js-font-resize input-label">{{ trans('public.status') }}</label>
+                                        <select class=" js-font-resize form-control" id="status" name="status">
                                             <option>{{ trans('public.all') }}</option>
                                             <option value="open" {{ (request()->get('status') === "open") ? 'selected' : '' }}>{{ trans('public.open') }}</option>
                                             <option value="finished" {{ (request()->get('status') === "finished") ? 'selected' : '' }}>{{ trans('public.finished') }}</option>
@@ -120,44 +120,44 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-lg-2 d-flex align-items-center justify-content-end">
-                    <button type="submit" class="btn btn-sm btn-acadima-primary w-100 mt-2">{{ trans('public.show_results') }}</button>
+                <div class=" js-font-resize col-12 col-lg-2 d-flex align-items-center justify-content-end">
+                    <button type="submit" class=" js-font-resize btn btn-sm btn-acadima-primary w-100 mt-2">{{ trans('public.show_results') }}</button>
                 </div>
             </form>
         </div>
     </section>
 
 
-    <section class="mt-35">
-        <div class="d-flex align-items-start align-items-md-center justify-content-between flex-column flex-md-row">
-            <h2 class="section-title">{{ trans('panel.meeting_list') }}</h2>
+    <section class=" js-font-resize mt-35">
+        <div class=" js-font-resize d-flex align-items-start align-items-md-center justify-content-between flex-column flex-md-row">
+            <h2 class=" js-font-resize section-title">{{ trans('panel.meeting_list') }}</h2>
 
-            <form action="/panel/meetings/reservation?{{ http_build_query(request()->all()) }}" class="d-flex align-items-center flex-row-reverse flex-md-row justify-content-start justify-content-md-center mt-20 mt-md-0">
-                <label class="cursor-pointer mb-0 mr-10 text-gray font-14 font-weight-500" for="openMeetingResult">{{ trans('panel.show_only_open_meetings') }}</label>
-                <div class="custom-control custom-switch">
-                    <input type="checkbox" name="open_meetings" class="js-panel-list-switch-filter custom-control-input" id="openMeetingResult" {{ (request()->get('open_meetings', '') == 'on') ? 'checked' : '' }}>
-                    <label class="custom-control-label" for="openMeetingResult"></label>
+            <form action="/panel/meetings/reservation?{{ http_build_query(request()->all()) }}" class=" js-font-resize d-flex align-items-center flex-row-reverse flex-md-row justify-content-start justify-content-md-center mt-20 mt-md-0">
+                <label class=" js-font-resize cursor-pointer mb-0 mr-10 text-gray font-14 font-weight-500" for="openMeetingResult">{{ trans('panel.show_only_open_meetings') }}</label>
+                <div class=" js-font-resize custom-control custom-switch">
+                    <input type="checkbox" name="open_meetings" class=" js-font-resize js-panel-list-switch-filter custom-control-input" id="openMeetingResult" {{ (request()->get('open_meetings', '') == 'on') ? 'checked' : '' }}>
+                    <label class=" js-font-resize custom-control-label" for="openMeetingResult"></label>
                 </div>
             </form>
         </div>
 
         @if($reserveMeetings->count() > 0)
 
-            <div class="panel-section-card py-20 px-25 mt-20">
-                <div class="row">
-                    <div class="col-12 ">
-                        <div class="table-responsive">
-                            <table class="table text-center custom-table">
+            <div class=" js-font-resize panel-section-card py-20 px-25 mt-20">
+                <div class=" js-font-resize row">
+                    <div class=" js-font-resize col-12 ">
+                        <div class=" js-font-resize table-responsive">
+                            <table class=" js-font-resize table text-center custom-table">
                                 <thead>
                                 <tr>
                                     <th>{{ trans('public.instructor') }}</th>
-                                    <th class="text-center">{{ trans('update.meeting_type') }}</th>
-                                    <th class="text-center">{{ trans('public.day') }}</th>
-                                    <th class="text-center">{{ trans('public.date') }}</th>
-                                    <th class="text-center">{{ trans('public.time') }}</th>
-                                    <th class="text-center">{{ trans('public.paid_amount') }}</th>
-                                    <th class="text-center">{{ trans('update.students_count') }}</th>
-                                    <th class="text-center">{{ trans('public.status') }}</th>
+                                    <th class=" js-font-resize text-center">{{ trans('update.meeting_type') }}</th>
+                                    <th class=" js-font-resize text-center">{{ trans('public.day') }}</th>
+                                    <th class=" js-font-resize text-center">{{ trans('public.date') }}</th>
+                                    <th class=" js-font-resize text-center">{{ trans('public.time') }}</th>
+                                    <th class=" js-font-resize text-center">{{ trans('public.paid_amount') }}</th>
+                                    <th class=" js-font-resize text-center">{{ trans('update.students_count') }}</th>
+                                    <th class=" js-font-resize text-center">{{ trans('public.status') }}</th>
                                     <th></th>
                                 </tr>
                                 </thead>
@@ -165,34 +165,34 @@
 
                                 @foreach($reserveMeetings as $ReserveMeeting)
                                     <tr>
-                                        <td class="text-left">
-                                            <div class="user-inline-avatar d-flex align-items-center">
-                                                <div class="avatar bg-gray200">
-                                                    <img src="{{ $ReserveMeeting->meeting->creator->getAvatar() }}" class="img-cover" alt="">
+                                        <td class=" js-font-resize text-left">
+                                            <div class=" js-font-resize user-inline-avatar d-flex align-items-center">
+                                                <div class=" js-font-resize avatar bg-gray200">
+                                                    <img src="{{ $ReserveMeeting->meeting->creator->getAvatar() }}" class=" js-font-resize img-cover" alt="">
                                                 </div>
-                                                <div class=" ml-5">
-                                                    <span class="d-block font-weight-500">{{ $ReserveMeeting->meeting->creator->full_name }}</span>
-                                                    <span class="mt-5 font-12 text-gray d-block">{{ $ReserveMeeting->meeting->creator->email }}</span>
+                                                <div class=" js-font-resize  ml-5">
+                                                    <span class=" js-font-resize d-block font-weight-500">{{ $ReserveMeeting->meeting->creator->full_name }}</span>
+                                                    <span class=" js-font-resize mt-5 font-12 text-gray d-block">{{ $ReserveMeeting->meeting->creator->email }}</span>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td class="align-middle">
-                                            <span class="font-weight-500">{{ trans('update.'.$ReserveMeeting->meeting_type) }}</span>
+                                        <td class=" js-font-resize align-middle">
+                                            <span class=" js-font-resize font-weight-500">{{ trans('update.'.$ReserveMeeting->meeting_type) }}</span>
                                         </td>
-                                        <td class="align-middle">
-                                            <span class="font-weight-500">{{ dateTimeFormat($ReserveMeeting->start_at, 'D') }}</span>
+                                        <td class=" js-font-resize align-middle">
+                                            <span class=" js-font-resize font-weight-500">{{ dateTimeFormat($ReserveMeeting->start_at, 'D') }}</span>
                                         </td>
-                                        <td class="align-middle">
+                                        <td class=" js-font-resize align-middle">
                                             <span>{{ dateTimeFormat($ReserveMeeting->start_at, 'j M Y') }}</span>
                                         </td>
-                                        <td class="align-middle">
-                                            <div class="d-inline-flex align-items-center rounded bg-gray200 py-5 px-15 font-14 font-weight-500">
-                                                <span class="">{{ dateTimeFormat($ReserveMeeting->start_at, 'H:i') }}</span>
-                                                <span class="mx-1">-</span>
-                                                <span class="">{{ dateTimeFormat($ReserveMeeting->end_at, 'H:i') }}</span>
+                                        <td class=" js-font-resize align-middle">
+                                            <div class=" js-font-resize d-inline-flex align-items-center rounded bg-gray200 py-5 px-15 font-14 font-weight-500">
+                                                <span class=" js-font-resize ">{{ dateTimeFormat($ReserveMeeting->start_at, 'H:i') }}</span>
+                                                <span class=" js-font-resize mx-1">-</span>
+                                                <span class=" js-font-resize ">{{ dateTimeFormat($ReserveMeeting->end_at, 'H:i') }}</span>
                                             </div>
                                         </td>
-                                        <td class="align-middle font-weight-500">
+                                        <td class=" js-font-resize align-middle font-weight-500">
                                             @if(!empty($ReserveMeeting->sale) and !empty($ReserveMeeting->sale->total_amount) and $ReserveMeeting->sale->total_amount > 0)
                                                 {{ handlePrice($ReserveMeeting->sale->total_amount) }}
 
@@ -200,64 +200,64 @@
                                                 {{ trans('public.free') }}
                                             @endif
                                         </td>
-                                        <td class="align-middle font-weight-500">
+                                        <td class=" js-font-resize align-middle font-weight-500">
                                             {{ $ReserveMeeting->student_count ?? 1 }}
                                         </td>
-                                        <td class="align-middle">
+                                        <td class=" js-font-resize align-middle">
                                             @switch($ReserveMeeting->status)
                                                 @case(\App\Models\ReserveMeeting::$pending)
-                                                    <span class="text-warning font-weight-500">{{ trans('public.pending') }}</span>
+                                                    <span class=" js-font-resize text-warning font-weight-500">{{ trans('public.pending') }}</span>
                                                     @break
                                                 @case(\App\Models\ReserveMeeting::$open)
-                                                    <span class="text-gray font-weight-500">{{ trans('public.open') }}</span>
+                                                    <span class=" js-font-resize text-gray font-weight-500">{{ trans('public.open') }}</span>
                                                     @break
                                                 @case(\App\Models\ReserveMeeting::$finished)
-                                                    <span class="font-weight-500 text-primary">{{ trans('public.finished') }}</span>
+                                                    <span class=" js-font-resize font-weight-500 text-primary">{{ trans('public.finished') }}</span>
                                                     @break
                                                 @case(\App\Models\ReserveMeeting::$canceled)
-                                                    <span class="text-danger font-weight-500">{{ trans('public.canceled') }}</span>
+                                                    <span class=" js-font-resize text-danger font-weight-500">{{ trans('public.canceled') }}</span>
                                                     @break
                                             @endswitch
                                         </td>
 
 
-                                        <td class="align-middle text-right">
+                                        <td class=" js-font-resize align-middle text-right">
                                             @if(!in_array($ReserveMeeting->status, [\App\Models\ReserveMeeting::$finished, \App\Models\ReserveMeeting::$canceled]))
 
-                                                <input type="hidden" class="js-meeting-password-{{ $ReserveMeeting->id }}" value="{{ $ReserveMeeting->password }}">
-                                                <input type="hidden" class="js-meeting-link-{{ $ReserveMeeting->id }}" value="{{ $ReserveMeeting->link }}">
+                                                <input type="hidden" class=" js-font-resize js-meeting-password-{{ $ReserveMeeting->id }}" value="{{ $ReserveMeeting->password }}">
+                                                <input type="hidden" class=" js-font-resize js-meeting-link-{{ $ReserveMeeting->id }}" value="{{ $ReserveMeeting->link }}">
 
 
-                                                <div class="btn-group dropdown table-actions">
-                                                    <button type="button" class="btn-transparent dropdown-toggle"
+                                                <div class=" js-font-resize btn-group dropdown table-actions">
+                                                    <button type="button" class=" js-font-resize btn-transparent dropdown-toggle"
                                                             data-toggle="dropdown" aria-haspopup="true"
                                                             aria-expanded="false">
                                                         <i data-feather="more-vertical" height="20"></i>
                                                     </button>
-                                                    <div class="dropdown-menu menu-lg">
+                                                    <div class=" js-font-resize dropdown-menu menu-lg">
 
                                                         @if(getFeaturesSettings('agora_for_meeting') and $ReserveMeeting->meeting_type != 'in_person' and $ReserveMeeting->status == \App\Models\ReserveMeeting::$open)
                                                             @if(!empty($ReserveMeeting->session))
                                                                 <button type="button" data-item-id="{{ $ReserveMeeting->id }}" data-date="{{ dateTimeFormat($ReserveMeeting->start_at, 'j M Y H:i') }}" data-link="{{ $ReserveMeeting->session->getJoinLink() }}"
-                                                                        class="js-join-meeting-session btn-transparent webinar-actions d-block mt-10 text-primary">{{ trans('update.join_to_session') }}</button>
+                                                                        class=" js-font-resize js-join-meeting-session btn-transparent webinar-actions d-block mt-10 text-primary">{{ trans('update.join_to_session') }}</button>
                                                             @endif
                                                         @endif
 
                                                         @if($ReserveMeeting->link and $ReserveMeeting->status == \App\Models\ReserveMeeting::$open)
                                                             <button type="button" data-reserve-id="{{ $ReserveMeeting->id }}"
-                                                                    class="js-join-reserve btn-transparent webinar-actions d-block mt-10">{{ trans('footer.join') }}</button>
+                                                                    class=" js-font-resize js-join-reserve btn-transparent webinar-actions d-block mt-10">{{ trans('footer.join') }}</button>
                                                         @endif
 
                                                         <a href="{{ $ReserveMeeting->addToCalendarLink() }}" target="_blank"
-                                                           class="webinar-actions d-block mt-10 font-weight-normal">{{ trans('public.add_to_calendar') }}</a>
+                                                           class=" js-font-resize webinar-actions d-block mt-10 font-weight-normal">{{ trans('public.add_to_calendar') }}</a>
 
                                                         <button type="button"
                                                                 data-user-id="{{ $ReserveMeeting->meeting->creator_id }}"
                                                                 data-item-id="{{ $ReserveMeeting->id }}"
                                                                 data-user-type="instructor"
-                                                                class="contact-info btn-transparent webinar-actions d-block mt-10">{{ trans('panel.contact_instructor') }}</button>
+                                                                class=" js-font-resize contact-info btn-transparent webinar-actions d-block mt-10">{{ trans('panel.contact_instructor') }}</button>
 
-                                                        <button type="button" data-id="{{ $ReserveMeeting->id }}" class="webinar-actions js-finish-meeting-reserve d-block btn-transparent mt-10 font-weight-normal">{{ trans('panel.finish_meeting') }}</button>
+                                                        <button type="button" data-id="{{ $ReserveMeeting->id }}" class=" js-font-resize webinar-actions js-finish-meeting-reserve d-block btn-transparent mt-10 font-weight-normal">{{ trans('panel.finish_meeting') }}</button>
                                                     </div>
                                                 </div>
                                             @endif
@@ -272,7 +272,7 @@
                 </div>
             </div>
 
-            <div class="my-30">
+            <div class=" js-font-resize my-30">
                 {{ $reserveMeetings->appends(request()->input())->links('vendor.pagination.panel') }}
             </div>
         @else
