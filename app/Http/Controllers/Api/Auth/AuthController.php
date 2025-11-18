@@ -285,7 +285,7 @@ class AuthController extends Controller
             $profile_completion[] = 'full_name';
             $data['profile_completion'] = $profile_completion;
         }
-
+  $data['role_id'] = $user->role_id;
         // return sendResponse2($data, 'user login successfully' );
         return response()->json(['data' => $data]);
     }
