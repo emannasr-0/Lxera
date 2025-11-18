@@ -114,7 +114,6 @@ class LoginController extends Controller
             "id" => $user->id,
             "full_name" => $user->full_name,
             "role_name" => $user->role_name,
-            "role_id" => $user->role_id,
             "user_code" => $user->user_code,
             "mobile" => $user->mobile,
             "email" => $user->email,
