@@ -62,12 +62,14 @@ class InstallmentsController extends Controller
  
             $totalAmount = $stepsFixedAmount + $stepsPercents;
             $installment->total_amount = handlePrice($totalAmount);
+
  
             // group ids
             $installment->group_ids = $installment->userGroups()->pluck('group_id');
  
             // specification items
             $installment->specificationItems = $installment->specificationItems()->get();
+
         }
  
         $data = [
