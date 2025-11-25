@@ -120,14 +120,38 @@ class RoleController extends Controller
             User::where('role_id', $role->id)->update(['role_name' => $role->name]);
 
             if ($role->is_admin) {
+                // IDs اللي جاية من الفورم (المسموح بيها)
+                $allowedIds = $request->input('permissions', []);
+                $allowedIds = array_map('intval', $allowedIds);
 
-                $sectionIds = $request->input('permissions', []);
-                $permissionsData = array_fill_keys($sectionIds, ['allow' => true]);
+                // كل الصلاحيات الحالية لهذا الدور
+                $currentPermissions = Permission::where('role_id', $role->id)->get();
 
-                // Sync the permissions
-                $role->sections()->sync($permissionsData);
+                // 1) عدل الموجود: خليه 1 لو موجود في الـ array، و 0 لو مش موجود
+                foreach ($currentPermissions as $perm) {
+                    $perm->allow = in_array((int) $perm->section_id, $allowedIds) ? 1 : 0;
+                    $perm->save();
+
+                    // شيل الـ id من الـ array عشان اللي هيفضل بعد اللوب يبقى جديد
+                    $allowedIds = array_diff($allowedIds, [(int) $perm->section_id]);
+                }
+
+                // 2) أي IDs لسه فضلالنا من الفورم ومكنتش موجودة قبل كده → نضيفها جديدة بـ allow = 1
+                if (!empty($allowedIds)) {
+                    $insertData = [];
+                    foreach ($allowedIds as $sectionId) {
+                        $insertData[] = [
+                            'role_id'    => $role->id,
+                            'section_id' => (int) $sectionId,
+                            'allow'      => 1,
+                        ];
+                    }
+
+                    Permission::insert($insertData);
+                }
             } else {
-                Permission::where('role_id', '=', $role->id)->delete();
+                // لو الدور مبقاش أدمن، نلغي كل صلاحياته
+                Permission::where('role_id', $role->id)->delete();
             }
 
             Cache::forget('sections');
@@ -188,39 +212,39 @@ class RoleController extends Controller
         ]);
     }
 
-   public function listPermissions()
-{
-    // جلب كل الـ sections
-    $sections = Section::all();
+    public function listPermissions()
+    {
+        // جلب كل الـ sections
+        $sections = Section::all();
 
-    // بناء هيكل هرمي: كل قسم يحتوي على صلاحياته (permissions)
-    $data = [];
+        // بناء هيكل هرمي: كل قسم يحتوي على صلاحياته (permissions)
+        $data = [];
 
-    foreach ($sections as $section) {
-        // فقط الأقسام الرئيسية (التي ليس لديها section_group_id)
-        if (is_null($section->section_group_id)) {
-            $children = $sections->where('section_group_id', $section->id)->values();
+        foreach ($sections as $section) {
+            // فقط الأقسام الرئيسية (التي ليس لديها section_group_id)
+            if (is_null($section->section_group_id)) {
+                $children = $sections->where('section_group_id', $section->id)->values();
 
-            $data[] = [
-                'id' => $section->id,
-                'name' => $section->name,
-                'caption' => $section->caption,
-                'permissions' => $children->map(function ($child) {
-                    return [
-                        'id' => $child->id,
-                        'name' => $child->name,
-                        'caption' => $child->caption,
-                    ];
-                })->toArray()
-            ];
+                $data[] = [
+                    'id' => $section->id,
+                    'name' => $section->name,
+                    'caption' => $section->caption,
+                    'permissions' => $children->map(function ($child) {
+                        return [
+                            'id' => $child->id,
+                            'name' => $child->name,
+                            'caption' => $child->caption,
+                        ];
+                    })->toArray()
+                ];
+            }
         }
-    }
 
-    return response()->json([
-        'status' => 'success',
-        'data' => $data
-    ]);
-}
+        return response()->json([
+            'status' => 'success',
+            'data' => $data
+        ]);
+    }
 
 
     public function showPermissions($url_name, $id)
