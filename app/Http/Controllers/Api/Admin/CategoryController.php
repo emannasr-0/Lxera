@@ -26,6 +26,7 @@ class CategoryController extends Controller
             return [
                 'id' => $category->id,
                 'icon' => $category->icon,
+                'slug' => $category->slug, 
                 'order' => $category->order,
                 'title' => $category->title,
                 'subCategories' => $category->subCategories->count(),
@@ -56,8 +57,9 @@ class CategoryController extends Controller
         $categories->getCollection()->transform(function ($category) {
             return [
                 'id' => $category->id,
-                'icon' => $category->icon,
+                'icon' => asset('store/' . $category->icon),
                 'order' => $category->order,
+                 'slug' => $category->slug,
                 'title' => $category->title,
                 'subCategoriesCount' => $category->subCategories->count(),
                 'courses_count' => count($category->getCategoryCourses()),
@@ -93,7 +95,7 @@ class CategoryController extends Controller
         $subCategories->getCollection()->transform(function ($sub) {
             return [
                 'id' => $sub->id,
-                'icon' => $sub->icon,
+                 'icon' => asset('store/' . $sub->icon),
                 'order' => $sub->order,
                 'title' => $sub->title,
                 'slug' => $sub->slug,
@@ -131,7 +133,7 @@ class CategoryController extends Controller
             'slug' => $category->slug,
             'parent_id' => $category->parent_id,
             'education' => $category->education,
-            'icon' => $category->icon,
+            'icon' => asset('store/' . $category->icon),
             'order' => $category->order,
             'status' => $category->status,
             'has_sub' => $category->has_sub,
@@ -157,183 +159,356 @@ class CategoryController extends Controller
         ], 200);
     }
 
-    public function store(Request $request)
-    {
-        try {
-            $this->authorize('admin_categories_create');
+public function store(Request $request)
+{
+    try {
+        $this->authorize('admin_categories_create');
 
-            $validated = $request->validate([
-                'title' => 'required|min:3|max:128',
-                'slug' => 'nullable|max:255|unique:categories,slug',
-                'icon' => 'required',
-                'status' => 'required|in:active,inactive',
-                'locale' => 'required|string|min:2|max:5'
-            ]);
+        // -------------------------
+        // 🔍 1) Validation
+        // -------------------------
+        $validated = $request->validate([
+            'title' => 'required|min:3|max:128',
+            'slug' => 'nullable|max:255|unique:categories,slug',
+            'icon' => 'required', 
+            'status' => 'required|in:active,inactive',
+            'locale' => 'required|string|min:2|max:5',
+            'sub_categories' => 'nullable|array',
+            'requirements' => 'nullable|array',
+        ]);
 
-            $data = $request->all();
-            // $locale = 'ar';
+        $data = $request->all();
 
-            $order = $data['order'] ?? Category::whereNull('parent_id')->count() + 1;
+        // -------------------------
+        // 📌 2) معالجة رفع الصورة (الأساسية)
+        // -------------------------
+        $path = $this->uploadImage($request->icon);
 
-            $category = Category::create([
-                'slug' => $data['slug'] ?? Category::makeSlug($data['title']),
-                'icon' => $data['icon'],
-                'order' => $order,
-                'status' => $data['status']
-            ]);
+        // -------------------------
+        // 📌 3) إنشاء التصنيف
+        // -------------------------
+        $order = $data['order'] ?? Category::whereNull('parent_id')->count() + 1;
 
-            CategoryTranslation::updateOrCreate([
-                'category_id' => $category->id,
-                'locale' => $data['locale'],
-            ], [
-                'title' => $data['title'],
-            ]);
+        $category = Category::create([
+            'slug' => $data['slug'] ?? Category::makeSlug($data['title']),
+            'icon' => $path,
+            'order' => $order,
+            'status' => $data['status']
+        ]);
 
-            $hasSubCategories = (!empty($request->get('sub_categories')));
-            $subCategories = $this->setSubCategory($category, $request->get('sub_categories'), $hasSubCategories, $data['locale']);
+        CategoryTranslation::updateOrCreate([
+            'category_id' => $category->id,
+            'locale' => $data['locale'],
+        ], [
+            'title' => $data['title'],
+        ]);
 
-            $hasRequirements = (!empty($request->get('requirements')));
-            $requirements = $this->setRequirements($category, $request->get('requirements'), $hasRequirements, $data['locale']);
+        // -------------------------
+        // 📌 4) إنشاء Sub Categories
+        // -------------------------
+        $subCategories = [];
+        if (!empty($data['sub_categories'])) {
+            foreach ($data['sub_categories'] as $sub) {
 
-            cache()->forget(Category::$cacheKey);
-            removeContentLocale();
+                $subIcon = !empty($sub['icon']) ? $this->uploadImage($sub['icon']) : null;
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Category created successfully',
-                'data' => [
-                    'id' => $category->id,
-                    'slug' => $category->slug,
-                    'title' => $data['title'],
-                    'icon' => $category->icon,
-                    'order' => $category->order,
-                    'status' => $category->status,
+                $subCat = Category::create([
+                    'parent_id' => $category->id,
+                    'slug' => $sub['slug'] ?? Category::makeSlug($sub['title']),
+                    'icon' => $subIcon,
+                    'order' => 1,
+                    'status' => 'active'
+                ]);
+
+                CategoryTranslation::updateOrCreate([
+                    'category_id' => $subCat->id,
                     'locale' => $data['locale'],
-                    'sub_categories' => $subCategories,
-                    'requirements' => $requirements
-                ]
-            ], 201);
-        } catch (\Illuminate\Validation\ValidationException $e) {
-            $formattedErrors = [];
-            $currentLocale = app()->getLocale();
+                ], [
+                    'title' => $sub['title'],
+                ]);
 
-            foreach ($e->errors() as $field => $messages) {
-                $data = $e->validator->getData();
-                $rules = [$field => $e->validator->getRules()[$field]];
-
-                app()->setLocale('ar');
-                $arValidator = Validator::make($data, $rules);
-                $arMessage = $arValidator->errors()->first($field);
-
-                app()->setLocale('en');
-                $enValidator = Validator::make($data, $rules);
-                $enMessage = $enValidator->errors()->first($field);
-
-                $formattedErrors[$field] = [
-                    'ar' => $arMessage,
-                    'en' => $enMessage
+                $subCategories[] = [
+                    'id' => $subCat->id,
+                    'title' => $sub['title'],
+                    'slug' => $subCat->slug,
+                    'icon' => $subIcon ? asset('store/' . $subIcon) : null,
+                    'order' => $subCat->order,
+                    'status' => $subCat->status
                 ];
             }
-
-            app()->setLocale($currentLocale);
-
-            return response()->json([
-                'message' => 'Validation failed',
-                'errors' => $formattedErrors
-            ], 422);
         }
+
+        // -------------------------
+        // 📌 5) إضافة Requirements
+        // -------------------------
+     
+
+        // -------------------------
+        // 📌 6) Clean cache
+        // -------------------------
+        cache()->forget(Category::$cacheKey);
+        removeContentLocale();
+
+        // -------------------------
+        // 📌 7) Return JSON
+        // -------------------------
+        return response()->json([
+            'success' => true,
+            'message' => 'Category created successfully',
+            'data' => [
+                'id' => $category->id,
+                'slug' => $category->slug,
+                'title' => $data['title'],
+                'icon' => asset('store/' . $category->icon),
+                'order' => $category->order,
+                'status' => $category->status,
+                'locale' => $data['locale'],
+                'sub_categories' => $subCategories
+                
+            ]
+        ], 201);
+
+
+    } catch (\Illuminate\Validation\ValidationException $e) {
+
+        // 🔥 نفس نظام رسائل الخطأ بلغتين
+        $formattedErrors = [];
+        $currentLocale = app()->getLocale();
+
+        foreach ($e->errors() as $field => $messages) {
+            $data = $e->validator->getData();
+            $rules = [$field => $e->validator->getRules()[$field]];
+
+            app()->setLocale('ar');
+            $arValidator = Validator::make($data, $rules);
+            $arMessage = $arValidator->errors()->first($field);
+
+            app()->setLocale('en');
+            $enValidator = Validator::make($data, $rules);
+            $enMessage = $enValidator->errors()->first($field);
+
+            $formattedErrors[$field] = [
+                'ar' => $arMessage,
+                'en' => $enMessage
+            ];
+        }
+
+        app()->setLocale($currentLocale);
+
+        return response()->json([
+            'message' => 'Validation failed',
+            'errors' => $formattedErrors
+        ], 422);
+    }
+}
+private function uploadImage($image)
+{
+    // ملف مرفوع
+    if ($image instanceof \Illuminate\Http\UploadedFile) {
+        return $image->store('categories', 'public');
     }
 
-    public function update(Request $request, $url_name,  $id)
-    {
-        try {
-            $this->authorize('admin_categories_edit');
+    // Base64
+    if (is_string($image) && preg_match('/^data:image\/(\w+);base64,/', $image, $type)) {
 
-            $organization = Organization::where('url_name', $url_name)->first();
-            if (!$organization) {
-                return response()->json(['message' => 'Organization not found'], 404);
+        $imageData = substr($image, strpos($image, ',') + 1);
+        $imageData = base64_decode($imageData);
+        $extension = $type[1];
+
+        $fileName = 'categories/' . uniqid() . "." . $extension;
+        Storage::disk('public')->put($fileName, $imageData);
+
+        return $fileName;
+    }
+
+    return null;
+}
+
+
+public function update(Request $request, $url_name, $id)
+{
+    try {
+        $this->authorize('admin_categories_edit');
+
+        // -----------------------------------
+        // 🔍 1) تأكيد وجود المؤسسة
+        // -----------------------------------
+        $organization = Organization::where('url_name', $url_name)->first();
+        if (!$organization) {
+            return response()->json(['message' => 'Organization not found'], 404);
+        }
+
+        // -----------------------------------
+        // 🔍 2) تحميل التصنيف
+        // -----------------------------------
+        $category = Category::findOrFail($id);
+
+        // -----------------------------------
+        // 🔍 3) Validate
+        // -----------------------------------
+        $request->validate([
+            'title' => 'sometimes|min:3|max:128',
+            'slug' => 'sometimes|max:255|unique:categories,slug,' . $category->id,
+            'icon' => 'sometimes',
+            'status' => 'sometimes|in:active,inactive',
+            'sub_categories' => 'nullable|array',
+           
+        ]);
+
+        $data = $request->all();
+        $locale = $data['locale'] ?? 'ar';
+
+        // -----------------------------------
+        // 🖼 4) رفع الصورة الجديدة (إن وجدت)
+        // -----------------------------------
+        if (!empty($data['icon'])) {
+
+            $newIcon = $this->uploadImage($data['icon']);
+
+            // حذف القديم لو موجود
+            if ($category->icon && Storage::disk('public')->exists($category->icon)) {
+                Storage::disk('public')->delete($category->icon);
             }
 
-            $category = Category::findOrFail($id);
+            $category->icon = $newIcon;
+        }
 
-            $validated = $request->validate([
-                'title' => 'sometimes|min:3|max:128',
-                'slug' => 'sometimes|max:255|unique:categories,slug,' . $category->id,
-                'icon' => 'sometimes',
-                'status' => 'sometimes|in:active,inactive',
-            ]);
+        // -----------------------------------
+        // 📌 5) تحديث بيانات التصنيف
+        // -----------------------------------
+        $category->slug = $data['slug'] ?? $category->slug;
+        $category->order = $data['order'] ?? $category->order;
+        $category->status = $data['status'] ?? $category->status;
+        $category->save();
 
-            $data = $request->all();
-            $locale = $data['locale'] ?? 'ar';
-
-            $category->update([
-                'slug' => $data['slug'] ?? Category::makeSlug($data['title']),
-                'icon' => $data['icon'],
-                'order' => $data['order'] ?? $category->order,
-                'status' => $data['status']
-            ]);
-
+        // -----------------------------------
+        // 🔤 6) تحديث الترجمة
+        // -----------------------------------
+        if (!empty($data['title'])) {
             CategoryTranslation::updateOrCreate([
                 'category_id' => $category->id,
                 'locale' => $locale,
             ], [
                 'title' => $data['title'],
             ]);
+        }
 
-            $hasSubCategories = (!empty($request->get('sub_categories')));
-            $subCategories = $this->setSubCategory($category, $request->get('sub_categories'), $hasSubCategories, $locale);
+        // -----------------------------------
+        // 📌 7) تحديث Sub Categories
+        // -----------------------------------
+        $subCategories = [];
+        if (!empty($data['sub_categories'])) {
 
-            $hasRequirements = (!empty($request->get('requirements')));
-            $requirements = $this->setRequirements($category, $request->get('requirements'), $hasRequirements, $locale);
+            foreach ($data['sub_categories'] as $sub) {
 
-            cache()->forget(Category::$cacheKey);
-            removeContentLocale();
+                // تحديث أو إنشاء Sub category
+                $subCat = Category::updateOrCreate(
+                    [
+                        'slug' => $sub['slug'] ?? Category::makeSlug($sub['title']),
+                        'parent_id' => $category->id,
+                    ],
+                    [
+                        'status' => 'active'
+                    ]
+                );
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Category updated successfully',
-                'data' => [
-                    'id' => $category->id,
-                    'slug' => $category->slug,
-                    'title' => $data['title'],
-                    'icon' => $category->icon,
-                    'order' => $category->order,
-                    'status' => $category->status,
-                    'locale' => $locale,
-                    'sub_categories' => $subCategories,
-                    'requirements' => $requirements
-                ]
-            ], 200);
-        } catch (\Illuminate\Validation\ValidationException $e) {
-            $formattedErrors = [];
-            $currentLocale = app()->getLocale();
+                // رفع صورة جديدة
+                if (!empty($sub['icon'])) {
 
-            foreach ($e->errors() as $field => $messages) {
-                $data = $e->validator->getData();
-                $rules = [$field => $e->validator->getRules()[$field]];
+                    $subIcon = $this->uploadImage($sub['icon']);
 
-                app()->setLocale('ar');
-                $arValidator = Validator::make($data, $rules);
-                $arMessage = $arValidator->errors()->first($field);
+                    if ($subCat->icon && Storage::disk('public')->exists($subCat->icon)) {
+                        Storage::disk('public')->delete($subCat->icon);
+                    }
 
-                app()->setLocale('en');
-                $enValidator = Validator::make($data, $rules);
-                $enMessage = $enValidator->errors()->first($field);
+                    $subCat->icon = $subIcon;
+                    $subCat->save();
+                }
 
-                $formattedErrors[$field] = [
-                    'ar' => $arMessage,
-                    'en' => $enMessage
+                // تحديث الترجمة
+                CategoryTranslation::updateOrCreate([
+                    'category_id' => $subCat->id,
+                    'locale' => $locale
+                ], [
+                    'title' => $sub['title']
+                ]);
+
+                // إعداد بيانات العودة
+                $subCategories[] = [
+                    'id' => $subCat->id,
+                    'title' => $sub['title'],
+                    'slug' => $subCat->slug,
+                    'icon' => $subCat->icon ? asset('store/' . $subCat->icon) : null,
+                    'order' => $subCat->order,
+                    'status' => $subCat->status
                 ];
             }
-
-            app()->setLocale($currentLocale);
-
-            return response()->json([
-                'message' => 'Validation failed',
-                'errors' => $formattedErrors
-            ], 422);
         }
+
+        // -----------------------------------
+        // 📌 8) تحديث Requirements
+        // -----------------------------------
+    
+
+        // -----------------------------------
+        // 🧹 9) Cache clear
+        // -----------------------------------
+        cache()->forget(Category::$cacheKey);
+        removeContentLocale();
+
+        // -----------------------------------
+        // 📌 10) Return response
+        // -----------------------------------
+        return response()->json([
+            'success' => true,
+            'message' => 'Category updated successfully',
+            'data' => [
+                'id' => $category->id,
+                'slug' => $category->slug,
+                'title' => $data['title'] ?? null,
+                'icon' => asset('store/' . $category->icon),
+                'order' => $category->order,
+                'status' => $category->status,
+                'locale' => $locale,
+                'sub_categories' => $subCategories,
+               
+            ]
+        ], 200);
+
+    } catch (\Illuminate\Validation\ValidationException $e) {
+
+        // نفس فورمات الأخطاء السابق
+        $formattedErrors = [];
+        $currentLocale = app()->getLocale();
+
+        foreach ($e->errors() as $field => $messages) {
+            $data = $e->validator->getData();
+            $rules = [$field => $e->validator->getRules()[$field]];
+
+            app()->setLocale('ar');
+            $arValidator = Validator::make($data, $rules);
+            $arMessage = $arValidator->errors()->first($field);
+
+            app()->setLocale('en');
+            $enValidator = Validator::make($data, $rules);
+            $enMessage = $enValidator->errors()->first($field);
+
+            $formattedErrors[$field] = [
+                'ar' => $arMessage,
+                'en' => $enMessage
+            ];
+        }
+
+        app()->setLocale($currentLocale);
+
+        return response()->json([
+            'message' => 'Validation failed',
+            'errors' => $formattedErrors
+        ], 422);
     }
+}
+
+
 
     public function destroy($url_name, $id)
     {
