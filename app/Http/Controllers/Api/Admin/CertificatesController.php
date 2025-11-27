@@ -149,107 +149,120 @@ class CertificatesController extends Controller
         return view('admin.certificates.new_templates', $data);
     }
 
-    public function CertificatesTemplateStore($url_name, Request $request)
-    {
-        try {
-            $this->authorize('admin_certificate_template_create');
+   public function CertificatesTemplateStore($url_name, Request $request)
+{
+    try {
+        $this->authorize('admin_certificate_template_create');
 
-            $organization = Organization::where('url_name', $url_name)->first();
-            if (!$organization) {
-                return response()->json(['message' => 'This organization was not found.'], 404);
-            }
-
-            $request->validate([
-                'title' => 'required|string',
-                'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-                'type' => 'required|in:quiz,course,bundle,attendance,new_verssion_bundle,new_verssion_course,new_verssion_attendance',
-
-                'position_x_student' => 'required|numeric',
-                'position_y_student' => 'required|numeric',
-                'font_size_student' => 'required|numeric',
-
-                'position_x_course' => 'required|numeric',
-                'position_y_course' => 'required|numeric',
-                'font_size_course' => 'required|numeric',
-
-                'position_x_date' => 'required|numeric',
-                'position_y_date' => 'required|numeric',
-                'font_size_date' => 'required|numeric',
-
-                'position_x_gpa' => 'required|numeric',
-                'position_y_gpa' => 'required|numeric',
-                'font_size_gpa' => 'required|numeric',
-
-                'position_x_certificate_code' => 'required|numeric',
-                'position_y_certificate_code' => 'required|numeric',
-                'font_size_certificate_code' => 'required|numeric',
-
-                'text_color' => 'required|string',
-                'locale' => 'required|string',
-
-                'bundles' => 'nullable|array',
-                'bundles.*' => 'exists:bundles,id',
-                'webinars' => 'nullable|array',
-                'webinars.*' => 'exists:webinars,id',
-            ]);
-
-            $validData = $request->except(['bundles', 'webinars']);
-
-            if ($request->hasFile('image')) {
-                $path = $request->file('image')->store('certificates', 'public');
-                $validData['image'] = $path;
-            }
-
-            $template = CertificateTemplate::create($validData);
-
-            if ($request->has('bundles')) {
-                $template->bundle()->sync($request->input('bundles', []));
-            }
-            if ($request->has('webinars')) {
-                $template->webinar()->sync($request->input('webinars', []));
-            }
-
-            CertificateTemplateTranslation::create([
-                'certificate_template_id' => $template->id,
-                'locale' => strtolower($request->input('locale')),
-                'title' => $request->input('title'),
-                'rtl' => $request->input('rtl', 0),
-            ]);
-
-            return response()->json([
-                'message' => "Certificate template saved successfully",
-                'data' => $template,
-            ], 201);
-        } catch (\Illuminate\Validation\ValidationException $e) {
-            $formattedErrors = [];
-            $currentLocale = app()->getLocale();
-
-            foreach ($e->errors() as $field => $messages) {
-                $data = $e->validator->getData();
-                $rules = [$field => $e->validator->getRules()[$field]];
-
-                app()->setLocale('ar');
-                $arValidator = Validator::make($data, $rules);
-                $arMessage = $arValidator->errors()->first($field);
-
-                app()->setLocale('en');
-                $enValidator = Validator::make($data, $rules);
-                $enMessage = $enValidator->errors()->first($field);
-
-                $formattedErrors[$field] = [
-                    'ar' => $arMessage,
-                    'en' => $enMessage
-                ];
-            }
-
-            app()->setLocale($currentLocale);
-
-            return response()->json([
-                'message' => 'Validation failed',
-                'errors' => $formattedErrors
-            ], 422);
+        $organization = Organization::where('url_name', $url_name)->first();
+        if (!$organization) {
+            return response()->json(['message' => 'This organization was not found.'], 404);
         }
+
+        $request->validate([
+            'title' => 'required|string',
+            'image' => 'required',
+            'type' => 'required|in:quiz,course,bundle,attendance,new_verssion_bundle,new_verssion_course,new_verssion_attendance',
+
+            'position_x_student' => 'required|numeric',
+            'position_y_student' => 'required|numeric',
+            'font_size_student' => 'required|numeric',
+
+            'position_x_course' => 'required|numeric',
+            'position_y_course' => 'required|numeric',
+            'font_size_course' => 'required|numeric',
+
+            'position_x_date' => 'required|numeric',
+            'position_y_date' => 'required|numeric',
+            'font_size_date' => 'required|numeric',
+
+            'position_x_gpa' => 'required|numeric',
+            'position_y_gpa' => 'required|numeric',
+            'font_size_gpa' => 'required|numeric',
+
+            'position_x_certificate_code' => 'required|numeric',
+            'position_y_certificate_code' => 'required|numeric',
+            'font_size_certificate_code' => 'required|numeric',
+
+            'text_color' => 'required|string',
+            'locale' => 'required|string',
+
+            'bundles' => 'nullable|array',
+            'bundles.*' => 'exists:bundles,id',
+            'webinars' => 'nullable|array',
+            'webinars.*' => 'exists:webinars,id',
+        ]);
+
+        $validData = $request->except(['bundles', 'webinars']);
+
+        // Upload image
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('certificates', 'public');
+            $validData['image'] = $path;
+        }
+
+        // Add timestamps manually using time()
+        $validData['created_at'] = time();
+        $validData['updated_at'] = time();
+
+        // Create certificate template
+        $template = CertificateTemplate::create($validData);
+
+        // Sync bundles & webinars
+        if ($request->has('bundles')) {
+            $template->bundle()->sync($request->input('bundles', []));
+        }
+        if ($request->has('webinars')) {
+            $template->webinar()->sync($request->input('webinars', []));
+        }
+
+        // Create translation
+        CertificateTemplateTranslation::create([
+            'certificate_template_id' => $template->id,
+            'locale' => strtolower($request->input('locale')),
+            'title' => $request->input('title'),
+            'rtl' => $request->input('rtl', 0),
+            'created_at' => time(),
+            'updated_at' => time(),
+        ]);
+
+        return response()->json([
+            'message' => "Certificate template saved successfully",
+            'data' => $template,
+        ], 201);
+
+    } catch (\Illuminate\Validation\ValidationException $e) {
+
+        $formattedErrors = [];
+        $currentLocale = app()->getLocale();
+
+        foreach ($e->errors() as $field => $messages) {
+            $data = $e->validator->getData();
+            $rules = [$field => $e->validator->getRules()[$field]];
+
+            app()->setLocale('ar');
+            $arValidator = Validator::make($data, $rules);
+            $arMessage = $arValidator->errors()->first($field);
+
+            app()->setLocale('en');
+            $enValidator = Validator::make($data, $rules);
+            $enMessage = $enValidator->errors()->first($field);
+
+            $formattedErrors[$field] = [
+                'ar' => $arMessage,
+                'en' => $enMessage
+            ];
+        }
+
+        app()->setLocale($currentLocale);
+
+        return response()->json([
+            'message' => 'Validation failed',
+            'errors' => $formattedErrors
+        ], 422);
     }
+}
+
 
     public function CertificatesTemplateUpdate($url_name, Request $request, $template_id)
     {
