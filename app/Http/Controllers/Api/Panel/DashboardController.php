@@ -37,6 +37,7 @@ class DashboardController extends Controller
 
     public function dashboard()
     {
+      
         $user = auth('api')->user();
 
         // if ($user->role_name == Role::$registered_user) {

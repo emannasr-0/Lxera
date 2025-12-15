@@ -19,113 +19,120 @@ use Illuminate\Support\Facades\Validator;
 
 class AssignmentsController extends Controller
 {
- public function index(Request $request)
+
+    public function index(Request $request)
     {
         $this->authorize('admin_webinar_assignments_lists');
 
         $query = WebinarAssignment::query();
 
+        // Counts before pagination
         $courseAssignmentsCount = deepClone($query)->count();
 
-        $pendingReviewCount = deepClone($query)->whereHas('assignmentHistory', function ($query) {
-            $query->where('status', WebinarAssignmentHistory::$pending);
+        $pendingReviewCount = deepClone($query)->whereHas('assignmentHistory', function ($q) {
+            $q->where('status', WebinarAssignmentHistory::$pending);
         })->count();
 
-        $passedCount = deepClone($query)->whereHas('assignmentHistory', function ($query) {
-            $query->where('status', WebinarAssignmentHistory::$passed);
+        $passedCount = deepClone($query)->whereHas('assignmentHistory', function ($q) {
+            $q->where('status', WebinarAssignmentHistory::$passed);
         })->count();
 
-        $failedCount = deepClone($query)->whereHas('assignmentHistory', function ($query) {
-            $query->where('status', WebinarAssignmentHistory::$notPassed);
+        $failedCount = deepClone($query)->whereHas('assignmentHistory', function ($q) {
+            $q->where('status', WebinarAssignmentHistory::$notPassed);
         })->count();
 
+        // Filters
         $query = $this->handleAssignmentsFilters($request, $query);
 
+        // Pagination params
+        $perPage = (int) $request->get('per_page', 10);
+        $page    = (int) $request->get('page', 1);
+
+        // Main query with relations
         $assignments = $query->with([
             'webinar',
+            'chapter',
             'attachments',
-            'instructorAssignmentHistories' => function ($query) {
-                $query->orderBy('created_at', 'desc');
-                $query->with([
-                    'messages' => function ($query) {
-                        $query->orderBy('created_at', 'desc');
+            'instructorAssignmentHistories' => function ($q) {
+                $q->orderBy('created_at', 'desc')->with([
+                    'messages' => function ($m) {
+                        $m->orderBy('created_at', 'desc');
                     }
                 ]);
             },
         ])
             ->orderBy('created_at', 'desc')
-            ->get();
-        $assignmentsData = [];
-         $assignments = $query->with([
-            'webinar',
-            'attachments',
-            'instructorAssignmentHistories' => function ($query) {
-                $query->orderBy('created_at', 'desc');
-                $query->with([
-                    'messages' => function ($query) {
-                        $query->orderBy('created_at', 'desc');
-                    }
-                ]);
-            },
-        ])
-            ->orderBy('created_at', 'desc')
-            ->get();
-        $assignmentsData = [];
-      foreach ($assignments as $assignment) {
-    $assignmentsData[] = [
-        'assignmentId'           => $assignment->id,
-        'assignmentTitle'        => $assignment->title,
-        'webinarTitle'           => $assignment->webinar->title,
-   'students' => $assignment->instructorAssignmentHistories,
-                'studentsCount' =>  $assignment->instructorAssignmentHistories->count(),
-        'assignmentGrade'        => $assignment->grade,
-        'assignmentPassGrade'    => $assignment->pass_grade,
-        'assignmentStatus'       => $assignment->status,
+            ->paginate($perPage, ['*'], 'page', $page);
 
-        // الحقول الإضافية
-        'id'                     => $assignment->id,
-        'chapter_id'             => $assignment->chapter_id,
-        'webinar_id'             => $assignment->webinar_id,
-            'chapterTitle'           => $assignment->chapter ? $assignment->chapter->title : null,  // هنا اسم الشابتر
-        'title'                  => $assignment->title,
-        'description'            => $assignment->description,
-        'grade'                  => $assignment->grade,
-        'pass_grade'             => $assignment->pass_grade,
-        'deadline'               => $assignment->deadline,
-        'attempts'               => $assignment->attempts,
-        'check_previous_parts'   => $assignment->check_previous_parts,
-        'access_after_day'       => $assignment->access_after_day,
-        'status'                 => $assignment->status,
-        'locale'                 => $assignment->locale,
-       'attachments' => $assignment->attachments ? $assignment->attachments->map(function ($att) {
-    return [
-        'file_name' => $att->file_name,
-        'file_url'  => $att->file_url,
-    ];
-}) : [],
+        // mapping data
+        $assignmentsData = $assignments->map(function ($assignment) {
+            return [
+                'assignmentId'         => $assignment->id,
+                'assignmentTitle'      => $assignment->title,
+                'webinarTitle'         => $assignment->webinar->title,
+                'students'             => $assignment->instructorAssignmentHistories,
+                'studentsCount'        => $assignment->instructorAssignmentHistories->count(),
+                'assignmentGrade'      => $assignment->grade,
+                'assignmentPassGrade'  => $assignment->pass_grade,
+                'assignmentStatus'     => $assignment->status,
 
-    ];
-}
+                // Extra fields
+                'id'                   => $assignment->id,
+                'chapter_id'           => $assignment->chapter_id,
+                'webinar_id'           => $assignment->webinar_id,
+                'chapterTitle'         => $assignment->chapter?->title,
+                'title'                => $assignment->title,
+                'description'          => $assignment->description,
+                'grade'                => $assignment->grade,
+                'pass_grade'           => $assignment->pass_grade,
+                'deadline'             => $assignment->deadline,
+                'attempts'             => $assignment->attempts,
+                'check_previous_parts' => $assignment->check_previous_parts,
+                'access_after_day'     => $assignment->access_after_day,
+                'status'               => $assignment->status,
+                'locale'               => $assignment->locale,
+                'attachments' => $assignment->attachments?->map(function ($att) {
+                    return [
+                        'file_name' => $att->file_name,
+                        'file_url'  => $att->file_url,
+                    ];
+                }),
+            ];
+        });
 
+        // Basic data
         $data = [
-            'assignmentsTable' => $assignmentsData,
-            'assignments' => $assignments,
+            'assignmentsTable'       => $assignmentsData,
             'courseAssignmentsCount' => $courseAssignmentsCount,
-            'pendingReviewCount' => $pendingReviewCount,
-            'passedCount' => $passedCount,
-            'failedCount' => $failedCount,
+            'pendingReviewCount'     => $pendingReviewCount,
+            'passedCount'            => $passedCount,
+            'failedCount'            => $failedCount,
+
+            // pagination meta
+            'pagination' => [
+                'current_page' => $assignments->currentPage(),
+                'per_page'     => $assignments->perPage(),
+                'total'        => $assignments->total(),
+                'last_page'    => $assignments->lastPage(),
+                'from'         => $assignments->firstItem(),
+                'to'           => $assignments->lastItem(),
+            ],
         ];
 
+        // webinar_ids filter
         $webinar_ids = $request->get('webinar_ids');
         if (!empty($webinar_ids)) {
-            $data['webinars'] = Webinar::select('id')->whereIn('id', $webinar_ids)->get();
+            $data['webinars'] = Webinar::select('id')
+                ->whereIn('id', $webinar_ids)
+                ->get();
         }
 
         return response()->json([
             'status' => 'success',
-            'data' => $data
+            'data'   => $data,
         ]);
     }
+
 
     private function handleAssignmentsFilters(Request $request, $query)
     {
@@ -336,14 +343,14 @@ class AssignmentsController extends Controller
         //     $data['access_after_day'] = null;
         // }
 
-$webinar = Webinar::find($data['webinar_id']);
+        $webinar = Webinar::find($data['webinar_id']);
 
-if (!$webinar) {
-    return response()->json([
-        'code' => 404,
-        'message' => 'Webinar not found',
-    ], 404);
-}
+        if (!$webinar) {
+            return response()->json([
+                'code' => 404,
+                'message' => 'Webinar not found',
+            ], 404);
+        }
 
 
         if (!empty($webinar)) {
@@ -380,7 +387,7 @@ if (!$webinar) {
 
             return response()->json([
                 'code' => 200,
-                'assignment'=>$assignment,
+                'assignment' => $assignment,
             ], 200);
         }
 
@@ -490,7 +497,7 @@ if (!$webinar) {
             return response()->json([
                 'status' => 'success',
                 'message' => 'Assignment Updated Successfully',
-                 'assignment'=>$assignment,
+                'assignment' => $assignment,
             ], 200);
         } catch (\Illuminate\Validation\ValidationException $e) {
             $formattedErrors = [];
@@ -519,14 +526,14 @@ if (!$webinar) {
         }
     }
 
-    public function destroy($url_name,$id)
+    public function destroy($url_name, $id)
     {
         $this->authorize('admin_webinars_edit');
 
         $assignment = WebinarAssignment::where('id', $id)->first();
 
         if (!empty($assignment)) {
-  
+
             WebinarChapterItem::where('user_id', $assignment->creator_id)
                 ->where('item_id', $assignment->id)
                 ->where('type', WebinarChapterItem::$chapterAssignment)

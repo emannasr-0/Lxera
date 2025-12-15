@@ -63,8 +63,8 @@ class DiscountController extends Controller
                     ? 'All Users'
                     : ($discount->discountUsers->user->full_name ?? '-'),
 
-                'created_at' => dateTimeFormat($discount->created_at, 'Y M d'),
-                'expired_at' => dateTimeFormat($discount->expired_at, 'Y M d - H:i'),
+                'created_at' => $discount->created_at,
+                'expired_at' => $discount->expired_at,
                 'status' => $discount->expired_at < time() ? 'Expired' : 'Active',
 
                 'for_first_purchase ' => $discount->for_first_purchase ,

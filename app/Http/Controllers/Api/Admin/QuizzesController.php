@@ -403,7 +403,7 @@ class QuizzesController extends Controller
 
             return response()->json([
                 'status' => 'success',
-                      "data" => $quiz,
+                "data" => $quiz,
                 'message' => 'Data Updated Successfully'
             ]);
         } catch (\Illuminate\Validation\ValidationException $e) {
@@ -878,7 +878,7 @@ class QuizzesController extends Controller
             }
 
             // Validate correct answer for multiple-choice
-            if ($data['type'] == QuizzesQuestion::$multiple && !empty($data['answers'])) {
+            if (($data['type'] ?? null) == QuizzesQuestion::$multiple && !empty($data['answers'])) {
                 $hasCorrect = collect($data['answers'])->contains(function ($answer) {
                     return isset($answer['correct']);
                 });
@@ -932,16 +932,39 @@ class QuizzesController extends Controller
                 'updated_at' => time()
             ]);
 
-            QuizzesQuestionTranslation::updateOrCreate(
-                [
-                    'quizzes_question_id' => $quizQuestion->id,
-                    'locale' => $data['locale'] ?? 'ar',
-                ],
-                [
-                    'title' => $data['title'],
-                    'correct' => $data['correct'] ?? null,
-                ]
-            );
+            // بعد ما تجيبي $locale و $quizQuestion
+
+            // نحدد الـ locale من الريكوست أو نخليها 'ar' لو مش مبعوتة
+            $locale = $data['locale'] ?? app()->getLocale() ?? 'ar';
+
+            // هنستخدم الترجمة الحالية كسورس
+            $currentTranslation = $quizQuestion->translations
+                ->where('locale', $locale)
+                ->first();
+
+            // لو المستخدم بعت title فعلاً → يبقى عايز يغير الترجمة
+            if (array_key_exists('title', $data)) {
+
+                $newTitle   = $data['title'];
+                $newCorrect = $data['correct'] ?? ($currentTranslation->correct ?? null);
+
+                QuizzesQuestionTranslation::updateOrCreate(
+                    [
+                        'quizzes_question_id' => $quizQuestion->id,
+                        'locale'              => $locale,
+                    ],
+                    [
+                        // حتى لو بعتّي title فاضي، مسؤوليتك من الـ validation فوق
+                        'title'   => $newTitle,
+                        'correct' => $newCorrect,
+                    ]
+                );
+            } else {
+                // ما فيش title في الريكوست → ما نعملش أي update على translations
+                // الترجمة القديمة تفضل زي ما هي
+            }
+
+
 
             $quiz->increaseTotalMark($quizQuestion->grade);
 
@@ -1052,6 +1075,7 @@ class QuizzesController extends Controller
             ], 500);
         }
     }
+
 
     public function getQuestionsByQuiz($url_name, Request $request, $quiz_id)
     {

@@ -11,18 +11,61 @@ use Illuminate\Support\Facades\Validator;
 
 class PlanController extends Controller
 {
-    public function index()
-    {
-        $plans = Plan::get();
-        $data = [
-            'plans' => $plans
-        ];
+  
+public function index($url_name)
+{
+    //dd($url_name);
+    // نجيب الـ organization من الـ url_name
+    $organization = Organization::where('url_name', $url_name)->first();
 
-        return response()->json([
-            'success' => true,
-            'message' => $data
-        ], 200);
+    if (!$organization) {
+        return response()->json(['message' => 'Organization not found'], 404);
     }
+
+    // عدد المستخدمين في هذه الـ organization
+    $usersCountForOrg = User::where('organization_id', $organization->id)->count();
+
+    // نجيب كل الخطط
+    $plans = Plan::all();
+
+    // نحضر البيانات مع عدد المستخدمين والمتبقي
+    $plans = $plans->map(function ($plan) use ($organization, $usersCountForOrg) {
+
+        // لو دي هي الخطة الحالية للـ organization -> استخدم عدد المستخدمين
+        if ($plan->id == $organization->plan_id) {
+            $usedUsers = $usersCountForOrg;
+        } else {
+            // باقي الخطط مش متفعّلة للـ organization دي
+            $usedUsers = 0;
+        }
+
+        $maxUsers = (int) ($plan->max_users ?? 0);
+        $availableUsers = max($maxUsers - $usedUsers, 0);
+
+        return [
+            'id'              => $plan->id,
+            'name'            => $plan->name,
+            'name_ar'         => $plan->name_ar,
+            'description'     => $plan->description,
+            'price'           => $plan->price,
+            'max_users'       => $maxUsers,
+            'used_users'      => $usedUsers,        // عدد مستخدمي الخطة
+            'available_users' => $availableUsers,   // المتاح للإضافة
+            'max_bundles'     => $plan->max_bundles,
+            'max_webinars'    => $plan->max_webinars,
+            'start_date'      => $plan->start_date,
+            'end_date'        => $plan->end_date,
+            'is_active'       => $plan->is_active,
+        ];
+    });
+
+    return response()->json([
+        'success' => true,
+        'data'    => [
+            'plans' => $plans,
+        ],
+    ], 200);
+}
 
     public function update($url_name, Request $request, $id)
     {

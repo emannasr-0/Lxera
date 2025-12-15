@@ -21,6 +21,9 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Panel\CertificateController as PanelCertificateController;
 use App\Models\Api\Organization;
 use Illuminate\Support\Carbon;
+use Illuminate\Http\Response as LaravelResponse;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class CertificatesController extends Controller
 {
@@ -161,7 +164,7 @@ class CertificatesController extends Controller
 
             $request->validate([
                 'title' => 'required|string',
-                'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+                'image' => 'required',
                 'type' => 'required|in:quiz,course,bundle,attendance,new_verssion_bundle,new_verssion_course,new_verssion_attendance',
 
                 'position_x_student' => 'required|numeric',
@@ -195,13 +198,20 @@ class CertificatesController extends Controller
 
             $validData = $request->except(['bundles', 'webinars']);
 
+            // Upload image
             if ($request->hasFile('image')) {
                 $path = $request->file('image')->store('certificates', 'public');
                 $validData['image'] = $path;
             }
 
+            // Add timestamps manually using time()
+            $validData['created_at'] = time();
+            $validData['updated_at'] = time();
+
+            // Create certificate template
             $template = CertificateTemplate::create($validData);
 
+            // Sync bundles & webinars
             if ($request->has('bundles')) {
                 $template->bundle()->sync($request->input('bundles', []));
             }
@@ -209,11 +219,14 @@ class CertificatesController extends Controller
                 $template->webinar()->sync($request->input('webinars', []));
             }
 
+            // Create translation
             CertificateTemplateTranslation::create([
                 'certificate_template_id' => $template->id,
                 'locale' => strtolower($request->input('locale')),
                 'title' => $request->input('title'),
                 'rtl' => $request->input('rtl', 0),
+                'created_at' => time(),
+                'updated_at' => time(),
             ]);
 
             return response()->json([
@@ -221,6 +234,7 @@ class CertificatesController extends Controller
                 'data' => $template,
             ], 201);
         } catch (\Illuminate\Validation\ValidationException $e) {
+
             $formattedErrors = [];
             $currentLocale = app()->getLocale();
 
@@ -629,15 +643,16 @@ class CertificatesController extends Controller
         ]);
     }
 
+
+
     public function CertificatesDownload($url_name, $id)
     {
         $organization = Organization::where('url_name', $url_name)->first();
-
         if (!$organization) {
             return response()->json(['message' => 'This organization was not found.'], 404);
         }
 
-        $certificate = Certificate::findOrFail($id);
+        $certificate = Certificate::find($id);
         if (!$certificate) {
             return response()->json(['message' => 'Certificate not found.'], 404);
         }
@@ -648,12 +663,8 @@ class CertificatesController extends Controller
             case 'quiz':
                 $quizResult = QuizzesResult::where('id', $certificate->quiz_result_id)
                     ->where('status', QuizzesResult::$passed)
-                    ->with([
-                        'quiz' => function ($query) {
-                            $query->with('webinar');
-                        },
-                        'user'
-                    ])->first();
+                    ->with(['quiz' => fn($q) => $q->with('webinar'), 'user'])
+                    ->first();
 
                 if (!$quizResult) {
                     return response()->json(['message' => 'Quiz result not found or not passed.'], 404);
@@ -674,12 +685,33 @@ class CertificatesController extends Controller
                 return response()->json(['message' => 'Invalid certificate type.'], 400);
         }
 
-        $filePath = 'http://127.0.0.1:8000/admin/certificates/' . $id . '/download';
+        $downloadName = 'certificat.pdf'; // ✅ الاسم اللي عايزاه
 
-        return response()->json([
-            'message' => 'Certificate generated successfully.',
-            'data' => $filePath
-        ], 200,  [], JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE);
+        // ✅ لو رجع Response file/download
+        if ($certificateData instanceof BinaryFileResponse) {
+            return $certificateData->setContentDisposition('attachment', $downloadName);
+        }
+
+        if ($certificateData instanceof StreamedResponse || $certificateData instanceof LaravelResponse) {
+            // لو StreamedResponse مش دايمًا ينفع نغير الاسم من هنا
+            // الأفضل تخلي MakeCertificate يرجع BinaryFileResponse أو path
+            return $certificateData;
+        }
+
+        // ✅ لو رجع path
+        if (is_string($certificateData) && file_exists($certificateData)) {
+            return response()->download($certificateData, $downloadName, [
+                'Content-Type' => 'application/pdf',
+            ]);
+        }
+
+        if (is_array($certificateData) && !empty($certificateData['path']) && file_exists($certificateData['path'])) {
+            return response()->download($certificateData['path'], $downloadName, [
+                'Content-Type' => 'application/pdf',
+            ]);
+        }
+
+        return response()->json(['message' => 'Certificate generation failed.'], 500);
     }
 
     public function deleteSelected(Request $request)
