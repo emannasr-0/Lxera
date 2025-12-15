@@ -475,3 +475,4 @@ class InstallmentsController extends Controller
  
         return response()->json($toastData);
     }
+}
