@@ -23,24 +23,22 @@ class BundleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-
         $user = apiAuth();
 
         $query = Bundle::where(function ($query) use ($user) {
             $query->where('bundles.teacher_id', $user->id);
             $query->orWhere('bundles.creator_id', $user->id);
         });
+
+        // قبل pagination
         $bundlesHours = deepClone($query)
             ->join('bundle_webinars', 'bundle_webinars.bundle_id', '=', 'bundles.id')
             ->join('webinars', 'webinars.id', '=', 'bundle_webinars.webinar_id')
             ->sum('webinars.duration');
 
         $query->with([
-            /*'reviews' => function ($query) {
-                $query->where('status', 'active');
-            },*/
             'bundleWebinars',
             'category',
             'teacher',
@@ -50,9 +48,12 @@ class BundleController extends Controller
             }
         ])->orderBy('updated_at', 'desc');
 
+        // قبل paginate
         $bundlesCount = $query->count();
 
-        $bundles = $query->get();
+        // 👇 pagination
+        $limit = $request->input('limit', 10);
+        $bundles = $query->paginate($limit);
 
         $bundleSales = Sale::where('seller_id', $user->id)
             ->where('type', 'bundle')
@@ -71,6 +72,13 @@ class BundleController extends Controller
                 'bundle_sales_count' => $bundleSales->count(),
                 'bundles_hours' => $bundlesHours,
 
+                // pagination meta
+                'pagination' => [
+                    'current_page' => $bundles->currentPage(),
+                    'last_page' => $bundles->lastPage(),
+                    'per_page' => $bundles->perPage(),
+                    'total' => $bundles->total(),
+                ]
             ]
         );
     }

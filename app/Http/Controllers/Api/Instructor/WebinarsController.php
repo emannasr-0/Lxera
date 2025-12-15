@@ -1426,21 +1426,29 @@ class WebinarsController extends Controller
         } elseif ($step == 4) {
             $query->with([
                 'chapters' => function ($query) {
-                    $query->orderBy('order', 'asc');
-                    $query->with([
-                        'chapterItems' => function ($query) {
-                            $query->orderBy('order', 'asc');
-                            $query->with([
-                                'quiz' => function ($query) {
-                                    $query->with([
-                                        'quizQuestions' => function ($query) {
-                                            $query->orderBy('order', 'asc');
-                                        }
+                    $query->orderBy('order', 'asc')
+                        ->with([
+                            'chapterItems' => function ($query) {
+                                $query->orderBy('order', 'asc')
+                                    ->with([
+                                        'quiz' => function ($query) {
+                                            $query->with([
+                                                'quizQuestions' => function ($query) {
+                                                    $query->orderBy('order', 'asc');
+                                                },
+                                                'translations',
+                                            ]);
+                                        },
+                                        'assignment' => function ($query) {
+                                            $query->with([
+                                                'translations',
+                                                'attachments',
+                                                // لو محتاجة history للطالب هنبقى نعملها بطريقة مختلفة (حسب student_id)
+                                            ]);
+                                        },
                                     ]);
-                                }
-                            ]);
-                        }
-                    ]);
+                            },
+                        ]);
                 },
             ]);
         } elseif ($step == 5) {
@@ -1522,33 +1530,31 @@ class WebinarsController extends Controller
         ], 200);
     }
 
-  public function getWebinarCount(Request $request)
-{
-    $user = apiAuth(); 
+    public function getWebinarCount(Request $request)
+    {
+        $user = apiAuth();
 
-    if ($user->isUser()) {
+        if ($user->isUser()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Unauthorized access.'
+            ], 403);
+        }
+
+        // تحديد عدد الويبينارات حسب نوع المستخدم
+        $query = Webinar::query();
+
+        if ($user->isTeacher()) {
+            $query->where('teacher_id', $user->id);
+        } elseif ($user->isOrganization()) {
+            $query->where('creator_id', $user->id);
+        }
+
+        $count = $query->count();
+
         return response()->json([
-            'status' => 'error',
-            'message' => 'Unauthorized access.'
-        ], 403);
+            'status' => 'success',
+            'webinar_count' => $count
+        ]);
     }
-
-    // تحديد عدد الويبينارات حسب نوع المستخدم
-    $query = Webinar::query();
-
-    if ($user->isTeacher()) {
-        $query->where('teacher_id', $user->id);
-    } elseif ($user->isOrganization()) {
-        $query->where('creator_id', $user->id);
-    }
-
-    $count = $query->count();
-
-    return response()->json([
-        'status' => 'success',
-        'webinar_count' => $count
-    ]);
-}
-
-
 }

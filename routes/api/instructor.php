@@ -119,6 +119,8 @@ Route::prefix('{url_name}')->group(function () {
             //webinars
             Route::get('/webinars', [WebinarsController::class, 'getTeacherWebinars']);
             Route::post('/webinars/chapter', [WebinarChapterController::class, 'store']);
+            Route::put('/webinars/chapter/{id}', [WebinarChapterController::class, 'update']);
+            Route::delete('/webinars/chapter/{id}', [WebinarChapterController::class, 'destroy']);
             Route::get('/webinars_content', [WebinarsController::class, 'getWebinarContent']);
             Route::get('/webinars_count', [WebinarsController::class, 'getWebinarCount']);
             Route::get('/webinar_learning-page/{id}', [WebinarsController::class, 'getWebinarsLessons']);
@@ -134,6 +136,9 @@ Route::prefix('{url_name}')->group(function () {
             // Route::get('course/learning/{id}?type=assignment&item={bundle}&student={id}',[WebinarsController::class, 'getWebinarsLessons']);
             Route::group(['prefix' => 'assignments'], function () {
                 Route::get('/{assignment}/students', [InstructorAssignmentController::class, 'submmision']);
+                Route::post('/store', [InstructorAssignmentController::class, 'store']);
+             Route::post('/{id}', [InstructorAssignmentController::class, 'update']);
+              Route::delete('/{id}', [InstructorAssignmentController::class, 'destroy']);
                 Route::get('/students', ['uses' => 'AssignmentController@students']);
                 Route::get('/', [InstructorAssignmentController::class, 'index']);
                 Route::post('/histories/{assignment_history}/rate', ['uses' => 'AssignmentController@setGrade']);

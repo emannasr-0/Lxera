@@ -8,42 +8,101 @@ use App\Models\Api\Organization;
 use App\Models\Notification;
 use App\Models\NotificationStatus;
 use Illuminate\Http\Request;
-
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Collection;
 use function App\Http\Controllers\Api\Panel\sendError;
 
 class NotificationsController extends Controller
 {
     public function list(Request $request)
-    {
-        $status = $request->input('status');
-        if ($status == 'unread') {
-            $notifications = $this->unRead();
-        } elseif ($status == 'read') {
-            $notifications = $this->read();
-        } else {
-            $notifications = $this->all();
-        }
-        $notifications = self::brief($notifications);
-        return sendResponse($notifications, trans('public.retrieved'));
+{
+    $user   = apiAuth(); // or auth()->user()
+    $status = $request->input('status');          // unread | read | null
+    $search = $request->input('search');          // search in title
+    $limit  = (int) $request->input('limit', 15); // default 15 per page
+
+    // ----- Base query for this user -----
+    $query = Notification::where('user_id', $user->id);
+
+    // Filter by status
+    if ($status === 'unread') {
+        // adjust to your logic for unread
+        $query->whereDoesntHave('notificationStatus');
+    } elseif ($status === 'read') {
+        // adjust to your logic for read
+        $query->whereHas('notificationStatus');
     }
 
-    public static function brief($notifications)
-    {
-        $notifications = $notifications->map(function ($notification) {
-            return [
-                'id' => $notification->id,
-                'title' => $notification->title,
-                'message' => $notification->message,
-                'type' => $notification->type,
-                'status' => ($notification->notificationStatus) ? 'read' : 'unread',
-                'created_at' => dateTimeFormat($notification->created_at, 'j M Y - H:i')
-            ];
-        });
-        return [
-            'count' => count($notifications),
-            'notifications' => $notifications,
-        ];
+    // Search by title (optional)
+    if (!empty($search)) {
+        $query->where('title', 'like', '%' . $search . '%');
     }
+
+    // Order newest first
+    $query->orderBy('created_at', 'desc');
+
+    // ----- Unread count (independent from pagination & search) -----
+    $unreadCount = Notification::where('user_id', $user->id)
+        ->whereDoesntHave('notificationStatus')   // same unread logic
+        ->count();
+
+    // ----- Paginate -----
+    $paginator = $query->paginate($limit);
+
+    // Use your brief() to format notifications (it now accepts paginator)
+    $data = self::brief($paginator);
+
+    // Add unread_count to response
+    $data['unread_count'] = $unreadCount;
+
+    return sendResponse($data, trans('public.retrieved'));
+} 
+
+   public static function brief($notifications)
+{
+    // If it's paginator, extract collection + build meta
+    if ($notifications instanceof LengthAwarePaginator || $notifications instanceof Paginator) {
+        $collection = $notifications->getCollection();
+
+        $pagination = [
+            'current_page' => $notifications->currentPage(),
+            'per_page'     => $notifications->perPage(),
+            'total'        => $notifications->total(),
+            'last_page'    => $notifications->lastPage(),
+        ];
+    } else {
+        // Normal collection/array
+        $collection = $notifications instanceof Collection
+            ? $notifications
+            : collect($notifications);
+
+        $pagination = null;
+    }
+
+    $mapped = $collection->map(function ($notification) {
+        return [
+            'id'         => $notification->id,
+            'title'      => $notification->title,
+            'message'    => $notification->message,
+            'type'       => $notification->type,
+            'status'     => ($notification->notificationStatus) ? 'read' : 'unread',
+            'created_at' => dateTimeFormat($notification->created_at, 'j M Y - H:i'),
+        ];
+    });
+
+    $result = [
+        // count of items in this page
+        'count'         => $mapped->count(),
+        'notifications' => $mapped->values(),
+    ];
+
+    if ($pagination) {
+        $result['pagination'] = $pagination;
+    }
+
+    return $result;
+}
 
     public function seen($url_name, $id)
     {

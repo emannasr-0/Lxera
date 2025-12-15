@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class CertificateTemplate extends Model implements TranslatableContract
 {
@@ -15,8 +16,24 @@ class CertificateTemplate extends Model implements TranslatableContract
     public $timestamps = false;
     protected $dateFormat = 'U';
     protected $guarded = ['id'];
+    protected $appends = ['image_url'];
 
     public $translatedAttributes = ['title', 'body'];
+
+    public function getImageUrlAttribute()
+    {
+        if (empty($this->image)) {
+            return null;
+        }
+
+        // لو الصورة already full url
+        if (filter_var($this->image, FILTER_VALIDATE_URL)) {
+            return $this->image;
+        }
+
+        // لو مخزنة كـ /store/...
+        return url($this->image);
+    }
 
     public function getTitleAttribute()
     {
@@ -62,5 +79,4 @@ class CertificateTemplate extends Model implements TranslatableContract
 
         return $title;
     }
-
 }

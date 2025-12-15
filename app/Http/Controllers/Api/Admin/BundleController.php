@@ -285,7 +285,7 @@ class BundleController extends Controller
                 'description' => 'required',
                 'teacher_id' => 'required|exists:users,id',
                 'category_id' => 'required',
-                'batch_id' => 'required',
+                'batch_id' => 'required|exists:study_classes,id',
                 'price' => 'required',
             ];
             $this->validate($request, $rules);

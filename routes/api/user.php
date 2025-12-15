@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Redirect;
 //Route::prefix('{url_name}')->group(function () {
 
 Route::group([], function () {
+      Route::get('/', 'DashboardController@dashboard');
 
     //webinar content
     Route::get('/bundles/{bundle}/course/learning/{id}', [LearningPageController::class, 'api_index']);
@@ -127,6 +128,16 @@ Route::group([], function () {
         Route::post('/', ['uses' => 'AddCartController@store']);
         Route::post('web_checkout', ['uses' => 'CartController@webCheckoutGenerator']);
     });
+
+       Route::group(['prefix' => 'programs'], function () {
+
+                Route::post('{id}/buyWithPoint', ['uses' => 'BundleController@buyWithPoint']);
+                Route::post('{id}/free', ['uses' => 'BundleController@free']);
+                Route::get('/installments/{installmentId}/verify', ['uses' => 'InstallmentsController@makeInstallmentPayment']);
+                Route::post('/purchase/{installmentId?}', ['uses' => 'BundleController@purchase_bundle']);
+                Route::get('/purchases', ['uses' => 'BundleController@purchases']);
+                Route::post('/applieds', ['uses' => 'BundleController@handle']);
+            });
     Route::group(['prefix' => 'financial'], function () {
 
         Route::get('sales', ['uses' => 'SalesController@index']);
@@ -141,7 +152,7 @@ Route::group([], function () {
         Route::group(['prefix' => 'payout'], function () {
             Route::get('/', ['uses' => 'PayoutsController@index']);
             Route::post('/', ['uses' => 'PayoutsController@requestPayout']);
-            Route::get('/', 'DashboardController@dashboard');
+          
             Route::group(['prefix' => '/comments'], function () {
                 Route::get('/', ['uses' => 'CommentsController@list']);
                 Route::post('/', ['uses' => 'CommentsController@store', 'middleware' => 'api.request.type']);
@@ -351,15 +362,7 @@ Route::group([], function () {
             Route::get('webinars/{id}/statistic', ['uses' => 'WebinarStatisticController@index'])->middleware('api.level-access:teacher');
 
             /***** Bundles  *****/
-            Route::group(['prefix' => 'programs'], function () {
-
-                Route::post('{id}/buyWithPoint', ['uses' => 'BundleController@buyWithPoint']);
-                Route::post('{id}/free', ['uses' => 'BundleController@free']);
-                Route::get('/installments/{installmentId}/verify', ['uses' => 'InstallmentsController@makeInstallmentPayment']);
-                Route::post('/purchase/{installmentId?}', ['uses' => 'BundleController@purchase_bundle']);
-                Route::get('/purchases', ['uses' => 'BundleController@purchases']);
-                Route::post('/applieds', ['uses' => 'BundleController@handle']);
-            });
+         
             /***** Reviews  *****/
             Route::group(['prefix' => '/reviews3'], function () {
                 Route::get('/', ['uses' => 'WebinarReviewController@list']);

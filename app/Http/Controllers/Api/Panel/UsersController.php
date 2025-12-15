@@ -98,6 +98,52 @@ class UsersController extends Controller
         return apiResponse2(1, 'updated', trans('api.public.updated'));
     }
 
+     public function updateUserBasicInformation(Request $request)
+    {
+        $user = auth('api')->user();
+        $data = $request->all();
+
+        $rules = [
+            'full_name' => 'required|string|min:15',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'mobile' => 'required|unique:users,mobile,',
+            'password' => 'nullable|string|min:6',
+            'timezone' => ['string', Rule::in(getListOfTimezones())],
+            'language' => 'string',
+            'public_message' => 'boolean',
+            'newsletter' => 'boolean',
+        ];
+
+        $validData = validateParam($request->all(), $rules);
+
+        $joinNewsletter = !empty($data['newsletter']);
+
+        $this->handleNewsletter($user->email, $user->id, $joinNewsletter);
+
+
+        if (!empty($validData['password'])) {
+            $user->update([
+                'password' => User::generatePassword($validData['password'])
+            ]);
+        }
+
+        $updateData = [
+            'full_name' => $data['full_name'],
+            'email' => $data['email'],
+            'mobile' => $data['mobile'],
+            // 'user_code' => $data['user_code'] ?? $user->user_code,
+            'language' => $data['language'] ?? null,
+            'timezone' => $data['timezone'] ?? null,
+            'currency' => $data['currency'] ?? null,
+            'newsletter' => $joinNewsletter,
+            'public_message' => !empty($data['public_message']),
+        ];
+
+        $user->update($updateData);
+
+        return sendResponse([], trans('panel.user_setting_success'));
+    }
+
     private function handleNewsletter($email, $user_id, $joinNewsletter)
     {
         $check = Newsletter::where('email', $email)->first();
