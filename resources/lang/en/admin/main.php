@@ -11,6 +11,7 @@ return [
     // General | Side Menu | Buttons
     //
     'search' => 'Search...',
+    'admin_panel' => 'Admin Panel',
     'admission_requirements' => 'Admission requirements',
     'requirements_form' => 'Requirements Form',
     'registrations' => 'Registrations',
@@ -110,6 +111,7 @@ return [
     'all_course_students' => 'All Course Students',
     'specific_course_students' => 'Specific Course Students',
     'programs' => 'Programs',
+    'program_statistics' => 'Program Statistics',
     'select_programs' => 'Select Programs',
     'courses' => 'Courses',
     'select_courses' => 'Select Courses',
@@ -1614,5 +1616,6 @@ By enabling this feature, newly registered users will require approval using thi
     'content_type' => 'Content type',
     'start_at' => 'Start Date',
     'end_at' => 'End Date',
+    'graduation_projects' => 'Graduation Projects',
 
 ];
