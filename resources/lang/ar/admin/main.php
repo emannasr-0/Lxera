@@ -12,6 +12,7 @@ return [
     //
 
     'search' => 'بحث ....',
+    'admin_panel' => 'لوحة الإدارة',
     'admission_requirements' => 'متطلبات القبول',
     'requirements_form' => 'نموذج المتطلبات',
     'registrations' => 'التسجيلات',
@@ -1130,6 +1131,7 @@ return [
     'all_course_students' => 'طلاب كل الدورات',
     'specific_course_students' => 'طلاب دورات محددة',
     'programs' => 'البرامج',
+    'program_statistics' => 'إحصائيات البرامج',
     'select_programs' => 'اختر البرامج',
     'courses' => 'الدورات',
     'select_courses' => 'اختر الدورات',
@@ -1306,4 +1308,5 @@ return [
     'new_support_ticket_title' => 'تذكرة دعم جديدة',
     'edit_support_ticket_title' => 'تعديل تذكرة الدعم',
     'staff_list_title' => 'قائمة طاقم العمل',
+    'graduation_projects' => 'مشاريع التخرج',
 ];
